@@ -5,8 +5,9 @@ from datetime import datetime, timedelta
 # Define the stage mappings
 STAGE_MAPPINGS = {
     'In Foster': 'In Foster',
-    'In SAFE Foster': 'SAFE Foster',
+    'Hold - SAFE Foster': 'Hold SAFE Foster',
     'Hold - Foster': 'Hold Foster',
+    'Hold - Cruelty Foster': 'Hold Cruelty Foster',
     'Hold - Behavior Foster': 'Hold Behavior Foster',
     'Hold - Surgery': 'Hold Surgery',
     'Hold - Doc': 'Hold Doc',
@@ -21,8 +22,9 @@ STAGE_MAPPINGS = {
 # Define the order for the report
 STAGE_ORDER = [
     'In Foster',
-    'SAFE Foster',
+    'Hold SAFE Foster',
     'Hold Foster',
+    'Hold Cruelty Foster',
     'Hold Behavior Foster',
     'Hold Surgery',
     'Hold Dental',

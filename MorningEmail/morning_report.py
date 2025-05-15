@@ -64,18 +64,10 @@ def get_fur_fits_count():
     # Get the report date from cell A2
     report_date = get_report_date_from_csv()
     check_dates = get_previous_business_days_from_report_date(report_date)
-    print(f"\nReport date from CSV: {report_date.strftime('%A, %B %d, %Y')}")
-    print("Checking for If The Fur Fits on dates:", check_dates)
     
     # Convert StartStatusDate to datetime and normalize to remove time component
     df_foster['StartStatusDate'] = pd.to_datetime(df_foster['StartStatusDate']).dt.normalize()
     check_datetimes = [pd.to_datetime(date).normalize() for date in check_dates]
-    
-    # Debug: Print all If The Fur Fits entries with DataFrame index, Name, and StartStatusDate
-    fur_fits_entries = df_foster[df_foster['Location'] == 'If The Fur Fits']
-    print("\nAll If The Fur Fits entries (with DataFrame index):")
-    for idx, row in fur_fits_entries.iterrows():
-        print(f"Index: {idx}, Name: {row.get('Name', 'N/A')}, StartStatusDate: {row.get('StartStatusDate', 'N/A')}, Location: {row.get('Location', 'N/A')}")
     
     # Count entries where Location is "If The Fur Fits" and StartStatusDate matches any check date
     fur_fits_count = len(df_foster[
@@ -83,7 +75,6 @@ def get_fur_fits_count():
         (df_foster['StartStatusDate'].isin(check_datetimes))
     ])
     
-    print(f"\nFound {fur_fits_count} If The Fur Fits entries for previous business day(s)")
     return fur_fits_count
 
 def get_foster_count():
@@ -138,14 +129,6 @@ def get_occupancy_counts():
     # Calculate age in months
     df['AgeMonths'] = ((today - df['DateOfBirth']).dt.days / 30.44)  # Average days per month
     
-    # Print some sample data for cats to verify age calculations
-    print("\nSample of Cat age calculations:")
-    sample_cats = df[df['AnimalType'] == 'Cat'].head()
-    for _, row in sample_cats.iterrows():
-        print(f"Birth: {row['DateOfBirth'].strftime('%m/%d/%Y')}, "
-              f"Age in months: {row['AgeMonths']:.1f}, "
-              f"Category: {'Kitten' if row['AgeMonths'] < 5 else 'Cat'}")
-    
     # Define offsite locations
     offsite_locations = ['Foster Home', 'If The Fur Fits', 'Offsite Adoptions']
     
@@ -165,13 +148,6 @@ def get_occupancy_counts():
             return 'Puppy' if row['AgeMonths'] < 6 else 'Dog'
     
     df['Category'] = df.apply(get_category, axis=1)
-    
-    # Print information about puppies in shelter
-    print("\nPuppies in Shelter:")
-    print("------------------")
-    puppies_in_shelter = df[(df['Category'] == 'Puppy') & (df['LocationCategory'] == 'Shelter')]
-    for _, row in puppies_in_shelter.iterrows():
-        print(f"ID: {row['AnimalNumber']}, Name: {row['AnimalName']}, Age: {row['AgeMonths']:.1f} months")
     
     # Create the counts
     categories = ['Cat', 'Dog', 'Kitten', 'Other', 'Puppy']
@@ -197,8 +173,27 @@ def get_occupancy_counts():
     
     return pd.DataFrame(counts)
 
+def get_adoptions_count():
+    # Read AnimalOutcomes.csv, skipping the first 3 rows to get to the header
+    try:
+        df_outcomes = pd.read_csv('AnimalOutcome.csv', skiprows=3)
+    except FileNotFoundError:
+        print("AnimalOutcomes.csv not found. Returning 0 adoptions.")
+        return 0
+    # Only keep debugging for textbox16
+    print("\nAnimalOutcomes.csv columns:", df_outcomes.columns.tolist())
+    if 'textbox16' in df_outcomes.columns:
+        print("Unique values in textbox16:", df_outcomes['textbox16'].unique())
+        adoptions_count = (df_outcomes['textbox16'] == 'Adoption').sum()
+    else:
+        print("Column 'textbox16' not found in AnimalOutcomes.csv!")
+        adoptions_count = 0
+    print(f"Found {adoptions_count} adoptions in AnimalOutcomes.csv")
+    return adoptions_count
+
 def export_to_excel():
     # Get all our data
+    adoptions = get_adoptions_count()
     fur_fits = get_fur_fits_count()
     foster_holds = get_stage_counts()
     occupancy = get_occupancy_counts()
@@ -219,18 +214,21 @@ def export_to_excel():
         'font_size': 11
     })
     
-    # Create DataFrame for If The Fur Fits count
-    fur_fits_df = pd.DataFrame({
-        'Metric': ['If The Fur Fits (previous business day)'],
-        'Count': [fur_fits]
+    # Create DataFrame for Adoptions and If The Fur Fits counts
+    metrics_df = pd.DataFrame({
+        'Outcomes': [
+            'Adoptions (previous business day)',
+            'If The Fur Fits (previous business day)'
+        ],
+        'Count': [adoptions, fur_fits]
     })
     
     # Create DataFrame for Foster/Hold counts
     foster_holds_df = pd.DataFrame(list(foster_holds.items()), columns=['Stage', 'Count'])
     
     # Write to Excel
-    # If The Fur Fits
-    fur_fits_df.to_excel(writer, sheet_name='Morning Report', startrow=0, index=False)
+    # Adoptions and If The Fur Fits
+    metrics_df.to_excel(writer, sheet_name='Morning Report', startrow=0, index=False)
     
     # Foster/Hold Counts
     foster_holds_df.to_excel(writer, sheet_name='Morning Report', startrow=3, index=False)
@@ -242,7 +240,7 @@ def export_to_excel():
     worksheet = writer.sheets['Morning Report']
     
     # Format headers
-    worksheet.write('A1', 'Metric', header_format)
+    worksheet.write('A1', 'Outcomes', header_format)
     worksheet.write('B1', 'Count', header_format)
     worksheet.write('A4', 'Stage', header_format)
     worksheet.write('B4', 'Count', header_format)
@@ -265,11 +263,6 @@ def test_weekend_handling():
     friday = test_date - timedelta(days=3)  # May 9th
     saturday = test_date - timedelta(days=2)  # May 10th
     
-    print(f"\nTesting weekend handling (simulating Monday, {test_date.strftime('%m/%d/%Y')})")
-    print(f"Should check for entries on:")
-    print(f"Friday: {friday.strftime('%m/%d/%Y')}")
-    print(f"Saturday: {saturday.strftime('%m/%d/%Y')}")
-    
     # Read FosterCurrent.csv, skipping first 6 rows
     df_foster = pd.read_csv('FosterCurrent.csv', skiprows=6)
     
@@ -285,19 +278,11 @@ def test_weekend_handling():
         )
     ]
     
-    print("\nFound If The Fur Fits entries:")
-    for _, row in fur_fits_entries.iterrows():
-        print(f"Date: {row['StartStatusDate'].strftime('%m/%d/%Y %I:%M:%S %p')}, Location: {row['Location']}")
-    
     print(f"\nTotal entries found: {len(fur_fits_entries)}")
 
 if __name__ == "__main__":
-    # Run the weekend test
-    test_weekend_handling()
-    print("\nNow running normal report...")
-    # Run the normal report
-    occupancy = get_occupancy_counts()
-    print("\nFinal Counts:")
-    print(occupancy)
-    export_to_excel()
-    print("Morning report has been exported to 'morning_report.xlsx'") 
+    get_adoptions_count()
+    # All other function calls are commented out for debugging
+    # test_weekend_handling()
+    # occupancy = get_occupancy_counts()
+    export_to_excel() 

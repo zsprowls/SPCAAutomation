@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 # Column mapping between PathwaysExportFile and AnimalInventory
 column_mapping = {
-    'Title': 'AnimalName',  # Title in Pathways maps to AnimalName in Inventory
+    'Name': 'AnimalName',  # Name in Pathways maps to AnimalName in Inventory
     'Species': 'Species',
     'Location': 'Location',
     'Intake Date': 'IntakeDateTime',
@@ -14,7 +14,7 @@ column_mapping = {
 }
 
 # Read the files
-pathways_df = pd.read_excel('PathwaysExportFile.xlsx')
+pathways_df = pd.read_csv('Pathways for Care.csv')
 inventory_df = pd.read_csv('AnimalInventory.csv', skiprows=3)  # Skip first 3 rows, use 4th as header
 
 # Print column names to debug
@@ -32,7 +32,7 @@ inventory_df['AID'] = inventory_df['AnimalNumber'].str[-8:]
 animals_to_remove = pathways_df[~pathways_df['AID'].isin(inventory_df['AID'])]
 
 # Save animals to remove (using original column names since this is from PathwaysExportFile)
-animals_to_remove[['Title', 'AID', 'Species', 'Location ', 'Intake Date']].to_excel('PathwaysRemove.xlsx', index=False)
+animals_to_remove[['Name', 'AID', 'Species', 'Location ', 'Intake Date']].to_excel('PathwaysRemove.xlsx', index=False)
 
 # Filter inventory for animals that should be added
 # Convert IntakeDateTime to datetime
@@ -76,7 +76,7 @@ animals_to_add = animals_to_add[~animals_to_add['Stage'].isin(excluded_stages)]
 
 # Prepare the output dataframe with required columns (using mapped names since this is from AnimalInventory)
 animals_to_add_output = pd.DataFrame({
-    'Title': animals_to_add[column_mapping['Title']],
+    'Name': animals_to_add[column_mapping['Name']],
     'AID': animals_to_add['AID'],
     'Species': animals_to_add[column_mapping['Species']],
     'Location': animals_to_add[column_mapping['Location']],
@@ -89,7 +89,7 @@ animals_to_add_output = pd.DataFrame({
 
 # Custom header as in the screenshot
 custom_header = [
-    'Title', 'AID', 'Species', 'Location', 'Intake Date', 'Breed', 'Age', 'Stage', 'LOSInDays'
+    'Name', 'AID', 'Species', 'Location', 'Intake Date', 'Breed', 'Age', 'Stage', 'LOSInDays'
 ]
 
 # Write the custom header and then the data starting from row 2

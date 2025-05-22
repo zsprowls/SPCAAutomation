@@ -128,8 +128,8 @@ def get_occupancy_counts():
     # Get the most recent date from the data to use as "today"
     today = pd.Timestamp.now().normalize()  # Use today's date without the time component
     
-    # Calculate age in months
-    df['AgeMonths'] = ((today - df['DateOfBirth']).dt.days / 30.44)  # Average days per month
+    # Calculate age in months - Fix calculation for very young animals
+    df['AgeMonths'] = ((today - df['DateOfBirth']).dt.total_seconds() / (60 * 60 * 24 * 30.44))
     
     # Define offsite locations
     offsite_locations = ['Foster Home', 'If The Fur Fits', 'Offsite Adoptions']
@@ -228,32 +228,64 @@ def export_to_excel():
     # Create DataFrame for Foster/Hold counts
     foster_holds_df = pd.DataFrame(list(foster_holds.items()), columns=['Stage', 'Count'])
     
-    # Write to Excel
-    # Adoptions and If The Fur Fits
-    metrics_df.to_excel(writer, sheet_name='Morning Report', startrow=0, index=False)
-    
-    # Foster/Hold Counts
-    foster_holds_df.to_excel(writer, sheet_name='Morning Report', startrow=3, index=False)
-    
-    # Daily Occupancy
-    occupancy.to_excel(writer, sheet_name='Morning Report', startrow=foster_holds_df.shape[0] + 6, index=False)
+    # Create the sheet with an empty DataFrame first
+    pd.DataFrame().to_excel(writer, sheet_name='Morning Report', startrow=0, index=False)
     
     # Get the worksheet
     worksheet = writer.sheets['Morning Report']
     
-    # Format headers
+    # Write Outcomes section
     worksheet.write('A1', 'Outcomes', header_format)
     worksheet.write('B1', 'Count', header_format)
-    worksheet.write('A4', 'Stage', header_format)
-    worksheet.write('B4', 'Count', header_format)
-    worksheet.write(f'A{foster_holds_df.shape[0] + 7}', 'Species/Age', header_format)
-    worksheet.write(f'B{foster_holds_df.shape[0] + 7}', 'Animals in Shelter', header_format)
-    worksheet.write(f'C{foster_holds_df.shape[0] + 7}', 'Animals in Foster/Off-Site', header_format)
+    metrics_df.to_excel(writer, sheet_name='Morning Report', startrow=1, index=False, header=False)
+    
+    current_row = 4  # Start Stage section at row 4 to leave one blank row after metrics
+    
+    # Write Stage section
+    worksheet.write(current_row, 0, 'Stage', header_format)
+    worksheet.write(current_row, 1, 'Count', header_format)
+    current_row += 1
+    foster_holds_df.to_excel(writer, sheet_name='Morning Report', startrow=current_row, index=False, header=False)
+    
+    current_row += foster_holds_df.shape[0] + 1  # Add 1 for single blank row
+    
+    # Write Occupancy section
+    worksheet.write(current_row, 0, 'Species/Age', header_format)
+    worksheet.write(current_row, 1, 'Animals in Shelter', header_format)
+    worksheet.write(current_row, 2, 'Animals in Foster/Off-Site', header_format)
+    current_row += 1
+    occupancy.to_excel(writer, sheet_name='Morning Report', startrow=current_row, index=False, header=False)
+    
+    current_row += occupancy.shape[0] + 1  # Add 1 for single blank row
+    
+    # Add Hold - Stray section
+    worksheet.write(current_row, 0, 'Animal ID', header_format)
+    worksheet.write(current_row, 1, 'Location', header_format)
+    worksheet.write(current_row, 2, 'Review Date', header_format)
+    current_row += 1
+
+    # Add Hold - Stray cases from StageReview.csv
+    stageReview_df = pd.read_csv('StageReview.csv', skiprows=3)
+    hold_stray_df = stageReview_df[stageReview_df['Stage'] == 'Hold - Stray']
+
+    if not hold_stray_df.empty:
+        hold_stray_data = hold_stray_df.apply(
+            lambda row: [
+                row['textbox89'],  # Animal ID
+                f"{row['Location']}, {row['SubLocation']}", # Location info
+                pd.to_datetime(row['ReviewDate']).strftime('%Y-%m-%d')  # Date in YYYY-MM-DD format
+            ], 
+            axis=1
+        ).tolist()
+        
+        for row_data in hold_stray_data:
+            worksheet.write_row(current_row, 0, row_data)
+            current_row += 1
     
     # Set column widths
     worksheet.set_column('A:A', 25)
     worksheet.set_column('B:C', 15)
-    
+
     # Save the file
     writer.close()
 

@@ -1,6 +1,24 @@
 import pandas as pd
 import re
 from datetime import datetime, timedelta
+import os
+
+def get_user_dates():
+    while True:
+        try:
+            date_input = input("Enter the dates to include (mm/dd/yyyy, separated by commas): ")
+            dates = [date.strip() for date in date_input.split(',') if date.strip()]
+            # Validate each date
+            validated_dates = []
+            for date in dates:
+                datetime.strptime(date, '%m/%d/%Y')
+                validated_dates.append(date)
+            return validated_dates
+        except ValueError:
+            print("Invalid date format. Please use mm/dd/yyyy format and separate dates with commas.")
+
+# Get the directory where the script is located
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Define the stage mappings
 STAGE_MAPPINGS = {
@@ -35,9 +53,18 @@ STAGE_ORDER = [
     'Hold Stray/Legal'
 ]
 
+# Add this list in the order of your mapping
+INTAKE_GROUP_ORDER = [
+    'Transfer In', 'DOA', 'Euthanasia Request', 'Euthanasia Req – Field', 'Field – Stray', 'Field – OS',
+    'Seized – Abandoned', 'Seized – Cruelty', 'Seized – General', 'Seized – Hospital', 'Seized – Signed over',
+    'Seized – Eviction', 'Seized – Police', 'Seized – Owner Died', 'Seized – Order Violation', 'Seized - Hoarding',
+    'Return', 'Stray', 'OTC – OS', 'OTC - OS - SAFE', 'Clinic - Medical Treatment', 'Clinic - Stray',
+    'Clinic - Retention', 'Clinic - Case Assistance', 'Clinic - Case Assistance - Outreach', 'Clinic - Outreach', 'Boarder'
+]
+
 def get_report_date_from_csv():
     # Read the second line of FosterCurrent.csv to get the report date
-    with open('FosterCurrent.csv', 'r') as f:
+    with open(os.path.join(SCRIPT_DIR, 'FosterCurrent.csv'), 'r') as f:
         lines = f.readlines()
         if len(lines) >= 2:
             # Join the first three columns to reconstruct the date string
@@ -59,13 +86,9 @@ def get_previous_business_days_from_report_date(report_date):
         yesterday = report_date - timedelta(days=1)
         return [yesterday.strftime('%-m/%-d/%Y')]
 
-def get_fur_fits_count():
+def get_fur_fits_count(check_dates):
     # Read FosterCurrent.csv, skipping first 6 rows
-    df_foster = pd.read_csv('FosterCurrent.csv', skiprows=6)
-    
-    # Get the report date from cell A2
-    report_date = get_report_date_from_csv()
-    check_dates = get_previous_business_days_from_report_date(report_date)
+    df_foster = pd.read_csv(os.path.join(SCRIPT_DIR, 'FosterCurrent.csv'), skiprows=6)
     
     # Convert StartStatusDate to datetime and normalize to remove time component
     df_foster['StartStatusDate'] = pd.to_datetime(df_foster['StartStatusDate']).dt.normalize()
@@ -81,7 +104,7 @@ def get_fur_fits_count():
 
 def get_foster_count():
     # Read FosterCurrent.csv, skipping first 6 rows
-    foster_path = 'FosterCurrent.csv'
+    foster_path = os.path.join(SCRIPT_DIR, 'FosterCurrent.csv')
     df_foster = pd.read_csv(foster_path, skiprows=6)
     
     # Get the first value from textbox53
@@ -95,7 +118,7 @@ def get_foster_count():
 
 def get_stage_counts():
     # Read the CSV file, skipping the first 3 rows
-    inventory_path = 'AnimalInventory.csv'
+    inventory_path = os.path.join(SCRIPT_DIR, 'AnimalInventory.csv')
     df = pd.read_csv(inventory_path, skiprows=3)
     
     # Map the stages using our defined mappings
@@ -120,7 +143,7 @@ def get_stage_counts():
 
 def get_occupancy_counts():
     # Read the CSV file, skipping first 3 rows
-    df = pd.read_csv('AnimalInventory.csv', skiprows=3)
+    df = pd.read_csv(os.path.join(SCRIPT_DIR, 'AnimalInventory.csv'), skiprows=3)
     
     # Convert DateOfBirth to datetime
     df['DateOfBirth'] = pd.to_datetime(df['DateOfBirth'])
@@ -175,33 +198,126 @@ def get_occupancy_counts():
     
     return pd.DataFrame(counts)
 
-def get_adoptions_count():
-    # Read AnimalOutcomes.csv, skipping the first 3 rows to get to the header
+def get_adoptions_count(check_dates):
+    # Read AnimalOutcome.csv, skipping the first 3 rows to get to the header
     try:
-        df_outcomes = pd.read_csv('AnimalOutcome.csv', skiprows=3)
+        df_outcomes = pd.read_csv(os.path.join(SCRIPT_DIR, 'AnimalOutcome.csv'), skiprows=3)
     except FileNotFoundError:
-        print("AnimalOutcomes.csv not found. Returning 0 adoptions.")
+        print("AnimalOutcome.csv not found. Returning 0 adoptions.")
         return 0
-    # Only keep debugging for textbox16
-    print("\nAnimalOutcomes.csv columns:", df_outcomes.columns.tolist())
-    if 'textbox16' in df_outcomes.columns:
-        print("Unique values in textbox16:", df_outcomes['textbox16'].unique())
-        adoptions_count = (df_outcomes['textbox16'] == 'Adoption').sum()
-    else:
-        print("Column 'textbox16' not found in AnimalOutcomes.csv!")
-        adoptions_count = 0
-    print(f"Found {adoptions_count} adoptions in AnimalOutcomes.csv")
+
+    # Convert the date column to datetime and extract only the date component
+    df_outcomes['Textbox50'] = pd.to_datetime(df_outcomes['Textbox50']).dt.date
+    check_dates_dt = [pd.to_datetime(date).date() for date in check_dates]
+    
+    # Count adoptions for the specified dates
+    adoptions_count = len(df_outcomes[
+        (df_outcomes['textbox16'] == 'Adoption') & 
+        (df_outcomes['Textbox50'].isin(check_dates_dt))
+    ])
+    
     return adoptions_count
 
-def export_to_excel():
+def map_intake_group(row):
+    op_type = str(row['OperationType']).strip().upper()
+    op_subtype = str(row['OperationSubType']).strip().upper()
+    # Logic from mapping
+    if op_type == 'TRANSFER IN':
+        return 'Transfer In'
+    if op_type == 'OWNER/GUARDIAN SURRENDER' and op_subtype == 'DOA':
+        return 'DOA'
+    if op_type == 'OWNER/GUARDIAN SURRENDER' and op_subtype in ['EUTHANASIA REQUEST', 'EUTHANASIA REQUEST - OTC!']:
+        return 'Euthanasia Request'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'SIGNED OVER/EUTHANASIA REQUEST':
+        return 'Euthanasia Req – Field'
+    if op_type == 'STRAY' and ('FIELD' in op_subtype):
+        return 'Field – Stray'
+    if op_type == 'OWNER/GUARDIAN SURRENDER' and ('FIELD' in op_subtype):
+        return 'Field – OS'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'ABANDONED':
+        return 'Seized – Abandoned'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'CRUELTY':
+        return 'Seized – Cruelty'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'GENERAL':
+        return 'Seized – General'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'HOSPITAL':
+        return 'Seized – Hospital'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'SIGNED OVER':
+        return 'Seized – Signed over'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'EVICTION':
+        return 'Seized – Eviction'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'POLICE':
+        return 'Seized – Police'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'OWNER DIED':
+        return 'Seized – Owner Died'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'COURT ORDER VIOLATION':
+        return 'Seized – Order Violation'
+    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'HOARDING':
+        return 'Seized - Hoarding'
+    if op_type == 'RETURN':
+        return 'Return'
+    if op_type == 'STRAY' and not ('FIELD' in op_subtype):
+        return 'Stray'
+    if op_type == 'OWNER/GUARDIAN SURRENDER' and ('OTC' in op_subtype):
+        return 'OTC – OS'
+    if op_type == 'OWNER/GUARDIAN SURRENDER' and op_subtype == 'SAFE FOSTER':
+        return 'OTC - OS - SAFE'
+    if op_type == 'CLINIC' and op_subtype == 'MEDICAL TREATMENT':
+        return 'Clinic - Medical Treatment'
+    if op_type == 'CLINIC' and op_subtype == 'STRAY':
+        return 'Clinic - Stray'
+    if op_type == 'CLINIC' and op_subtype == 'RETENTION':
+        return 'Clinic - Retention'
+    if op_type == 'CLINIC' and op_subtype == 'CASE ASSISTANCE':
+        return 'Clinic - Case Assistance'
+    if op_type == 'CLINIC' and op_subtype == 'CASE - OUTREACH':
+        return 'Clinic - Case Assistance - Outreach'
+    if op_type == 'CLINIC' and op_subtype == 'OUTREACH':
+        return 'Clinic - Outreach'
+    if op_type == 'BOARDER':
+        return 'Boarder'
+    return 'not counted'
+
+def get_intake_count_detail(check_dates):
+    intake_path = os.path.join(SCRIPT_DIR, 'AnimalIntake.csv')
+    df_intake = pd.read_csv(intake_path, skiprows=3)
+    # Filter by intake date (textbox44)
+    df_intake['textbox44'] = pd.to_datetime(df_intake['textbox44']).dt.date
+    check_dates_dt = [pd.to_datetime(date).date() for date in check_dates]
+    filtered = df_intake[df_intake['textbox44'].isin(check_dates_dt)].copy()
+    # Assign group
+    filtered['IntakeGroup'] = filtered.apply(map_intake_group, axis=1)
+    # For detail, include all rows (even not counted)
+    all_rows = df_intake.copy()
+    all_rows['IntakeGroup'] = all_rows.apply(map_intake_group, axis=1)
+    # Only keep relevant columns
+    detail = all_rows[['AnimalNumber', 'Species', 'textbox44', 'OperationType', 'OperationSubType', 'IntakeGroup']]
+    return detail
+
+def get_intake_summary(detail_df):
+    # Only use rows that are in the mapping order (including not counted)
+    summary = []
+    for group in INTAKE_GROUP_ORDER:
+        group_df = detail_df[detail_df['IntakeGroup'] == group]
+        cat_count = (group_df['Species'].str.lower() == 'cat').sum() if not group_df.empty else ''
+        dog_count = (group_df['Species'].str.lower() == 'dog').sum() if not group_df.empty else ''
+        other_count = (~group_df['Species'].str.lower().isin(['cat', 'dog'])).sum() if not group_df.empty else ''
+        # Leave blank if 0
+        cat_count = cat_count if cat_count != 0 else ''
+        dog_count = dog_count if dog_count != 0 else ''
+        other_count = other_count if other_count != 0 else ''
+        summary.append({'Group': group, 'Cat': cat_count, 'Dog': dog_count, 'Other': other_count})
+    return pd.DataFrame(summary)
+
+def export_to_excel(check_dates):
     # Get all our data
-    adoptions = get_adoptions_count()
-    fur_fits = get_fur_fits_count()
+    adoptions = get_adoptions_count(check_dates)
+    fur_fits = get_fur_fits_count(check_dates)
     foster_holds = get_stage_counts()
     occupancy = get_occupancy_counts()
     
     # Create Excel writer object
-    output_path = 'morning_report.xlsx'
+    output_path = os.path.join(SCRIPT_DIR, 'morning_report.xlsx')
     writer = pd.ExcelWriter(output_path, engine='xlsxwriter')
     workbook = writer.book
     
@@ -219,8 +335,8 @@ def export_to_excel():
     # Create DataFrame for Adoptions and If The Fur Fits counts
     metrics_df = pd.DataFrame({
         'Outcomes': [
-            'Adoptions (previous business day)',
-            'If The Fur Fits (previous business day)'
+            f'Adoptions ({", ".join(check_dates)})',
+            f'If The Fur Fits ({", ".join(check_dates)})'
         ],
         'Count': [adoptions, fur_fits]
     })
@@ -265,7 +381,7 @@ def export_to_excel():
     current_row += 1
 
     # Add Hold - Stray cases from StageReview.csv
-    stageReview_df = pd.read_csv('StageReview.csv', skiprows=3)
+    stageReview_df = pd.read_csv(os.path.join(SCRIPT_DIR, 'StageReview.csv'), skiprows=3)
     hold_stray_df = stageReview_df[stageReview_df['Stage'] == 'Hold - Stray']
 
     if not hold_stray_df.empty:
@@ -273,7 +389,7 @@ def export_to_excel():
             lambda row: [
                 row['textbox89'],  # Animal ID
                 f"{row['Location']}, {row['SubLocation']}", # Location info
-                pd.to_datetime(row['ReviewDate']).strftime('%Y-%m-%d')  # Date in YYYY-MM-DD format
+                pd.to_datetime(row['ReviewDate']).strftime('%Y-%m-%d') if pd.notna(row['ReviewDate']) else 'No Review Date'  # Date in YYYY-MM-DD format
             ], 
             axis=1
         ).tolist()
@@ -285,6 +401,30 @@ def export_to_excel():
     # Set column widths
     worksheet.set_column('A:A', 25)
     worksheet.set_column('B:C', 15)
+
+    # Add a blank row for separation
+    current_row += 1
+
+    # Intake Count Detail
+    intake_detail = get_intake_count_detail(check_dates)
+    intake_detail.to_excel(writer, sheet_name='Intake Count Detail', index=False)
+
+    # Add a blank row for separation
+    current_row += 1
+
+    # Intake Count Summary
+    intake_summary = get_intake_summary(intake_detail)
+    worksheet.write(current_row, 0, 'Intake Count Summary', header_format)
+    worksheet.write(current_row, 1, 'Cat', header_format)
+    worksheet.write(current_row, 2, 'Dog', header_format)
+    worksheet.write(current_row, 3, 'Other', header_format)
+    current_row += 1
+    for _, row in intake_summary.iterrows():
+        worksheet.write(current_row, 0, row['Group'])
+        worksheet.write(current_row, 1, row['Cat'])
+        worksheet.write(current_row, 2, row['Dog'])
+        worksheet.write(current_row, 3, row['Other'])
+        current_row += 1
 
     # Save the file
     writer.close()
@@ -298,7 +438,7 @@ def test_weekend_handling():
     saturday = test_date - timedelta(days=2)  # May 10th
     
     # Read FosterCurrent.csv, skipping first 6 rows
-    df_foster = pd.read_csv('FosterCurrent.csv', skiprows=6)
+    df_foster = pd.read_csv(os.path.join(SCRIPT_DIR, 'FosterCurrent.csv'), skiprows=6)
     
     # Convert StartStatusDate to datetime
     df_foster['StartStatusDate'] = pd.to_datetime(df_foster['StartStatusDate'])
@@ -315,8 +455,9 @@ def test_weekend_handling():
     print(f"\nTotal entries found: {len(fur_fits_entries)}")
 
 if __name__ == "__main__":
-    get_adoptions_count()
+    check_dates = get_user_dates()
+    get_adoptions_count(check_dates)
+    export_to_excel(check_dates)
     # All other function calls are commented out for debugging
     # test_weekend_handling()
-    # occupancy = get_occupancy_counts()
-    export_to_excel() 
+    # occupancy = get_occupancy_counts() 

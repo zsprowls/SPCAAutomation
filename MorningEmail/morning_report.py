@@ -23,7 +23,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Define the stage mappings
 STAGE_MAPPINGS = {
     'In Foster': 'In Foster',
-    'Hold - SAFE Foster': 'Hold SAFE Foster',
+    'Hold – SAFE Foster': 'Hold SAFE Foster',
     'Hold - Foster': 'Hold Foster',
     'Hold - Cruelty Foster': 'Hold Cruelty Foster',
     'Hold - Behavior Foster': 'Hold Behavior Foster',

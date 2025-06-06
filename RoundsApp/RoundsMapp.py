@@ -28,45 +28,66 @@ layout_path = 'shelter_layout_template.csv'
 animal_path = 'AnimalInventory.csv'
 clear_path = 'clear.csv'
 
-layout_df = pd.read_csv(layout_path)
+try:
+    layout_df = pd.read_csv(layout_path)
+    st.write("Layout data loaded successfully")
+except Exception as e:
+    st.error(f"Error loading layout data: {str(e)}")
+    st.stop()
+
 try:
     animal_df = pd.read_csv(animal_path, skiprows=3)
-except Exception:
-    animal_df = pd.read_csv(animal_path)
+    st.write("Animal data loaded successfully")
+except Exception as e:
+    try:
+        animal_df = pd.read_csv(animal_path)
+        st.write("Animal data loaded successfully (without skiprows)")
+    except Exception as e:
+        st.error(f"Error loading animal data: {str(e)}")
+        st.stop()
 
 for col in ["AnimalName", "Stage", "Location_1", "SubLocation"]:
     if col in animal_df.columns:
         animal_df[col] = animal_df[col].astype(str).str.strip()
 
 # --- Load clear dates from clear.csv ---
-if clear_path.exists():
+try:
+    clear_df = pd.read_csv(clear_path, dtype=str, encoding='utf-8', on_bad_lines='skip')
+    st.write("Clear dates loaded successfully")
+except UnicodeDecodeError:
     try:
-        clear_df = pd.read_csv(clear_path, dtype=str, encoding='utf-8', on_bad_lines='skip')
-    except UnicodeDecodeError:
         clear_df = pd.read_csv(clear_path, dtype=str, encoding='latin1', on_bad_lines='skip')
-    clear_df.columns = [c.strip() for c in clear_df.columns]
-    clear_df['AnimalNumber'] = clear_df['AnimalNumber'].astype(str)
-    # Fix Excel serial numbers in ClearDate
-    def process_clear_date(val):
-        try:
-            # First try to handle Excel serial numbers
-            val = float(val)
-            dt = datetime.datetime(1899, 12, 30) + datetime.timedelta(days=val)
-            return dt.strftime("%m/%d/%y")
-        except Exception:
-            # Try to parse as date-time string with AM/PM
-            for fmt in ("%m/%d/%Y %I:%M %p", "%m/%d/%Y %I:%M%p", "%m/%d/%y %I:%M %p", "%m/%d/%y %I:%M%p"):
-                try:
-                    dt = datetime.datetime.strptime(str(val), fmt)
-                    return dt.strftime("%m/%d/%y")
-                except Exception:
-                    continue
-            return val  # Return original value if parsing fails
-    if 'ClearDate' in clear_df.columns:
-        clear_df['ClearDate'] = clear_df['ClearDate'].apply(process_clear_date)
-    clear_dates_dict = dict(zip(clear_df['AnimalNumber'], clear_df['ClearDate']))
-else:
-    clear_dates_dict = {}
+        st.write("Clear dates loaded successfully (with latin1 encoding)")
+    except Exception as e:
+        st.error(f"Error loading clear dates: {str(e)}")
+        clear_df = pd.DataFrame(columns=['AnimalNumber', 'ClearDate'])
+        st.warning("Using empty clear dates DataFrame")
+except Exception as e:
+    st.error(f"Error loading clear dates: {str(e)}")
+    clear_df = pd.DataFrame(columns=['AnimalNumber', 'ClearDate'])
+    st.warning("Using empty clear dates DataFrame")
+
+clear_df.columns = [c.strip() for c in clear_df.columns]
+clear_df['AnimalNumber'] = clear_df['AnimalNumber'].astype(str)
+# Fix Excel serial numbers in ClearDate
+def process_clear_date(val):
+    try:
+        # First try to handle Excel serial numbers
+        val = float(val)
+        dt = datetime.datetime(1899, 12, 30) + datetime.timedelta(days=val)
+        return dt.strftime("%m/%d/%y")
+    except Exception:
+        # Try to parse as date-time string with AM/PM
+        for fmt in ("%m/%d/%Y %I:%M %p", "%m/%d/%Y %I:%M%p", "%m/%d/%y %I:%M %p", "%m/%d/%y %I:%M%p"):
+            try:
+                dt = datetime.datetime.strptime(str(val), fmt)
+                return dt.strftime("%m/%d/%y")
+            except Exception:
+                continue
+        return val  # Return original value if parsing fails
+if 'ClearDate' in clear_df.columns:
+    clear_df['ClearDate'] = clear_df['ClearDate'].apply(process_clear_date)
+clear_dates_dict = dict(zip(clear_df['AnimalNumber'], clear_df['ClearDate']))
 
 def format_clear_date(date_str):
     # Convert float to string if needed

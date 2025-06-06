@@ -3493,8 +3493,8 @@ def file_hash(filepath):
     with open(filepath, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()
 
-animal_path = Path('AnimalInventory.csv')
-csv_hash = file_hash(animal_path)
+# Use the script directory for the file hash
+csv_hash = file_hash(script_dir / 'AnimalInventory.csv')
 
 # --- Filter for animals needing clear dates ---
 clear_date_needed = animal_df[

@@ -5,6 +5,9 @@ import datetime
 import os
 import hashlib
 
+# Change to the script's directory
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 st.set_page_config(page_title="Daily Occupancy Dashboard", layout="wide")
 
 # --- Force Reset Button (ALWAYS shows) ---
@@ -21,9 +24,9 @@ if 'clear_dates_completed' not in st.session_state:
     st.session_state.clear_dates_completed = False
 
 # --- Load Data ---
-layout_path = Path('shelter_layout_template.csv')
-animal_path = Path('AnimalInventory.csv')
-clear_path = Path('clear.csv')
+layout_path = 'shelter_layout_template.csv'
+animal_path = 'AnimalInventory.csv'
+clear_path = 'clear.csv'
 
 layout_df = pd.read_csv(layout_path)
 try:

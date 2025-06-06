@@ -6,7 +6,7 @@ import os
 import hashlib
 
 # Get the directory where the script is located
-script_dir = os.path.dirname(os.path.abspath(__file__))
+script_dir = Path(__file__).parent.absolute()
 
 st.set_page_config(page_title="Daily Occupancy Dashboard", layout="wide")
 
@@ -24,9 +24,9 @@ if 'clear_dates_completed' not in st.session_state:
     st.session_state.clear_dates_completed = False
 
 # --- Load Data ---
-layout_path = os.path.join(script_dir, 'shelter_layout_template.csv')
-animal_path = os.path.join(script_dir, 'AnimalInventory.csv')
-clear_path = os.path.join(script_dir, 'clear.csv')
+layout_path = script_dir / 'shelter_layout_template.csv'
+animal_path = script_dir / 'AnimalInventory.csv'
+clear_path = script_dir / 'clear.csv'
 
 layout_df = pd.read_csv(layout_path)
 try:

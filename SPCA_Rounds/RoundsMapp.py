@@ -3501,7 +3501,8 @@ clear_date_needed = animal_df[
     animal_df['Stage'].str.contains('Bite/Scratch|Stray|Legal', case=False, na=False)
 ].copy()
 
-st.write(clear_date_needed)  # DEBUG: See if you have any animals needing clear dates
+# Remove debug line
+# st.write(clear_date_needed)  # DEBUG: See if you have any animals needing clear dates
 
 show_clear_date_form = not st.session_state.clear_dates_completed and not clear_date_needed.empty
 

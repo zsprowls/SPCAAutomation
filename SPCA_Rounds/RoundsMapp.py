@@ -125,7 +125,7 @@ STATUS_MAP = {
     'Hold - Possible Adoption': 'PADPT',
     'Hold - Pups at the Pen!': 'PEN',
     'Hold - Rescue': 'RESC',
-    'Hold - SAFE Foster': 'SAFE',
+    'Hold – SAFE Foster': 'SAFE',
     'Hold - Special Event': 'SPEC',
     'Hold - Stray': 'STRAY',
     'Hold - Surgery': 'SX',

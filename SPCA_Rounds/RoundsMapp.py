@@ -133,6 +133,11 @@ STATUS_MAP = {
     'Hold - Special Event': 'SPEC',
     'Hold - Stray': 'STRAY',
     'Hold - Surgery': 'SX',
+    'Available - Behind the Scenes': 'BTS',
+    'Available - ITFF Medical': 'ITFF MED',
+    'Available - ITFF Behavior': 'ITFF BEH',
+    'Pending Foster Pickup': 'PFP'
+    
 }
 
 def map_status(stage):

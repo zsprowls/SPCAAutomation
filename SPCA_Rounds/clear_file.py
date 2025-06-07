@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import datetime
+import os
 
 # Define the stages we want to filter for
 HOLD_STAGES = [
@@ -35,11 +36,11 @@ def process_inventory():
     try:
         # Read the AnimalInventory.csv file, skipping the first 4 rows
         # Row 5 becomes the data, with Row 4 as headers
-        df = pd.read_csv('AnimalInventory.csv', skiprows=3)
+        df = pd.read_csv('__Load Files Go Here__/AnimalInventory.csv', skiprows=3)
         
         # Read the StageReview.csv file, also skipping first 3 rows
         # Row 4 becomes headers, Row 5 starts data
-        review_df = pd.read_csv('StageReview.csv', skiprows=3)
+        review_df = pd.read_csv('__Load Files Go Here__/StageReview.csv', skiprows=3)
         
         # Print column names to debug
         print("AnimalInventory columns:", df.columns.tolist())
@@ -68,7 +69,7 @@ def process_inventory():
         filtered_df['ClearDate'] = filtered_df['ClearDate'].apply(extract_date)
         
         # Write the filtered data to clear.csv
-        filtered_df.to_csv('clear.csv', index=False)
+        filtered_df.to_csv('SPCA_Rounds/clear.csv', index=False)
         print("Successfully created clear.csv with filtered data")
         
     except FileNotFoundError as e:

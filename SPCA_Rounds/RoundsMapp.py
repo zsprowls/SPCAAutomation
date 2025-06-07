@@ -7,6 +7,10 @@ import hashlib
 
 # Get the directory where the script is located
 script_dir = Path(__file__).parent.absolute()
+# Get the parent directory (SPCAAutomation)
+parent_dir = script_dir.parent
+# Get the path to the files directory
+files_dir = parent_dir / '__Load Files Go Here__'
 
 st.set_page_config(page_title="Daily Occupancy Dashboard", layout="wide")
 
@@ -25,7 +29,7 @@ if 'clear_dates_completed' not in st.session_state:
 
 # --- Load Data ---
 layout_path = script_dir / 'shelter_layout_template.csv'
-animal_path = script_dir / 'AnimalInventory.csv'
+animal_path = files_dir / 'AnimalInventory.csv'
 clear_path = script_dir / 'clear.csv'
 
 layout_df = pd.read_csv(layout_path)
@@ -3493,8 +3497,8 @@ def file_hash(filepath):
     with open(filepath, "rb") as f:
         return hashlib.md5(f.read()).hexdigest()
 
-# Use the script directory for the file hash
-csv_hash = file_hash(script_dir / 'AnimalInventory.csv')
+# Use the files directory for the file hash
+csv_hash = file_hash(files_dir / 'AnimalInventory.csv')
 
 # --- Filter for animals needing clear dates ---
 clear_date_needed = animal_df[

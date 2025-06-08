@@ -219,11 +219,12 @@ def map_intake_group(row):
         return 'DOA'
     if op_type == 'OWNER/GUARDIAN SURRENDER' and op_subtype in ['EUTHANASIA REQUEST', 'EUTHANASIA REQUEST - OTC!']:
         return 'Euthanasia Request'
-    if op_type == 'SEIZED / CUSTODY' and op_subtype == 'SIGNED OVER/EUTHANASIA REQUEST':
+    if (op_type == 'SEIZED / CUSTODY' and op_subtype == 'SIGNED OVER/EUTHANASIA REQUEST') or \
+       (op_type == 'OWNER/GUARDIAN SURRENDER' and op_subtype == 'EUTHANASIA REQUEST - FIELD!'):
         return 'Euthanasia Req – Field'
     if op_type == 'STRAY' and ('FIELD' in op_subtype):
         return 'Field – Stray'
-    if op_type == 'OWNER/GUARDIAN SURRENDER' and ('FIELD' in op_subtype):
+    if op_type == 'OWNER/GUARDIAN SURRENDER' and ('FIELD' in op_subtype) and op_subtype != 'EUTHANASIA REQUEST - FIELD!':
         return 'Field – OS'
     if op_type == 'SEIZED / CUSTODY' and op_subtype == 'ABANDONED':
         return 'Seized – Abandoned'
@@ -307,8 +308,8 @@ def export_to_excel(check_dates):
     foster_holds = get_stage_counts()
     occupancy = get_occupancy_counts()
     
-    # Create Excel writer object - save in the same directory as the script
-    output_path = 'morning_report.xlsx'
+    # Create Excel writer object - save in the MorningEmail directory
+    output_path = os.path.join('MorningEmail', 'morning_report.xlsx')
     writer = pd.ExcelWriter(output_path, engine='xlsxwriter')
     workbook = writer.book
     

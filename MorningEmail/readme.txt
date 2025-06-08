@@ -39,7 +39,9 @@ GO TO THE REPORTS WEBSITE - PLACE FOLLOWING REPORTS IN '__Load Files Go Here__' 
         Group by Foster Parent
         Set Detail/Summary to Detail
 
-Run MorningEmail/morning_report.py 
+Run MorningEmail/morning_report.py
+Put in dates you need intakes and outcomes for in mm/dd/yyyy format
+Seperate multiple days by commas ex: 06/06/2025, 06/07/2025
 
 Use that report to copy/paste into email template (for now, it'll make the whole email eventually - you just wait)
 

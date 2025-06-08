@@ -17,8 +17,8 @@ def get_user_dates():
         except ValueError:
             print("Invalid date format. Please use mm/dd/yyyy format and separate dates with commas.")
 
-# Get the directory where the script is located
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# Use relative path to the __Load Files Go Here__ directory
+LOAD_FILES_DIR = '__Load Files Go Here__'
 
 # Define the stage mappings
 STAGE_MAPPINGS = {
@@ -64,7 +64,7 @@ INTAKE_GROUP_ORDER = [
 
 def get_report_date_from_csv():
     # Read the second line of FosterCurrent.csv to get the report date
-    with open(os.path.join(SCRIPT_DIR, 'FosterCurrent.csv'), 'r') as f:
+    with open(os.path.join(LOAD_FILES_DIR, 'FosterCurrent.csv'), 'r') as f:
         lines = f.readlines()
         if len(lines) >= 2:
             # Join the first three columns to reconstruct the date string
@@ -75,24 +75,15 @@ def get_report_date_from_csv():
         else:
             raise ValueError('Could not find report date in FosterCurrent.csv')
 
-def get_previous_business_days_from_report_date(report_date):
-    if report_date.weekday() == 0:  # Monday
-        # Return Friday and Saturday
-        friday = report_date - timedelta(days=3)
-        saturday = report_date - timedelta(days=2)
-        return [friday.strftime('%-m/%-d/%Y'), saturday.strftime('%-m/%-d/%Y')]
-    else:
-        # Return previous day
-        yesterday = report_date - timedelta(days=1)
-        return [yesterday.strftime('%-m/%-d/%Y')]
+
 
 def get_fur_fits_count(check_dates):
     # Read FosterCurrent.csv, skipping first 6 rows
-    df_foster = pd.read_csv(os.path.join(SCRIPT_DIR, 'FosterCurrent.csv'), skiprows=6)
+    df_foster = pd.read_csv(os.path.join(LOAD_FILES_DIR, 'FosterCurrent.csv'), skiprows=6)
     
     # Convert StartStatusDate to datetime and normalize to remove time component
-    df_foster['StartStatusDate'] = pd.to_datetime(df_foster['StartStatusDate']).dt.normalize()
-    check_datetimes = [pd.to_datetime(date).normalize() for date in check_dates]
+    df_foster['StartStatusDate'] = pd.to_datetime(df_foster['StartStatusDate'], format='mixed').dt.normalize()
+    check_datetimes = [pd.to_datetime(date, format='%m/%d/%Y').normalize() for date in check_dates]
     
     # Count entries where Location is "If The Fur Fits" and StartStatusDate matches any check date
     fur_fits_count = len(df_foster[
@@ -104,7 +95,7 @@ def get_fur_fits_count(check_dates):
 
 def get_foster_count():
     # Read FosterCurrent.csv, skipping first 6 rows
-    foster_path = os.path.join(SCRIPT_DIR, 'FosterCurrent.csv')
+    foster_path = os.path.join(LOAD_FILES_DIR, 'FosterCurrent.csv')
     df_foster = pd.read_csv(foster_path, skiprows=6)
     
     # Get the first value from textbox53
@@ -118,7 +109,7 @@ def get_foster_count():
 
 def get_stage_counts():
     # Read the CSV file, skipping the first 3 rows
-    inventory_path = os.path.join(SCRIPT_DIR, 'AnimalInventory.csv')
+    inventory_path = os.path.join(LOAD_FILES_DIR, 'AnimalInventory.csv')
     df = pd.read_csv(inventory_path, skiprows=3)
     
     # Map the stages using our defined mappings
@@ -143,10 +134,10 @@ def get_stage_counts():
 
 def get_occupancy_counts():
     # Read the CSV file, skipping first 3 rows
-    df = pd.read_csv(os.path.join(SCRIPT_DIR, 'AnimalInventory.csv'), skiprows=3)
+    df = pd.read_csv(os.path.join(LOAD_FILES_DIR, 'AnimalInventory.csv'), skiprows=3)
     
     # Convert DateOfBirth to datetime
-    df['DateOfBirth'] = pd.to_datetime(df['DateOfBirth'])
+    df['DateOfBirth'] = pd.to_datetime(df['DateOfBirth'], format='mixed')
     
     # Get the most recent date from the data to use as "today"
     today = pd.Timestamp.now().normalize()  # Use today's date without the time component
@@ -201,14 +192,14 @@ def get_occupancy_counts():
 def get_adoptions_count(check_dates):
     # Read AnimalOutcome.csv, skipping the first 3 rows to get to the header
     try:
-        df_outcomes = pd.read_csv(os.path.join(SCRIPT_DIR, 'AnimalOutcome.csv'), skiprows=3)
+        df_outcomes = pd.read_csv(os.path.join(LOAD_FILES_DIR, 'AnimalOutcome.csv'), skiprows=3)
     except FileNotFoundError:
         print("AnimalOutcome.csv not found. Returning 0 adoptions.")
         return 0
 
     # Convert the date column to datetime and extract only the date component
-    df_outcomes['Textbox50'] = pd.to_datetime(df_outcomes['Textbox50']).dt.date
-    check_dates_dt = [pd.to_datetime(date).date() for date in check_dates]
+    df_outcomes['Textbox50'] = pd.to_datetime(df_outcomes['Textbox50'], format='mixed').dt.date
+    check_dates_dt = [pd.to_datetime(date, format='%m/%d/%Y').date() for date in check_dates]
     
     # Count adoptions for the specified dates
     adoptions_count = len(df_outcomes[
@@ -279,7 +270,7 @@ def map_intake_group(row):
     return 'not counted'
 
 def get_intake_count_detail(check_dates):
-    intake_path = os.path.join(SCRIPT_DIR, 'AnimalIntake.csv')
+    intake_path = os.path.join(LOAD_FILES_DIR, 'AnimalIntake.csv')
     df_intake = pd.read_csv(intake_path, skiprows=3)
     # Filter by intake date (textbox44)
     df_intake['textbox44'] = pd.to_datetime(df_intake['textbox44']).dt.date
@@ -316,8 +307,8 @@ def export_to_excel(check_dates):
     foster_holds = get_stage_counts()
     occupancy = get_occupancy_counts()
     
-    # Create Excel writer object
-    output_path = os.path.join(SCRIPT_DIR, 'morning_report.xlsx')
+    # Create Excel writer object - save in the same directory as the script
+    output_path = 'morning_report.xlsx'
     writer = pd.ExcelWriter(output_path, engine='xlsxwriter')
     workbook = writer.book
     
@@ -381,7 +372,7 @@ def export_to_excel(check_dates):
     current_row += 1
 
     # Add Hold - Stray cases from StageReview.csv
-    stageReview_df = pd.read_csv(os.path.join(SCRIPT_DIR, 'StageReview.csv'), skiprows=3)
+    stageReview_df = pd.read_csv(os.path.join(LOAD_FILES_DIR, 'StageReview.csv'), skiprows=3)
     hold_stray_df = stageReview_df[stageReview_df['Stage'] == 'Hold - Stray']
 
     if not hold_stray_df.empty:
@@ -429,30 +420,6 @@ def export_to_excel(check_dates):
     # Save the file
     writer.close()
 
-def test_weekend_handling():
-    # Simulate running on Monday, May 12th
-    test_date = datetime(2025, 5, 12)
-    
-    # Get Friday and Saturday dates
-    friday = test_date - timedelta(days=3)  # May 9th
-    saturday = test_date - timedelta(days=2)  # May 10th
-    
-    # Read FosterCurrent.csv, skipping first 6 rows
-    df_foster = pd.read_csv(os.path.join(SCRIPT_DIR, 'FosterCurrent.csv'), skiprows=6)
-    
-    # Convert StartStatusDate to datetime
-    df_foster['StartStatusDate'] = pd.to_datetime(df_foster['StartStatusDate'])
-    
-    # Get all If The Fur Fits entries for Friday and Saturday
-    fur_fits_entries = df_foster[
-        (df_foster['Location'] == 'If The Fur Fits') &
-        (
-            (df_foster['StartStatusDate'].dt.date == friday.date()) |
-            (df_foster['StartStatusDate'].dt.date == saturday.date())
-        )
-    ]
-    
-    print(f"\nTotal entries found: {len(fur_fits_entries)}")
 
 if __name__ == "__main__":
     check_dates = get_user_dates()

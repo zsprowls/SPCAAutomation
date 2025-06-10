@@ -1,78 +1,58 @@
-﻿"Name","AID","Species","Location ","Intake Date","Days in System","Welfare Notes","Foster Attempted","Transfer Attempted","Communications Team Attempted"
-"Betty","57237345","Cat","Cat Room G","11/8/2024","186.0","1/7 - available, doing well
-2/4 - available and doing well. Will go on the WOLF next week. 
-2/18 - no change
-3/4 - no change to above, list on Bissell NYS Transport Program
-3/18 - no change, listed on NYS Bissell board
-4/1 - no change, will change name to Betty
-4/29 - Was on doc hold for vomiting and not eating. Currently available, no serious issues noted.
-
-5/13 - no change, still available ",,"In Progress","Yes"
-"Wishbone","57230680","Dog","Dog E","11/13/2024","181.0","1/7 - available, reduced adoption fee due to age and LOS on 12/27, single dog only
+﻿"Name","AID","Species","Location ","Intake Date","Days in System","Foster Attempted","Transfer Attempted","Communications Team Attempted","Welfare Notes"
+"Wishbone","57230680","Dog","Dog E","11/13/2024","181.0","Yes","In Progress","Yes","1/7 - available, reduced adoption fee due to age and LOS on 12/27, single dog only
 2/4 - was made BMOD due to reactivity and aggressive behaviors towards other dogs. Had dog test with fake dog and he attacked the face/neck and would not release. Placed on meds to see if that helps decrease reactivity. 
 2/18 - doing much better on behavior meds, staff able to better redirect when he sees another dog. Went into behavior foster yesterday, doing well. 
 3/3 - had a seizure while in foster and was turned away at e-clinic. BW is normal but Doc thinks it may be due to behavior meds, so he is no longer on them. Reactivity is an issue. Will try sertraline and clonidine combo.
 3/18 - available for adoption, is doing well on behavior meds. Charged fence while in play yard and staff was then able to redirect.  Place on Bissell Board, will feature again, waive adoption fee. 
 4/1 - no change, behavior team is concerned with long term stay and barriers with adoption and overall candidacy, plan? Will try foster again.
 
-5/13 - likely had another seizure and was on doc-hold, cleared and now available again. Trying to transfer to Lollypop","Yes","In Progress","Yes"
-"Pickle","57091836","Cat","Feature Room 1","10/22/2024","203.0","1/7 - bonded to Crystal (57091845), available itff-med for dental
-2/4 - in ITFF-med, dental scheduled for 3/13
-2/17 - no change
-3/4 - no change, dental next week
-3/18 - FP no showed to appointment and was not returning Krissi's calls. When she said we would outcome cats and he is responsible for dental, he reached back out and then hung up when he was placed on hold. Krissi was unable to reach him again and emailed. She asked techs this morning if they felt we could outcome but cats are in great need of dental so now it is turned over to Nicole to see if we can get more participation from FP. Dental is now scheduled for 5/14
-4/1 - no change, memo in PP details that Nicole called Jayden to confirm his appt on 5/14 and if he does not show then he will be issued MSVS and take the cats to his own vet for the dental. 
-
-5/13 - has dental appt tomorrow!","In Progress",,
-"Crystal","57091845","Cat","Feature Room 1","10/22/2024","203.0","1/7 - bonded to Pickle (57091836), available itff-med for dental
-2/4 - in ITFF-med, dental scheduled for 3/13
-2/18 - no change
-3/4 - no change, dental next week
-3/18 - FP no showed to appointment and was not returning Krissi's calls. When she said we would outcome cats and he is responsible for dental, he reached back out and then hung up when he was placed on hold. Krissi was unable to reach him again and emailed. She asked techs this morning if they felt we could outcome but cats are in great need of dental so now it is turned over to Nicole to see if we can get more participation from FP. Dental is now scheduled for 5/14
-4/1 - no change, memo in PP details that Nicole called Jayden to confirm his appt on 5/14 and if he does not show then he will be issued MSVS and take the cats to his own vet for the dental. 
-
-5/13 - has dental appt tomorrow!","In Progress",,
-"Colby Jack Cheese","57670293","Dog","Dog A","1/17/2025","116.0","2/4 - brought in as seized/abandoned. Was waiting for legal and surgery. Now available for adoption. No behavior concerns just needs work on manners.
-2/18 - was in foster and was brought back for biting FPs roommate. Bite hold cleared today, will work on desensitizing to touch and harnesses, went after Natalia's hands when she tried to harness. 
-3/3 - seems to be regressing in the shelter, 1 year old dog. Had poor meet and greets with families and also destroyed kongs and other toys in kennel. Placed on BMOD and behavior meds. 
-3/18 - is currently hold-behavior foster, will try to send over plan to foster today to find placement. Muzzle trained and is doing well, but still getting mouthy with feet/hands/arms. Going to resource test him again tomorrow. Is he play group appropriate with Kim S? 
-4/1 - is available but we are also looking for behavior foster, still mouthy, especially with feet, regressing the longer he is here. Unable to work with him outside due to overstimulation, needs to be inside in order to do productive BMOD training. Adoptability? Will adjust drugs, will reach out to Kim again to see if he can go with her for day school
-
-5/13 - in ITFF-Behavior",,,
-"Sabre","57305889","Cat","Foster Home","11/21/2024","173.0","2/18 - in ITFF-MED, has dental appt on 4/3
-3/4 - no change
-3/18 - no change
-4/3 - no change, appt friday
-
-5/13 - has appt on 5/29","In Progress",,
-"Fleetwood","57657154","Cat","Condo Rooms","1/16/2025","117.0","3/18 - cats that came from hoarding case, left in downstairs apt w/ minimal human contact. Initially shy cat and slowly adjusting and making progress.
-4/1 - making progress and is becoming more engaging with visitors and volunteers
-
-5/13 - trying to transfer to FCF
-",,,
-"Mac","57657157","Cat","Condo Rooms","1/16/2025","117.0","3/18 - cats that came from hoarding case, left in downstairs apt w/ minimal human contact. Initially shy cat and slowly adjusting and making progress.
-4/1 - making progress and is becoming more engaging with visitors and volunteers
-
-5/13 - trying to transfer to FCF",,,
-"Bon Jovi","57657185","Cat","Condo Rooms","1/16/2025","117.0","3/18 - cats that came from hoarding case, left in downstairs apt w/ minimal human contact. Initially shy cat and slowly adjusting and making progress.
-4/1 - making progress and is becoming more engaging with visitors and volunteers
-
-5/13 - trying to transfer to FCF",,,
-"Tigress","57657181","Cat","Foster Home","1/16/2025","75.0","3/18 - from hoarding case. Had tail amputated and is currently in foster
-
-4/1 - in foster, recheck in two weeks","In Progress",,
-"Breadstick","58011693","Bird","Small Animals & Exotics","3/13/2025","19.0","4/1 - from a house with over 100 exotic birds. Has broken wing and needs amputation.",,,
-"Jane","56455382","Cat","Cat Room H","1/29/2025","104.0","4/1 - was adopted then returned because owner could no longer keep. Was on doc hold for some time due to attacking hind legs and tail, placed on gabapentin. Available for adoption. Media?
-
-5/13- still available for adoption, no change. ",,,
-"Maraschino","57954349","Dog","Dog A","3/4/2025","28.0","4/1- came in as stray, very shut down but has slowly warmed up to behavior team, and is now doing fine. Waiting on SX. ",,,
-"Zeke","57925440","Dog","Dog B","2/28/2025","32.0","4/1- came in w/ skin and ear issues, fee waived and is available for adoption, on WBEN 2 weeks ago. If he deteriorates in the kennel we will need to move forward with PTS.",,,"Yes"
-"Whiskey","57935094","Dog","Dog F","2/28/2025","32.0","4/1 - puppy was in foster and brought in for neuter. Notice he now has issues with rear legs, on doc hold. ","Yes",,
-"Comet","57711591","Cat","Foster Home","1/28/2025","63.0","4/1 - in ITFF-Med, has dental appt in June","Yes",,
-"Montague","57765213","Cat","Foster Home","2/1/2025","59.0","4/1- in ITFF-Med with Romeo, has dental on 5/1","Yes",,
-"Romeo","57765219","Cat","Foster Home","2/1/2025","59.0","4/1- in ITFF-Med with Montague, has dental on 5/1","Yes",,
-"Mike","57945726","Dog","Foster Home","3/3/2025","29.0","4/1 - bonded to Ella, was in ITFF and coming back to the shelter, adopter brought home while parents were away and is now allowed to have them",,,"Yes"
-"Ella","57945729","Dog","Foster Home","3/3/2025","29.0","4/1 - bonded to Mike, was in ITFF and coming back to the shelter, adopter brought home while parents were away and is now allowed to have them",,,"Yes"
-"Casher","0058057188","Dog","Dog A","3/21/2025","35.0","4/29 - Seized-Sign over, no FWS. Bit volunteer, level 1 bite on 4/11. Volunteer was gripping leash too tight. Was BMOD for reactivity shortly thereafter. Now available BTS. ",,,
-"Quailejandro","A0058332064","Bird","Farm","4/17/2025","32.0",,"No","No","No"
-"Zag","A0058349243","Bird","Farm","4/22/2025","27.0","Made available for adoption 4/22/25 -ALD 5-19-25",,,
+5/13 - likely had another seizure and was on doc-hold, cleared and now available again. Trying to transfer to Lollypop"
+"Comet","57711591","Cat","Foster Home","1/28/2025","63.0","Yes",,,"4/1 - in ITFF-Med, has dental appt in June"
+"Quailejandro","58332064","Bird","Farm","4/17/2025","53.0","No","No","No",
+"Zag","58349243","Bird","Farm","4/22/2025","48.0",,,,"Made available for adoption 4/22/25 -ALD 5-19-25"
+"Peachy","58246097","Cat","Cat Adoption Room G","4/4/2025","66.0",,,,
+"NINA","58089142","Cat","Cat Behavior Room I","3/27/2025","74.0",,,,
+"HEIDI","57975287","Cat","Cat Behavior Room I","3/14/2025","87.0",,,,
+"WENDELL","54196266","Cat","Feature Room 1","4/8/2025","62.0",,,,
+"PALM","58262248","Cat","Feature Room 2","4/8/2025","62.0",,,,
+"KIKI","42479416","Cat","Foster Home","3/10/2025","91.0","Yes",,,
+"NAJI","58051432","Cat","Foster Home","4/1/2025","69.0","Yes",,,
+"PISHU","58227600","Cat","Foster Home","4/1/2025","69.0","Yes",,,
+"GUSTAVO","57782868","Cat","If The Fur Fits","2/20/2025","109.0",,,,
+"SNORKEL","57853586","Cat","If The Fur Fits","2/14/2025","115.0",,,,
+"SPEEDO","57853590","Cat","If The Fur Fits","2/14/2025","115.0",,,,
+"COLLIE","57884999","Cat","If The Fur Fits","2/20/2025","109.0",,,,
+"Nushi","57966945","Cat","If The Fur Fits","3/25/2025","76.0",,,,
+"OREO","58048215","Cat","If The Fur Fits","3/21/2025","80.0",,,,
+"JENNIFER","58074487","Cat","If The Fur Fits","3/25/2025","76.0",,,,
+"CARMELA","58074491","Cat","If The Fur Fits","3/25/2025","76.0",,,,
+"WESLEY","58216827","Cat","If The Fur Fits","3/31/2025","70.0",,,,
+"SPECK","52249653","Dog","Dog Adoptions D","4/16/2025","54.0",,,,
+"Gunther","58419207","Dog","Dog Holding F","5/1/2025","39.0",,,,
+"TAFFY","58419259","Dog","Dog Holding F","5/1/2025","39.0",,,,
+"Tito","58419271","Dog","Dog Holding F","5/1/2025","39.0",,,,
+"IRIS","58067136","Dog","Foster Home","3/24/2025","77.0","Yes",,,
+"OKLAHOMA","58284280","Dog","Foster Home","4/10/2025","60.0","Yes",,,
+"ZOEY","58415270","Dog","Foster Home","5/1/2025","39.0","Yes",,,
+"Bella","58475350","Dog","Foster Home","5/10/2025","30.0","Yes",,,
+"BENTLEY","58017236","Dog","If The Fur Fits","3/14/2025","87.0",,,,
+"SAMMY","58018420","Dog","If The Fur Fits","4/3/2025","67.0",,,,
+"BEAUFORD","58304780","Dog","If The Fur Fits","4/15/2025","55.0",,,,
+"MUPPET","58304783","Dog","If The Fur Fits","4/15/2025","55.0",,,,
+"Coco","58387440","Dog","If The Fur Fits","5/6/2025","34.0",,,,
+"HONEY BUN","58421981","Dog","If The Fur Fits","5/2/2025","38.0",,,,
+"Bingo","58419299","Dog","Receiving","5/1/2025","39.0",,,,
+"CHERRY BLOSSOM","58071379","Rabbit","Adoptions Lobby","3/25/2025","76.0",,,,
+"Red Fred","58553591","Bird","Farm","5/23/2025","17.0",,,,
+"McNugget","58549222","Bird","Farm","5/21/2025","19.0",,,,
+,"58047453","Rabbit","Foster Home","3/21/2025","80.0","Yes",,,
+"SASSAFRAS","58353042","Rabbit","Foster Home","4/24/2025","46.0","Yes",,,
+,"58571047","Rodent","Foster Home","5/24/2025","16.0","Yes",,,
+"GUAVA","58571055","Rodent","Foster Home","5/24/2025","16.0","Yes",,,
+,"57946635","Rodent","Humane Education Office","3/6/2025","95.0",,,,
+"INDIGO","58467665","Bird","Small Animals & Exotics","5/9/2025","31.0",,,,
+"OCEAN","58480470","Bird","Small Animals & Exotics","5/12/2025","28.0",,,,
+"TRUFFLE","58529193","Rodent","Small Animals & Exotics","5/20/2025","20.0",,,,
+"PIGGY STARDUST","58571051","Rodent","Small Animals & Exotics","5/24/2025","16.0",,,,
+"DAVID BOWIE","58571053","Rodent","Small Animals & Exotics","5/24/2025","16.0",,,,
+"BIBBLE","58571057","Rodent","Small Animals & Exotics","5/24/2025","16.0",,,,

@@ -1,22 +1,9 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Wednesday, June 11, 2025",6/10/2025 12:00 AM,All,6/10/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Thursday, June 12, 2025",6/11/2025 12:00 AM,All,6/11/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0058539862,LEAH,Dog,Beagle,9yrs,F,Yes,Adoption,New Adopter - Dog,WEBSTER KATE,KATEW,EVERYTHING BAGEL,Mix,No,,Town of Tonawanda,,06/10/2025 01:55 PM,,,,,,17
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0058611963,Maxie,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,,No,,,,06/10/2025 04:28 PM,,,,,,17
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0058640645,CROUTON,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",3yrs,M,Yes,Adoption,New Adopter - Dog,Witkowski Victoria,VictoriaW,,Mix,No,,Hamburg,,06/10/2025 03:51 PM,,,,,,17
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0058611962,Bear,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,,No,,,,06/10/2025 04:30 PM,,,,,,17
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0054196266,WENDELL,Cat,Domestic Shorthair,2yrs,M,Yes,Adoption,New Adopter - Cat,McCrohan Nikki,NikkiM,,,No,,,,06/10/2025 02:19 PM,,,,,,17
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0058605265,COFFEECAKE,Rabbit,Rex,,M,Yes,Adoption,Previous Adopter - Other,WEBSTER KATE,KATEW,,,No,,Elma,,06/10/2025 12:46 PM,,,,,,17
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0058446768,GAIA,Cat,Domestic Longhair,2yrs,F,Yes,Adoption,Previous Adopter - Cat,WEBSTER KATE,KATEW,34,,No,,Buffalo,,06/10/2025 04:55 PM,,,,,,17
-Adoption,Total Outcomes: 8,Total Unique Animals: 8,A0058571057,BIBBLE,Rodent,GUINEA PIG,,M,No,Adoption,New Adopter - Other,Witkowski Victoria,VictoriaW,,,No,,Lancaster,,06/10/2025 04:50 PM,,,,,,17
-DOA,Total Outcomes: 1,Total Unique Animals: 1,A0058668403,Nubby,Cat,Domestic Longhair,5yrs,F,No,DOA, ,,TAMMIC,,Mix,No,,,,06/10/2025 02:45 PM,,,,,,17
-Euthanasia,Total Outcomes: 7,Total Unique Animals: 7,A0057052406,PICHAEL,Cat,Domestic Shorthair,4yrs,M,Yes,Euthanasia,Requested Sleep,,SALLYB,,Mix,No,,,,06/10/2025 03:13 PM,,,,,,17
-Euthanasia,Total Outcomes: 7,Total Unique Animals: 7,A0055794806,MAYA,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",4yrs,F,Yes,Euthanasia,Aggression - Animals,,VALERIEM,,Mix,No,,,,06/10/2025 10:04 AM,,,,,,17
-Euthanasia,Total Outcomes: 7,Total Unique Animals: 7,A0058621971,Yoshi,Dog,"Poodle, Miniature",16yrs,M,No,Euthanasia,Requested Sleep,,VALERIEM,,Shih Tzu,No,,,,06/10/2025 12:01 PM,,,,,,17
-Euthanasia,Total Outcomes: 7,Total Unique Animals: 7,A0058650379,,Cat,Domestic Shorthair,12yrs,F,Yes,Euthanasia,Medical Reasons,,VALERIEM,Betty,Mix,No,,,,06/10/2025 08:28 AM,,,,,,17
-Euthanasia,Total Outcomes: 7,Total Unique Animals: 7,A0058676198,,Cat,Domestic Shorthair,2mos,M,No,Euthanasia,Requested Sleep,,MILESW,,Mix,No,,,,06/10/2025 10:49 AM,,,,,,17
-Euthanasia,Total Outcomes: 7,Total Unique Animals: 7,A0058670929,MINKA,Cat,Domestic Shorthair,15yrs,F,Yes,Euthanasia,Requested Sleep,,KRYSTANP,,Mix,No,,,,06/10/2025 02:59 PM,,,,,,17
-Euthanasia,Total Outcomes: 7,Total Unique Animals: 7,A0058676200,,Cat,Domestic Shorthair,1mos,F,No,Euthanasia,Medical Reasons,,VALERIEM,,Mix,No,,,,06/10/2025 03:48 PM,,,,,,17
-Return to Owner/Guardian,Total Outcomes: 1,Total Unique Animals: 1,A0058668403,Nubby,Cat,Domestic Longhair,5yrs,F,No,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,06/10/2025 02:44 PM,,,,,,17
+Died,Total Outcomes: 2,Total Unique Animals: 2,A0058676201,,Cat,Domestic Shorthair,1mos,M,No,Died,IN KENNEL,PROCYSZYN-BILGER LANA,LANAP,,Mix,No,,,,06/11/2025 09:43 AM,,,,,,4
+Died,Total Outcomes: 2,Total Unique Animals: 2,A0058676199,,Cat,Domestic Shorthair,1mos,M,No,Died,IN KENNEL,PROCYSZYN-BILGER LANA,LANAP,,Mix,No,,,,06/11/2025 09:45 AM,,,,,,4
+Euthanasia,Total Outcomes: 2,Total Unique Animals: 2,A0058676202,,Cat,Domestic Shorthair,1mos,F,No,Euthanasia,Humane Reasons,,LANAP,,Mix,No,,,,06/11/2025 09:53 AM,,,,,,4
+Euthanasia,Total Outcomes: 2,Total Unique Animals: 2,A0058679430,,Domestic (Cage) Bird,Parakeet (Budgie),,F,No,Euthanasia,Medical Reasons,,MILESW,,Parakeet (Budgie),No,,,,06/11/2025 09:05 AM,,,,,,4
 

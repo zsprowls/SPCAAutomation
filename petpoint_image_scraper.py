@@ -214,78 +214,77 @@ def get_animal_images(driver, animal_id):
         # Print page title for debugging
         print(f"Page title: {driver.title}")
         
-        # Try different methods to find images
-        print("\nTrying to find images...")
-        
-        # Method 1: Original XPath
+        # Navigate to Photos/Video tab
+        print("\nNavigating to Photos/Video tab...")
         try:
-            print("Method 1: Trying original XPath...")
-            image_xpath = "/html/body/div[1]/div/section/div/div[4]/div[2]/div[2]/div/div/div[2]/div/div/div[1]/div[1]/img"
-            images = driver.find_elements(By.XPATH, image_xpath)
-            print(f"Found {len(images)} images with original XPath")
+            # Wait for and click the Photos/Video tab
+            photo_tab = WebDriverWait(driver, 20).until(
+                EC.element_to_be_clickable((By.XPATH, "//a[@id='AnimalImageGalleryTabLink']"))
+            )
+            photo_tab.click()
+            print("Clicked Photos/Video tab")
+            time.sleep(3)  # Wait for tab content to load
+            
+            # Try multiple selectors to find images
+            image_urls = []
+            
+            # Method 1: Try finding images in the gallery container
+            try:
+                print("Method 1: Looking for images in gallery container...")
+                gallery_images = driver.find_elements(By.CSS_SELECTOR, "#ImageGallery img")
+                if gallery_images:
+                    print(f"Found {len(gallery_images)} images in gallery container")
+                    for img in gallery_images:
+                        src = img.get_attribute('src')
+                        if src:
+                            image_urls.append(src)
+                            print(f"Found image URL: {src}")
+            except Exception as e:
+                print(f"Method 1 failed: {str(e)}")
+            
+            # Method 2: Try finding all images in the tab content
+            if not image_urls:
+                try:
+                    print("\nMethod 2: Looking for all images in tab content...")
+                    tab_images = driver.find_elements(By.CSS_SELECTOR, "#ImageGallery .tab-content img")
+                    if tab_images:
+                        print(f"Found {len(tab_images)} images in tab content")
+                        for img in tab_images:
+                            src = img.get_attribute('src')
+                            if src:
+                                image_urls.append(src)
+                                print(f"Found image URL: {src}")
+                except Exception as e:
+                    print(f"Method 2 failed: {str(e)}")
+            
+            # Method 3: Try finding images with specific classes
+            if not image_urls:
+                try:
+                    print("\nMethod 3: Looking for images with specific classes...")
+                    class_images = driver.find_elements(By.CSS_SELECTOR, ".animal-image, .pet-image, .gallery-image")
+                    if class_images:
+                        print(f"Found {len(class_images)} images with specific classes")
+                        for img in class_images:
+                            src = img.get_attribute('src')
+                            if src:
+                                image_urls.append(src)
+                                print(f"Found image URL: {src}")
+                except Exception as e:
+                    print(f"Method 3 failed: {str(e)}")
+            
+            # Print the page source for debugging if no images found
+            if not image_urls:
+                print("\nNo images found. Current page source:")
+                print(driver.page_source[:2000])  # Print first 2000 chars for debugging
+            
+            return image_urls
+            
         except Exception as e:
-            print(f"Method 1 failed: {str(e)}")
-            images = []
-        
-        # Method 2: Find all images in the page
-        if not images:
-            try:
-                print("\nMethod 2: Trying to find all images...")
-                images = driver.find_elements(By.TAG_NAME, "img")
-                print(f"Found {len(images)} total images on page")
-                
-                # Filter for animal images (you might need to adjust this filter)
-                animal_images = []
-                for img in images:
-                    src = img.get_attribute('src')
-                    if src and ('animal' in src.lower() or 'pet' in src.lower()):
-                        animal_images.append(img)
-                print(f"Found {len(animal_images)} potential animal images")
-                images = animal_images
-            except Exception as e:
-                print(f"Method 2 failed: {str(e)}")
-        
-        # Method 3: Try finding images in specific containers
-        if not images:
-            try:
-                print("\nMethod 3: Looking in specific containers...")
-                # Try to find image containers
-                containers = driver.find_elements(By.CLASS_NAME, "animal-image")
-                if not containers:
-                    containers = driver.find_elements(By.CLASS_NAME, "pet-image")
-                if not containers:
-                    containers = driver.find_elements(By.CLASS_NAME, "image-container")
-                
-                print(f"Found {len(containers)} potential image containers")
-                
-                # Look for images in these containers
-                for container in containers:
-                    container_images = container.find_elements(By.TAG_NAME, "img")
-                    if container_images:
-                        images.extend(container_images)
-                
-                print(f"Found {len(images)} images in containers")
-            except Exception as e:
-                print(f"Method 3 failed: {str(e)}")
-        
-        # Extract image URLs
-        image_urls = []
-        for img in images:
-            try:
-                src = img.get_attribute('src')
-                if src:
-                    print(f"Found image URL: {src}")
-                    image_urls.append(src)
-            except Exception as e:
-                print(f"Error getting image source: {str(e)}")
-        
-        print(f"\nTotal images found: {len(image_urls)}")
-        return image_urls
-    
+            print(f"Error navigating to Photos/Video tab: {str(e)}")
+            return []
+            
     except Exception as e:
-        print(f"Error scraping images for animal {animal_id}: {str(e)}")
-        print("Current URL:", driver.current_url)
-        print("Page source:", driver.page_source[:1000])
+        print(f"Error accessing animal page: {str(e)}")
         return []
 
 def download_images(image_urls, output_dir, animal_id):

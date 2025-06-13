@@ -214,6 +214,17 @@ def get_animal_images(driver, animal_id):
         # Print page title for debugging
         print(f"Page title: {driver.title}")
         
+        # Try to close any popup overlays
+        try:
+            overlay = driver.find_element(By.CLASS_NAME, "k-overlay")
+            if overlay:
+                print("Found overlay, trying to close it...")
+                # Try to click outside the overlay
+                ActionChains(driver).move_by_offset(0, 0).click().perform()
+                time.sleep(2)
+        except:
+            print("No overlay found or couldn't close it")
+        
         # Navigate to Photos/Video tab
         print("\nNavigating to Photos/Video tab...")
         try:
@@ -221,7 +232,12 @@ def get_animal_images(driver, animal_id):
             photo_tab = WebDriverWait(driver, 20).until(
                 EC.element_to_be_clickable((By.XPATH, "//a[@id='AnimalImageGalleryTabLink']"))
             )
-            photo_tab.click()
+            # Try to click the tab
+            try:
+                photo_tab.click()
+            except:
+                # If click fails, try JavaScript click
+                driver.execute_script("arguments[0].click();", photo_tab)
             print("Clicked Photos/Video tab")
             time.sleep(3)  # Wait for tab content to load
             
@@ -316,46 +332,19 @@ def download_images(image_urls, output_dir, animal_id):
             print(f"Error downloading image {i+1} for animal {animal_id}: {str(e)}")
 
 def main():
-    # Set up argument parser
-    parser = argparse.ArgumentParser(description='Scrape images from PetPoint for given animal IDs')
-    parser.add_argument('--animal-id', help='Single animal ID to process')
-    parser.add_argument('--input-file', help='Text file containing animal IDs (one per line)')
-    parser.add_argument('--output-dir', default='animal_images', help='Directory to save images (default: animal_images)')
-    args = parser.parse_args()
-
-    # Login credentials
-    SHELTER_ID = "USNY9"
-    USERNAME = "zaks"
-    PASSWORD = "Gillian666!"
+    # List of animal IDs to process
+    animal_ids = [
+        "57711591",
+        "58332064",
+        "58349243",
+        "58467665",
+        "58480470"
+    ]
     
-    # Get animal IDs to process
-    animal_ids = []
-    if args.animal_id:
-        animal_ids.append(args.animal_id)
-    elif args.input_file:
-        try:
-            with open(args.input_file, 'r') as f:
-                animal_ids = [line.strip() for line in f if line.strip()]
-        except FileNotFoundError:
-            print(f"Error: Input file '{args.input_file}' not found.")
-            return
-    else:
-        # If no arguments provided, ask for input
-        print("Enter animal IDs (one per line, press Enter twice to finish):")
-        while True:
-            animal_id = input().strip()
-            if not animal_id:
-                break
-            animal_ids.append(animal_id)
-    
-    if not animal_ids:
-        print("No animal IDs provided. Exiting.")
-        return
-
     # Setup driver and login
     driver = setup_driver()
     try:
-        if login_to_petpoint(driver, SHELTER_ID, USERNAME, PASSWORD):
+        if login_to_petpoint(driver, "USNY9", "zaks", "Gillian666!"):
             print("Successfully logged in.")
             
             # Process each animal ID
@@ -365,7 +354,7 @@ def main():
                 
                 if image_urls:
                     print(f"Found {len(image_urls)} images")
-                    download_images(image_urls, args.output_dir, animal_id)
+                    print("First image URL:", image_urls[0])
                 else:
                     print("No images found")
         else:
@@ -374,4 +363,109 @@ def main():
         driver.quit()
 
 if __name__ == "__main__":
-    main() 
+    main()
+
+class PetPointImageScraper:
+    def __init__(self):
+        self.driver = None
+        self.last_login_time = None
+        self.login_timeout = 1800  # 30 minutes in seconds
+        
+    def ensure_valid_session(self):
+        current_time = time.time()
+        if (self.last_login_time is None or 
+            current_time - self.last_login_time > self.login_timeout):
+            self.login()
+            
+    def login(self):
+        if self.driver:
+            try:
+                self.driver.quit()
+            except:
+                pass
+                
+        self.driver = webdriver.Chrome()
+        self.driver.get("https://sms.petpoint.com/sms3/enhanced/")
+        
+        # Wait for login form and enter credentials
+        username_field = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "username"))
+        )
+        password_field = self.driver.find_element(By.ID, "password")
+        
+        username_field.send_keys("zsprowls")
+        password_field.send_keys("Zaksprowls1!")
+        
+        # Click login button
+        login_button = self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+        login_button.click()
+        
+        # Wait for login to complete
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "k-widget"))
+        )
+        
+        self.last_login_time = time.time()
+        
+    def get_animal_images(self, animal_id):
+        try:
+            self.ensure_valid_session()
+            
+            # Navigate to animal page
+            url = f"https://sms.petpoint.com/sms3/enhanced/animal/{animal_id}"
+            self.driver.get(url)
+            
+            # Wait for page to load
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "k-widget"))
+            )
+            
+            # Try to close any overlay
+            try:
+                overlay = self.driver.find_element(By.CLASS_NAME, "k-overlay")
+                if overlay.is_displayed():
+                    close_button = self.driver.find_element(By.CLASS_NAME, "k-window-titlebar-close")
+                    close_button.click()
+            except:
+                pass
+            
+            # Click Photos/Video tab
+            try:
+                photos_tab = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable((By.XPATH, "//span[contains(text(), 'Photos/Video')]"))
+                )
+                photos_tab.click()
+            except:
+                print("Could not click Photos/Video tab")
+                return []
+            
+            # Wait for images to load
+            time.sleep(2)
+            
+            # Find all images
+            images = []
+            try:
+                # Method 1: Look for images in gallery container
+                gallery = self.driver.find_element(By.CLASS_NAME, "k-gallery")
+                img_elements = gallery.find_elements(By.TAG_NAME, "img")
+                
+                for img in img_elements:
+                    src = img.get_attribute("src")
+                    if src and "petango.com" in src:
+                        images.append(src)
+                        
+            except:
+                print("No images found in gallery container")
+                
+            return images
+            
+        except Exception as e:
+            print(f"Error accessing animal page: {str(e)}")
+            return []
+            
+    def cleanup(self):
+        if self.driver:
+            try:
+                self.driver.quit()
+            except:
+                pass 

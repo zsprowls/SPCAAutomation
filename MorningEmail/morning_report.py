@@ -87,7 +87,7 @@ def get_fur_fits_count(check_dates):
     
     # Count entries where Location is "If The Fur Fits" and StartStatusDate matches any check date
     fur_fits_count = len(df_foster[
-        (df_foster['Location'] == 'If The Fur Fits') & 
+        df_foster['FosterReason'].fillna('').str.startswith('Possible Adoption') & 
         (df_foster['StartStatusDate'].isin(check_datetimes))
     ])
     
@@ -98,14 +98,14 @@ def get_foster_count():
     foster_path = os.path.join(LOAD_FILES_DIR, 'FosterCurrent.csv')
     df_foster = pd.read_csv(foster_path, skiprows=6)
     
-    # Get the first value from textbox53
-    total_text = df_foster['textbox53'].iloc[0]
+    # Filter for rows where Location is either 'Foster Home' or 'If The Fur Fits'
+    foster_locations = ['Foster Home', 'If The Fur Fits']
+    foster_df = df_foster[df_foster['Location'].isin(foster_locations)]
     
-    # Extract the number using regex
-    match = re.search(r'Total Animals: (\d+)', total_text)
-    if match:
-        return int(match.group(1))
-    return 0
+    # Count unique Animal IDs from textbox9
+    unique_foster_count = foster_df['textbox9'].nunique()
+    
+    return unique_foster_count
 
 def get_stage_counts():
     # Read the CSV file, skipping the first 3 rows

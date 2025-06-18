@@ -1,33 +1,20 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Tuesday, June 17, 2025",6/16/2025 12:00 AM,All,6/16/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Wednesday, June 18, 2025",6/17/2025 12:00 AM,All,6/17/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058545116,Molly,Dog,"Terrier, Jack Russell",3yrs,F,Yes,Adoption,Foster Care Adoption - Dog,MIRANDA KRISSI,KRISSIM,Bonnie,Mix,No,,,,06/16/2025 12:31 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058051432,NAJI,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,,Mix,No,,,,06/16/2025 02:09 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058304780,BEAUFORD,Dog,Shih Tzu,5yrs,M,Yes,Adoption,New Adopter - Dog,Sisti Maria,MariaS,,Mix,No,,Clarence,,06/16/2025 03:02 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058425052,Cara,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:11 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058425077,Valencia,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:16 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058596368,Inkspot,Cat,Domestic Shorthair,1yrs,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,,No,,,,06/16/2025 03:26 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058067136,IRIS,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",1yrs,F,Yes,Adoption,Foster Care Adoption - Dog,MIRANDA KRISSI,KRISSIM,STACEY,Mix,No,,Town of Tonawanda,,06/16/2025 03:44 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058373583,Cloud,Cat,Domestic Longhair,3mos,F,Yes,Adoption,Previous Adopter - Cat,Sisti Maria,MariaS,,,No,,,,06/16/2025 11:53 AM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058425062,Tangerine,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:12 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058425069,Bergamont,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:08 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058441765,Pimm,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:20 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058441766,Darbie,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:22 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058441767,Dizzle,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:18 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0057853590,Soot,Cat,Snowshoe,5mos,M,Yes,Adoption,Foster Care Adoption - Cat,Paryz Michelle,MICHELLEP,Speedo,Mix,No,,,,06/16/2025 01:32 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058529193,TRUFFLE,Rodent,GUINEA PIG,6yrs,M,No,Adoption,Previous Adopter - Other,Sisti Maria,MariaS,,,No,,Buffalo,,06/16/2025 12:29 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058441769,Bibble,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:17 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058553455,Mia,Cat,Domestic Shorthair,1yrs,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,06/16/2025 03:24 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058594817,TRIXIE,Cat,Domestic Shorthair,9yrs,F,Yes,Adoption,Foster Care Adoption - Cat,Paryz Michelle,MICHELLEP,,,No,,Lancaster,,06/16/2025 05:05 PM,,,,,,28
-Adoption,Total Outcomes: 19,Total Unique Animals: 19,A0058656259,Shrimp,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1yrs,M,Yes,Adoption,Previous Adopter - Dog,Paryz Michelle,MICHELLEP,Shadow,Mix,No,,,,06/16/2025 12:33 PM,,,,,,28
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058697050,Nova,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",3yrs,F,Yes,Clinic Out,Retention,BUCHHOLZ AMBER,AmberB,,Mix,No,,,,06/16/2025 03:06 PM,,,,,,28
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058223085,Cinnabun,Rabbit,Lion Head,,M,Yes,Clinic Out,Retention,BUCHHOLZ AMBER,AmberB,,Mix,No,,,,06/16/2025 02:58 PM,,,,,,28
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058679860,Peach,Rabbit,Holland Lop,3yrs,F,Yes,Clinic Out,Retention,Cook Keara,KEARAC,,,No,,Amherst,,06/16/2025 02:37 PM,,,,,,28
-DOA,Total Outcomes: 2,Total Unique Animals: 2,A0058717101,,Cat,Domestic Shorthair,,U,No,DOA, ,,AmberB,,Mix,No,,Buffalo,,06/16/2025 10:47 AM,,,,,,28
-DOA,Total Outcomes: 2,Total Unique Animals: 2,A0058717112,,Cat,Domestic Shorthair,,U,No,DOA, ,,AmberB,,Mix,No,,Buffalo,,06/16/2025 10:47 AM,,,,,,28
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058694957,Lucas,Dog,"Retriever, Golden",16yrs,M,No,Euthanasia,Requested Sleep,,SALLYB,,"Spaniel, American Cocker",No,,,,06/16/2025 03:51 PM,,,,,,28
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058706029,Mahjong,Cat,Domestic Shorthair,19yrs,F,Yes,Euthanasia,Requested Sleep,,SALLYB,,Mix,No,,,,06/16/2025 03:49 PM,,,,,,28
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058709460,Bones,Cat,Domestic Shorthair,17yrs,F,Yes,Euthanasia,Requested Sleep,,LANAP,,Mix,No,,,,06/16/2025 11:14 AM,,,,,,28
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058717573,Tia,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",14yrs,F,Yes,Euthanasia,Requested Sleep,,SALLYB,,Mix,No,,,,06/16/2025 11:39 AM,,,,,,28
+Adoption,Total Outcomes: 7,Total Unique Animals: 7,A0058444304,LAWSON,Cat,Ragdoll,9mos,M,Yes,Adoption,Previous Adopter - Cat,WEBSTER KATE,KATEW,24,Mix,No,,Buffalo,,06/17/2025 11:24 AM,,,,,,15
+Adoption,Total Outcomes: 7,Total Unique Animals: 7,A0058484864,PALMETTO,Cat,Domestic Shorthair,1yrs,F,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KATEW,,,No,,Grand Island,,06/17/2025 01:43 PM,,,,,,15
+Adoption,Total Outcomes: 7,Total Unique Animals: 7,A0058640662,INDIA,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2yrs,F,Yes,Adoption,New Adopter - Dog,WEBSTER KATE,KATEW,,Mix,No,,Lancaster,,06/17/2025 04:32 PM,,,,,,15
+Adoption,Total Outcomes: 7,Total Unique Animals: 7,A0058467665,INDIGO,Domestic (Cage) Bird,Parakeet (Budgie),,M,No,Adoption,New Adopter - Other,Witkowski Victoria,VictoriaW,,,No,,Lancaster,,06/17/2025 04:39 PM,,,,,,15
+Adoption,Total Outcomes: 7,Total Unique Animals: 7,A0058480470,OCEAN,Domestic (Cage) Bird,Parakeet (Budgie),,M,No,Adoption,Previous Adopter - Other,Kiblin Julia,JULIAK,,,No,,Depew,,06/17/2025 04:58 PM,,,,,,15
+Adoption,Total Outcomes: 7,Total Unique Animals: 7,A0058678697,DAISY,Cat,Domestic Shorthair,2yrs,F,Yes,Adoption,New Adopter - Cat,Kiblin Julia,JULIAK,DAISY,,No,,,,06/17/2025 03:23 PM,,,,,,15
+Adoption,Total Outcomes: 7,Total Unique Animals: 7,A0058443991,NAIA,Cat,Domestic Longhair,9mos,F,Yes,Adoption,Previous Adopter - Cat,WEBSTER KATE,KATEW,5,,No,,Niagara County,,06/17/2025 11:58 AM,,,,,,15
+Clinic Out,Total Outcomes: 1,Total Unique Animals: 1,A0058073288,Sicada,Dog,"Terrier, Pit Bull",3yrs,F,Yes,Clinic Out,Medical Treatment Completed,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,06/17/2025 11:22 AM,,,,,,15
+Died,Total Outcomes: 1,Total Unique Animals: 1,A0058716138,CHASE,Cat,Domestic Shorthair,2yrs,M,Yes,Died,IN KENNEL,POMEROY KRYSTAN,KRYSTANP,,,No,,,,06/17/2025 09:03 AM,,,,,,15
+DOA,Total Outcomes: 1,Total Unique Animals: 1,A0058718209,Luigi,Cat,Domestic Longhair,7yrs,M,No,DOA, ,,SHANNONV,,Mix,No,,Town of Tonawanda,,06/17/2025 01:14 PM,,,,,,15
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058723929,DESTINY,Dog,Pomeranian,15yrs,F,No,Euthanasia,Requested Sleep,,VALERIEM,,,No,,,,06/17/2025 10:17 AM,,,,,,15
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058698177,,Cat,Domestic Longhair,8yrs,F,Yes,Euthanasia,Humane Reasons,,SALLYB,Destiny Lee,,No,,,,06/17/2025 01:38 PM,,,,,,15
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058705115,Paislee,Dog,"Poodle, Miniature",13yrs,F,No,Euthanasia,Requested Sleep,,VALERIEM,,Mix,No,,,,06/17/2025 09:08 AM,,,,,,15
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058728669,,Cat,Domestic Shorthair,2yrs,M,No,Euthanasia,Medical Reasons,,VALERIEM,,Mix,No,,,,06/17/2025 03:48 PM,,,,,,15
+Return to Owner/Guardian,Total Outcomes: 1,Total Unique Animals: 1,A0058720454,SUGAR MAMA,Dog,Terrier,3yrs,F,No,Return to Owner/Guardian,General,BUCHHOLZ AMBER,AmberB,,Mix,No,,,,06/17/2025 02:49 PM,,,,,,15
 

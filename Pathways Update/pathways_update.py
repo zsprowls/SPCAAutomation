@@ -63,7 +63,7 @@ cats_to_add = inventory_df[
 dogs_to_add = inventory_df[
     (inventory_df['Species'] == 'Dog') & 
     (inventory_df['AgeInMonths'] >= 3) &
-    (inventory_df['DaysInShelter'] >= 30)
+    (inventory_df['DaysInShelter'] >= 14)
 ]
 
 others_to_add = inventory_df[

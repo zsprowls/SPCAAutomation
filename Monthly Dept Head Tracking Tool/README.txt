@@ -19,6 +19,8 @@ Fosters Numbers: FosterAnimalExtended.xls
 
 Run THE_SCRIPT.py
 
-Ensure that the only things that aren't counted in Adoptions are the DOA's and the Requested Euthanasias and that all of the Fosters were counted.  
+Ensure that the only things that aren't counted in Outcomes are the DOA's and the Requested Euthanasias and that all of the Fosters were counted.  
 If anything was not counted that should have been, fix THE_SCRIPT.py because it is broken now.
 
+NOTE - REPORT FOR JUNE - DID NOT COUNT DOA'S IN SKIPPED, BUT CONFIRMED THAT THEY WERE NOT IN ANY OF THE COUNTS, SO THEY WERE IN FACT SKIPPED.
+NOTE - REPORT FOR JUNE - SKIPPED 5 FOSTERS THAT HAD REASON AS 'HOLD EVENT' INSTEAD OF 'POSSIBLE ADOPTION' LIKE I ASSUMED THEY WOULD

@@ -5,6 +5,7 @@ import os
 OUTCOME_FILE = 'AnimalOutcome.csv'
 FOSTER_FILE = 'FosterAnimalExtended.xls'
 MEDICAL_FILE = 'MedicalExamSurgeryExtended.xlsx'
+MED_CONDITION_FILE = 'MedConditionHistory.csv'
 OUTPUT_FILE = 'Department Head Monthly Report Generation.xlsx'
 
 # Define the operation types in the required order
@@ -271,16 +272,33 @@ def process_medical_surgery():
     
     return pd.DataFrame(surgery_results, columns=['Category', 'Count']), uncounted_df
 
+# Process Medical Condition History Data
+def process_med_condition_history():
+    # Load the medical condition history data, skip first 3 rows and use row 4 as header
+    df = pd.read_csv(MED_CONDITION_FILE, skiprows=3)
+    
+    # Count unique Animal IDs from the textbox27 column (Animal ID)
+    unique_animal_count = df['textbox27'].nunique()
+    
+    # Create a result row for Yelp For Help Candidate
+    result = [("", ""), ("Yelp For Help Candidate", unique_animal_count)]
+    
+    return pd.DataFrame(result, columns=['Category', 'Count'])
+
 # Process both datasets
 outcomes_df, uncounted_outcomes = process_outcomes()
 fosters_df, uncounted_fosters = process_fosters()
 medical_surgery_df, uncounted_medical_surgery = process_medical_surgery()
+med_condition_df = process_med_condition_history()
+
+# Combine medical surgery data with medical condition data
+combined_medical_df = pd.concat([medical_surgery_df, med_condition_df], ignore_index=True)
 
 # Create Excel writer
 with pd.ExcelWriter(OUTPUT_FILE) as writer:
     outcomes_df.to_excel(writer, sheet_name='Outcomes', index=False)
     fosters_df.to_excel(writer, sheet_name='Fosters', index=False)
-    medical_surgery_df.to_excel(writer, sheet_name='Medical_Surgery', index=False)
+    combined_medical_df.to_excel(writer, sheet_name='Medical_Surgery', index=False)
     
     # Add uncounted animals to separate sheets
     uncounted_outcomes.to_excel(writer, sheet_name='Uncounted Outcomes', index=False)
@@ -291,3 +309,4 @@ print(f"Summary saved to {OUTPUT_FILE}")
 print(f"Found {len(uncounted_outcomes)} uncounted outcomes")
 print(f"Found {len(uncounted_fosters)} uncounted fosters")
 print(f"Found {len(uncounted_medical_surgery)} uncounted medical/surgery records")
+print(f"Found {med_condition_df.iloc[1]['Count']} Yelp For Help Candidate animals")

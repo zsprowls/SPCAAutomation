@@ -1,22 +1,26 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Tuesday, July 1, 2025",6/30/2025 12:00 AM,All,6/30/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Wednesday, July 2, 2025",7/1/2025 12:00 AM,All,7/1/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 4,Total Unique Animals: 4,A0058373583,Cloud,Cat,Domestic Longhair,3mos,F,Yes,Adoption,Previous Adopter - Cat,McCrohan Nikki,NikkiM,,,No,,,,06/30/2025 12:06 PM,,,,,,17
-Adoption,Total Outcomes: 4,Total Unique Animals: 4,A0058353042,Hope,Rabbit,Rex,,F,Yes,Adoption,New Adopter - Other,Witkowski Victoria,VictoriaW,SASSAFRAS,"Harlequin, Magpie",No,,Alden,,06/30/2025 04:16 PM,,,,,,17
-Adoption,Total Outcomes: 4,Total Unique Animals: 4,A0058748918,Boo,Cat,Domestic Shorthair,10mos,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Amherst,,06/30/2025 03:41 PM,,,,,,17
-Adoption,Total Outcomes: 4,Total Unique Animals: 4,A0058800447,Phineas,Cat,Domestic Shorthair,8yrs,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,Mix,No,,Silver Creek,,06/30/2025 10:52 AM,,,,,,17
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058563467,LILY,Rabbit,"Rex, Mini",8mos,F,Yes,Clinic Out,Retention,VOGT SHANNON,SHANNONV,,Rex,No,,Buffalo,,06/30/2025 03:09 PM,,,,,,17
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058772179,Bernard,Rabbit,Lion Head,2yrs,M,Yes,Clinic Out,Retention,COGSWELL TAMMI,TAMMIC,,Lion Head,No,,,,06/30/2025 03:06 PM,,,,,,17
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058816447,,Cat,Domestic Shorthair,10mos,M,No,Clinic Out,Stray,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,06/30/2025 04:09 PM,,,,,,17
-Died,Total Outcomes: 1,Total Unique Animals: 1,A0058813495,Milky,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2yrs,F,No,Died,IN SURGERY,PARFINSKI PAIGE,PAIGEP,,Mix,No,,,,06/30/2025 04:47 PM,,,,,,17
-DOA,Total Outcomes: 5,Total Unique Animals: 5,A0058804211,Willie,Domestic (Cage) Bird,"African Grey, Congo",24yrs,M,No,DOA, ,,ASHLEYD,,"African Grey, Congo",No,,,,06/30/2025 10:01 AM,,,,,,17
-DOA,Total Outcomes: 5,Total Unique Animals: 5,A0058812472,MAGOO,Cat,Domestic Shorthair,8yrs,M,Yes,DOA, ,,TAMMIC,,Mix,No,,Buffalo,,06/30/2025 11:11 AM,,,,,,17
-DOA,Total Outcomes: 5,Total Unique Animals: 5,A0058812728,Gizmo,Dog,"Chihuahua, Short Coat",14yrs,M,No,DOA, ,,SHANNONV,,Mix,No,,Buffalo,,06/30/2025 11:28 AM,,,,,,17
-DOA,Total Outcomes: 5,Total Unique Animals: 5,A0058813263,Mya,Dog,German Shepherd,12yrs,F,No,DOA, ,,SHANNONV,,Mix,No,,West Seneca,,06/30/2025 12:04 PM,,,,,,17
-DOA,Total Outcomes: 5,Total Unique Animals: 5,A0058816089,,Cat,Domestic Shorthair,,M,No,DOA, ,,TAMMIC,,Mix,No,,Cheektowaga,,06/30/2025 03:23 PM,,,,,,17
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0015599570,NICK,Cat,Domestic Shorthair,14yrs,M,Yes,Euthanasia,Requested Sleep,,LANAP,ELLIOTT NESS,,No,,,,06/30/2025 01:17 PM,,,,,,17
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058640671,CARAMEL,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",5yrs,F,Yes,Euthanasia,Aggression - People,,MILESW,,Mix,No,,,,06/30/2025 06:26 PM,,,,,,17
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058814043,,Farm Type Fowl,Duck,,U,No,Euthanasia,Humane Reasons,,LANAP,,Duck,No,,,,06/30/2025 02:11 PM,,,,,,17
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058814049,,Farm Type Fowl,Duck,,U,No,Euthanasia,Humane Reasons,,LANAP,,Duck,No,,,,06/30/2025 02:08 PM,,,,,,17
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058444084,Nibbles,Cat,Domestic Longhair,3mos,M,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,14,,No,,Lancaster,,07/01/2025 12:07 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058720471,Pablo,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2yrs,M,Yes,Adoption,New Adopter - Dog,Witkowski Victoria,VictoriaW,,Mix,No,,Buffalo,,07/01/2025 12:36 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058415827,Lucy,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:41 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058415858,Sophie,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:42 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058610572,Baxter,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:38 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058610576,Peaches,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:35 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058605936,Leia,Cat,Domestic Longhair,3mos,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Niagara County,,07/01/2025 03:57 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058734134,Pip,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:44 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058734140,Peony,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:45 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058734147,Pumpkin,Cat,Domestic Longhair,4mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:47 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058353916,Mochi,Cat,Domestic Longhair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:54 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058415910,Ocean,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/01/2025 01:48 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058415913,Oakley,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,,No,,,,07/01/2025 01:50 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058598619,SUDS,Dog,"Chihuahua, Short Coat",5yrs,M,Yes,Adoption,New Adopter - Dog,McCrohan Nikki,NikkiM,,"Terrier, Rat",No,,,,07/01/2025 03:41 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058778873,JELLYFISH,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Niagara County,,07/01/2025 05:10 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058787827,SCARLETT,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",3mos,F,Yes,Adoption,New Adopter - Dog,McCrohan Nikki,NikkiM,,Mix,No,,,,07/01/2025 04:07 PM,,,,,,21
+Adoption,Total Outcomes: 17,Total Unique Animals: 17,A0058654173,HEATH,Dog,Whippet,8mos,M,Yes,Adoption,Foster Care Adoption - Dog,McCrohan Nikki,NikkiM,,Mix,No,,,,07/01/2025 05:01 PM,,,,,,21
+DOA,Total Outcomes: 1,Total Unique Animals: 1,A0054021734,CHRISTA,Cat,Domestic Shorthair,4yrs,F,Yes,DOA, ,,SHANNONV,,Mix,No,,Buffalo,,07/01/2025 08:02 AM,,,,,,21
+Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0058800763,ALEXANDER,Dog,German Shepherd,10yrs,M,No,Euthanasia,Humane Reasons,,NINAP,,,No,,,,07/01/2025 04:20 PM,,,,,,21
+Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0058820045,Missy,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",8yrs,F,Yes,Euthanasia,Requested Sleep,,MILESW,,Mix,No,,,,07/01/2025 11:12 AM,,,,,,21
+Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0058822625,ROTINI,Cat,Domestic Shorthair,1mos,U,No,Euthanasia,Humane Reasons,,PAIGEP,KITTEN,Mix,No,,,,07/01/2025 03:37 PM,,,,,,21
 

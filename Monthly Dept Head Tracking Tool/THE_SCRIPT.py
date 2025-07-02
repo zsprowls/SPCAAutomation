@@ -4,6 +4,7 @@ import os
 # Define the filenames for input and output
 OUTCOME_FILE = 'AnimalOutcome.csv'
 FOSTER_FILE = 'FosterAnimalExtended.xls'
+MEDICAL_FILE = 'MedicalExamSurgeryExtended.xlsx'
 OUTPUT_FILE = 'Department Head Monthly Report Generation.xlsx'
 
 # Define the operation types in the required order
@@ -67,14 +68,57 @@ FOSTER_REASON_GROUPS = {
     ]
 }
 
+# Define surgery categories and their order
+SURGERY_CATEGORIES = [
+    ('Cat', 'Spay'),
+    ('Dog', 'Spay'),
+    ('Rabbit', 'Spay'),
+    ('', ''),  # Blank space
+    ('Cat', 'Neuter'),
+    ('Dog', 'Neuter'),
+    ('Rabbit', 'Neuter'),
+    ('Rat', 'Neuter'),
+    ('', ''),  # Blank space
+    ('Cat', 'Dental'),
+    ('Dog', 'Dental'),
+    ('', ''),  # Blank space
+    ('Cat', 'Other Surgeries'),
+    ('Dog', 'Other Surgeries'),
+    ('Others', 'Other Surgeries')
+]
+
 # Function to classify species
 def classify_species(species):
     if species == 'Cat':
         return 'Cat'
     elif species == 'Dog':
         return 'Dog'
+    elif species == 'Rabbit':
+        return 'Rabbit'
+    elif species == 'Rodent':
+        return 'Rat'
+    else:
+        return 'Others'
+
+# Function to classify species for foster data (original logic)
+def classify_species_foster(species):
+    if species == 'Cat':
+        return 'Cat'
+    elif species == 'Dog':
+        return 'Dog'
     else:
         return 'Other'
+
+# Function to classify surgery subtype
+def classify_surgery_subtype(record_subtype):
+    if record_subtype == 'Spay':
+        return 'Spay'
+    elif record_subtype == 'Neuter':
+        return 'Neuter'
+    elif record_subtype == 'Dental':
+        return 'Dental'
+    else:
+        return 'Other Surgeries'
 
 # Process Outcomes Data
 def process_outcomes():
@@ -134,7 +178,7 @@ def process_fosters():
     foster_df = pd.read_excel(FOSTER_FILE)
     
     # Classify species
-    foster_df['SpeciesCategory'] = foster_df['Animal Type'].apply(classify_species)
+    foster_df['SpeciesCategory'] = foster_df['Animal Type'].apply(classify_species_foster)
     
     # Initialize results list
     foster_results = []
@@ -171,19 +215,79 @@ def process_fosters():
     
     return pd.DataFrame(foster_results, columns=['Category', 'Count']), uncounted_df
 
+# Process Medical/Surgery Data
+def process_medical_surgery():
+    # Load the medical/surgery data
+    df = pd.read_excel(MEDICAL_FILE)
+    
+    # Filter for only Surgery Record Type
+    surgery_df = df[df['Record Type'] == 'Surgery'].copy()
+    
+    # Apply classification to new columns
+    surgery_df['SpeciesCategory'] = surgery_df['Species'].apply(classify_species)
+    surgery_df['SurgeryCategory'] = surgery_df['Record Subtype'].apply(classify_surgery_subtype)
+    
+    # Initialize results list
+    surgery_results = []
+    
+    # Track counted records
+    counted_records = set()
+    
+    # Process each surgery category in the specified order
+    for species, surgery_type in SURGERY_CATEGORIES:
+        if species == '' and surgery_type == '':  # Blank space
+            surgery_results.append(("", ""))
+            continue
+            
+        # Filter for this species and surgery type
+        if species == 'Others':
+            # For "Others", include all species except Cat and Dog
+            subset = surgery_df[
+                (~surgery_df['SpeciesCategory'].isin(['Cat', 'Dog'])) &
+                (surgery_df['SurgeryCategory'] == surgery_type)
+            ]
+        else:
+            subset = surgery_df[
+                (surgery_df['SpeciesCategory'] == species) & 
+                (surgery_df['SurgeryCategory'] == surgery_type)
+            ]
+        
+        # Count unique Record # entries
+        unique_count = subset['Record #'].nunique()
+        label = f"{species} {surgery_type}"
+        surgery_results.append((label, unique_count))
+        
+        # Track counted records
+        counted_records.update(subset['Record #'].tolist())
+    
+    # Find uncounted surgery records
+    all_surgery_records = set(surgery_df['Record #'].tolist())
+    uncounted_records = all_surgery_records - counted_records
+    
+    # Create DataFrame for uncounted records
+    uncounted_df = surgery_df[surgery_df['Record #'].isin(uncounted_records)][
+        ['Record #', 'Species', 'Record Subtype', 'Animal #', 'Name']
+    ].sort_values('Record #')
+    
+    return pd.DataFrame(surgery_results, columns=['Category', 'Count']), uncounted_df
+
 # Process both datasets
 outcomes_df, uncounted_outcomes = process_outcomes()
 fosters_df, uncounted_fosters = process_fosters()
+medical_surgery_df, uncounted_medical_surgery = process_medical_surgery()
 
 # Create Excel writer
 with pd.ExcelWriter(OUTPUT_FILE) as writer:
     outcomes_df.to_excel(writer, sheet_name='Outcomes', index=False)
     fosters_df.to_excel(writer, sheet_name='Fosters', index=False)
+    medical_surgery_df.to_excel(writer, sheet_name='Medical_Surgery', index=False)
     
     # Add uncounted animals to separate sheets
     uncounted_outcomes.to_excel(writer, sheet_name='Uncounted Outcomes', index=False)
     uncounted_fosters.to_excel(writer, sheet_name='Uncounted Fosters', index=False)
+    uncounted_medical_surgery.to_excel(writer, sheet_name='Uncounted_Medical_Surgery', index=False)
 
 print(f"Summary saved to {OUTPUT_FILE}")
 print(f"Found {len(uncounted_outcomes)} uncounted outcomes")
 print(f"Found {len(uncounted_fosters)} uncounted fosters")
+print(f"Found {len(uncounted_medical_surgery)} uncounted medical/surgery records")

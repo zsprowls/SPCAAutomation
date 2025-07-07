@@ -1,18 +1,21 @@
 AnimalNumber,AnimalName,AnimalType,Stage,ClearDate
 A0058811219,BUFFY,Cat,Hold - Bite/Scratch,07/10/25
-A0058552578,Catalytic Converter,Cat,Hold - Bite/Scratch,07/07/25
 A0058698188,BOB ROSS,Cat,Hold - Bite/Scratch,07/08/25
-A0058552576,Carburetor,Cat,Hold - Bite/Scratch,07/05/25
-A0058819386,,Cat,Hold - Bite/Scratch,07/11/25
+A0058812302,,Cat,Hold - Bite/Scratch,07/10/25
 A0058552575,Muffler,Cat,Hold - Bite/Scratch,07/05/25
+A0058552576,Carburetor,Cat,Hold - Bite/Scratch,07/05/25
+A0058552578,Catalytic Converter,Cat,Hold - Bite/Scratch,07/07/25
+A0058834498,,Dog,Hold - Legal Notice,07/10/25
+A0058834577,,Dog,Hold - Legal Notice,07/10/25
+A0058834525,,Dog,Hold - Legal Notice,07/10/25
+A0058834563,,Dog,Hold - Legal Notice,07/10/25
+A0058811207,DIAMOND,Dog,Hold - Legal Notice,07/08/25
+A0058834486,,Dog,Hold - Legal Notice,07/10/25
+A0058834490,,Dog,Hold - Legal Notice,07/10/25
+A0058831524,,Other,Hold - Legal Notice,07/09/25
 A0058792719,Queenie,Dog,Hold - Legal Notice,07/05/25
-A0058787532,DUTCHESS,Cat,Hold - Legal Notice,07/03/25
-A0058793704,,Cat,Hold - Legal Notice,07/03/25
-A0058798054,,Cat,Hold - Legal Notice,07/05/25
-A0058798000,,Dog,Hold - Legal Notice,07/05/25
-A0058811207,DIAMOND,Dog,Hold - Legal Notice,07/07/25
-A0058797987,,Dog,Hold - Legal Notice,07/05/25
-A0058792732,Peanut,Dog,Hold - Legal Notice,07/05/25
-A0058819245,,Other,Hold - Stray,07/08/25
-A0058812302,,Cat,Hold - Stray,07/05/25
+A0058849616,,Bird,Hold - Stray,07/11/25
+A0058840701,,Cat,Hold - Stray,07/08/25
+A0058839495,,Cat,Hold - Stray,07/08/25
 A0058812861,,Other,Hold - Stray,07/07/25
+A0058819245,,Other,Hold - Stray,07/08/25

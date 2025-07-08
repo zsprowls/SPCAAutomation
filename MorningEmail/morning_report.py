@@ -274,7 +274,7 @@ def get_intake_count_detail(check_dates):
     intake_path = os.path.join(LOAD_FILES_DIR, 'AnimalIntake.csv')
     df_intake = pd.read_csv(intake_path, skiprows=3)
     # Filter by intake date (textbox44)
-    df_intake['textbox44'] = pd.to_datetime(df_intake['textbox44']).dt.date
+    df_intake['textbox44'] = pd.to_datetime(df_intake['textbox44'], format='%m/%d/%Y %I:%M %p').dt.date
     check_dates_dt = [pd.to_datetime(date).date() for date in check_dates]
     filtered = df_intake[df_intake['textbox44'].isin(check_dates_dt)].copy()
     # Assign group

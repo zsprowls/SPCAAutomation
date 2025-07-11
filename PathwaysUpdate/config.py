@@ -22,7 +22,7 @@ IMAGE_CONFIG = {
     'max_images_per_animal': 3,
     'image_cache_size': 100,
     'image_timeout': 30,  # seconds
-    'headless_browser': False  # Set to False to see browser and handle trust dialogs
+    'headless_browser': True  # Set to True for faster processing, False to see browser
 }
 
 # Data Settings

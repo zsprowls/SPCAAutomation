@@ -1,17 +1,20 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Thursday, July 10, 2025",7/9/2025 12:00 AM,All,7/9/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Friday, July 11, 2025",7/10/2025 12:00 AM,All,7/10/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058703599,Mistletoe,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",3yrs,F,Yes,Adoption,New Adopter - Dog,Paryz Michelle,MICHELLEP,MISSY,Mix,No,,,,07/09/2025 03:50 PM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058486296,LAMARCA,Cat,Domestic Longhair,1yrs,F,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,57,,No,,Town of Tonawanda,,07/09/2025 02:36 PM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0057966945,Nushi,Cat,Domestic Shorthair,6yrs,M,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,,,No,,Niagara County,,07/09/2025 02:19 PM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058703414,PICNIC,Cat,Domestic Shorthair,3yrs,F,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,,,No,,Hamburg,,07/09/2025 12:03 PM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058763999,BEATLE,Cat,Domestic Shorthair,3yrs,M,Yes,Adoption,Previous Adopter - Cat,Sisti Maria,MariaS,,,No,,,,07/09/2025 12:37 PM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058847120,,Cat,Domestic Shorthair,4mos,F,Yes,Adoption,New Adopter - Cat,Paryz Michelle,MICHELLEP,,,No,,Springville,,07/09/2025 01:10 PM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058821064,,Cat,Domestic Shorthair,2yrs,M,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,OBSIDIAN,Mix,No,,Cheektowaga,,07/09/2025 10:29 AM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058793704,Margarita,Cat,Domestic Longhair,4yrs,F,Yes,Adoption,New Adopter - Cat,Sisti Maria,NikkiM,,,No,,Buffalo,,07/09/2025 11:19 AM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058836708,LATTE,Cat,Domestic Shorthair,5yrs,F,Yes,Adoption,Previous Adopter - Cat,Sisti Maria,MariaS,,,No,,,,07/09/2025 12:37 PM,,,,,,12
-Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058839495,Jojo,Cat,Domestic Longhair,2yrs,M,Yes,Adoption,New Adopter - Cat,Kiblin Julia,JULIAK,JOJO,,No,,,,07/09/2025 12:02 PM,,,,,,12
-DOA,Total Outcomes: 1,Total Unique Animals: 1,A0058862375,JACK JACK THE BIG WHITE CAT,Cat,Domestic Shorthair,20yrs,M,Yes,DOA, ,,TAMMIC,,Mix,No,,,,07/09/2025 10:02 AM,,,,,,12
-Euthanasia,Total Outcomes: 1,Total Unique Animals: 1,A0058832269,Deogi,Dog,Mastiff,6yrs,M,Yes,Euthanasia,Requested Sleep,,JENT,,Mix,No,,,,07/09/2025 10:04 AM,,,,,,12
+Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058805811,John Cena,Reptile/Amphibian,Euromastyx,,M,No,Adoption,New Adopter - Other,McCrohan Nikki,NikkiM,,,No,,,,07/10/2025 11:23 AM,,,,,,15
+Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058447679,,Cat,Snowshoe,3mos,F,Yes,Adoption,Foster Care Adoption - Cat,Witkowski Victoria,VictoriaW,35,Mix,No,,Elma,,07/10/2025 01:13 PM,,,,,,15
+Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058465818,Adelaide,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,,,No,,Buffalo,,07/10/2025 11:51 AM,,,,,,15
+Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058627577,Minou,Cat,Domestic Shorthair,8yrs,F,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,,,No,,Kenmore,,07/10/2025 01:29 PM,,,,,,15
+Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058753970,JEWELIE,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",10yrs,F,Yes,Adoption,Foster Care Adoption - Dog,MIRANDA KRISSI,KRISSIM,,Mix,No,,Buffalo,,07/10/2025 12:17 PM,,,,,,15
+Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058811219,BUFFY,Cat,Ragdoll,4yrs,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,Mix,No,,Town of Tonawanda,,07/10/2025 02:52 PM,,,,,,15
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0057606326,,Cat,Domestic Shorthair,,M,No,Clinic Out,Not Received,VOGT SHANNON,SHANNONV,,Mix,No,,Buffalo,,07/10/2025 12:37 PM,,,,,,15
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0057606328,,Cat,Domestic Shorthair,,M,No,Clinic Out,Not Received,VOGT SHANNON,SHANNONV,,Mix,No,,Buffalo,,07/10/2025 12:37 PM,,,,,,15
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0057606329,,Cat,Domestic Shorthair,,M,No,Clinic Out,Not Received,VOGT SHANNON,SHANNONV,,Mix,No,,Buffalo,,07/10/2025 12:37 PM,,,,,,15
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0021403555,WATSON,Cat,Domestic Shorthair,15yrs,M,Yes,Euthanasia,Requested Sleep,,NINAP,,,No,,,,07/10/2025 10:17 AM,,,,,,15
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0053747735,PATRICIA,Cat,Domestic Shorthair,4yrs,F,Yes,Euthanasia,Humane Reasons,,NINAP,FEE PAID! Muttfia!,,No,,,,07/10/2025 11:36 AM,,,,,,15
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0058812302,PAPA SMURF,Cat,Domestic Shorthair,5yrs,M,No,Euthanasia,Requested Sleep,,NINAP,,,No,,,,07/10/2025 09:39 AM,,,,,,15
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0058847947,Chester,Cat,Domestic Longhair,11yrs,M,Yes,Euthanasia,Requested Sleep,,SARAD,,Mix,No,,,,07/10/2025 12:13 PM,,,,,,15
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0058878916,Conky,Cat,Domestic Shorthair,17yrs,M,Yes,Euthanasia,Requested Sleep,,ROBINR,,Mix,No,,,,07/10/2025 02:32 PM,,,,,,15
+Transfer Out,Total Outcomes: 1,Total Unique Animals: 1,A0058753979,CINDER,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",10yrs,F,Yes,Transfer Out,VET,WOOD LINDSEY,LINDSEYS,,Mix,No,,Little Valley,More Suitable Housing,07/10/2025 11:33 AM,,,,,,15
 

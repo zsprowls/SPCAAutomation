@@ -252,7 +252,7 @@ class OptimizedImageCacheManager:
                     if gallery_images:
                         for img in gallery_images:
                             src = img.get_attribute('src')
-                            if src and "petango.com" in src:
+                            if src and ("petango.com" in src or "youtube.com" in src):
                                 image_urls.append(src)
                 except:
                     pass
@@ -263,7 +263,7 @@ class OptimizedImageCacheManager:
                         tab_images = self.driver.find_elements(By.CSS_SELECTOR, "#ImageGallery .tab-content img")
                         for img in tab_images:
                             src = img.get_attribute('src')
-                            if src and "petango.com" in src:
+                            if src and ("petango.com" in src or "youtube.com" in src):
                                 image_urls.append(src)
                     except:
                         pass
@@ -274,10 +274,34 @@ class OptimizedImageCacheManager:
                         class_images = self.driver.find_elements(By.CSS_SELECTOR, ".animal-image, .pet-image, .gallery-image")
                         for img in class_images:
                             src = img.get_attribute('src')
-                            if src and "petango.com" in src:
+                            if src and ("petango.com" in src or "youtube.com" in src):
                                 image_urls.append(src)
                     except:
                         pass
+                
+                # Method 4: Look for video links and YouTube URLs
+                try:
+                    # Look for links that might contain video URLs
+                    video_links = self.driver.find_elements(By.CSS_SELECTOR, "a[href*='youtube.com'], a[href*='youtu.be']")
+                    for link in video_links:
+                        href = link.get_attribute('href')
+                        if href and ("youtube.com/watch" in href or "youtu.be/" in href):
+                            image_urls.append(href)
+                except:
+                    pass
+                
+                # Method 5: Look for iframe elements that might contain videos
+                try:
+                    iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe[src*='youtube.com']")
+                    for iframe in iframes:
+                        src = iframe.get_attribute('src')
+                        if src and "youtube.com/embed" in src:
+                            # Convert embed URL to watch URL
+                            video_id = src.split('/embed/')[1].split('?')[0]
+                            watch_url = f"https://www.youtube.com/watch?v={video_id}"
+                            image_urls.append(watch_url)
+                except:
+                    pass
                 
                 # Limit to max images per animal
                 max_images = IMAGE_CONFIG.get('max_images_per_animal', 3)

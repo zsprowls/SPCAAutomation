@@ -224,8 +224,8 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             dbc.ButtonGroup([
-                dbc.Button("Spreadsheet View", id="btn-spreadsheet", color="primary", outline=True),
-                dbc.Button("Record Browser", id="btn-browser", color="primary", outline=True)
+                dbc.Button("Record Browser", id="btn-browser", color="primary", outline=True),
+                dbc.Button("Spreadsheet View", id="btn-spreadsheet", color="primary", outline=True)
             ], className="mb-3")
         ], className="text-center")
     ]),
@@ -313,7 +313,7 @@ app.layout = dbc.Container([
                 )
             ])
         ])
-    ], style={'display': 'block'}),
+    ], style={'display': 'none'}),
     
     # Record Browser View
     html.Div(id="browser-view", children=[
@@ -389,7 +389,23 @@ app.layout = dbc.Container([
                                 ])
                             ])
                         ], className="mb-3"),
-                        
+
+                        # Welfare Notes section (moved up)
+                        dbc.Row([
+                            dbc.Col([
+                                dbc.Card([
+                                    dbc.CardHeader("Welfare Notes", className="bg-warning text-dark"),
+                                    dbc.CardBody([
+                                        html.Div(id="browser-notes", style={
+                                            'fontSize': '14px', 
+                                            'lineHeight': '1.6',
+                                            'whiteSpace': 'pre-line'  # Preserve line breaks
+                                        })
+                                    ])
+                                ])
+                            ])
+                        ], className="mb-3"),
+
                         # Edit Section
                         dbc.Row([
                             dbc.Col([
@@ -450,8 +466,7 @@ app.layout = dbc.Container([
                                         ], className="mb-3"),
                                         dbc.Row([
                                             dbc.Col([
-                                                dbc.Button("Save Changes", id="btn-save-changes", color="success", size="lg", className="me-2"),
-                                                html.Span(id="save-status", className="text-success fw-bold")
+                                                dbc.Button("Save Changes", id="btn-save-changes", color="success", size="lg", className="me-2")
                                             ], width=12, className="text-center")
                                         ])
                                     ])
@@ -460,25 +475,12 @@ app.layout = dbc.Container([
                         ], className="mb-3"),
                         
                         # Welfare Notes section
-                        dbc.Row([
-                            dbc.Col([
-                                dbc.Card([
-                                    dbc.CardHeader("Welfare Notes", className="bg-warning text-dark"),
-                                    dbc.CardBody([
-                                        html.Div(id="browser-notes", style={
-                                            'fontSize': '14px', 
-                                            'lineHeight': '1.6',
-                                            'whiteSpace': 'pre-line'  # Preserve line breaks
-                                        })
-                                    ])
-                                ])
-                            ])
-                        ])
+                        # This section is now moved up and handled by the browser-notes div
                     ])
                 ])
             ])
         ])
-    ], style={'display': 'none'})
+    ], style={'display': 'block'})
 ], fluid=True)
 
 # View switching callback
@@ -493,8 +495,8 @@ app.layout = dbc.Container([
 def switch_view(btn_spreadsheet, btn_browser):
     ctx = callback_context
     if not ctx.triggered:
-        # Default to spreadsheet view
-        return {'display': 'block'}, {'display': 'none'}, False, True
+        # Default to browser view
+        return {'display': 'none'}, {'display': 'block'}, True, False
     
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
     
@@ -538,10 +540,11 @@ def populate_search_dropdown(btn_browser):
     [Input("btn-browser", "n_clicks"),
      Input("btn-prev", "n_clicks"),
      Input("btn-next", "n_clicks"),
-     Input("animal-search-dropdown", "value")],
+     Input("animal-search-dropdown", "value"),
+     Input("btn-save-changes", "n_clicks")],
     [State("page-indicator", "children")]
 )
-def update_browser_view(btn_browser, btn_prev, btn_next, search_value, current_page):
+def update_browser_view(btn_browser, btn_prev, btn_next, search_value, btn_save, current_page):
     print(f"DEBUG: Record browser callback triggered")
     
     ctx = callback_context
@@ -557,6 +560,12 @@ def update_browser_view(btn_browser, btn_prev, btn_next, search_value, current_p
         elif button_id == "btn-browser":
             # Initialize browser view - start with first record
             current_index = 0
+        elif button_id == "btn-save-changes":
+            # Save button was clicked, stay on current page
+            if current_page:
+                current_index = int(current_page.split('/')[0]) - 1
+            else:
+                current_index = 0
         else:
             # Parse current page indicator for navigation
             if current_page:
@@ -589,29 +598,93 @@ def update_browser_view(btn_browser, btn_prev, btn_next, search_value, current_p
         style={'color': '#007bff', 'textDecoration': 'underline', 'cursor': 'pointer'}
     )
     
-    # Create image components (show all images)
-    image_components = []
+    # Create image/video components (show all media)
+    media_components = []
     if image_urls:
-        for i, url in enumerate(image_urls):  # Show all images
-            image_components.append(
-                html.Img(
-                    src=url,
-                    style={
-                        'maxWidth': '200px',
-                        'maxHeight': '200px',
-                        'margin': '5px',
-                        'borderRadius': '8px',
-                        'boxShadow': '0 2px 4px rgba(0,0,0,0.1)'
-                    },
-                    alt=f"Animal {animal_id} image {i+1}"
+        for i, url in enumerate(image_urls):  # Show all media
+            # Check if this is a YouTube link
+            if 'youtube.com' in url or 'youtu.be' in url:
+                # Extract video ID from YouTube URL
+                video_id = None
+                
+                # Handle different YouTube URL formats
+                if 'youtube.com/watch?v=' in url:
+                    video_id = url.split('youtube.com/watch?v=')[1].split('&')[0]
+                elif 'youtu.be/' in url:
+                    video_id = url.split('youtu.be/')[1].split('?')[0]
+                elif 'youtube.com/embed/' in url:
+                    video_id = url.split('youtube.com/embed/')[1].split('?')[0]
+                elif 'img.youtube.com/vi/' in url:
+                    # This is a thumbnail URL, extract video ID
+                    video_id = url.split('img.youtube.com/vi/')[1].split('/')[0]
+                
+                if video_id:
+                    # Create clickable YouTube video link with thumbnail
+                    watch_url = f"https://www.youtube.com/watch?v={video_id}"
+                    media_components.append(
+                        html.Div([
+                            html.Img(
+                                src=url,  # Use the thumbnail as preview
+                                style={
+                                    'maxWidth': '200px',
+                                    'maxHeight': '200px',
+                                    'margin': '5px',
+                                    'borderRadius': '8px',
+                                    'boxShadow': '0 2px 4px rgba(0,0,0,0.1)',
+                                    'cursor': 'pointer'
+                                },
+                                alt=f"Animal {animal_id} video {i+1}"
+                            ),
+                            html.Br(),
+                            html.A(
+                                f"▶ Watch Video",
+                                href=watch_url,
+                                target="_blank",
+                                style={
+                                    'color': '#007bff',
+                                    'textDecoration': 'underline',
+                                    'fontSize': '12px',
+                                    'fontWeight': 'bold'
+                                }
+                            )
+                        ], style={'textAlign': 'center'})
+                    )
+                else:
+                    # Fallback to image if video ID extraction fails
+                    media_components.append(
+                        html.Img(
+                            src=url,
+                            style={
+                                'maxWidth': '200px',
+                                'maxHeight': '200px',
+                                'margin': '5px',
+                                'borderRadius': '8px',
+                                'boxShadow': '0 2px 4px rgba(0,0,0,0.1)'
+                            },
+                            alt=f"Animal {animal_id} media {i+1}"
+                        )
+                    )
+            else:
+                # Regular image
+                media_components.append(
+                    html.Img(
+                        src=url,
+                        style={
+                            'maxWidth': '200px',
+                            'maxHeight': '200px',
+                            'margin': '5px',
+                            'borderRadius': '8px',
+                            'boxShadow': '0 2px 4px rgba(0,0,0,0.1)'
+                        },
+                        alt=f"Animal {animal_id} image {i+1}"
+                    )
                 )
-            )
     else:
-        image_components.append(
+        media_components.append(
             html.Div([
                 html.I(className="fas fa-image fa-3x text-muted"),
                 html.Br(),
-                html.Span("No images available", className="text-muted")
+                html.Span("No images or videos available", className="text-muted")
             ], style={'padding': '20px'})
         )
     
@@ -627,7 +700,7 @@ def update_browser_view(btn_browser, btn_prev, btn_next, search_value, current_p
         record['Transfer Attempted'] or "N/A",
         record['Communications Team Attempted'] or "N/A",
         record['Welfare Notes'] or "No notes available",
-        image_components,
+        media_components,
         record['Foster Attempted'] or None,  # dropdown value
         record['Transfer Attempted'] or None,  # dropdown value
         record['Communications Team Attempted'] or None  # dropdown value
@@ -638,7 +711,7 @@ def update_browser_view(btn_browser, btn_prev, btn_next, search_value, current_p
 
 # Save changes callback
 @app.callback(
-    Output("save-status", "children"),
+    Output("new-welfare-note", "value"),  # Use this as a dummy output to trigger the callback
     [Input("btn-save-changes", "n_clicks")],
     [State("page-indicator", "children"),
      State("edit-foster-dropdown", "value"),
@@ -648,7 +721,7 @@ def update_browser_view(btn_browser, btn_prev, btn_next, search_value, current_p
 )
 def save_changes(btn_save, current_page, foster_value, transfer_value, communications_value, new_note):
     if not btn_save:
-        return ""
+        return dash.no_update
     
     try:
         # Get current record index
@@ -688,22 +761,17 @@ def save_changes(btn_save, current_page, foster_value, transfer_value, communica
         
         print(f"Saved changes for animal {df.at[current_index, 'AID']} ({df.at[current_index, 'Name']})")
         
-        return "✓ Changes saved successfully!"
+        return ""  # Clear the text area
         
     except Exception as e:
         print(f"Error saving changes: {e}")
-        return f"✗ Error saving changes: {str(e)}"
+        return dash.no_update
 
-# Clear new welfare note after saving
-@app.callback(
-    Output("new-welfare-note", "value"),
-    [Input("btn-save-changes", "n_clicks")],
-    [State("new-welfare-note", "value")]
-)
-def clear_new_note(btn_save, current_note):
-    if btn_save and current_note and current_note.strip():
-        return ""  # Clear the text area after saving
-    return dash.no_update  # Don't update if no save action
+
+
+
+
+
 
 
 

@@ -19,7 +19,7 @@ APP_CONFIG = {
 
 # Image Settings
 IMAGE_CONFIG = {
-    'max_images_per_animal': 3,
+    'max_images_per_animal': None,  # Set to None to get all images, or a number to limit
     'image_cache_size': 100,
     'image_timeout': 30,  # seconds
     'headless_browser': True  # Set to True for faster processing, False to see browser

@@ -303,9 +303,10 @@ class OptimizedImageCacheManager:
                 except:
                     pass
                 
-                # Limit to max images per animal
+                # Limit to max images per animal (if specified)
                 max_images = IMAGE_CONFIG.get('max_images_per_animal', 3)
-                image_urls = image_urls[:max_images]
+                if max_images is not None:
+                    image_urls = image_urls[:max_images]
                 
                 logger.info(f"Found {len(image_urls)} images for animal {animal_id}")
                 return image_urls

@@ -172,8 +172,11 @@ def load_data_from_database():
     """Load data from cloud database"""
     try:
         # Connect to cloud database
+        st.info("Attempting to connect to cloud database...")
         if not connect_to_database(use_cloud=True):
+            st.error("Failed to connect to cloud database")
             return None
+        st.success("Successfully connected to cloud database")
         
         # Get database manager
         manager = get_database_manager()

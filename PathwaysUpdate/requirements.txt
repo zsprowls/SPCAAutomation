@@ -8,10 +8,6 @@ pymysql>=1.1.0
 cryptography>=41.0.0
 sqlalchemy>=2.0.0
 
-# Web scraping and automation
-selenium>=4.15.0
-webdriver-manager>=4.0.0
-
 # Image processing
 Pillow>=10.0.0
 
@@ -22,9 +18,6 @@ xlrd>=2.0.0
 # Utilities
 python-dotenv>=1.0.0
 requests>=2.31.0
-
-# Environment variable loading
-python-dotenv>=1.0.0
 
 # Optional: For better performance
 pyarrow>=14.0.0 

@@ -12,13 +12,20 @@ import pymysql
 from datetime import datetime
 from typing import Optional, Dict, Any, List
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # python-dotenv not installed, use system environment variables
+
 class DatabaseManager:
     def __init__(self, config_path: str = 'cloud_config.json'):
         """
         Initialize database manager
         
         Args:
-            config_path: Path to configuration file
+            config_path: Path to configuration file (for non-sensitive config only)
         """
         self.config_path = config_path
         self.config = self._load_config()
@@ -26,14 +33,47 @@ class DatabaseManager:
         self.db_type = None
         
     def _load_config(self) -> Optional[Dict[str, Any]]:
-        """Load configuration from file"""
+        """Load configuration from environment variables and file"""
         try:
-            if os.path.exists(self.config_path):
-                with open(self.config_path, 'r') as f:
-                    return json.load(f)
-            else:
-                print(f"⚠️  Config file not found: {self.config_path}")
+            # Load sensitive data from environment variables
+            cloud_config = {
+                'instance_name': os.getenv('CLOUD_SQL_INSTANCE_NAME'),
+                'database_name': os.getenv('CLOUD_SQL_DATABASE_NAME'),
+                'user': os.getenv('CLOUD_SQL_USER'),
+                'password': os.getenv('CLOUD_SQL_PASSWORD'),
+                'host': os.getenv('CLOUD_SQL_HOST'),
+                'port': int(os.getenv('CLOUD_SQL_PORT', '3306'))
+            }
+            
+            # Check if all required environment variables are set
+            missing_vars = [key for key, value in cloud_config.items() if not value]
+            if missing_vars:
+                print(f"⚠️  Missing environment variables: {', '.join(missing_vars)}")
+                print("Please set the following environment variables:")
+                for var in missing_vars:
+                    print(f"  - {var.upper()}")
                 return None
+            
+            # Load non-sensitive config from file if it exists
+            file_config = {}
+            if os.path.exists(self.config_path):
+                try:
+                    with open(self.config_path, 'r') as f:
+                        file_config = json.load(f)
+                except Exception as e:
+                    print(f"⚠️  Error loading config file: {e}")
+            
+            # Merge configurations
+            config = {
+                'cloud_sql': cloud_config,
+                'local_backup': file_config.get('local_backup', {
+                    'enabled': True,
+                    'backup_path': './backups/'
+                })
+            }
+            
+            return config
+            
         except Exception as e:
             print(f"❌ Error loading config: {e}")
             return None

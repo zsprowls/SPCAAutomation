@@ -2,11 +2,13 @@
 Configuration settings for the Pathways for Care Viewer application.
 """
 
+import os
+
 # PetPoint Login Credentials
 PETPOINT_CONFIG = {
-    'shelter_id': 'USNY9',
-    'username': 'zaks',
-    'password': 'Gillian666!'
+    'shelter_id': os.getenv('PETPOINT_SHELTER_ID', 'USNY9'),
+    'username': os.getenv('PETPOINT_USERNAME', 'zaks'),
+    'password': os.getenv('PETPOINT_PASSWORD', 'Gillian666!')
 }
 
 # Application Settings

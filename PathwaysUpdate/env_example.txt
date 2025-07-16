@@ -1,0 +1,15 @@
+# Cloud SQL Database Configuration
+# Copy this file to .env and fill in your actual values
+# DO NOT commit the .env file to version control
+
+CLOUD_SQL_INSTANCE_NAME=your-instance-name
+CLOUD_SQL_DATABASE_NAME=your-database-name
+CLOUD_SQL_USER=your-username
+CLOUD_SQL_PASSWORD=your-password
+CLOUD_SQL_HOST=your-host-ip
+CLOUD_SQL_PORT=3306
+
+# PetPoint Credentials (if needed for image scraping)
+PETPOINT_SHELTER_ID=your-shelter-id
+PETPOINT_USERNAME=your-username
+PETPOINT_PASSWORD=your-password 

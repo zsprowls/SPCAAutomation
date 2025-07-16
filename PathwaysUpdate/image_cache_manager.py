@@ -17,7 +17,8 @@ import threading
 from queue import Queue
 import logging
 
-from config import PETPOINT_CONFIG, IMAGE_CONFIG
+# PetPoint config no longer needed since we only read from cache
+# from config import PETPOINT_CONFIG, IMAGE_CONFIG
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -61,8 +62,8 @@ class OptimizedImageCacheManager:
             chrome_options = Options()
             
             # Headless mode for faster processing
-            if IMAGE_CONFIG.get('headless_browser', True):
-                chrome_options.add_argument("--headless")
+            # if IMAGE_CONFIG.get('headless_browser', True):
+            chrome_options.add_argument("--headless")
             
             # Cloud environment specific options
             chrome_options.add_argument("--no-sandbox")
@@ -150,228 +151,23 @@ class OptimizedImageCacheManager:
             return None
     
     def ensure_valid_session(self):
-        """Ensure we have a valid login session"""
-        with self.session_lock:
-            current_time = time.time()
-            if (self.last_login_time is None or 
-                current_time - self.last_login_time > self.login_timeout):
-                self.login_to_petpoint()
+        """Ensure we have a valid login session - DISABLED since we only read from cache"""
+        # with self.session_lock:
+        #     current_time = time.time()
+        #     if (self.last_login_time is None or 
+        #         current_time - self.last_login_time > self.login_timeout):
+        #         self.login_to_petpoint()
+        pass  # No login needed when reading from cache
     
     def login_to_petpoint(self):
-        """Login to PetPoint with optimized approach"""
-        try:
-            if self.driver:
-                try:
-                    self.driver.quit()
-                except:
-                    pass
-            
-            logger.info("Setting up headless browser...")
-            self.driver = self.setup_driver()
-            
-            if self.driver is None:
-                logger.error("Failed to setup Chrome driver")
-                return False
-            
-            logger.info("Navigating to login page...")
-            self.driver.get("https://sms.petpoint.com/sms3/forms/signinout.aspx")
-            time.sleep(3)
-            
-            # Wait for page to be fully loaded
-            WebDriverWait(self.driver, 20).until(
-                lambda d: d.execute_script('return document.readyState') == 'complete'
-            )
-            
-            # Handle iframes
-            iframes = self.driver.find_elements(By.TAG_NAME, "iframe")
-            if iframes:
-                logger.info(f"Found {len(iframes)} iframes, switching to first one...")
-                self.driver.switch_to.frame(iframes[0])
-            
-            # Enter shelter ID
-            shelter_id_input = WebDriverWait(self.driver, 20).until(
-                EC.presence_of_element_located((By.ID, "LoginShelterId"))
-            )
-            shelter_id_input.clear()
-            shelter_id_input.send_keys(PETPOINT_CONFIG['shelter_id'])
-            time.sleep(1)
-            
-            # Click continue or press Enter
-            try:
-                continue_button = WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Continue')]"))
-                )
-                continue_button.click()
-            except:
-                shelter_id_input.send_keys(Keys.RETURN)
-            
-            time.sleep(3)
-            
-            # Switch back to iframe if needed
-            if iframes:
-                self.driver.switch_to.default_content()
-                self.driver.switch_to.frame(iframes[0])
-            
-            # Enter username
-            username_input = WebDriverWait(self.driver, 20).until(
-                EC.presence_of_element_located((By.ID, "LoginUsername"))
-            )
-            username_input.clear()
-            username_input.send_keys(PETPOINT_CONFIG['username'])
-            time.sleep(1)
-            
-            # Enter password
-            password_input = WebDriverWait(self.driver, 20).until(
-                EC.presence_of_element_located((By.ID, "LoginPassword"))
-            )
-            password_input.clear()
-            password_input.send_keys(PETPOINT_CONFIG['password'])
-            time.sleep(1)
-            
-            # Click login or press Enter
-            try:
-                login_button = WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Login')]"))
-                )
-                login_button.click()
-            except:
-                password_input.send_keys(Keys.RETURN)
-            
-            time.sleep(5)
-            
-            # Switch back to default content
-            if iframes:
-                self.driver.switch_to.default_content()
-            
-            # Check if login was successful
-            current_url = self.driver.current_url.lower()
-            if "signinout.aspx" in current_url:
-                logger.error("Login failed - still on login page")
-                return False
-            
-            self.last_login_time = time.time()
-            logger.info("Successfully logged in to PetPoint")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Error during login: {str(e)}")
-            return False
+        """Login to PetPoint - DISABLED since we only read from cache"""
+        logger.info("PetPoint login disabled - using cache only")
+        return False
     
     def get_animal_images_from_page(self, animal_id):
-        """Get images for a specific animal from PetPoint"""
-        try:
-            self.ensure_valid_session()
-            
-            # Extract last 8 digits if full ID is provided
-            if len(animal_id) > 8:
-                animal_id = animal_id[-8:]
-            
-            url = f"https://sms.petpoint.com/sms3/enhanced/animal/{animal_id}"
-            logger.info(f"Processing animal {animal_id}...")
-            
-            self.driver.get(url)
-            time.sleep(2)  # Reduced wait time
-            
-            # Wait for page to be fully loaded
-            WebDriverWait(self.driver, 15).until(
-                lambda d: d.execute_script('return document.readyState') == 'complete'
-            )
-            
-            # Try to close any popup overlays
-            try:
-                overlay = self.driver.find_element(By.CLASS_NAME, "k-overlay")
-                if overlay:
-                    ActionChains(self.driver).move_by_offset(0, 0).click().perform()
-                    time.sleep(1)
-            except:
-                pass
-            
-            # Navigate to Photos/Video tab
-            try:
-                photo_tab = WebDriverWait(self.driver, 15).until(
-                    EC.element_to_be_clickable((By.XPATH, "//a[@id='AnimalImageGalleryTabLink']"))
-                )
-                try:
-                    photo_tab.click()
-                except:
-                    self.driver.execute_script("arguments[0].click();", photo_tab)
-                time.sleep(2)  # Reduced wait time
-                
-                # Try multiple selectors to find images
-                image_urls = []
-                
-                # Method 1: Gallery container
-                try:
-                    gallery_images = self.driver.find_elements(By.CSS_SELECTOR, "#ImageGallery img")
-                    if gallery_images:
-                        for img in gallery_images:
-                            src = img.get_attribute('src')
-                            if src and ("petango.com" in src or "youtube.com" in src):
-                                image_urls.append(src)
-                except:
-                    pass
-                
-                # Method 2: Tab content
-                if not image_urls:
-                    try:
-                        tab_images = self.driver.find_elements(By.CSS_SELECTOR, "#ImageGallery .tab-content img")
-                        for img in tab_images:
-                            src = img.get_attribute('src')
-                            if src and ("petango.com" in src or "youtube.com" in src):
-                                image_urls.append(src)
-                    except:
-                        pass
-                
-                # Method 3: Specific classes
-                if not image_urls:
-                    try:
-                        class_images = self.driver.find_elements(By.CSS_SELECTOR, ".animal-image, .pet-image, .gallery-image")
-                        for img in class_images:
-                            src = img.get_attribute('src')
-                            if src and ("petango.com" in src or "youtube.com" in src):
-                                image_urls.append(src)
-                    except:
-                        pass
-                
-                # Method 4: Look for video links and YouTube URLs
-                try:
-                    # Look for links that might contain video URLs
-                    video_links = self.driver.find_elements(By.CSS_SELECTOR, "a[href*='youtube.com'], a[href*='youtu.be']")
-                    for link in video_links:
-                        href = link.get_attribute('href')
-                        if href and ("youtube.com/watch" in href or "youtu.be/" in href):
-                            image_urls.append(href)
-                except:
-                    pass
-                
-                # Method 5: Look for iframe elements that might contain videos
-                try:
-                    iframes = self.driver.find_elements(By.CSS_SELECTOR, "iframe[src*='youtube.com']")
-                    for iframe in iframes:
-                        src = iframe.get_attribute('src')
-                        if src and "youtube.com/embed" in src:
-                            # Convert embed URL to watch URL
-                            video_id = src.split('/embed/')[1].split('?')[0]
-                            watch_url = f"https://www.youtube.com/watch?v={video_id}"
-                            image_urls.append(watch_url)
-                except:
-                    pass
-                
-                # Limit to max images per animal (if specified)
-                max_images = IMAGE_CONFIG.get('max_images_per_animal', 3)
-                if max_images is not None:
-                    image_urls = image_urls[:max_images]
-                
-                logger.info(f"Found {len(image_urls)} images for animal {animal_id}")
-                return image_urls
-                
-            except Exception as e:
-                logger.warning(f"Error navigating to Photos/Video tab for {animal_id}: {str(e)}")
-                return []
-                
-        except Exception as e:
-            logger.error(f"Error accessing animal page for {animal_id}: {str(e)}")
-            return []
+        """Get images for a specific animal from PetPoint - DISABLED since we only read from cache"""
+        logger.info(f"Image scraping disabled for animal {animal_id} - using cache only")
+        return []
     
     def process_animal_batch(self, animal_ids, progress_queue):
         """Process a batch of animals concurrently"""

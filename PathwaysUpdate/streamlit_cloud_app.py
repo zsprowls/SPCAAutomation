@@ -346,6 +346,18 @@ def save_record_to_database(aid, foster_value, transfer_value, communications_va
         manager = get_database_manager()
         st.info(f"🔧 Got database manager: {manager}")
         
+        # Check if we have a database connection
+        if not manager.connection:
+            st.error("❌ No database connection available!")
+            st.info("🔧 Attempting to connect to cloud database...")
+            if not connect_to_database(use_cloud=True):
+                st.error("❌ Failed to connect to cloud database")
+                return False
+            st.success("✅ Connected to cloud database")
+        
+        st.info(f"🔧 Database type: {manager.db_type}")
+        st.info(f"🔧 Connection status: {manager.connection is not None}")
+        
         success = manager.update_animal_record(aid, foster_value, transfer_value, communications_value, new_note)
         st.info(f"🔧 update_animal_record returned: {success}")
         

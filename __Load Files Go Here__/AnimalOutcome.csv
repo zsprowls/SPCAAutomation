@@ -1,28 +1,12 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Tuesday, July 15, 2025",7/14/2025 12:00 AM,All,7/14/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Wednesday, July 16, 2025",7/15/2025 12:00 AM,All,7/15/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058831489,Mandy,Dog,"Chihuahua, Short Coat",11yrs,F,Yes,Adoption,Previous Adopter - Dog,McCrohan Nikki,NikkiM,,Mix,No,,,,07/14/2025 02:48 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058578387,McRib,Cat,Domestic Longhair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,Starlight,Mix,No,,,,07/14/2025 02:57 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058475350,Bella,Dog,"Chihuahua, Short Coat",9yrs,F,Yes,Adoption,Foster Care Adoption - Dog,Sisti Maria,MariaS,,Mix,No,,West Falls,,07/14/2025 05:09 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058812861,XAVIER,Rabbit,Satin,,M,Yes,Adoption,New Adopter - Other,Sisti Maria,MariaS,Xavier,Dutch,No,,Springville,,07/14/2025 03:08 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058433954,Socks,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/14/2025 03:07 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058657306,Pasta,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/14/2025 02:54 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058735803,BUN BUN,Rabbit,Angora,11mos,M,Yes,Adoption,New Adopter - Other,Sisti Maria,MariaS,,,No,,Akron,,07/14/2025 11:39 AM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058747362,Pinky,Cat,Domestic Longhair,2mos,F,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,,Mix,No,,Buffalo,,07/14/2025 04:10 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058578392,McFlurry,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,Grogar,Mix,No,,,,07/14/2025 03:04 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058757250,PHOEBE,Cat,Domestic Shorthair,1yrs,F,Yes,Adoption,New Adopter - Cat,Kiblin Julia,JULIAK,,,No,,,,07/14/2025 03:25 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058798054,Mojito,Cat,Domestic Shorthair,1yrs,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/14/2025 03:03 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058578394,Big Mac,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,New Adopter - Cat,McCrohan Nikki,NikkiM,Big Mcintosh,,No,,,,07/14/2025 05:03 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058878498,Zebo,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/14/2025 03:05 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058798000,BENNY,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",3yrs,M,Yes,Adoption,Foster Care Adoption - Dog,McCrohan Nikki,NikkiM,,Mix,No,,,,07/14/2025 02:07 PM,,,,,,23
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058871542,MILKSHAKE,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,New Adopter - Cat,McCrohan Nikki,NikkiM,,,No,,,,07/14/2025 04:28 PM,,,,,,23
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058645169,Dandelion,Rabbit,Lion Head,,F,Yes,Clinic Out,Retention,BUCHHOLZ AMBER,AmberB,,,No,,,,07/14/2025 03:26 PM,,,,,,23
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058658142,TOAST,Rabbit,Holland Lop,7mos,M,Yes,Clinic Out,Retention,BUCHHOLZ AMBER,AmberB,,,No,,,,07/14/2025 03:01 PM,,,,,,23
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058867235,,Cat,Domestic Shorthair,1yrs,F,Yes,Clinic Out,Stray,BUCHHOLZ AMBER,AmberB,,Mix,No,,,,07/14/2025 10:42 AM,,,,,,23
-DOA,Total Outcomes: 1,Total Unique Animals: 1,A0058902362,BooBoo,Dog,Maltese,7yrs,M,Yes,DOA, ,,AmberB,,Mix,No,,,,07/14/2025 10:19 AM,,,,,,23
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058883828,,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,M,No,Euthanasia,Medical Reasons,,VALERIEM,,Mix,No,,,,07/14/2025 10:03 AM,,,,,,23
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058894633,GIZMO,Cat,Domestic Shorthair,15yrs,M,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Mix,No,,,,07/14/2025 01:15 PM,,,,,,23
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058901666,Sweetie,Dog,Shih Tzu,18yrs,F,Yes,Euthanasia,Requested Sleep,,KRYSTANP,,Mix,No,,,,07/14/2025 09:10 AM,,,,,,23
-Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0058902017,Smoket,Cat,Domestic Shorthair,6yrs,F,No,Euthanasia,Dental Disease/Stomatitis,,VALERIEM,,Mix,No,,,,07/14/2025 12:04 PM,,,,,,23
+Adoption,Total Outcomes: 3,Total Unique Animals: 3,A0058571053,DAVID BOWIE,Rodent,GUINEA PIG,6mos,M,No,Adoption,New Adopter - Other,WEBSTER KATE,KATEW,,,No,,Eden,,07/15/2025 11:14 AM,,,,,,7
+Adoption,Total Outcomes: 3,Total Unique Animals: 3,A0058578389,Chicken Nugget,Cat,Domestic Longhair,3mos,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,Twilight,,No,,Buffalo,,07/15/2025 11:50 AM,,,,,,7
+Adoption,Total Outcomes: 3,Total Unique Animals: 3,A0058811636,KARMEN,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2yrs,M,Yes,Adoption,New Adopter - Dog,WEBSTER KATE,KATEW,karma,Mix,No,,Lancaster,,07/15/2025 05:06 PM,,,,,,7
+Euthanasia,Total Outcomes: 2,Total Unique Animals: 2,A0058878747,Sage,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",16yrs,F,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Mix,No,,,,07/15/2025 11:49 AM,,,,,,7
+Euthanasia,Total Outcomes: 2,Total Unique Animals: 2,A0058909286,,Cat,Domestic Shorthair,1mos,F,No,Euthanasia,Neurologic Reasons,,VALERIEM,,Mix,No,,,,07/15/2025 10:11 AM,,,,,,7
+Transfer Out,Total Outcomes: 2,Total Unique Animals: 2,A0058552575,MUFFLER,Cat,Domestic Shorthair,3mos,F,Yes,Transfer Out,Feral Cat Focus,VOGT SHANNON,SHANNONV,,,No,,East Aurora,More Suitable Housing,07/15/2025 12:39 PM,,,,,,7
+Transfer Out,Total Outcomes: 2,Total Unique Animals: 2,A0058552576,Carburetor,Cat,Domestic Shorthair,3mos,F,Yes,Transfer Out,Feral Cat Focus,VOGT SHANNON,SHANNONV,,,No,,East Aurora,More Suitable Housing,07/15/2025 12:39 PM,,,,,,7
 

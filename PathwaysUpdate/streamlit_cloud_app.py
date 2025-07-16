@@ -211,11 +211,9 @@ def load_data_from_database():
     """Load data from cloud database"""
     try:
         # Connect to cloud database
-        st.info("Attempting to connect to cloud database...")
         if not connect_to_database(use_cloud=True):
             st.error("Failed to connect to cloud database")
             return None
-        st.success("Successfully connected to cloud database")
         
         # Get database manager
         manager = get_database_manager()
@@ -380,39 +378,26 @@ def load_data_from_database():
 def save_record_to_database(aid, foster_value, transfer_value, communications_value, new_note):
     """Save a record to the database"""
     try:
-        st.info(f"🔧 save_record_to_database called with AID: {aid}")
-        
         manager = get_database_manager()
-        st.info(f"🔧 Got database manager: {manager}")
         
         # Check if we have a database connection
         if not manager.connection:
-            st.error("❌ No database connection available!")
-            st.info("🔧 Attempting to connect to cloud database...")
             if not connect_to_database(use_cloud=True):
-                st.error("❌ Failed to connect to cloud database")
+                st.error("Failed to connect to database")
                 return False
-            st.success("✅ Connected to cloud database")
-        
-        st.info(f"🔧 Database type: {manager.db_type}")
-        st.info(f"🔧 Connection status: {manager.connection is not None}")
         
         success = manager.update_animal_record(aid, foster_value, transfer_value, communications_value, new_note)
-        st.info(f"🔧 update_animal_record returned: {success}")
         
         if success:
-            st.success("Record updated successfully!")
             # Clear cache to reload data
             st.cache_data.clear()
             return True
         else:
-            st.error("Failed to update record!")
+            st.error("Failed to update record")
             return False
             
     except Exception as e:
         st.error(f"Database error: {e}")
-        import traceback
-        st.error(f"Full traceback: {traceback.format_exc()}")
         return False
 
 def export_database_to_csv():
@@ -420,7 +405,7 @@ def export_database_to_csv():
     try:
         # Ensure we have a fresh connection
         if not connect_to_database(use_cloud=True):
-            st.error("Failed to connect to cloud database.")
+            st.error("Failed to connect to database")
             return False
         
         manager = get_database_manager()
@@ -428,13 +413,8 @@ def export_database_to_csv():
         # Get the data
         df = manager.get_pathways_data()
         
-        # Debug info
-        if df is None:
-            st.error("Database query returned None")
-            return False
-        
-        if len(df) == 0:
-            st.error("Database query returned empty DataFrame")
+        if df is None or len(df) == 0:
+            st.error("No data available to export")
             return False
         
         # Convert DataFrame to CSV string
@@ -450,12 +430,10 @@ def export_database_to_csv():
             file_name=filename,
             mime="text/csv"
         )
-        st.success(f"✅ Ready to export {len(df)} records")
         return True
             
     except Exception as e:
         st.error(f"Export error: {e}")
-        st.error(f"Error type: {type(e)}")
         return False
 
 def display_media(animal_id, image_urls):

@@ -420,39 +420,61 @@ def export_database_to_csv():
         return False
 
 def display_media(animal_id, image_urls):
-    """Display images and videos for an animal in a compact single line"""
+    """Display images and videos for an animal with a slider"""
     if not image_urls:
         st.markdown('<div style="text-align: center; padding: 20px; color: #6c757d; font-style: italic; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;">No images or videos available</div>', unsafe_allow_html=True)
         return
     
-    # Build HTML content as a single string
-    html_content = '<div style="width: 100%; overflow-x: auto; overflow-y: hidden; white-space: nowrap; padding: 8px; scrollbar-width: thin; scrollbar-color: #bc6f32 #f8f9fa; -webkit-overflow-scrolling: touch;"><div style="display: inline-flex; gap: 8px; align-items: center; min-width: min-content;">'
+    # Create a slider for image selection
+    if len(image_urls) > 1:
+        selected_index = st.slider(
+            f"Select Image/Video (1-{len(image_urls)})",
+            min_value=0,
+            max_value=len(image_urls) - 1,
+            value=0,
+            key=f"image_slider_{animal_id}"
+        )
+    else:
+        selected_index = 0
     
-    for i, url in enumerate(image_urls):
-        if 'youtube.com' in url or 'youtu.be' in url:
-            # Extract video ID
-            video_id = None
-            if 'youtube.com/watch?v=' in url:
-                video_id = url.split('youtube.com/watch?v=')[1].split('&')[0]
-            elif 'youtu.be/' in url:
-                video_id = url.split('youtu.be/')[1].split('?')[0]
-            elif 'youtube.com/embed/' in url:
-                video_id = url.split('youtube.com/embed/')[1].split('?')[0]
-            elif 'img.youtube.com/vi/' in url:
-                video_id = url.split('img.youtube.com/vi/')[1].split('/')[0]
-            
-            if video_id:
-                watch_url = f"https://www.youtube.com/watch?v={video_id}"
-                html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Video {i+1}"><div style="font-size: 12px; margin-top: 2px; font-weight: bold;"><a href="{watch_url}" target="_blank" style="color: #bc6f32; text-decoration: underline;">▶ Watch Video</a></div></div>'
-            else:
-                html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Media {i+1}"><div style="font-size: 10px; margin-top: 2px;">Media {i+1}</div></div>'
+    # Get the selected image/video
+    selected_url = image_urls[selected_index]
+    
+    # Display the selected media
+    st.markdown('<div style="text-align: center; padding: 10px;">', unsafe_allow_html=True)
+    
+    if 'youtube.com' in selected_url or 'youtu.be' in selected_url:
+        # Handle YouTube videos
+        video_id = None
+        if 'youtube.com/watch?v=' in selected_url:
+            video_id = selected_url.split('youtube.com/watch?v=')[1].split('&')[0]
+        elif 'youtu.be/' in selected_url:
+            video_id = selected_url.split('youtu.be/')[1].split('?')[0]
+        elif 'youtube.com/embed/' in selected_url:
+            video_id = selected_url.split('youtube.com/embed/')[1].split('?')[0]
+        elif 'img.youtube.com/vi/' in selected_url:
+            video_id = selected_url.split('img.youtube.com/vi/')[1].split('/')[0]
+        
+        if video_id:
+            watch_url = f"https://www.youtube.com/watch?v={video_id}"
+            st.markdown(f"""
+            <div style="text-align: center;">
+                <img src="{selected_url}" style="max-width: 400px; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);" alt="Video {selected_index + 1}">
+                <br>
+                <a href="{watch_url}" target="_blank" style="color: #bc6f32; text-decoration: underline; font-weight: bold;">▶ Watch Video on YouTube</a>
+            </div>
+            """, unsafe_allow_html=True)
         else:
-            html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Image {i+1}"><div style="font-size: 10px; margin-top: 2px;">Image {i+1}</div></div>'
+            st.image(selected_url, caption=f"Media {selected_index + 1}", use_column_width=True)
+    else:
+        # Handle regular images
+        st.image(selected_url, caption=f"Image {selected_index + 1} of {len(image_urls)}", use_column_width=True)
     
-    html_content += '</div></div>'
+    st.markdown('</div>', unsafe_allow_html=True)
     
-    # Display the compact image layout
-    st.markdown(html_content, unsafe_allow_html=True)
+    # Show image counter
+    if len(image_urls) > 1:
+        st.markdown(f'<div style="text-align: center; color: #6c757d; font-size: 14px;">Image {selected_index + 1} of {len(image_urls)}</div>', unsafe_allow_html=True)
 
 def main():
     # Initialize image cache (with cloud environment handling)
@@ -527,15 +549,17 @@ def main():
         col1, col2, col3 = st.columns([1, 2, 1])
         
         with col1:
-            if st.button("← Previous"):
+            if st.button("← Previous", key="prev_button"):
                 st.session_state.current_index = max(0, st.session_state.current_index - 1)
+                st.rerun()
         
         with col2:
             st.markdown(f'<div class="page-indicator">Animal {st.session_state.current_index + 1} of {len(df)}</div>', unsafe_allow_html=True)
         
         with col3:
-            if st.button("Next →"):
+            if st.button("Next →", key="next_button"):
                 st.session_state.current_index = min(len(df) - 1, st.session_state.current_index + 1)
+                st.rerun()
         
         # Handle search selection
         if selected_animal != "Select an animal...":

@@ -4,15 +4,6 @@ import time
 import sys
 from pathlib import Path
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
 import threading
 from queue import Queue
 import logging
@@ -57,98 +48,9 @@ class OptimizedImageCacheManager:
             logger.error(f"Error saving cache: {e}")
     
     def setup_driver(self):
-        """Set up and return a configured Chrome WebDriver with headless mode"""
-        try:
-            chrome_options = Options()
-            
-            # Headless mode for faster processing
-            # if IMAGE_CONFIG.get('headless_browser', True):
-            chrome_options.add_argument("--headless")
-            
-            # Cloud environment specific options
-            chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--disable-dev-shm-usage")
-            chrome_options.add_argument("--disable-gpu")
-            chrome_options.add_argument("--disable-extensions")
-            chrome_options.add_argument("--disable-plugins")
-            chrome_options.add_argument("--disable-images")  # Don't load images for faster page loads
-            chrome_options.add_argument("--disable-javascript")  # Disable JS for faster loads
-            chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-            chrome_options.add_argument("--remote-debugging-port=9222")
-            chrome_options.add_argument("--disable-web-security")
-            chrome_options.add_argument("--allow-running-insecure-content")
-            chrome_options.add_argument("--disable-setuid-sandbox")
-            chrome_options.add_argument("--disable-background-timer-throttling")
-            chrome_options.add_argument("--disable-backgrounding-occluded-windows")
-            chrome_options.add_argument("--disable-renderer-backgrounding")
-            chrome_options.add_argument("--disable-features=TranslateUI")
-            chrome_options.add_argument("--disable-ipc-flooding-protection")
-            chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-            chrome_options.add_experimental_option('useAutomationExtension', False)
-            
-            # Add additional preferences for faster loading
-            chrome_options.add_experimental_option("prefs", {
-                "profile.default_content_setting_values.notifications": 2,
-                "credentials_enable_service": False,
-                "profile.password_manager_enabled": False,
-                "profile.default_content_settings.popups": 0,
-                "profile.managed_default_content_settings.images": 2,  # Block images
-            })
-            
-            # Try to setup Chrome driver with better error handling
-            try:
-                service = Service(ChromeDriverManager().install())
-                driver = webdriver.Chrome(service=service, options=chrome_options)
-            except Exception as chrome_error:
-                logger.error(f"Chrome driver setup failed: {chrome_error}")
-                
-                # Check if we're in a cloud environment and try alternative approaches
-                if os.path.exists('/home/appuser') or os.path.exists('/app'):
-                    logger.info("Detected cloud environment, trying alternative Chrome setup...")
-                    
-                    # Try with system Chrome if available
-                    try:
-                        chrome_options.binary_location = "/usr/bin/google-chrome"
-                        service = Service(ChromeDriverManager().install())
-                        driver = webdriver.Chrome(service=service, options=chrome_options)
-                        logger.info("Successfully setup Chrome with system binary")
-                    except Exception as system_chrome_error:
-                        logger.error(f"System Chrome setup failed: {system_chrome_error}")
-                        
-                        # Try with chromium if available
-                        try:
-                            chrome_options.binary_location = "/usr/bin/chromium-browser"
-                            service = Service(ChromeDriverManager().install())
-                            driver = webdriver.Chrome(service=service, options=chrome_options)
-                            logger.info("Successfully setup Chrome with Chromium binary")
-                        except Exception as chromium_error:
-                            logger.error(f"Chromium setup failed: {chromium_error}")
-                            logger.error("All Chrome driver attempts failed. Image scraping will be disabled.")
-                            return None
-                else:
-                    # Not in cloud environment, re-raise the original error
-                    raise chrome_error
-            
-            # Execute CDP commands to prevent detection
-            try:
-                driver.execute_cdp_cmd('Network.setUserAgentOverride', {
-                    "userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-                })
-                
-                driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
-                    'source': '''
-                        Object.defineProperty(navigator, 'webdriver', {
-                            get: () => undefined
-                        })
-                    '''
-                })
-            except Exception as cdp_error:
-                logger.warning(f"CDP commands failed (non-critical): {cdp_error}")
-            
-            return driver
-        except Exception as e:
-            logger.error(f"Failed to setup Chrome driver: {e}")
-            return None
+        """Set up and return a configured Chrome WebDriver - DISABLED since we only read from cache"""
+        logger.info("Chrome driver setup disabled - using cache only")
+        return None
     
     def ensure_valid_session(self):
         """Ensure we have a valid login session - DISABLED since we only read from cache"""

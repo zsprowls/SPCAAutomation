@@ -169,13 +169,11 @@ st.markdown("""
 
 @st.cache_data
 def load_data_from_database():
-    """Load data from database with fallback to local SQLite"""
+    """Load data from cloud database"""
     try:
-        # Try to connect to cloud database first
+        # Connect to cloud database
         if not connect_to_database(use_cloud=True):
-            # Fallback to local SQLite database
-            if not connect_to_database(use_cloud=False):
-                return None
+            return None
         
         # Get database manager
         manager = get_database_manager()
@@ -359,12 +357,10 @@ def save_record_to_database(aid, foster_value, transfer_value, communications_va
 def export_database_to_csv():
     """Export database to CSV"""
     try:
-        # Ensure we have a fresh connection with fallback
+        # Ensure we have a fresh connection
         if not connect_to_database(use_cloud=True):
-            # Fallback to local SQLite database
-            if not connect_to_database(use_cloud=False):
-                st.error("Failed to connect to any database.")
-                return False
+            st.error("Failed to connect to cloud database.")
+            return False
         
         manager = get_database_manager()
         

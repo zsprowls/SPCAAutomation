@@ -245,8 +245,34 @@ class DatabaseManager:
     
     def get_animal_by_id(self, aid: str) -> Optional[pd.DataFrame]:
         """Get animal by AID"""
-        query = "SELECT * FROM pathways_data WHERE AID = ?"
-        return self.execute_query(query, (aid,))
+        try:
+            import streamlit as st
+            st.info(f"🔧 Looking for animal {aid} in database")
+            
+            if self.db_type == 'mysql':
+                query = "SELECT * FROM pathways_data WHERE AID = %s"
+            else:
+                query = "SELECT * FROM pathways_data WHERE AID = ?"
+            
+            st.info(f"🔧 Query: {query}")
+            st.info(f"🔧 Parameter: {aid}")
+            
+            result = self.execute_query(query, (aid,))
+            
+            if result is None:
+                st.error(f"❌ Query returned None for animal {aid}")
+                return None
+            elif len(result) == 0:
+                st.error(f"❌ No records found for animal {aid}")
+                return None
+            else:
+                st.success(f"✅ Found {len(result)} record(s) for animal {aid}")
+                return result
+                
+        except Exception as e:
+            import streamlit as st
+            st.error(f"❌ Error in get_animal_by_id: {e}")
+            return None
     
     def update_animal_record(self, aid: str, foster_value: str, transfer_value: str, 
                            communications_value: str, new_note: str) -> bool:

@@ -25,7 +25,9 @@ logger = logging.getLogger(__name__)
 
 class OptimizedImageCacheManager:
     def __init__(self):
-        self.cache_file = "animal_images_cache.json"
+        # Use absolute path to cache file relative to this script's location
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        self.cache_file = os.path.join(script_dir, "animal_images_cache.json")
         self.cache_data = {}
         self.driver = None
         self.last_login_time = None
@@ -523,6 +525,10 @@ def get_cache_manager():
 def initialize_cache():
     """Initialize the cache during application startup - READ ONLY MODE"""
     manager = get_cache_manager()
+    
+    # Debug: Log the cache file path
+    logger.info(f"Looking for cache file at: {manager.cache_file}")
+    logger.info(f"Current working directory: {os.getcwd()}")
     
     # Check if cache exists
     if os.path.exists(manager.cache_file):

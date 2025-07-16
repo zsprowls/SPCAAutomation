@@ -465,7 +465,7 @@ def display_media(animal_id, image_urls):
         return
     
     # Build HTML content as a single string for horizontal scroll
-    html_content = '<div class="image-scroll-container" style="width: 100%; overflow-x: scroll; overflow-y: hidden; white-space: nowrap; padding: 8px; scrollbar-width: auto; scrollbar-color: #bc6f32 #f8f9fa; -webkit-overflow-scrolling: touch;"><div style="display: inline-flex; gap: 8px; align-items: center; min-width: min-content;">'
+    html_content = '<div style="display: flex; flex-wrap: nowrap; gap: 8px; align-items: center; justify-content: center; overflow-x: auto; padding: 8px; scrollbar-width: thin; scrollbar-color: #bc6f32 #f8f9fa;">'
     
     for i, url in enumerate(image_urls):
         if 'youtube.com' in url or 'youtu.be' in url:
@@ -488,7 +488,7 @@ def display_media(animal_id, image_urls):
         else:
             html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Image {i+1}"><div style="font-size: 10px; margin-top: 2px;">Image {i+1}</div></div>'
     
-    html_content += '</div></div>'
+    html_content += '</div>'
     
     # Display the compact horizontal scroll layout
     st.markdown(html_content, unsafe_allow_html=True)

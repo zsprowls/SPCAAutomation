@@ -1,8 +1,26 @@
-streamlit>=1.24.0
-pandas>=1.5.0
-openpyxl>=3.0.0
+# Core dependencies
+streamlit>=1.28.0
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Database dependencies
+pymysql>=1.1.0
+cryptography>=41.0.0
+
+# Web scraping and automation
 selenium>=4.15.0
 webdriver-manager>=4.0.0
+
+# Image processing
+Pillow>=10.0.0
+
+# Data handling
+openpyxl>=3.1.0
+xlrd>=2.0.0
+
+# Utilities
+python-dotenv>=1.0.0
 requests>=2.31.0
-beautifulsoup4>=4.12.0
-geckodriver-autoinstaller>=0.1.0 
+
+# Optional: For better performance
+pyarrow>=14.0.0 

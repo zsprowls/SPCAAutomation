@@ -55,49 +55,57 @@ class OptimizedImageCacheManager:
     
     def setup_driver(self):
         """Set up and return a configured Chrome WebDriver with headless mode"""
-        chrome_options = Options()
-        
-        # Headless mode for faster processing
-        if IMAGE_CONFIG.get('headless_browser', True):
-            chrome_options.add_argument("--headless")
-        
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--disable-extensions")
-        chrome_options.add_argument("--disable-plugins")
-        chrome_options.add_argument("--disable-images")  # Don't load images for faster page loads
-        chrome_options.add_argument("--disable-javascript")  # Disable JS for faster loads
-        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        chrome_options.add_experimental_option('useAutomationExtension', False)
-        
-        # Add additional preferences for faster loading
-        chrome_options.add_experimental_option("prefs", {
-            "profile.default_content_setting_values.notifications": 2,
-            "credentials_enable_service": False,
-            "profile.password_manager_enabled": False,
-            "profile.default_content_settings.popups": 0,
-            "profile.managed_default_content_settings.images": 2,  # Block images
-        })
-        
-        service = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=chrome_options)
-        
-        # Execute CDP commands to prevent detection
-        driver.execute_cdp_cmd('Network.setUserAgentOverride', {
-            "userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        })
-        
-        driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
-            'source': '''
-                Object.defineProperty(navigator, 'webdriver', {
-                    get: () => undefined
-                })
-            '''
-        })
-        
-        return driver
+        try:
+            chrome_options = Options()
+            
+            # Headless mode for faster processing
+            if IMAGE_CONFIG.get('headless_browser', True):
+                chrome_options.add_argument("--headless")
+            
+            # Cloud environment specific options
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--disable-gpu")
+            chrome_options.add_argument("--disable-extensions")
+            chrome_options.add_argument("--disable-plugins")
+            chrome_options.add_argument("--disable-images")  # Don't load images for faster page loads
+            chrome_options.add_argument("--disable-javascript")  # Disable JS for faster loads
+            chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+            chrome_options.add_argument("--remote-debugging-port=9222")
+            chrome_options.add_argument("--disable-web-security")
+            chrome_options.add_argument("--allow-running-insecure-content")
+            chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            chrome_options.add_experimental_option('useAutomationExtension', False)
+            
+            # Add additional preferences for faster loading
+            chrome_options.add_experimental_option("prefs", {
+                "profile.default_content_setting_values.notifications": 2,
+                "credentials_enable_service": False,
+                "profile.password_manager_enabled": False,
+                "profile.default_content_settings.popups": 0,
+                "profile.managed_default_content_settings.images": 2,  # Block images
+            })
+            
+            service = Service(ChromeDriverManager().install())
+            driver = webdriver.Chrome(service=service, options=chrome_options)
+            
+            # Execute CDP commands to prevent detection
+            driver.execute_cdp_cmd('Network.setUserAgentOverride', {
+                "userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            })
+            
+            driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
+                'source': '''
+                    Object.defineProperty(navigator, 'webdriver', {
+                        get: () => undefined
+                    })
+                '''
+            })
+            
+            return driver
+        except Exception as e:
+            logger.error(f"Failed to setup Chrome driver: {e}")
+            return None
     
     def ensure_valid_session(self):
         """Ensure we have a valid login session"""
@@ -118,6 +126,10 @@ class OptimizedImageCacheManager:
             
             logger.info("Setting up headless browser...")
             self.driver = self.setup_driver()
+            
+            if self.driver is None:
+                logger.error("Failed to setup Chrome driver")
+                return False
             
             logger.info("Navigating to login page...")
             self.driver.get("https://sms.petpoint.com/sms3/forms/signinout.aspx")
@@ -489,8 +501,12 @@ def initialize_cache():
 
 def get_animal_images_cached(animal_id):
     """Get images for an animal from cache"""
-    manager = get_cache_manager()
-    return manager.get_animal_images(animal_id)
+    try:
+        manager = get_cache_manager()
+        return manager.get_animal_images(animal_id)
+    except Exception as e:
+        logger.error(f"Error getting cached images for {animal_id}: {e}")
+        return []
 
 def get_cache_stats():
     """Get cache statistics"""

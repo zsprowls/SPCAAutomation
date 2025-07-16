@@ -425,15 +425,18 @@ def display_media(animal_id, image_urls):
     st.markdown(html_content, unsafe_allow_html=True)
 
 def main():
-    # Initialize image cache
+    # Initialize image cache (with cloud environment handling)
     if 'cache_initialized' not in st.session_state:
         st.session_state.cache_initialized = False
     
     if not st.session_state.cache_initialized:
         with st.spinner("Initializing image cache..."):
-            cache_success = initialize_cache()
-            if not cache_success:
-                st.sidebar.warning("Cache initialization failed, images may not be available")
+            try:
+                cache_success = initialize_cache()
+                if not cache_success:
+                    st.sidebar.warning("Cache initialization failed, images may not be available")
+            except Exception as e:
+                st.sidebar.warning(f"Cache initialization failed: {str(e)}. Images may not be available.")
         st.session_state.cache_initialized = True
     
     # Main header

@@ -191,8 +191,8 @@ class DatabaseManager:
             # Update the record
             query = """
                 UPDATE pathways_data 
-                SET "Foster Attempted" = ?, "Transfer Attempted" = ?, 
-                    "Communications Team Attempted" = ?, "Welfare Notes" = ?
+                SET Foster_Attempted = ?, Transfer_Attempted = ?, 
+                    Communications_Team_Attempted = ?, Welfare_Notes = ?
                 WHERE AID = ?
             """
             

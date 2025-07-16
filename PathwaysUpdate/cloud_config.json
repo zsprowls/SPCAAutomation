@@ -1,0 +1,15 @@
+{
+  "cloud_sql": {
+    "instance_name": "lunar-gradient-466017-a9:us-east5:pathways-for-care-db",
+    "database_name": "pathways_care",
+    "user": "pathways_user",
+    "password": "Pathways01",
+    "host": "34.162.59.3",
+    "port": 3306
+   
+  },
+  "local_backup": {
+    "enabled": true,
+    "backup_path": "./backups/"
+  }
+}

@@ -504,6 +504,32 @@ def display_media(animal_id, image_urls):
     st.markdown(html_content, unsafe_allow_html=True)
 
 def main():
+    # Password protection
+    if 'authenticated' not in st.session_state:
+        st.session_state.authenticated = False
+    
+    if not st.session_state.authenticated:
+        st.markdown('<h1 class="main-header">Pathways for Care Viewer</h1>', unsafe_allow_html=True)
+        
+        # Center the password input
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            st.markdown('<div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 10px; border: 1px solid #dee2e6;">', unsafe_allow_html=True)
+            st.markdown('<h3 style="color: #062b49; margin-bottom: 20px;">🔐 Authentication Required</h3>', unsafe_allow_html=True)
+            
+            password = st.text_input("Enter Password:", type="password", label_visibility="collapsed")
+            
+            if st.button("Login", type="primary", use_container_width=True):
+                if password == "SPCAPathways1*":
+                    st.session_state.authenticated = True
+                    st.rerun()
+                else:
+                    st.error("❌ Incorrect password")
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        return
+    
     # Initialize image cache (with cloud environment handling)
     if 'cache_initialized' not in st.session_state:
         st.session_state.cache_initialized = False
@@ -687,17 +713,11 @@ def main():
             col1, col2, col3 = st.columns([1, 1, 1])
             with col2:
                 if st.button("Save Changes", type="primary"):
-                    st.info(f"🔧 Attempting to save changes for animal {record['AID']}")
-                    st.info(f"🔧 Values: foster={foster_value}, transfer={transfer_value}, comms={communications_value}")
-                    st.info(f"🔧 New note: {new_note[:50] if new_note else 'None'}...")
-                    
                     if save_record_to_database(record['AID'], foster_value, transfer_value, communications_value, new_note):
-                        st.success("✅ Changes saved to database!")
                         st.cache_data.clear()  # Clear cache to reload data
                         st.rerun()
                     else:
-                        st.error("❌ Failed to save changes")
-                        st.error("Check the console logs for detailed error information")
+                        st.error("Failed to save changes")
 
     else:
         # Spreadsheet View

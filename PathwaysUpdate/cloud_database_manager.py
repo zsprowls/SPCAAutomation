@@ -174,7 +174,6 @@ class DatabaseManager:
         """
         try:
             if not self.connection:
-                print("❌ No database connection")
                 return None
             
             # Use SQLAlchemy engine if available for better pandas compatibility
@@ -193,7 +192,6 @@ class DatabaseManager:
             return df
             
         except Exception as e:
-            print(f"❌ Query execution failed: {e}")
             return None
     
     def execute_update(self, query: str, params: tuple = None) -> bool:
@@ -208,34 +206,20 @@ class DatabaseManager:
             True if successful, False otherwise
         """
         try:
-            import streamlit as st
             if not self.connection:
-                st.error("❌ No database connection")
                 return False
-            
-            st.info(f"🔧 Executing update query with {len(params) if params else 0} parameters")
             
             with self.connection.cursor() as cursor:
                 if params:
-                    st.info(f"🔧 Executing: {query}")
-                    st.info(f"🔧 With params: {params}")
                     cursor.execute(query, params)
                 else:
-                    st.info(f"🔧 Executing: {query}")
                     cursor.execute(query)
                 
                 rows_affected = cursor.rowcount
-                st.info(f"🔧 Rows affected: {rows_affected}")
-                
                 self.connection.commit()
-                st.success(f"✅ Update committed successfully")
                 return True
                 
         except Exception as e:
-            import streamlit as st
-            st.error(f"❌ Update execution failed: {e}")
-            import traceback
-            st.error(f"Full traceback: {traceback.format_exc()}")
             return False
     
     def get_pathways_data(self) -> Optional[pd.DataFrame]:
@@ -246,54 +230,29 @@ class DatabaseManager:
     def get_animal_by_id(self, aid: str) -> Optional[pd.DataFrame]:
         """Get animal by AID"""
         try:
-            import streamlit as st
-            st.info(f"🔧 Looking for animal {aid} in database")
-            
             if self.db_type == 'mysql':
                 query = "SELECT * FROM pathways_data WHERE AID = %s"
             else:
                 query = "SELECT * FROM pathways_data WHERE AID = ?"
             
-            st.info(f"🔧 Query: {query}")
-            st.info(f"🔧 Parameter: {aid}")
-            
             result = self.execute_query(query, (aid,))
-            
-            if result is None:
-                st.error(f"❌ Query returned None for animal {aid}")
-                return None
-            elif len(result) == 0:
-                st.error(f"❌ No records found for animal {aid}")
-                return None
-            else:
-                st.success(f"✅ Found {len(result)} record(s) for animal {aid}")
-                return result
+            return result
                 
         except Exception as e:
-            import streamlit as st
-            st.error(f"❌ Error in get_animal_by_id: {e}")
             return None
     
     def update_animal_record(self, aid: str, foster_value: str, transfer_value: str, 
                            communications_value: str, new_note: str) -> bool:
         """Update animal record"""
         try:
-            import streamlit as st
-            st.info(f"🔧 Starting update for animal {aid}")
-            st.info(f"🔧 Values: foster={foster_value}, transfer={transfer_value}, comms={communications_value}")
-            
             # Check connection
             if not self.connection:
-                st.error("❌ No database connection available")
                 return False
             
             # Get current welfare notes
             current_df = self.get_animal_by_id(aid)
             if current_df is None or len(current_df) == 0:
-                st.error(f"❌ Animal {aid} not found")
                 return False
-            
-            st.success(f"✅ Found animal {aid} in database")
             
             # Handle different column names for welfare notes
             welfare_col = None
@@ -303,11 +262,9 @@ class DatabaseManager:
                     break
             
             if not welfare_col:
-                st.error(f"❌ Welfare notes column not found. Available columns: {list(current_df.columns)}")
                 return False
             
             current_notes = current_df.iloc[0][welfare_col] if current_df.iloc[0][welfare_col] else ""
-            st.info(f"🔧 Current notes: {current_notes[:50]}...")
             
             # Add new note if provided
             if new_note and new_note.strip():
@@ -317,8 +274,6 @@ class DatabaseManager:
                     new_welfare_notes = new_note.strip()
             else:
                 new_welfare_notes = current_notes
-            
-            st.info(f"🔧 New notes: {new_welfare_notes[:50]}...")
             
             # Update the record - handle different database types
             if self.db_type == 'mysql':
@@ -336,24 +291,12 @@ class DatabaseManager:
                     WHERE AID = ?
                 """
             
-            st.info(f"🔧 Executing query: {query}")
-            st.info(f"🔧 Parameters: {foster_value}, {transfer_value}, {communications_value}, {new_welfare_notes[:50]}..., {aid}")
-            
             success = self.execute_update(query, (foster_value, transfer_value, 
                                                  communications_value, new_welfare_notes, aid))
-            
-            if success:
-                st.success(f"✅ Successfully updated animal {aid}")
-            else:
-                st.error(f"❌ Failed to update animal {aid}")
             
             return success
             
         except Exception as e:
-            import streamlit as st
-            st.error(f"❌ Update failed: {e}")
-            import traceback
-            st.error(f"Full traceback: {traceback.format_exc()}")
             return False
     
     def get_inventory_data(self) -> Optional[pd.DataFrame]:

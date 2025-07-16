@@ -19,6 +19,13 @@ try:
 except ImportError:
     pass  # python-dotenv not installed, use system environment variables
 
+# Import SQLAlchemy for better pandas compatibility
+try:
+    from sqlalchemy import create_engine
+    SQLALCHEMY_AVAILABLE = True
+except ImportError:
+    SQLALCHEMY_AVAILABLE = False
+
 class DatabaseManager:
     def __init__(self, config_path: str = 'cloud_config.json'):
         """
@@ -30,6 +37,7 @@ class DatabaseManager:
         self.config_path = config_path
         self.config = self._load_config()
         self.connection = None
+        self.engine = None
         self.db_type = None
         
     def _load_config(self) -> Optional[Dict[str, Any]]:
@@ -104,6 +112,7 @@ class DatabaseManager:
                         }
                     }
                 
+                # Create pymysql connection for updates
                 self.connection = pymysql.connect(
                     host=cloud_config['host'],
                     port=cloud_config['port'],
@@ -113,6 +122,12 @@ class DatabaseManager:
                     charset='utf8mb4',
                     **ssl_config
                 )
+                
+                # Create SQLAlchemy engine for pandas queries
+                if SQLALCHEMY_AVAILABLE:
+                    connection_string = f"mysql+pymysql://{cloud_config['user']}:{cloud_config['password']}@{cloud_config['host']}:{cloud_config['port']}/{cloud_config['database_name']}"
+                    self.engine = create_engine(connection_string)
+                
                 self.db_type = 'mysql'
                 print("✅ Connected to Google Cloud SQL (MySQL)")
                 
@@ -138,8 +153,13 @@ class DatabaseManager:
         if self.connection:
             self.connection.close()
             self.connection = None
-            self.db_type = None
-            print("🔌 Database connection closed")
+        
+        if self.engine:
+            self.engine.dispose()
+            self.engine = None
+            
+        self.db_type = None
+        print("🔌 Database connection closed")
     
     def execute_query(self, query: str, params: tuple = None) -> Optional[pd.DataFrame]:
         """
@@ -157,10 +177,18 @@ class DatabaseManager:
                 print("❌ No database connection")
                 return None
             
-            if params:
-                df = pd.read_sql_query(query, self.connection, params=params)
+            # Use SQLAlchemy engine if available for better pandas compatibility
+            if SQLALCHEMY_AVAILABLE and self.engine:
+                if params:
+                    df = pd.read_sql_query(query, self.engine, params=params)
+                else:
+                    df = pd.read_sql_query(query, self.engine)
             else:
-                df = pd.read_sql_query(query, self.connection)
+                # Fallback to direct connection
+                if params:
+                    df = pd.read_sql_query(query, self.connection, params=params)
+                else:
+                    df = pd.read_sql_query(query, self.connection)
             
             return df
             

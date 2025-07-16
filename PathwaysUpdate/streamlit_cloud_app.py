@@ -11,6 +11,14 @@ import os
 import re
 from datetime import datetime
 import json
+
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # python-dotenv not installed, use system environment variables
+
 from cloud_database_manager import get_database_manager, connect_to_database
 from image_cache_manager import get_animal_images_cached, initialize_cache
 

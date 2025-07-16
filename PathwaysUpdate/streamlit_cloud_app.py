@@ -477,7 +477,7 @@ def display_media(animal_id, image_urls):
     col1, col2, col3 = st.columns([1, 3, 1])
     
     with col1:
-        if st.button("← Previous", key=f"prev_page_{animal_id}"):
+        if st.button("←", key=f"prev_page_{animal_id}"):
             st.session_state[page_key] = max(0, current_page - 1)
             st.rerun()
     
@@ -487,7 +487,7 @@ def display_media(animal_id, image_urls):
         st.markdown(f'<div style="text-align: center; font-weight: bold; color: #6c757d; padding: 8px;">Images {start_idx}-{end_idx} of {len(image_urls)}</div>', unsafe_allow_html=True)
     
     with col3:
-        if st.button("Next →", key=f"next_page_{animal_id}"):
+        if st.button("→", key=f"next_page_{animal_id}"):
             st.session_state[page_key] = min(total_pages - 1, current_page + 1)
             st.rerun()
     

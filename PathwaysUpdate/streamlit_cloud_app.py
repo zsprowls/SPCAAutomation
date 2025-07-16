@@ -341,8 +341,13 @@ def load_data_from_database():
 def save_record_to_database(aid, foster_value, transfer_value, communications_value, new_note):
     """Save a record to the database"""
     try:
+        st.info(f"🔧 save_record_to_database called with AID: {aid}")
+        
         manager = get_database_manager()
+        st.info(f"🔧 Got database manager: {manager}")
+        
         success = manager.update_animal_record(aid, foster_value, transfer_value, communications_value, new_note)
+        st.info(f"🔧 update_animal_record returned: {success}")
         
         if success:
             st.success("Record updated successfully!")
@@ -355,6 +360,8 @@ def save_record_to_database(aid, foster_value, transfer_value, communications_va
             
     except Exception as e:
         st.error(f"Database error: {e}")
+        import traceback
+        st.error(f"Full traceback: {traceback.format_exc()}")
         return False
 
 def export_database_to_csv():
@@ -617,12 +624,17 @@ def main():
             col1, col2, col3 = st.columns([1, 1, 1])
             with col2:
                 if st.button("Save Changes", type="primary"):
+                    st.info(f"🔧 Attempting to save changes for animal {record['AID']}")
+                    st.info(f"🔧 Values: foster={foster_value}, transfer={transfer_value}, comms={communications_value}")
+                    st.info(f"🔧 New note: {new_note[:50] if new_note else 'None'}...")
+                    
                     if save_record_to_database(record['AID'], foster_value, transfer_value, communications_value, new_note):
                         st.success("✅ Changes saved to database!")
                         st.cache_data.clear()  # Clear cache to reload data
                         st.rerun()
                     else:
                         st.error("❌ Failed to save changes")
+                        st.error("Check the console logs for detailed error information")
 
     else:
         # Spreadsheet View

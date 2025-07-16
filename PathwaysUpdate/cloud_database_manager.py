@@ -212,17 +212,28 @@ class DatabaseManager:
                 print("❌ No database connection")
                 return False
             
+            print(f"🔧 Executing update query with {len(params) if params else 0} parameters")
+            
             with self.connection.cursor() as cursor:
                 if params:
+                    print(f"🔧 Executing: {query}")
+                    print(f"🔧 With params: {params}")
                     cursor.execute(query, params)
                 else:
+                    print(f"🔧 Executing: {query}")
                     cursor.execute(query)
                 
+                rows_affected = cursor.rowcount
+                print(f"🔧 Rows affected: {rows_affected}")
+                
                 self.connection.commit()
+                print(f"✅ Update committed successfully")
                 return True
                 
         except Exception as e:
             print(f"❌ Update execution failed: {e}")
+            import traceback
+            traceback.print_exc()
             return False
     
     def get_pathways_data(self) -> Optional[pd.DataFrame]:
@@ -239,13 +250,35 @@ class DatabaseManager:
                            communications_value: str, new_note: str) -> bool:
         """Update animal record"""
         try:
+            print(f"🔧 Starting update for animal {aid}")
+            print(f"🔧 Values: foster={foster_value}, transfer={transfer_value}, comms={communications_value}")
+            
+            # Check connection
+            if not self.connection:
+                print("❌ No database connection available")
+                return False
+            
             # Get current welfare notes
             current_df = self.get_animal_by_id(aid)
             if current_df is None or len(current_df) == 0:
                 print(f"❌ Animal {aid} not found")
                 return False
             
-            current_notes = current_df.iloc[0]['Welfare Notes'] if current_df.iloc[0]['Welfare Notes'] else ""
+            print(f"✅ Found animal {aid} in database")
+            
+            # Handle different column names for welfare notes
+            welfare_col = None
+            for col in ['Welfare Notes', 'Welfare_Notes', 'welfare_notes']:
+                if col in current_df.columns:
+                    welfare_col = col
+                    break
+            
+            if not welfare_col:
+                print(f"❌ Welfare notes column not found. Available columns: {list(current_df.columns)}")
+                return False
+            
+            current_notes = current_df.iloc[0][welfare_col] if current_df.iloc[0][welfare_col] else ""
+            print(f"🔧 Current notes: {current_notes[:50]}...")
             
             # Add new note if provided
             if new_note and new_note.strip():
@@ -256,19 +289,41 @@ class DatabaseManager:
             else:
                 new_welfare_notes = current_notes
             
-            # Update the record
-            query = """
-                UPDATE pathways_data 
-                SET Foster_Attempted = ?, Transfer_Attempted = ?, 
-                    Communications_Team_Attempted = ?, Welfare_Notes = ?
-                WHERE AID = ?
-            """
+            print(f"🔧 New notes: {new_welfare_notes[:50]}...")
             
-            return self.execute_update(query, (foster_value, transfer_value, 
-                                             communications_value, new_welfare_notes, aid))
+            # Update the record - handle different database types
+            if self.db_type == 'mysql':
+                query = """
+                    UPDATE pathways_data 
+                    SET Foster_Attempted = %s, Transfer_Attempted = %s, 
+                        Communications_Team_Attempted = %s, Welfare_Notes = %s
+                    WHERE AID = %s
+                """
+            else:
+                query = """
+                    UPDATE pathways_data 
+                    SET Foster_Attempted = ?, Transfer_Attempted = ?, 
+                        Communications_Team_Attempted = ?, Welfare_Notes = ?
+                    WHERE AID = ?
+                """
+            
+            print(f"🔧 Executing query: {query}")
+            print(f"🔧 Parameters: {foster_value}, {transfer_value}, {communications_value}, {new_welfare_notes[:50]}..., {aid}")
+            
+            success = self.execute_update(query, (foster_value, transfer_value, 
+                                                 communications_value, new_welfare_notes, aid))
+            
+            if success:
+                print(f"✅ Successfully updated animal {aid}")
+            else:
+                print(f"❌ Failed to update animal {aid}")
+            
+            return success
             
         except Exception as e:
             print(f"❌ Update failed: {e}")
+            import traceback
+            traceback.print_exc()
             return False
     
     def get_inventory_data(self) -> Optional[pd.DataFrame]:

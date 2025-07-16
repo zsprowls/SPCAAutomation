@@ -500,27 +500,23 @@ def main():
         )
         st.markdown('</div>', unsafe_allow_html=True)
         
+        # Initialize current index once
+        if 'current_index' not in st.session_state:
+            st.session_state.current_index = 0
+        
         # Navigation controls
         col1, col2, col3 = st.columns([1, 2, 1])
         
         with col1:
             if st.button("← Previous"):
-                if 'current_index' not in st.session_state:
-                    st.session_state.current_index = 0
-                else:
-                    st.session_state.current_index = max(0, st.session_state.current_index - 1)
+                st.session_state.current_index = max(0, st.session_state.current_index - 1)
         
         with col2:
-            if 'current_index' not in st.session_state:
-                st.session_state.current_index = 0
             st.markdown(f'<div class="page-indicator">Animal {st.session_state.current_index + 1} of {len(df)}</div>', unsafe_allow_html=True)
         
         with col3:
             if st.button("Next →"):
-                if 'current_index' not in st.session_state:
-                    st.session_state.current_index = 0
-                else:
-                    st.session_state.current_index = min(len(df) - 1, st.session_state.current_index + 1)
+                st.session_state.current_index = min(len(df) - 1, st.session_state.current_index + 1)
         
         # Handle search selection
         if selected_animal != "Select an animal...":
@@ -529,10 +525,6 @@ def main():
                 if str(row['AID']).strip() == aid:
                     st.session_state.current_index = idx
                     break
-        
-        # Initialize current index
-        if 'current_index' not in st.session_state:
-            st.session_state.current_index = 0
         
         # Display current record
         if 0 <= st.session_state.current_index < len(df):

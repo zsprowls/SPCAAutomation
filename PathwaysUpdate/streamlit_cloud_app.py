@@ -459,15 +459,47 @@ def export_database_to_csv():
         return False
 
 def display_media(animal_id, image_urls):
-    """Display images and videos for an animal in a compact horizontal scroll"""
+    """Display images and videos for an animal with navigation buttons - 5 at a time"""
     if not image_urls:
         st.markdown('<div style="text-align: center; padding: 20px; color: #6c757d; font-style: italic; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6;">No images or videos available</div>', unsafe_allow_html=True)
         return
     
-    # Build HTML content as a single string for horizontal scroll
-    html_content = '<div style="display: flex; flex-wrap: nowrap; gap: 8px; align-items: center; justify-content: center; overflow-x: auto; padding: 8px; scrollbar-width: thin; scrollbar-color: #bc6f32 #f8f9fa;">'
+    # Initialize current page for this animal
+    page_key = f"current_page_{animal_id}"
+    if page_key not in st.session_state:
+        st.session_state[page_key] = 0
     
-    for i, url in enumerate(image_urls):
+    current_page = st.session_state[page_key]
+    images_per_page = 5
+    total_pages = (len(image_urls) + images_per_page - 1) // images_per_page
+    
+    # Navigation buttons
+    col1, col2, col3 = st.columns([1, 3, 1])
+    
+    with col1:
+        if st.button("← Previous", key=f"prev_page_{animal_id}"):
+            st.session_state[page_key] = max(0, current_page - 1)
+            st.rerun()
+    
+    with col2:
+        start_idx = current_page * images_per_page + 1
+        end_idx = min((current_page + 1) * images_per_page, len(image_urls))
+        st.markdown(f'<div style="text-align: center; font-weight: bold; color: #6c757d; padding: 8px;">Images {start_idx}-{end_idx} of {len(image_urls)}</div>', unsafe_allow_html=True)
+    
+    with col3:
+        if st.button("Next →", key=f"next_page_{animal_id}"):
+            st.session_state[page_key] = min(total_pages - 1, current_page + 1)
+            st.rerun()
+    
+    # Display current page of images
+    start_idx = current_page * images_per_page
+    end_idx = min(start_idx + images_per_page, len(image_urls))
+    current_images = image_urls[start_idx:end_idx]
+    
+    # Build HTML for 5 images in a row
+    html_content = '<div style="display: flex; flex-wrap: nowrap; gap: 8px; align-items: center; justify-content: center; padding: 8px;">'
+    
+    for i, url in enumerate(current_images):
         if 'youtube.com' in url or 'youtu.be' in url:
             # Extract video ID
             video_id = None
@@ -482,15 +514,15 @@ def display_media(animal_id, image_urls):
             
             if video_id:
                 watch_url = f"https://www.youtube.com/watch?v={video_id}"
-                html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Video {i+1}"><div style="font-size: 12px; margin-top: 2px; font-weight: bold;"><a href="{watch_url}" target="_blank" style="color: #bc6f32; text-decoration: underline;">▶ Watch Video</a></div></div>'
+                html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Video {start_idx + i + 1}"><div style="font-size: 12px; margin-top: 2px; font-weight: bold;"><a href="{watch_url}" target="_blank" style="color: #bc6f32; text-decoration: underline;">▶ Watch Video</a></div></div>'
             else:
-                html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Media {i+1}"><div style="font-size: 10px; margin-top: 2px;">Media {i+1}</div></div>'
+                html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Media {start_idx + i + 1}"><div style="font-size: 10px; margin-top: 2px;">Media {start_idx + i + 1}</div></div>'
         else:
-            html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Image {i+1}"><div style="font-size: 10px; margin-top: 2px;">Image {i+1}</div></div>'
+            html_content += f'<div style="flex-shrink: 0; text-align: center; min-width: 200px;"><img src="{url}" style="max-width: 200px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" alt="Image {start_idx + i + 1}"><div style="font-size: 10px; margin-top: 2px;">Image {start_idx + i + 1}</div></div>'
     
     html_content += '</div>'
     
-    # Display the compact horizontal scroll layout
+    # Display the images
     st.markdown(html_content, unsafe_allow_html=True)
 
 def main():

@@ -445,7 +445,7 @@ def display_media(animal_id, image_urls):
         return
     
     # Build HTML content as a single string for horizontal scroll
-    html_content = '<div style="width: 100%; overflow-x: auto; overflow-y: hidden; white-space: nowrap; padding: 8px; scrollbar-width: thin; scrollbar-color: #bc6f32 #f8f9fa; -webkit-overflow-scrolling: touch;"><div style="display: inline-flex; gap: 8px; align-items: center; min-width: min-content;">'
+    html_content = '<div style="width: 100%; overflow-x: scroll; overflow-y: hidden; white-space: nowrap; padding: 8px; scrollbar-width: auto; scrollbar-color: #bc6f32 #f8f9fa; -webkit-overflow-scrolling: touch;"><div style="display: inline-flex; gap: 8px; align-items: center; min-width: min-content;">'
     
     for i, url in enumerate(image_urls):
         if 'youtube.com' in url or 'youtu.be' in url:

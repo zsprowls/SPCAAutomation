@@ -164,25 +164,6 @@ st.markdown("""
         font-weight: 700;
         font-family: 'Texta', sans-serif;
     }
-    
-    /* Custom scrollbar styles */
-    .image-scroll-container::-webkit-scrollbar {
-        height: 8px;
-    }
-    
-    .image-scroll-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-    }
-    
-    .image-scroll-container::-webkit-scrollbar-thumb {
-        background: #bc6f32;
-        border-radius: 4px;
-    }
-    
-    .image-scroll-container::-webkit-scrollbar-thumb:hover {
-        background: #a05a28;
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -445,13 +426,7 @@ def display_media(animal_id, image_urls):
         return
     
     # Build HTML content as a single string for horizontal scroll
-    html_content = '''
-    <div class="image-scroll-container" style="width: 100%; overflow-x: auto; overflow-y: hidden; white-space: nowrap; padding: 8px; 
-         scrollbar-width: thin; scrollbar-color: #bc6f32 #f8f9fa; 
-         -webkit-overflow-scrolling: touch;
-         border: 1px solid #dee2e6; border-radius: 8px; background: #f8f9fa;">
-        <div style="display: inline-flex; gap: 8px; align-items: center; min-width: min-content; padding: 4px;">
-    '''
+    html_content = '<div style="width: 100%; overflow-x: auto; overflow-y: hidden; white-space: nowrap; padding: 8px; scrollbar-width: thin; scrollbar-color: #bc6f32 #f8f9fa; -webkit-overflow-scrolling: touch;"><div style="display: inline-flex; gap: 8px; align-items: center; min-width: min-content;">'
     
     for i, url in enumerate(image_urls):
         if 'youtube.com' in url or 'youtu.be' in url:

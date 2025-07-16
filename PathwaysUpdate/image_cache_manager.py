@@ -74,6 +74,12 @@ class OptimizedImageCacheManager:
             chrome_options.add_argument("--remote-debugging-port=9222")
             chrome_options.add_argument("--disable-web-security")
             chrome_options.add_argument("--allow-running-insecure-content")
+            chrome_options.add_argument("--disable-setuid-sandbox")
+            chrome_options.add_argument("--disable-background-timer-throttling")
+            chrome_options.add_argument("--disable-backgrounding-occluded-windows")
+            chrome_options.add_argument("--disable-renderer-backgrounding")
+            chrome_options.add_argument("--disable-features=TranslateUI")
+            chrome_options.add_argument("--disable-ipc-flooding-protection")
             chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
             chrome_options.add_experimental_option('useAutomationExtension', False)
             
@@ -86,21 +92,55 @@ class OptimizedImageCacheManager:
                 "profile.managed_default_content_settings.images": 2,  # Block images
             })
             
-            service = Service(ChromeDriverManager().install())
-            driver = webdriver.Chrome(service=service, options=chrome_options)
+            # Try to setup Chrome driver with better error handling
+            try:
+                service = Service(ChromeDriverManager().install())
+                driver = webdriver.Chrome(service=service, options=chrome_options)
+            except Exception as chrome_error:
+                logger.error(f"Chrome driver setup failed: {chrome_error}")
+                
+                # Check if we're in a cloud environment and try alternative approaches
+                if os.path.exists('/home/appuser') or os.path.exists('/app'):
+                    logger.info("Detected cloud environment, trying alternative Chrome setup...")
+                    
+                    # Try with system Chrome if available
+                    try:
+                        chrome_options.binary_location = "/usr/bin/google-chrome"
+                        service = Service(ChromeDriverManager().install())
+                        driver = webdriver.Chrome(service=service, options=chrome_options)
+                        logger.info("Successfully setup Chrome with system binary")
+                    except Exception as system_chrome_error:
+                        logger.error(f"System Chrome setup failed: {system_chrome_error}")
+                        
+                        # Try with chromium if available
+                        try:
+                            chrome_options.binary_location = "/usr/bin/chromium-browser"
+                            service = Service(ChromeDriverManager().install())
+                            driver = webdriver.Chrome(service=service, options=chrome_options)
+                            logger.info("Successfully setup Chrome with Chromium binary")
+                        except Exception as chromium_error:
+                            logger.error(f"Chromium setup failed: {chromium_error}")
+                            logger.error("All Chrome driver attempts failed. Image scraping will be disabled.")
+                            return None
+                else:
+                    # Not in cloud environment, re-raise the original error
+                    raise chrome_error
             
             # Execute CDP commands to prevent detection
-            driver.execute_cdp_cmd('Network.setUserAgentOverride', {
-                "userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            })
-            
-            driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
-                'source': '''
-                    Object.defineProperty(navigator, 'webdriver', {
-                        get: () => undefined
-                    })
-                '''
-            })
+            try:
+                driver.execute_cdp_cmd('Network.setUserAgentOverride', {
+                    "userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                })
+                
+                driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
+                    'source': '''
+                        Object.defineProperty(navigator, 'webdriver', {
+                            get: () => undefined
+                        })
+                    '''
+                })
+            except Exception as cdp_error:
+                logger.warning(f"CDP commands failed (non-critical): {cdp_error}")
             
             return driver
         except Exception as e:
@@ -481,23 +521,25 @@ def get_cache_manager():
     return cache_manager
 
 def initialize_cache():
-    """Initialize the cache during application startup"""
+    """Initialize the cache during application startup - READ ONLY MODE"""
     manager = get_cache_manager()
     
-    # Check if cache exists and is recent
+    # Check if cache exists
     if os.path.exists(manager.cache_file):
         cache_age = time.time() - os.path.getmtime(manager.cache_file)
         cache_age_hours = cache_age / 3600
         
-        if cache_age_hours < 24:  # Cache is less than 24 hours old
-            logger.info(f"Using existing cache (age: {cache_age_hours:.1f} hours)")
-            return True
-        else:
-            logger.info(f"Cache is old ({cache_age_hours:.1f} hours), rebuilding...")
-    
-    # Build cache from CSV
-    csv_path = os.path.join(os.path.dirname(__file__), '..', '__Load Files Go Here__', 'Pathways for Care.csv')
-    return manager.build_cache_from_csv(csv_path)
+        logger.info(f"Using existing cache (age: {cache_age_hours:.1f} hours)")
+        
+        # Get cache stats for logging
+        stats = manager.get_cache_stats()
+        logger.info(f"Cache contains {stats['total_animals']} animals with {stats['total_images']} total images")
+        
+        return True
+    else:
+        logger.warning("No cache file found. Images will not be available.")
+        logger.info("To enable images, build the cache locally using build_cache.py and push the animal_images_cache.json file")
+        return False
 
 def get_animal_images_cached(animal_id):
     """Get images for an animal from cache"""

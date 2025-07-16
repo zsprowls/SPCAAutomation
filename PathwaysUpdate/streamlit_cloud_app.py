@@ -442,9 +442,18 @@ def main():
             try:
                 cache_success = initialize_cache()
                 if not cache_success:
-                    st.sidebar.warning("Cache initialization failed, images may not be available")
+                    st.sidebar.warning("⚠️ No image cache found")
+                    st.sidebar.info("📋 Images will not be available. To enable images:")
+                    st.sidebar.markdown("""
+                    **Build cache locally:** Run `python build_cache.py`  
+                    **Push to git:** Upload the `animal_images_cache.json` file  
+                    **Deploy:** The app will automatically use the updated cache
+                    """)
+                else:
+                    st.sidebar.success("✅ Image cache loaded successfully")
             except Exception as e:
-                st.sidebar.warning(f"Cache initialization failed: {str(e)}. Images may not be available.")
+                st.sidebar.warning(f"⚠️ Cache loading failed: {str(e)}")
+                st.sidebar.info("📋 Images will not be available. Check that animal_images_cache.json exists.")
         st.session_state.cache_initialized = True
     
     # Main header

@@ -105,8 +105,8 @@ st.markdown("""
 def load_data_from_multiple_sources():
     """Load data from multiple sources and merge them"""
     try:
-        # Get Google Drive manager (no authentication needed for API key)
-        manager = get_gdrive_manager(use_service_account=False)
+        # Get Google Drive manager (using service account for authentication)
+        manager = get_gdrive_manager(use_service_account=True)
         # Load pathways data from Google Sheet using API key
         df_pathways = manager.read_from_sheets_with_api_key()
         if df_pathways is None:
@@ -178,7 +178,7 @@ def load_data_from_multiple_sources():
 def save_record_to_drive(aid, foster_value, transfer_value, communications_value, new_note):
     """Save a record to Google Drive Sheet using API key"""
     try:
-        manager = get_gdrive_manager(use_service_account=False)
+        manager = get_gdrive_manager(use_service_account=True)
         success = manager.update_animal_record_with_api_key(aid, foster_value, transfer_value, communications_value, new_note)
         if success:
             st.success(f"✅ Successfully updated animal {aid}")

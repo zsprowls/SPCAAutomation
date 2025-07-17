@@ -78,7 +78,7 @@ class GoogleDriveManager:
                 return False
             
             # Load service account credentials
-            SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets.readonly']
+            SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets']
             credentials = service_account.Credentials.from_service_account_file(
                 key_file, scopes=SCOPES)
             
@@ -334,9 +334,14 @@ class GoogleDriveManager:
 
     def update_animal_record_with_api_key(self, aid: str, foster_value: str, transfer_value: str, 
                                         communications_value: str, new_note: str) -> bool:
-        """Update animal record in Google Sheet using API key"""
+        """Update animal record in Google Sheet using service account authentication"""
         try:
-            # Read current data using API key
+            # First, authenticate with service account for write access
+            if not self.authenticate():
+                print("❌ Failed to authenticate with service account")
+                return False
+            
+            # Read current data using API key (for reading)
             df = self.read_from_sheets_with_api_key()
             if df is None:
                 print("❌ Failed to read data from Google Sheets")
@@ -348,13 +353,28 @@ class GoogleDriveManager:
                 print(f"❌ Animal {aid} not found in data")
                 return False
             
-            # Get current welfare notes
-            welfare_col = None
-            for col in ['Welfare_Notes', 'Welfare Notes', 'welfare_notes']:
-                if col in df.columns:
-                    welfare_col = col
-                    break
+            # Get the row index (add 2 because Google Sheets is 1-indexed and we have headers)
+            row_index = animal_mask.idxmax() + 2
             
+            # Find column names for the dropdown fields
+            foster_col = None
+            transfer_col = None
+            communications_col = None
+            welfare_col = None
+            
+            for col in df.columns:
+                col_lower = col.lower()
+                if 'foster' in col_lower:
+                    foster_col = col
+                elif 'transfer' in col_lower:
+                    transfer_col = col
+                elif 'communications' in col_lower:
+                    communications_col = col
+                elif 'welfare' in col_lower:
+                    welfare_col = col
+            
+            # Get current welfare notes if we have a welfare column
+            current_notes = ""
             if welfare_col:
                 current_notes = df.loc[animal_mask, welfare_col].iloc[0]
                 if pd.isna(current_notes):
@@ -371,53 +391,112 @@ class GoogleDriveManager:
             else:
                 new_welfare_notes = new_note.strip() if new_note and new_note.strip() else ""
             
-            # Find column names for the dropdown fields
-            foster_col = None
-            transfer_col = None
-            communications_col = None
+            # Build the Google Sheets service
+            sheets_service = build('sheets', 'v4', credentials=self.credentials)
             
-            for col in df.columns:
-                col_lower = col.lower()
-                if 'foster' in col_lower:
-                    foster_col = col
-                elif 'transfer' in col_lower:
-                    transfer_col = col
-                elif 'communications' in col_lower:
-                    communications_col = col
+            # Prepare batch update requests
+            requests = []
             
-            # Update the record
+            # Update foster column if found
             if foster_col:
-                df.loc[animal_mask, foster_col] = foster_value
+                col_index = df.columns.get_loc(foster_col)
+                requests.append({
+                    "updateCells": {
+                        "range": {
+                            "sheetId": 0,  # First sheet
+                            "startRowIndex": row_index - 1,
+                            "endRowIndex": row_index,
+                            "startColumnIndex": col_index,
+                            "endColumnIndex": col_index + 1
+                        },
+                        "rows": [{
+                            "values": [{"userEnteredValue": {"stringValue": foster_value}}]
+                        }],
+                        "fields": "userEnteredValue"
+                    }
+                })
+            
+            # Update transfer column if found
             if transfer_col:
-                df.loc[animal_mask, transfer_col] = transfer_value
+                col_index = df.columns.get_loc(transfer_col)
+                requests.append({
+                    "updateCells": {
+                        "range": {
+                            "sheetId": 0,  # First sheet
+                            "startRowIndex": row_index - 1,
+                            "endRowIndex": row_index,
+                            "startColumnIndex": col_index,
+                            "endColumnIndex": col_index + 1
+                        },
+                        "rows": [{
+                            "values": [{"userEnteredValue": {"stringValue": transfer_value}}]
+                        }],
+                        "fields": "userEnteredValue"
+                    }
+                })
+            
+            # Update communications column if found
             if communications_col:
-                df.loc[animal_mask, communications_col] = communications_value
-            if welfare_col:
-                df.loc[animal_mask, welfare_col] = new_welfare_notes
+                col_index = df.columns.get_loc(communications_col)
+                requests.append({
+                    "updateCells": {
+                        "range": {
+                            "sheetId": 0,  # First sheet
+                            "startRowIndex": row_index - 1,
+                            "endRowIndex": row_index,
+                            "startColumnIndex": col_index,
+                            "endColumnIndex": col_index + 1
+                        },
+                        "rows": [{
+                            "values": [{"userEnteredValue": {"stringValue": communications_value}}]
+                        }],
+                        "fields": "userEnteredValue"
+                    }
+                })
             
-            # Convert DataFrame to values for Google Sheets API
-            values = [df.columns.tolist()] + df.values.tolist()
+            # Update welfare notes if found
+            if welfare_col and new_welfare_notes:
+                col_index = df.columns.get_loc(welfare_col)
+                requests.append({
+                    "updateCells": {
+                        "range": {
+                            "sheetId": 0,  # First sheet
+                            "startRowIndex": row_index - 1,
+                            "endRowIndex": row_index,
+                            "startColumnIndex": col_index,
+                            "endColumnIndex": col_index + 1
+                        },
+                        "rows": [{
+                            "values": [{"userEnteredValue": {"stringValue": new_welfare_notes}}]
+                        }],
+                        "fields": "userEnteredValue"
+                    }
+                })
             
-            # Update Google Sheet using API key
-            url = f"https://sheets.googleapis.com/v4/spreadsheets/{HARDCODED_FILE_ID}/values/A:Z?valueInputOption=RAW&key={API_KEY}"
-            
-            # Prepare the update request
-            update_data = {
-                "values": values
-            }
-            
-            response = requests.put(url, json=update_data)
-            
-            if response.status_code == 200:
-                print(f"✅ Successfully updated animal {aid} in Google Sheets")
-                return True
-            else:
-                print(f"❌ Failed to update Google Sheet: {response.status_code} - {response.text}")
+            if not requests:
+                print("❌ No columns found to update")
                 return False
             
+            # Execute batch update using Google Sheets API
+            batch_update_body = {
+                "requests": requests
+            }
+            
+            response = sheets_service.spreadsheets().batchUpdate(
+                spreadsheetId=HARDCODED_FILE_ID,
+                body=batch_update_body
+            ).execute()
+            
+            print(f"✅ Successfully updated animal {aid} in Google Sheets")
+            return True
+            
         except Exception as e:
-            print(f"❌ Error updating animal record with API key: {e}")
+            print(f"❌ Error updating animal record: {e}")
+            import traceback
+            print(f"Full traceback: {traceback.format_exc()}")
             return False
+    
+
     
     def get_pathways_data(self) -> Optional[pd.DataFrame]:
         """Get all pathways data from CSV"""

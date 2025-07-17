@@ -20,14 +20,22 @@ A Streamlit application for viewing and managing Pathways for Care data using Go
 pip install -r requirements_gdrive.txt
 ```
 
-### 2. Set Up Google Drive API
+### 2. Set Up Google Service Account
 
-See `SERVICE_ACCOUNT_SETUP.md` for detailed setup instructions.
+**Option A: Use the setup script (Recommended)**
+```bash
+python3 setup_service_account.py
+```
+
+**Option B: Manual setup**
+1. Follow the instructions in `SERVICE_ACCOUNT_SETUP.md`
+2. Download your service account key as `service_account_key.json`
+3. Place it in the `PathwaysUpdate/` directory
 
 ### 3. Test Connection
 
 ```bash
-python3 test_gdrive_connection.py
+python3 test_update_functionality.py
 ```
 
 ### 4. Run the App
@@ -40,16 +48,29 @@ streamlit run streamlit_gdrive_app.py
 
 ```
 PathwaysUpdate/
-├── streamlit_gdrive_app.py      # Main Streamlit application
-├── google_drive_manager.py      # Google Drive API integration
-├── image_cache_manager.py       # Image cache management
-├── build_cache.py               # Build image cache from PetPoint
-├── animal_images_cache.json     # Cached animal images
-├── requirements_gdrive.txt      # Python dependencies
-├── test_gdrive_connection.py    # Connection test script
-├── SERVICE_ACCOUNT_SETUP.md     # Service account setup guide
-└── README.md                    # This file
+├── streamlit_gdrive_app.py          # Main Streamlit application
+├── google_drive_manager.py          # Google Drive API integration
+├── image_cache_manager.py           # Image cache management
+├── build_cache.py                   # Build image cache from PetPoint
+├── animal_images_cache.json         # Cached animal images
+├── requirements_gdrive.txt          # Python dependencies
+├── setup_service_account.py         # Service account setup helper
+├── test_update_functionality.py     # Update functionality test
+├── service_account_key_template.json # Template for service account key
+├── .gitignore                       # Git ignore rules (excludes sensitive files)
+├── SERVICE_ACCOUNT_SETUP.md         # Service account setup guide
+└── README.md                        # This file
 ```
+
+## Security Notes
+
+⚠️ **Important**: The following files contain sensitive information and are automatically excluded from Git:
+- `service_account_key.json` - Your Google service account credentials
+- `.env` - Environment variables
+- `credentials.json` - OAuth credentials (if using OAuth)
+- `token.pickle` - OAuth tokens (if using OAuth)
+
+These files are listed in `.gitignore` to prevent accidental commits of sensitive data.
 
 ## Data Structure
 
@@ -86,7 +107,26 @@ To enable animal images:
 
 ## Troubleshooting
 
-See `SERVICE_ACCOUNT_SETUP.md` for detailed troubleshooting information.
+### Common Issues
+
+1. **"Invalid JWT Signature" error**
+   - Your service account key is corrupted or invalid
+   - Solution: Download a fresh key from Google Cloud Console
+
+2. **"Permission denied" error**
+   - The service account doesn't have access to the Google Sheet
+   - Solution: Share the sheet with the service account email (Editor permissions)
+
+3. **"API not enabled" error**
+   - Google Drive API or Google Sheets API not enabled
+   - Solution: Enable both APIs in Google Cloud Console
+
+### Getting Help
+
+1. Run the setup script: `python3 setup_service_account.py`
+2. Check the test script: `python3 test_update_functionality.py`
+3. See `SERVICE_ACCOUNT_SETUP.md` for detailed troubleshooting
+4. Contact the development team for additional support
 
 ## Support
 
@@ -102,35 +142,38 @@ For issues or questions, check the setup guide or contact the development team.
 2. **Select Your Project**
    - At the top left, select the project you want to use (or create a new one if needed).
 
-3. **Enable Google Drive API**
-   - (You said this is already done, so you can skip this step.)
+3. **Enable Required APIs**
+   - Go to **APIs & Services > Library**
+   - Search for and enable:
+     - **Google Drive API**
+     - **Google Sheets API**
 
-4. **Configure OAuth Consent Screen**
-   - In the left sidebar, go to **APIs & Services > OAuth consent screen**.
-   - **User Type:** Choose “External” (unless you want to restrict to your Google Workspace).
-   - **App Name:** Enter a name (e.g., “Pathways for Care Viewer”).
-   - **User Support Email:** Enter your email.
-   - **Developer Contact Information:** Enter your email again.
-   - **Scopes:** You can leave as default for now (the app will only request Drive access).
-   - **Test Users:** Add your Google account email (and any others who will use the app).
-   - Click **Save and Continue** until you reach the summary, then **Back to Dashboard**.
+4. **Create Service Account**
+   - Go to **IAM & Admin > Service Accounts**
+   - Click **"Create Service Account"**
+   - **Name**: `pathways-sheets-service`
+   - **Description**: `Service account for Pathways for Care Google Sheets access`
+   - Click **"Create and Continue"**
+   - **Grant access**: Select **"Editor"** role
+   - Click **"Continue"** then **"Done"**
 
-5. **Create OAuth 2.0 Credentials**
-   - Go to **APIs & Services > Credentials**.
-   - Click **+ CREATE CREDENTIALS** > **OAuth client ID**.
-   - **Application type:** Select “Desktop app”.
-   - **Name:** (e.g., “Pathways Streamlit Local”)
-   - Click **Create**.
+5. **Create Service Account Key**
+   - Click on your new service account
+   - Go to **"Keys"** tab
+   - Click **"Add Key"** → **"Create new key"** → **"JSON"**
+   - Download the key file
+   - Rename it to `service_account_key.json`
+   - Place it in your `PathwaysUpdate/` directory
 
-6. **Download Credentials**
-   - Click **Download JSON** for your new OAuth client.
-   - Rename the file to `credentials.json`.
-   - Place it in your `PathwaysUpdate/` directory.
+6. **Share Your Google Sheet**
+   - Open your Google Sheet
+   - Click **"Share"** (top right)
+   - Add your service account email (found in the JSON file)
+   - Give it **"Editor"** permissions
+   - Uncheck "Notify people"
+   - Click **"Share"**
 
-7. **First-Time Authentication**
-   - Run:
-     ```bash
-     python3 test_gdrive_connection.py
-     ```
-   - A browser window will open. Log in with your Google account and approve access.
-   - A `token.pickle` file will be created for future logins. 
+7. **Test the Setup**
+   ```bash
+   python3 setup_service_account.py
+   ``` 

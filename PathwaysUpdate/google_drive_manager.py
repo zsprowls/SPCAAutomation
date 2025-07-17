@@ -74,17 +74,28 @@ class GoogleDriveManager:
             # First, try to get credentials from Streamlit secrets (for online deployment)
             try:
                 import streamlit as st
-                if hasattr(st, 'secrets') and 'service_account' in st.secrets:
-                    logger.info("🔐 Using service account from Streamlit secrets")
-                    service_account_info = st.secrets['service_account']
-                    credentials = service_account.Credentials.from_service_account_info(
-                        service_account_info, scopes=SCOPES)
-                    self.credentials = credentials
-                    self.service = build('drive', 'v3', credentials=credentials)
-                    logger.info("✅ Service account authentication from secrets successful")
-                    return True
+                logger.info("🔍 Checking for Streamlit secrets...")
+                logger.info(f"st.secrets exists: {hasattr(st, 'secrets')}")
+                if hasattr(st, 'secrets'):
+                    logger.info(f"Available secrets keys: {list(st.secrets.keys()) if hasattr(st.secrets, 'keys') else 'No keys method'}")
+                    if 'service_account' in st.secrets:
+                        logger.info("🔐 Using service account from Streamlit secrets")
+                        service_account_info = st.secrets['service_account']
+                        logger.info(f"Service account info keys: {list(service_account_info.keys())}")
+                        credentials = service_account.Credentials.from_service_account_info(
+                            service_account_info, scopes=SCOPES)
+                        self.credentials = credentials
+                        self.service = build('drive', 'v3', credentials=credentials)
+                        logger.info("✅ Service account authentication from secrets successful")
+                        return True
+                    else:
+                        logger.error("❌ 'service_account' key not found in Streamlit secrets")
+                        logger.info(f"Available keys: {list(st.secrets.keys())}")
+                else:
+                    logger.error("❌ st.secrets not available")
             except Exception as e:
-                logger.warning(f"⚠️ Could not load from Streamlit secrets: {e}")
+                logger.error(f"❌ Error loading from Streamlit secrets: {e}")
+                logger.error(f"Full traceback: {traceback.format_exc()}")
             
             # Fallback to local file (for local development)
             key_file = 'service_account_key.json'

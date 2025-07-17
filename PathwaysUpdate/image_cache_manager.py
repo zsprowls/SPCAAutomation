@@ -85,7 +85,7 @@ def get_cache_manager():
 def initialize_cache():
     """Initialize the image cache"""
     try:
-        manager = get_cache_manager()
+    manager = get_cache_manager()
         stats = manager.get_cache_stats()
         
         if stats['total_animals'] > 0:
@@ -102,8 +102,8 @@ def initialize_cache():
 def get_animal_images_cached(animal_id):
     """Get cached images for an animal"""
     try:
-        manager = get_cache_manager()
-        return manager.get_animal_images(animal_id)
+    manager = get_cache_manager()
+    return manager.get_animal_images(animal_id)
     except Exception as e:
         logger.error(f"Error getting cached images for {animal_id}: {e}")
         return []
@@ -111,8 +111,8 @@ def get_animal_images_cached(animal_id):
 def get_cache_stats():
     """Get cache statistics"""
     try:
-        manager = get_cache_manager()
-        return manager.get_cache_stats()
+    manager = get_cache_manager()
+    return manager.get_cache_stats()
     except Exception as e:
         logger.error(f"Error getting cache stats: {e}")
         return {}

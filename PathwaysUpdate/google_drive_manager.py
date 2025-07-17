@@ -11,6 +11,7 @@ import pandas as pd
 from datetime import datetime
 from typing import Optional, Dict, Any, List
 import io
+import requests
 
 # Load environment variables from .env file
 try:
@@ -35,6 +36,8 @@ except ImportError:
 
 # HARDCODE your file ID here if needed
 HARDCODED_FILE_ID = "1IDixZ49uXsCQsAdjZkVAm_6vcSNU0uehiUm7Wc2JRWQ"
+# API Key for simple access
+API_KEY = "AIzaSyDBrghdKVPOER3Vsu1fn912Ss8OymCOxOw"
 
 class GoogleDriveManager:
     def __init__(self, use_service_account: bool = True):
@@ -188,6 +191,36 @@ class GoogleDriveManager:
             print(f"❌ Error finding/creating CSV file: {e}")
             return None
     
+    def read_from_sheets_with_api_key(self, file_id: str = None) -> Optional[pd.DataFrame]:
+        """Read Google Sheet using simple API key (no authentication needed)"""
+        try:
+            if not file_id:
+                file_id = HARDCODED_FILE_ID
+            
+            # Read from Google Sheets using API key
+            url = f"https://sheets.googleapis.com/v4/spreadsheets/{file_id}/values/A:Z?key={API_KEY}"
+            response = requests.get(url)
+            
+            if response.status_code == 200:
+                data = response.json()
+                values = data.get('values', [])
+                
+                if not values:
+                    print('✅ Google Sheet is empty')
+                    return pd.DataFrame()
+                
+                # Convert to DataFrame
+                df = pd.DataFrame(values[1:], columns=values[0])  # First row as headers
+                print(f"✅ Loaded {len(df)} records from Google Sheets using API key")
+                return df.reset_index(drop=True)
+            else:
+                print(f"❌ Failed to load data from Google Sheets: {response.status_code}")
+                return None
+                
+        except Exception as e:
+            print(f"❌ Error reading from Google Sheets with API key: {e}")
+            return None
+
     def read_csv_from_drive(self, file_id: str = None, sheet_name: str = None) -> Optional[pd.DataFrame]:
         """Read Google Sheet from Google Drive"""
         try:

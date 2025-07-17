@@ -105,14 +105,10 @@ st.markdown("""
 def load_data_from_multiple_sources():
     """Load data from multiple sources and merge them"""
     try:
-        # Connect to Google Drive
-        if not connect_to_gdrive(use_service_account=True):
-            st.error("❌ Failed to connect to Google Drive")
-            return None
-        # Get Google Drive manager
-        manager = get_gdrive_manager(use_service_account=True)
-        # Load pathways data from Google Sheet
-        df_pathways = manager.get_pathways_data()
+        # Get Google Drive manager (no authentication needed for API key)
+        manager = get_gdrive_manager(use_service_account=False)
+        # Load pathways data from Google Sheet using API key
+        df_pathways = manager.read_from_sheets_with_api_key()
         if df_pathways is None:
             st.error("❌ Failed to load pathways data from Google Sheet")
             return None

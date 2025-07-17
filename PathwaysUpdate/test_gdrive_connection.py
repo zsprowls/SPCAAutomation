@@ -35,9 +35,9 @@ def test_gdrive_setup():
         print("pip install -r requirements_gdrive.txt")
         return False
     
-    # Test connection
+    # Test connection (using service account)
     print("\n🔌 Testing Google Drive connection...")
-    success = test_gdrive_connection()
+    success = test_gdrive_connection(use_service_account=True)
     
     if success:
         print("✅ Google Drive connection successful!")

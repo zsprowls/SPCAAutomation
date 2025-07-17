@@ -2,7 +2,7 @@
 """
 Google Drive Manager for Pathways for Care Viewer
 Uses Google Drive API to read/write CSV files
-Much more cost-effective than Google Cloud SQL
+Supports both OAuth (local) and Service Account (web deployment)
 """
 
 import os
@@ -22,6 +22,7 @@ except ImportError:
 # Google Drive API imports
 try:
     from google.oauth2.credentials import Credentials
+    from google.oauth2 import service_account
     from google_auth_oauthlib.flow import InstalledAppFlow
     from google.auth.transport.requests import Request
     from googleapiclient.discovery import build
@@ -32,12 +33,16 @@ except ImportError:
     GOOGLE_DRIVE_AVAILABLE = False
     print("⚠️  Google Drive API not available. Install with: pip install google-auth-oauthlib google-auth-httplib2 google-api-python-client")
 
+# HARDCODE your file ID here if needed
+HARDCODED_FILE_ID = "1IDixZ49uXsCQsAdjZkVAm_6vcSNU0uehiUm7Wc2JRWQ"
+
 class GoogleDriveManager:
-    def __init__(self):
+    def __init__(self, use_service_account: bool = True):
         """Initialize Google Drive manager"""
         self.service = None
         self.file_id = None
         self.credentials = None
+        self.use_service_account = use_service_account
         
     def authenticate(self) -> bool:
         """Authenticate with Google Drive API"""
@@ -45,6 +50,45 @@ class GoogleDriveManager:
             print("❌ Google Drive API not available")
             return False
             
+        try:
+            if self.use_service_account:
+                return self._authenticate_service_account()
+            else:
+                return self._authenticate_oauth()
+                
+        except Exception as e:
+            print(f"❌ Google Drive authentication failed: {e}")
+            return False
+    
+    def _authenticate_service_account(self) -> bool:
+        """Authenticate using service account"""
+        try:
+            # Check for service account key file
+            key_file = 'service_account_key.json'
+            if not os.path.exists(key_file):
+                print(f"❌ {key_file} not found")
+                print("📋 To set up service account:")
+                print("1. Go to Google Cloud Console > APIs & Services > Credentials")
+                print("2. Create a Service Account")
+                print("3. Create and download a JSON key")
+                print("4. Rename to 'service_account_key.json' and place in this directory")
+                return False
+            
+            # Load service account credentials
+            SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets.readonly']
+            credentials = service_account.Credentials.from_service_account_file(
+                key_file, scopes=SCOPES)
+            
+            self.credentials = credentials
+            self.service = build('drive', 'v3', credentials=credentials)
+            print("✅ Service account authentication successful")
+            return True
+        except Exception as e:
+            print(f"❌ Service account authentication failed: {e}")
+            return False
+    
+    def _authenticate_oauth(self) -> bool:
+        """Authenticate using OAuth (for local development)"""
         try:
             # If modifying these scopes, delete the file token.pickle.
             SCOPES = ['https://www.googleapis.com/auth/drive.file']
@@ -81,15 +125,17 @@ class GoogleDriveManager:
             
             self.credentials = creds
             self.service = build('drive', 'v3', credentials=creds)
-            print("✅ Google Drive authentication successful")
+            print("✅ OAuth authentication successful")
             return True
-            
         except Exception as e:
-            print(f"❌ Google Drive authentication failed: {e}")
+            print(f"❌ OAuth authentication failed: {e}")
             return False
     
     def find_or_create_csv_file(self, filename: str = "pathways_data.csv") -> Optional[str]:
         """Find existing CSV file or create new one"""
+        if HARDCODED_FILE_ID:
+            print(f"🔗 Using hardcoded file ID: {HARDCODED_FILE_ID}")
+            return HARDCODED_FILE_ID
         try:
             if not self.service:
                 return None
@@ -142,36 +188,37 @@ class GoogleDriveManager:
             print(f"❌ Error finding/creating CSV file: {e}")
             return None
     
-    def read_csv_from_drive(self, file_id: str = None) -> Optional[pd.DataFrame]:
-        """Read CSV file from Google Drive"""
+    def read_csv_from_drive(self, file_id: str = None, sheet_name: str = None) -> Optional[pd.DataFrame]:
+        """Read Google Sheet from Google Drive"""
         try:
             if not self.service:
                 return None
-            
             if not file_id:
                 file_id = self.find_or_create_csv_file()
                 if not file_id:
                     return None
-            
             self.file_id = file_id
-            
-            # Download file content
-            request = self.service.files().get_media(fileId=file_id)
-            file = io.BytesIO()
-            downloader = MediaIoBaseDownload(file, request)
-            done = False
-            
-            while done is False:
-                status, done = downloader.next_chunk()
-            
-            # Read CSV content
-            file.seek(0)
-            df = pd.read_csv(file)
-            print(f"✅ Loaded {len(df)} records from Google Drive")
-            return df
-            
+
+            sheets_service = build('sheets', 'v4', credentials=self.credentials)
+            # If no sheet_name provided, get the first sheet
+            sheet_metadata = sheets_service.spreadsheets().get(spreadsheetId=file_id).execute()
+            if not sheet_name:
+                sheet_name = sheet_metadata['sheets'][0]['properties']['title']
+            result = sheets_service.spreadsheets().values().get(
+                spreadsheetId=file_id,
+                range=sheet_name
+            ).execute()
+            values = result.get('values', [])
+            if not values:
+                print('✅ Google Sheet is empty')
+                return pd.DataFrame()
+            df = pd.DataFrame(values)
+            df.columns = df.iloc[0]
+            df = df[1:]
+            print(f"✅ Loaded {len(df)} records from Google Sheet")
+            return df.reset_index(drop=True)
         except Exception as e:
-            print(f"❌ Error reading CSV from Drive: {e}")
+            print(f"❌ Error reading Google Sheet from Drive: {e}")
             return None
     
     def write_csv_to_drive(self, df: pd.DataFrame, file_id: str = None) -> bool:
@@ -289,19 +336,19 @@ class GoogleDriveManager:
 # Global Google Drive manager instance
 _gdrive_manager = None
 
-def get_gdrive_manager() -> GoogleDriveManager:
+def get_gdrive_manager(use_service_account: bool = True) -> GoogleDriveManager:
     """Get global Google Drive manager instance"""
     global _gdrive_manager
     if _gdrive_manager is None:
-        _gdrive_manager = GoogleDriveManager()
+        _gdrive_manager = GoogleDriveManager(use_service_account=use_service_account)
     return _gdrive_manager
 
-def connect_to_gdrive() -> bool:
+def connect_to_gdrive(use_service_account: bool = True) -> bool:
     """Connect to Google Drive"""
-    manager = get_gdrive_manager()
+    manager = get_gdrive_manager(use_service_account=use_service_account)
     return manager.authenticate()
 
-def test_gdrive_connection() -> bool:
+def test_gdrive_connection(use_service_account: bool = True) -> bool:
     """Test Google Drive connection"""
-    manager = get_gdrive_manager()
+    manager = get_gdrive_manager(use_service_account=use_service_account)
     return manager.test_connection() 

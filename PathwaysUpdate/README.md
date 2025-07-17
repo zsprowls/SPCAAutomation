@@ -22,7 +22,7 @@ pip install -r requirements_gdrive.txt
 
 ### 2. Set Up Google Drive API
 
-See the step-by-step guide at the end of this README.
+See `SERVICE_ACCOUNT_SETUP.md` for detailed setup instructions.
 
 ### 3. Test Connection
 
@@ -47,7 +47,7 @@ PathwaysUpdate/
 ├── animal_images_cache.json     # Cached animal images
 ├── requirements_gdrive.txt      # Python dependencies
 ├── test_gdrive_connection.py    # Connection test script
-├── GOOGLE_DRIVE_SETUP.md        # Detailed setup guide
+├── SERVICE_ACCOUNT_SETUP.md     # Service account setup guide
 └── README.md                    # This file
 ```
 
@@ -86,7 +86,7 @@ To enable animal images:
 
 ## Troubleshooting
 
-See `GOOGLE_DRIVE_SETUP.md` for detailed troubleshooting information.
+See `SERVICE_ACCOUNT_SETUP.md` for detailed troubleshooting information.
 
 ## Support
 

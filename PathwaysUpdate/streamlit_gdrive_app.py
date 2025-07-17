@@ -271,7 +271,8 @@ def display_media(animal_id, image_urls):
 
 def main():
     # Add a simple test to show the app is running the latest code
-    st.sidebar.markdown("**App Version:** Latest with enhanced logging")
+    st.sidebar.markdown("**App Version:** v1.2.3 - Fixed SCOPES bug")
+    st.sidebar.markdown(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
     # Password protection
     if 'authenticated' not in st.session_state:
@@ -324,6 +325,19 @@ def main():
             )
     # Load data
     st.info("🔄 Loading data from Google Sheets...")
+    st.info("🔧 Version: v1.2.3 - Fixed SCOPES bug")
+    
+    # Add detailed logging for debugging
+    try:
+        import streamlit as st
+        if hasattr(st, 'secrets'):
+            st.sidebar.info(f"✅ Streamlit secrets available")
+            st.sidebar.info(f"Available keys: {list(st.secrets.keys())}")
+        else:
+            st.sidebar.error("❌ Streamlit secrets not available")
+    except Exception as e:
+        st.sidebar.error(f"❌ Error checking secrets: {e}")
+    
     df = load_data_from_multiple_sources()
     if df is None:
         st.error("Failed to load data")

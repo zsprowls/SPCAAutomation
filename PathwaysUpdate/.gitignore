@@ -31,6 +31,7 @@ credentials.json
 token.pickle
 *.json.key
 *_key.json
+streamlit_secrets.toml
 
 # IDE and editor files
 .vscode/

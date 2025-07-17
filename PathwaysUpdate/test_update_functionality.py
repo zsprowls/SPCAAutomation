@@ -20,7 +20,7 @@ def test_update_functionality():
         
         # Test reading data first
         print("\n📖 Testing data reading...")
-        df = manager.read_from_sheets_with_api_key()
+        df = manager.read_from_sheets_with_service_account()
         if df is None:
             print("❌ Failed to read data from Google Sheets")
             return False
@@ -62,7 +62,7 @@ def test_update_functionality():
                 
                 # Read data again to verify the change
                 print("\n📖 Verifying update...")
-                df_updated = manager.read_from_sheets_with_api_key()
+                df_updated = manager.read_from_sheets_with_service_account()
                 if df_updated is not None:
                     updated_row = df_updated[df_updated['AID'] == first_aid]
                     if len(updated_row) > 0:

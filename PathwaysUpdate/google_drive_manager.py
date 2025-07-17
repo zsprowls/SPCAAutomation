@@ -70,6 +70,9 @@ class GoogleDriveManager:
     
     def _authenticate_service_account(self) -> bool:
         """Authenticate using service account"""
+        # Define scopes at the beginning of the method
+        SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets']
+        
         try:
             # First, try to get credentials from Streamlit secrets (for online deployment)
             try:
@@ -112,7 +115,6 @@ class GoogleDriveManager:
                 return False
             
             # Load service account credentials
-            SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets']
             logger.info(f"🔧 Loading credentials from {key_file}")
             credentials = service_account.Credentials.from_service_account_file(
                 key_file, scopes=SCOPES)

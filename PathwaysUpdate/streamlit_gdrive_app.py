@@ -11,6 +11,11 @@ from datetime import datetime
 import json
 from pathlib import Path
 import traceback
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Load environment variables from .env file
 try:
@@ -106,12 +111,19 @@ def load_data_from_multiple_sources():
     """Load data from multiple sources and merge them"""
     try:
         # Get Google Drive manager (using service account for authentication)
+        logger.info("🔧 Getting Google Drive manager...")
         manager = get_gdrive_manager(use_service_account=True)
-        # Load pathways data from Google Sheet using API key
-        df_pathways = manager.read_from_sheets_with_api_key()
+        
+        # Load pathways data from Google Sheet using service account
+        logger.info("📖 Attempting to load data from Google Sheet...")
+        df_pathways = manager.read_from_sheets_with_service_account()
+        
         if df_pathways is None:
+            logger.error("❌ Failed to load pathways data from Google Sheet")
             st.error("❌ Failed to load pathways data from Google Sheet")
             return None
+        else:
+            logger.info(f"✅ Successfully loaded {len(df_pathways)} records from Google Sheet")
         # Load additional animal data from AnimalInventory.csv
         try:
             inventory_file = os.path.join(os.path.dirname(__file__), "..", "__Load Files Go Here__", "AnimalInventory.csv")

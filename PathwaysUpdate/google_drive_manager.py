@@ -12,6 +12,11 @@ from datetime import datetime
 from typing import Optional, Dict, Any, List
 import io
 import requests
+import logging
+import traceback
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 # Load environment variables from .env file
 try:
@@ -66,28 +71,48 @@ class GoogleDriveManager:
     def _authenticate_service_account(self) -> bool:
         """Authenticate using service account"""
         try:
-            # Check for service account key file
+            # First, try to get credentials from Streamlit secrets (for online deployment)
+            try:
+                import streamlit as st
+                if hasattr(st, 'secrets') and 'service_account' in st.secrets:
+                    logger.info("🔐 Using service account from Streamlit secrets")
+                    service_account_info = st.secrets['service_account']
+                    credentials = service_account.Credentials.from_service_account_info(
+                        service_account_info, scopes=SCOPES)
+                    self.credentials = credentials
+                    self.service = build('drive', 'v3', credentials=credentials)
+                    logger.info("✅ Service account authentication from secrets successful")
+                    return True
+            except Exception as e:
+                logger.warning(f"⚠️ Could not load from Streamlit secrets: {e}")
+            
+            # Fallback to local file (for local development)
             key_file = 'service_account_key.json'
             if not os.path.exists(key_file):
-                print(f"❌ {key_file} not found")
-                print("📋 To set up service account:")
-                print("1. Go to Google Cloud Console > APIs & Services > Credentials")
-                print("2. Create a Service Account")
-                print("3. Create and download a JSON key")
-                print("4. Rename to 'service_account_key.json' and place in this directory")
+                logger.error(f"❌ {key_file} not found")
+                logger.info("📋 To set up service account:")
+                logger.info("1. Go to Google Cloud Console > APIs & Services > Credentials")
+                logger.info("2. Create a Service Account")
+                logger.info("3. Create and download a JSON key")
+                logger.info("4. Rename to 'service_account_key.json' and place in this directory")
+                logger.info("\n📋 For online deployment:")
+                logger.info("1. Add service account JSON to Streamlit secrets")
+                logger.info("2. Use the key 'service_account' with the entire JSON content")
                 return False
             
             # Load service account credentials
             SCOPES = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets']
+            logger.info(f"🔧 Loading credentials from {key_file}")
             credentials = service_account.Credentials.from_service_account_file(
                 key_file, scopes=SCOPES)
             
             self.credentials = credentials
             self.service = build('drive', 'v3', credentials=credentials)
-            print("✅ Service account authentication successful")
+            logger.info("✅ Service account authentication successful")
             return True
         except Exception as e:
-            print(f"❌ Service account authentication failed: {e}")
+            logger.error(f"❌ Service account authentication failed: {e}")
+            logger.error(f"Full traceback: {traceback.format_exc()}")
             return False
     
     def _authenticate_oauth(self) -> bool:
@@ -191,6 +216,47 @@ class GoogleDriveManager:
             print(f"❌ Error finding/creating CSV file: {e}")
             return None
     
+    def read_from_sheets_with_service_account(self, file_id: str = None) -> Optional[pd.DataFrame]:
+        """Read Google Sheet using service account authentication"""
+        try:
+            logger.info("🔐 Starting service account authentication...")
+            # First, authenticate with service account
+            if not self.authenticate():
+                logger.error("❌ Failed to authenticate with service account")
+                return None
+            
+            logger.info("✅ Service account authentication successful")
+            
+            if not file_id:
+                file_id = HARDCODED_FILE_ID
+                logger.info(f"📄 Using hardcoded file ID: {file_id}")
+            
+            # Build the Google Sheets service
+            logger.info("🔧 Building Google Sheets service...")
+            sheets_service = build('sheets', 'v4', credentials=self.credentials)
+            
+            # Read from Google Sheets using service account
+            logger.info(f"📖 Reading from Google Sheet: {file_id}")
+            result = sheets_service.spreadsheets().values().get(
+                spreadsheetId=file_id,
+                range='A:Z'
+            ).execute()
+            
+            values = result.get('values', [])
+            if not values:
+                logger.info('✅ Google Sheet is empty')
+                return pd.DataFrame()
+            
+            # Convert to DataFrame
+            df = pd.DataFrame(values[1:], columns=values[0])  # First row as headers
+            logger.info(f"✅ Loaded {len(df)} records from Google Sheets using service account")
+            return df.reset_index(drop=True)
+                
+        except Exception as e:
+            logger.error(f"❌ Error reading from Google Sheets with service account: {e}")
+            logger.error(f"Full traceback: {traceback.format_exc()}")
+            return None
+
     def read_from_sheets_with_api_key(self, file_id: str = None) -> Optional[pd.DataFrame]:
         """Read Google Sheet using simple API key (no authentication needed)"""
         try:
@@ -341,8 +407,8 @@ class GoogleDriveManager:
                 print("❌ Failed to authenticate with service account")
                 return False
             
-            # Read current data using API key (for reading)
-            df = self.read_from_sheets_with_api_key()
+            # Read current data using service account (for reading)
+            df = self.read_from_sheets_with_service_account()
             if df is None:
                 print("❌ Failed to read data from Google Sheets")
                 return False
@@ -394,6 +460,24 @@ class GoogleDriveManager:
             # Build the Google Sheets service
             sheets_service = build('sheets', 'v4', credentials=self.credentials)
             
+            # Get the sheet metadata to find the correct sheet ID
+            try:
+                sheet_metadata = sheets_service.spreadsheets().get(
+                    spreadsheetId=HARDCODED_FILE_ID
+                ).execute()
+                sheets = sheet_metadata.get('sheets', [])
+                if not sheets:
+                    print("❌ No sheets found in the spreadsheet")
+                    return False
+                
+                # Use the first sheet (or you can specify by name if needed)
+                sheet_id = sheets[0]['properties']['sheetId']
+                print(f"✅ Found sheet with ID: {sheet_id}")
+                
+            except Exception as e:
+                print(f"❌ Error getting sheet metadata: {e}")
+                return False
+            
             # Prepare batch update requests
             requests = []
             
@@ -403,7 +487,7 @@ class GoogleDriveManager:
                 requests.append({
                     "updateCells": {
                         "range": {
-                            "sheetId": 0,  # First sheet
+                            "sheetId": sheet_id,
                             "startRowIndex": row_index - 1,
                             "endRowIndex": row_index,
                             "startColumnIndex": col_index,
@@ -422,7 +506,7 @@ class GoogleDriveManager:
                 requests.append({
                     "updateCells": {
                         "range": {
-                            "sheetId": 0,  # First sheet
+                            "sheetId": sheet_id,
                             "startRowIndex": row_index - 1,
                             "endRowIndex": row_index,
                             "startColumnIndex": col_index,
@@ -441,7 +525,7 @@ class GoogleDriveManager:
                 requests.append({
                     "updateCells": {
                         "range": {
-                            "sheetId": 0,  # First sheet
+                            "sheetId": sheet_id,
                             "startRowIndex": row_index - 1,
                             "endRowIndex": row_index,
                             "startColumnIndex": col_index,
@@ -460,7 +544,7 @@ class GoogleDriveManager:
                 requests.append({
                     "updateCells": {
                         "range": {
-                            "sheetId": 0,  # First sheet
+                            "sheetId": sheet_id,
                             "startRowIndex": row_index - 1,
                             "endRowIndex": row_index,
                             "startColumnIndex": col_index,

@@ -176,14 +176,10 @@ def load_data_from_multiple_sources():
         return None
 
 def save_record_to_drive(aid, foster_value, transfer_value, communications_value, new_note):
-    """Save a record to Google Drive Sheet"""
+    """Save a record to Google Drive Sheet using API key"""
     try:
-        manager = get_gdrive_manager(use_service_account=True)
-        if not manager.service:
-            if not connect_to_gdrive(use_service_account=True):
-                st.error("❌ Failed to connect to Google Drive")
-                return False
-        success = manager.update_animal_record(aid, foster_value, transfer_value, communications_value, new_note)
+        manager = get_gdrive_manager(use_service_account=False)
+        success = manager.update_animal_record_with_api_key(aid, foster_value, transfer_value, communications_value, new_note)
         if success:
             st.success(f"✅ Successfully updated animal {aid}")
             st.cache_data.clear()

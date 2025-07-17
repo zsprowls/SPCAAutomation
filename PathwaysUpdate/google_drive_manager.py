@@ -36,8 +36,8 @@ except ImportError:
 
 # HARDCODE your file ID here if needed
 HARDCODED_FILE_ID = "1IDixZ49uXsCQsAdjZkVAm_6vcSNU0uehiUm7Wc2JRWQ"
-# API Key for simple access
-API_KEY = "AIzaSyDBrghdKVPOER3Vsu1fn912Ss8OymCOxOw"
+# API Key for simple access - load from environment variable
+API_KEY = os.getenv('GOOGLE_API_KEY', '')
 
 class GoogleDriveManager:
     def __init__(self, use_service_account: bool = True):
@@ -330,6 +330,93 @@ class GoogleDriveManager:
             
         except Exception as e:
             print(f"❌ Error updating animal record: {e}")
+            return False
+
+    def update_animal_record_with_api_key(self, aid: str, foster_value: str, transfer_value: str, 
+                                        communications_value: str, new_note: str) -> bool:
+        """Update animal record in Google Sheet using API key"""
+        try:
+            # Read current data using API key
+            df = self.read_from_sheets_with_api_key()
+            if df is None:
+                print("❌ Failed to read data from Google Sheets")
+                return False
+            
+            # Find the animal record
+            animal_mask = df['AID'] == aid
+            if not animal_mask.any():
+                print(f"❌ Animal {aid} not found in data")
+                return False
+            
+            # Get current welfare notes
+            welfare_col = None
+            for col in ['Welfare_Notes', 'Welfare Notes', 'welfare_notes']:
+                if col in df.columns:
+                    welfare_col = col
+                    break
+            
+            if welfare_col:
+                current_notes = df.loc[animal_mask, welfare_col].iloc[0]
+                if pd.isna(current_notes):
+                    current_notes = ""
+                
+                # Add new note if provided
+                if new_note and new_note.strip():
+                    if current_notes:
+                        new_welfare_notes = f"{current_notes}\n\n{new_note.strip()}"
+                    else:
+                        new_welfare_notes = new_note.strip()
+                else:
+                    new_welfare_notes = current_notes
+            else:
+                new_welfare_notes = new_note.strip() if new_note and new_note.strip() else ""
+            
+            # Find column names for the dropdown fields
+            foster_col = None
+            transfer_col = None
+            communications_col = None
+            
+            for col in df.columns:
+                col_lower = col.lower()
+                if 'foster' in col_lower:
+                    foster_col = col
+                elif 'transfer' in col_lower:
+                    transfer_col = col
+                elif 'communications' in col_lower:
+                    communications_col = col
+            
+            # Update the record
+            if foster_col:
+                df.loc[animal_mask, foster_col] = foster_value
+            if transfer_col:
+                df.loc[animal_mask, transfer_col] = transfer_value
+            if communications_col:
+                df.loc[animal_mask, communications_col] = communications_value
+            if welfare_col:
+                df.loc[animal_mask, welfare_col] = new_welfare_notes
+            
+            # Convert DataFrame to values for Google Sheets API
+            values = [df.columns.tolist()] + df.values.tolist()
+            
+            # Update Google Sheet using API key
+            url = f"https://sheets.googleapis.com/v4/spreadsheets/{HARDCODED_FILE_ID}/values/A:Z?valueInputOption=RAW&key={API_KEY}"
+            
+            # Prepare the update request
+            update_data = {
+                "values": values
+            }
+            
+            response = requests.put(url, json=update_data)
+            
+            if response.status_code == 200:
+                print(f"✅ Successfully updated animal {aid} in Google Sheets")
+                return True
+            else:
+                print(f"❌ Failed to update Google Sheet: {response.status_code} - {response.text}")
+                return False
+            
+        except Exception as e:
+            print(f"❌ Error updating animal record with API key: {e}")
             return False
     
     def get_pathways_data(self) -> Optional[pd.DataFrame]:

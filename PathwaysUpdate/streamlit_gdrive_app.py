@@ -270,6 +270,9 @@ def display_media(animal_id, image_urls):
     st.markdown(html_content, unsafe_allow_html=True)
 
 def main():
+    # Add a simple test to show the app is running the latest code
+    st.sidebar.markdown("**App Version:** Latest with enhanced logging")
+    
     # Password protection
     if 'authenticated' not in st.session_state:
         st.session_state.authenticated = False
@@ -320,6 +323,7 @@ def main():
                 mime="text/csv"
             )
     # Load data
+    st.info("🔄 Loading data from Google Sheets...")
     df = load_data_from_multiple_sources()
     if df is None:
         st.error("Failed to load data")

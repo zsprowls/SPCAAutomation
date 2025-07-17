@@ -71,4 +71,4 @@ __pycache__/
 *.tmp
 *.temp
 temp/
-tmp/ 
+tmp/ PathwaysUpdate/service_account_key.json

@@ -357,6 +357,47 @@ def main():
     # Display filtered data
     st.markdown(f'<div style="text-align: center; font-weight: bold; color: #657; padding: 1rem;">Showing {len(filtered_df)} of {len(df)} animals</div>', unsafe_allow_html=True)
 
+    # Search functionality with placeholder styling
+    st.markdown('<div style="margin: 20px 0;">', unsafe_allow_html=True)
+    st.markdown('<h4 style="color: #062b49; margin-bottom: 10px;">Search Animals</h4>', unsafe_allow_html=True)
+    
+    # Create search options
+    search_options = []
+    for idx, row in filtered_df.iterrows():
+        aid = row.get('AID', '')
+        name = row.get('AnimalName', '')
+        breed = row.get('PrimaryBreed', '')
+        search_text = f"{aid} - {name} ({breed})" if name else f"{aid} - {breed}" if breed else str(aid)
+        search_options.append((search_text, idx))
+    
+    # Search dropdown with placeholder styling
+    if search_options:
+        # Initialize search key counter
+        if 'search_key_counter' not in st.session_state:
+            st.session_state['search_key_counter'] = 0
+        
+        # Add a placeholder option at the top
+        placeholder_text = "Type to search for animals..."
+        all_options = [placeholder_text] + [opt[0] for opt in search_options]
+        all_indices = [None] + [opt[1] for opt in search_options]
+        
+        selected_search = st.selectbox(
+            "Search by AID, Name, or Breed:",
+            options=all_options,
+            index=0,
+            key=f"search_dropdown_{st.session_state['search_key_counter']}"
+        )
+        
+        # Only update if a real animal was selected (not placeholder)
+        if selected_search != placeholder_text:
+            selected_idx = all_indices[all_options.index(selected_search)]
+            if selected_idx is not None:
+                st.session_state['animal_index'] = selected_idx
+                # Increment the key counter to force a reset
+                st.session_state['search_key_counter'] += 1
+                st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
+
     # Animal navigation state
     if 'animal_index' not in st.session_state:
         st.session_state['animal_index'] = 0

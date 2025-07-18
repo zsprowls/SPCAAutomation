@@ -188,16 +188,29 @@ def load_data_from_multiple_sources():
         return None
 
 def save_record_to_drive(aid, foster_value, transfer_value, communications_value, new_note):
-    """Save a record to Google Drive Sheet using API key"""
+    """Save a record to Google Drive Sheet using service account"""
     try:
+        st.info("🔧 Getting Google Drive manager...")
         manager = get_gdrive_manager(use_service_account=True)
+        
+        st.info("🔐 Authenticating with service account...")
+        if not manager.authenticate():
+            st.error("❌ Service account authentication failed")
+            return False
+        
+        st.info("✏️ Attempting to update record...")
         success = manager.update_animal_record_with_api_key(aid, foster_value, transfer_value, communications_value, new_note)
+        
         if success:
             st.success(f"✅ Successfully updated animal {aid}")
             st.cache_data.clear()
             return True
         else:
             st.error(f"❌ Failed to update animal {aid}")
+            st.error("📋 Common causes:")
+            st.error("1. Google Sheet not shared with service account email")
+            st.error("2. Service account only has 'Viewer' permissions (needs 'Editor')")
+            st.error("3. Google Drive API or Google Sheets API not enabled")
             return False
     except Exception as e:
         st.error(f"❌ Google Drive error: {e}")
@@ -272,6 +285,16 @@ def display_media(animal_id, image_urls):
 def main():
     # Add a simple test to show the app is running the latest code
     st.sidebar.markdown("**App Version:** Latest with enhanced logging")
+    
+    # Show service account info for debugging
+    try:
+        manager = get_gdrive_manager(use_service_account=True)
+        if manager.authenticate():
+            if hasattr(manager.credentials, 'service_account_email'):
+                st.sidebar.info(f"**Service Account:** {manager.credentials.service_account_email}")
+                st.sidebar.info("📋 Make sure this email has Editor access to your Google Sheet!")
+    except:
+        pass
     
     # Password protection
     if 'authenticated' not in st.session_state:

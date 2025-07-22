@@ -4,29 +4,31 @@ import time
 import sys
 from pathlib import Path
 import pandas as pd
-import logging
 
-# Set up logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# Add the parent directory to the path so we can import the petpoint_image_scraper
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-class OptimizedImageCacheManager:
+from config import PETPOINT_CONFIG, IMAGE_CONFIG
+
+# Import the working functions from the original scraper
+from petpoint_image_scraper import setup_driver, login_to_petpoint, get_animal_images
+
+class ImageCacheManager:
     def __init__(self):
-        # Use absolute path to cache file relative to this script's location
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        self.cache_file = os.path.join(script_dir, "animal_images_cache.json")
+        self.cache_file = "animal_images_cache.json"
         self.cache_data = {}
+        self.scraper = None
         self.load_cache()
-        
+    
     def load_cache(self):
         """Load existing cache from file"""
         if os.path.exists(self.cache_file):
             try:
                 with open(self.cache_file, 'r') as f:
                     self.cache_data = json.load(f)
-                logger.info(f"Loaded {len(self.cache_data)} cached image entries")
+                print(f"Loaded {len(self.cache_data)} cached image entries")
             except Exception as e:
-                logger.error(f"Error loading cache: {e}")
+                print(f"Error loading cache: {e}")
                 self.cache_data = {}
     
     def save_cache(self):
@@ -34,9 +36,55 @@ class OptimizedImageCacheManager:
         try:
             with open(self.cache_file, 'w') as f:
                 json.dump(self.cache_data, f, indent=2)
-            logger.info(f"Saved {len(self.cache_data)} image entries to cache")
+            print(f"Saved {len(self.cache_data)} image entries to cache")
         except Exception as e:
-            logger.error(f"Error saving cache: {e}")
+            print(f"Error saving cache: {e}")
+    
+    def initialize_scraper(self):
+        """Initialize the PetPoint scraper using the working setup_driver function"""
+        try:
+            # Use the exact working setup_driver function from the original scraper
+            self.driver = setup_driver()
+            print("✓ Chrome driver initialized using working setup function")
+            return True
+            
+        except ImportError:
+            print("✗ Original scraper not available")
+            return False
+        except Exception as e:
+            print(f"✗ Error initializing scraper: {e}")
+            return False
+    
+    def login_to_petpoint(self):
+        """Login to PetPoint using the working login function"""
+        try:
+            # Use the exact working login function from the original scraper
+            success = login_to_petpoint(
+                self.driver, 
+                PETPOINT_CONFIG['shelter_id'], 
+                PETPOINT_CONFIG['username'], 
+                PETPOINT_CONFIG['password']
+            )
+            if success:
+                print("✓ Login successful using working login function!")
+            else:
+                print("✗ Login failed using working login function")
+            return success
+            
+        except Exception as e:
+            print(f"Error during login: {str(e)}")
+            return False
+    
+    def get_animal_images_from_page(self, animal_id):
+        """Get images from the animal page using the exact working function"""
+        try:
+            # Use the exact working get_animal_images function from the original scraper
+            image_urls = get_animal_images(self.driver, animal_id)
+            return image_urls
+            
+        except Exception as e:
+            print(f"Error getting images for {animal_id}: {str(e)}")
+            return []
     
     def get_animal_images(self, animal_id):
         """Get images for a specific animal (from cache only)"""
@@ -48,6 +96,80 @@ class OptimizedImageCacheManager:
         
         # Return empty list if not in cache
         return []
+    
+    def build_cache_from_csv(self, csv_path):
+        """Build cache for all animals in the CSV file"""
+        print("Building image cache from CSV data...")
+        
+        # Load CSV data
+        try:
+            df = pd.read_csv(csv_path)
+            print(f"Loaded {len(df)} animals from CSV")
+        except Exception as e:
+            print(f"Error loading CSV: {e}")
+            return False
+        
+        # Initialize scraper
+        if not self.initialize_scraper():
+            print("Cannot build cache without scraper")
+            return False
+        
+        # Login once for all animals
+        if not self.login_to_petpoint():
+            print("Failed to login to PetPoint. Cannot build cache.")
+            return False
+        
+        # Get unique animal IDs
+        animal_ids = df['AID'].dropna().unique()
+        print(f"Found {len(animal_ids)} unique animal IDs")
+        
+        # Process each animal
+        processed = 0
+        cached = 0
+        
+        for animal_id in animal_ids:
+            animal_id = str(animal_id).strip()
+            if not animal_id or animal_id == 'nan':
+                continue
+            
+            processed += 1
+            
+            # Skip if already cached
+            if animal_id in self.cache_data:
+                cached += 1
+                continue
+            
+            print(f"Processing {processed}/{len(animal_ids)}: Animal {animal_id}")
+            
+            try:
+                image_urls = self.get_animal_images_from_page(animal_id)
+                if image_urls:
+                    self.cache_data[animal_id] = image_urls
+                    cached += 1
+                    print(f"  ✓ Found {len(image_urls)} images")
+                else:
+                    print(f"  - No images found")
+                
+                # Save cache periodically
+                if processed % 10 == 0:
+                    self.save_cache()
+                
+                # Small delay to be nice to the server
+                time.sleep(1)
+                
+            except Exception as e:
+                print(f"  ✗ Error: {e}")
+                continue
+        
+        # Final save
+        self.save_cache()
+        
+        print(f"\nCache building complete!")
+        print(f"Processed: {processed} animals")
+        print(f"Cached: {cached} animals with images")
+        print(f"Total cache entries: {len(self.cache_data)}")
+        
+        return True
     
     def get_cache_stats(self):
         """Get statistics about the cache"""
@@ -67,62 +189,59 @@ class OptimizedImageCacheManager:
         self.cache_data = {}
         if os.path.exists(self.cache_file):
             os.remove(self.cache_file)
+        print("Cache cleared")
     
     def cleanup(self):
-        """Cleanup resources"""
-        pass  # No cleanup needed for cache-only manager
+        """Clean up resources"""
+        if hasattr(self, 'driver') and self.driver:
+            try:
+                self.driver.quit()
+            except:
+                pass
+            self.driver = None
 
 # Global cache manager instance
-_cache_manager = None
+cache_manager = None
 
 def get_cache_manager():
-    """Get global cache manager instance"""
-    global _cache_manager
-    if _cache_manager is None:
-        _cache_manager = OptimizedImageCacheManager()
-    return _cache_manager
+    """Get the global cache manager instance"""
+    global cache_manager
+    if cache_manager is None:
+        cache_manager = ImageCacheManager()
+    return cache_manager
 
 def initialize_cache():
-    """Initialize the image cache"""
-    try:
-        manager = get_cache_manager()
-        stats = manager.get_cache_stats()
+    """Initialize the cache during application startup"""
+    manager = get_cache_manager()
+    
+    # Check if cache exists and is recent
+    if os.path.exists(manager.cache_file):
+        cache_age = time.time() - os.path.getmtime(manager.cache_file)
+        cache_age_hours = cache_age / 3600
         
-        if stats['total_animals'] > 0:
-            logger.info(f"Cache contains {stats['total_animals']} animals with {stats['total_images']} total images")
+        if cache_age_hours < 24:  # Cache is less than 24 hours old
+            print(f"Using existing cache (age: {cache_age_hours:.1f} hours)")
             return True
         else:
-            logger.warning("No animals found in cache")
-            return False
-            
-    except Exception as e:
-        logger.error(f"Error initializing cache: {e}")
-        return False
+            print(f"Cache is old ({cache_age_hours:.1f} hours), rebuilding...")
+    
+    # Build cache from CSV
+    csv_path = os.path.join(os.path.dirname(__file__), '..', '__Load Files Go Here__', 'Pathways for Care.csv')
+    return manager.build_cache_from_csv(csv_path)
 
 def get_animal_images_cached(animal_id):
-    """Get cached images for an animal"""
-    try:
-        manager = get_cache_manager()
-        return manager.get_animal_images(animal_id)
-    except Exception as e:
-        logger.error(f"Error getting cached images for {animal_id}: {e}")
-        return []
+    """Get images for an animal from cache"""
+    manager = get_cache_manager()
+    return manager.get_animal_images(animal_id)
 
 def get_cache_stats():
     """Get cache statistics"""
-    try:
-        manager = get_cache_manager()
-        return manager.get_cache_stats()
-    except Exception as e:
-        logger.error(f"Error getting cache stats: {e}")
-        return {}
+    manager = get_cache_manager()
+    return manager.get_cache_stats()
 
 def cleanup_cache():
-    """Cleanup cache resources"""
-    try:
-        global _cache_manager
-        if _cache_manager:
-            _cache_manager.cleanup()
-            _cache_manager = None
-    except Exception as e:
-        logger.error(f"Error cleaning up cache: {e}") 
+    """Clean up cache resources"""
+    global cache_manager
+    if cache_manager:
+        cache_manager.cleanup()
+        cache_manager = None 

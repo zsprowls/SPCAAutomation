@@ -1,0 +1,20 @@
+SPCA REPORTS - QUICK START GUIDE
+================================
+
+FIRST TIME SETUP (5 minutes):
+1. Double-click "setup.bat" and follow the prompts
+2. That's it! (This installs Python packages)
+
+EVERY TIME YOU WANT TO RUN REPORTS:
+1. Copy your latest CSV files into "__Load Files Go Here__" folder
+2. Double-click "Run_SPCA_Reports.bat"
+3. Follow the prompts on screen
+4. Enter dates when asked (example: 12/15/2024, 12/16/2024)
+
+OUTPUT FILES:
+- SPCA_Rounds/clear.csv
+- MorningEmail/morning_report.xlsx
+
+NEED HELP?
+- Read "SPCA_Reports_Instructions.txt" for detailed instructions
+- Read "README.md" for troubleshooting 

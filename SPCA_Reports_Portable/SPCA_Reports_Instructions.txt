@@ -1,0 +1,59 @@
+SPCA Reports Automation - Instructions for Non-Technical Users
+================================================================
+
+QUICK START:
+1. Double-click "Run_SPCA_Reports.bat"
+2. Follow the prompts on screen
+3. That's it!
+
+DETAILED INSTRUCTIONS:
+======================
+
+Before Running:
+1. Make sure you have the latest files in the "__Load Files Go Here__" folder:
+   - AnimalInventory.csv
+   - StageReview.csv  
+   - FosterCurrent.csv
+   - AnimalOutcome.csv
+   - Any other required files
+
+2. Make sure Python is installed on your computer
+   (If you get an error saying "python is not recognized", you'll need to install Python first)
+
+Running the Reports:
+1. Double-click the "Run_SPCA_Reports.bat" file
+2. A black command window will open
+3. Read the instructions on screen
+4. Press any key when prompted to continue
+5. The script will run both reports automatically
+6. If prompted for dates (morning email report), enter them in mm/dd/yyyy format, separated by commas
+   Example: 12/15/2024, 12/16/2024
+
+What the Scripts Do:
+===================
+
+1. Clear File Processing (SPCA_Rounds/clear_file.py):
+   - Reads AnimalInventory.csv and StageReview.csv
+   - Filters for animals on "Hold" status
+   - Creates clear.csv with animals that need attention
+
+2. Morning Email Report (MorningEmail/morning_email.py):
+   - Reads multiple CSV files from "__Load Files Go Here__"
+   - Generates a comprehensive morning report
+   - Creates morning_report.xlsx
+
+Output Files:
+=============
+After running successfully, you'll find:
+- SPCA_Rounds/clear.csv (clear file processing results)
+- MorningEmail/morning_report.xlsx (morning email report)
+
+Troubleshooting:
+===============
+- If you get an error, make sure all files in "__Load Files Go Here__" are up to date
+- If Python is not found, contact IT to install Python
+- If files are missing, check that you're running the batch file from the correct folder
+
+Need Help?
+==========
+If you encounter any issues, contact your IT department or the person who set up this automation. 

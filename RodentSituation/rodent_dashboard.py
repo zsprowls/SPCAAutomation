@@ -338,7 +338,7 @@ def main():
     st.header("📋 Rodent Inventory")
     
     # Prepare table data with clickable links
-    table_data = filtered_data[['AnimalNumber', 'Name', 'Species', 'Sex', 'Age', 'Status', 'Location_Combined', 'FosterPersonID', 'FosterName']].copy()
+    table_data = filtered_data[['AnimalNumber', 'AnimalName', 'Species', 'Sex', 'Age', 'Status', 'Location_Combined', 'FosterPersonID', 'FosterName']].copy()
     
     # Create clickable AnimalNumber links using HTML
     table_data['AnimalNumber'] = table_data['AnimalNumber'].apply(create_clickable_link)

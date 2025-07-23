@@ -4,6 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from pathlib import Path
 import numpy as np
+import os
 
 # Page configuration
 st.set_page_config(
@@ -37,6 +38,14 @@ st.markdown("""
     .stSelectbox > div > div {
         background-color: white;
     }
+    .animal-link {
+        color: #bc6f32;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .animal-link:hover {
+        text-decoration: underline;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -54,15 +63,15 @@ def load_data():
         '/tmp',  # Alternative Streamlit Cloud path
     ]
     
-    # Load RodentIntake.csv (header row 4)
+    # Load RodentIntake.csv (no header skip needed - it's clean)
     rodent_intake = None
     for base_path in base_paths:
         try:
             file_path = f"{base_path}/RodentIntake.csv"
-            rodent_intake = pd.read_csv(file_path, skiprows=3)
-            rodent_intake.columns = ['AnimalNumber', 'Name', 'Species', 'Gender', 'Color']
-            st.success(f"✅ Loaded {len(rodent_intake)} rodents from {file_path}")
-            break
+            if os.path.exists(file_path):
+                rodent_intake = pd.read_csv(file_path)
+                st.success(f"✅ Loaded {len(rodent_intake)} rodents from {file_path}")
+                break
         except Exception as e:
             continue
     
@@ -75,13 +84,14 @@ def load_data():
     for base_path in base_paths:
         try:
             file_path = f"{base_path}/FosterCurrent.csv"
-            foster_current = pd.read_csv(file_path, skiprows=6)
-            # Extract relevant columns
-            foster_data = foster_current[['textbox9', 'textbox10', 'textbox11']].copy()
-            foster_data.columns = ['AnimalNumber', 'FosterPersonID', 'FosterName']
-            foster_data = foster_data.dropna(subset=['AnimalNumber'])
-            st.success(f"✅ Loaded {len(foster_data)} foster records from {file_path}")
-            break
+            if os.path.exists(file_path):
+                foster_current = pd.read_csv(file_path, skiprows=6)
+                # Extract relevant columns
+                foster_data = foster_current[['textbox9', 'textbox10', 'textbox11']].copy()
+                foster_data.columns = ['AnimalNumber', 'FosterPersonID', 'FosterName']
+                foster_data = foster_data.dropna(subset=['AnimalNumber'])
+                st.success(f"✅ Loaded {len(foster_data)} foster records from {file_path}")
+                break
         except Exception as e:
             continue
     
@@ -94,12 +104,13 @@ def load_data():
     for base_path in base_paths:
         try:
             file_path = f"{base_path}/AnimalInventory.csv"
-            inventory = pd.read_csv(file_path, skiprows=3)
-            # Extract relevant columns
-            inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation']].copy()
-            inventory_data = inventory_data.dropna(subset=['AnimalNumber'])
-            st.success(f"✅ Loaded {len(inventory_data)} inventory records from {file_path}")
-            break
+            if os.path.exists(file_path):
+                inventory = pd.read_csv(file_path, skiprows=3)
+                # Extract relevant columns - Stage and Location are the key ones
+                inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation']].copy()
+                inventory_data = inventory_data.dropna(subset=['AnimalNumber'])
+                st.success(f"✅ Loaded {len(inventory_data)} inventory records from {file_path}")
+                break
         except Exception as e:
             continue
     
@@ -112,12 +123,13 @@ def load_data():
     for base_path in base_paths:
         try:
             file_path = f"{base_path}/AnimalOutcome.csv"
-            outcome = pd.read_csv(file_path, skiprows=3)
-            # Extract relevant columns
-            outcome_data = outcome[['AnimalNumber', 'OperationType']].copy()
-            outcome_data = outcome_data.dropna(subset=['AnimalNumber'])
-            st.success(f"✅ Loaded {len(outcome_data)} outcome records from {file_path}")
-            break
+            if os.path.exists(file_path):
+                outcome = pd.read_csv(file_path, skiprows=3)
+                # Extract relevant columns - OperationType is the key one
+                outcome_data = outcome[['AnimalNumber', 'OperationType']].copy()
+                outcome_data = outcome_data.dropna(subset=['AnimalNumber'])
+                st.success(f"✅ Loaded {len(outcome_data)} outcome records from {file_path}")
+                break
         except Exception as e:
             continue
     
@@ -136,7 +148,7 @@ def merge_data(rodent_intake, foster_data, inventory_data, outcome_data):
     # Add foster information
     merged = merged.merge(foster_data, on='AnimalNumber', how='left')
     
-    # Add inventory information
+    # Add inventory information (Stage and Location)
     merged = merged.merge(inventory_data, on='AnimalNumber', how='left')
     
     # Add outcome information for animals not in inventory
@@ -145,11 +157,14 @@ def merge_data(rodent_intake, foster_data, inventory_data, outcome_data):
     # Clean up and standardize data
     merged['Sex'] = merged['Sex'].fillna(merged['Gender'])
     merged['Age'] = merged['Age'].fillna('N/A')
+    
+    # Create combined location field
     merged['Location_Combined'] = merged['Location'].fillna('') + ' - ' + merged['SubLocation'].fillna('')
     merged['Location_Combined'] = merged['Location_Combined'].str.replace(' - $', '', regex=False)
     merged['Location_Combined'] = merged['Location_Combined'].str.replace('^ - ', '', regex=True)
+    merged['Location_Combined'] = merged['Location_Combined'].fillna('Unknown')
     
-    # Determine Status
+    # Determine Status: First try Stage from inventory, then OperationType from outcome
     merged['Status'] = merged['Stage'].fillna(merged['OperationType']).fillna('Unknown')
     
     # Clean up foster information
@@ -158,7 +173,9 @@ def merge_data(rodent_intake, foster_data, inventory_data, outcome_data):
     
     return merged
 
-
+def create_clickable_link(animal_id):
+    """Create a clickable HTML link for the animal ID"""
+    return f'<a href="https://sms.petpoint.com/sms3/enhanced/animal/{animal_id}" target="_blank" class="animal-link">{animal_id}</a>'
 
 def main():
     # Header
@@ -317,30 +334,25 @@ def main():
         
         st.plotly_chart(fig_species, use_container_width=True)
     
-
-    
     # Main Data Table
     st.header("📋 Rodent Inventory")
     
-    # Prepare table data
+    # Prepare table data with clickable links
     table_data = filtered_data[['AnimalNumber', 'Name', 'Species', 'Sex', 'Age', 'Status', 'Location_Combined', 'FosterPersonID', 'FosterName']].copy()
     
-    # Create clickable AnimalNumber links
-    table_data['AnimalNumber'] = table_data['AnimalNumber'].apply(
-        lambda x: f"[{x}](https://sms.petpoint.com/sms3/enhanced/animal/{x})"
-    )
+    # Create clickable AnimalNumber links using HTML
+    table_data['AnimalNumber'] = table_data['AnimalNumber'].apply(create_clickable_link)
     
-    # Display table with pagination
-    st.dataframe(
-        table_data,
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "AnimalNumber": "Animal ID",
-            "FosterPersonID": "Foster ID",
-            "FosterName": "Foster Name",
-            "Location_Combined": "Location"
-        }
+    # Display table with HTML rendering
+    st.write("**Note:** Click on Animal ID to open in PetPoint")
+    st.markdown(
+        table_data.to_html(
+            escape=False,
+            index=False,
+            classes=['dataframe'],
+            table_id='rodent-table'
+        ),
+        unsafe_allow_html=True
     )
     
     # Summary statistics

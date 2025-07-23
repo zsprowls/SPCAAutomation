@@ -1,37 +1,36 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Monday, July 21, 2025",7/21/2025 12:00 AM,All,7/21/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Wednesday, July 23, 2025",7/22/2025 12:00 AM,All,7/22/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058911345,MAI TAI,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,New Adopter - Cat,McCrohan Nikki,NikkiM,,,No,,,,07/21/2025 03:09 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0054790728,LUNA,Cat,Domestic Shorthair,2yrs,F,Yes,Adoption,Previous Adopter - Cat,McCrohan Nikki,MariaS,HOLLY,,No,,West Seneca,,07/21/2025 11:45 AM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058544621,Shadow,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/21/2025 02:12 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058305672,Cypress,Cat,Domestic Shorthair,3yrs,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,Cry Baby,Mix,No,,,,07/21/2025 02:19 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058544622,Bear,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/21/2025 02:14 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058561034,Roco,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,07/21/2025 02:16 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058697780,MARLEY,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Previous Adopter - Cat,McCrohan Nikki,NikkiM,,,No,,,,07/21/2025 02:17 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058448506,Momo,Cat,Ragdoll,5mos,M,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,36,Mix,No,,Buffalo,,07/21/2025 05:09 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058636095,Cecilia,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,,,No,,Grand Island,,07/21/2025 05:23 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058636098,Korra,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,,,No,,Grand Island,,07/21/2025 05:23 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058822909,Lola,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2mos,F,Yes,Adoption,Foster Care Adoption - Puppy,Sisti Maria,MariaS,Jade,Mix,No,,Alden,,07/21/2025 03:42 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058636089,Mira,Cat,Domestic Shorthair,11mos,F,Yes,Adoption,Previous Adopter - Cat,Kiblin Julia,JULIAK,WAFFLE,,No,,,,07/21/2025 03:50 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058819858,DRAGONFLY,Cat,Domestic Shorthair,1yrs,F,Yes,Adoption,Foster Care Adoption - Cat,McCrohan Nikki,NikkiM,,,No,,,,07/21/2025 05:10 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058859402,Leila,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",10yrs,F,Yes,Adoption,Previous Adopter - Dog,Paryz Michelle,MICHELLEP,,Mix,No,,Town of Tonawanda,,07/21/2025 02:50 PM,,,,,,32
-Adoption,Total Outcomes: 15,Total Unique Animals: 15,A0058859425,Sophie,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",5yrs,F,Yes,Adoption,Previous Adopter - Dog,Paryz Michelle,MICHELLEP,,Mix,No,,Town of Tonawanda,,07/21/2025 02:50 PM,,,,,,32
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058847120,KIWI,Cat,Domestic Shorthair,4mos,F,Yes,Clinic Out,Medical Treatment Completed,COGSWELL TAMMI,TAMMIC,,,No,,,,07/21/2025 02:44 PM,,,,,,32
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058702515,Doug,Rabbit,New Zealand,2yrs,F,Yes,Clinic Out,Retention,COGSWELL TAMMI,TAMMIC,,New Zealand,No,,,,07/21/2025 03:35 PM,,,,,,32
-Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058949040,,Cat,Domestic Longhair,10mos,F,No,Clinic Out,Stray,Cook Keara,KEARAC,,,No,,Buffalo,,07/21/2025 02:17 PM,,,,,,32
-DOA,Total Outcomes: 3,Total Unique Animals: 3,A0058948324,DR. EVIL,Cat,Domestic Shorthair,4yrs,M,No,DOA, ,,TAMMIC,,Mix,No,,Buffalo,,07/21/2025 10:54 AM,,,,,,32
-DOA,Total Outcomes: 3,Total Unique Animals: 3,A0058951819,,Cat,Domestic Shorthair,3yrs,U,No,DOA, ,,KEARAC,,Mix,No,,Cheektowaga,,07/21/2025 03:28 PM,,,,,,32
-DOA,Total Outcomes: 3,Total Unique Animals: 3,A0047753814,Patches,Cat,Domestic Shorthair,,F,Yes,DOA, ,,TAMMIC,,Mix,No,,Buffalo,,07/21/2025 10:54 AM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0058917937,Gregory,Reptile/Amphibian,"Turtle, Red Eared Slider",,M,No,Euthanasia,Medical Reasons,,MILESW,,"Turtle, Red Eared Slider",No,,,,07/21/2025 12:36 PM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0058919342,Chewy,Rabbit,Dutch,10yrs,F,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Dutch,No,,,,07/21/2025 11:20 AM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0058933398,Dante,Dog,"Terrier, Rat",12yrs,M,Yes,Euthanasia,Requested Sleep,,SARAD,,Mix,No,,,,07/21/2025 10:22 AM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0058947194,,Cat,Domestic Shorthair,5yrs,M,No,Euthanasia,Humane Reasons,,PAIGEP,,Mix,No,,,,07/21/2025 02:52 PM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0058948528,Hondo,Dog,German Shepherd,8yrs,M,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Mix,No,,,,07/21/2025 11:54 AM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0058951563,,Cat,Domestic Shorthair,2mos,F,No,Euthanasia,Humane Reasons,,PAIGEP,,Mix,No,,,,07/21/2025 05:17 PM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0010646211,RAZOR,Cat,Domestic Shorthair,15yrs,M,Yes,Euthanasia,Medical Reasons,,SARAD,,,No,,,,07/21/2025 04:28 PM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0057812734,KIRA,Cat,Domestic Shorthair,15yrs,F,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Mix,No,,,,07/21/2025 11:21 AM,,,,,,32
-Euthanasia,Total Outcomes: 9,Total Unique Animals: 9,A0058874851,,Cat,Domestic Shorthair,1mos,M,No,Euthanasia,Medical Reasons,,VALERIEM,,Mix,No,,,,07/21/2025 12:14 PM,,,,,,32
-Return to Owner/Guardian,Total Outcomes: 1,Total Unique Animals: 1,A0031109282,BAXTER,Dog,Beagle,11yrs,M,Yes,Return to Owner/Guardian,General,HOMSI MELINA,MELINAH,CARNEY,Mix,No,,Hamburg,,07/21/2025 08:06 AM,,,,,,32
-Transfer Out,Total Outcomes: 1,Total Unique Animals: 1,A0058775077,CHARLIE,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2yrs,M,Yes,Transfer Out,SPCA - Other Counties,VOGT SHANNON,SHANNONV,,Mix,No,,,More Suitable Housing,07/21/2025 09:24 AM,,,,,,32
+Adoption,Total Outcomes: 3,Total Unique Animals: 3,A0058873095,Cookie,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",5yrs,F,Yes,Adoption,Foster Care Adoption - Dog,Witkowski Victoria,VictoriaW,,"Terrier, Yorkshire",No,,East Aurora,,07/22/2025 01:53 PM,,,,,,31
+Adoption,Total Outcomes: 3,Total Unique Animals: 3,A0058017236,BENTLEY,Dog,Hound,3yrs,M,Yes,Adoption,Foster Care Adoption - Dog,Witkowski Victoria,VictoriaW,,Mix,No,,Buffalo,,07/22/2025 04:39 PM,,,,,,31
+Adoption,Total Outcomes: 3,Total Unique Animals: 3,A0058913557,Xanni,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",7mos,F,Yes,Adoption,Previous Adopter - Dog,WEBSTER KATE,KATEW,Xabi,Mix,No,,Niagara County,,07/22/2025 04:57 PM,,,,,,31
+Clinic Out,Total Outcomes: 1,Total Unique Animals: 1,A0058763197,CRUISER,Cat,Domestic Shorthair,5mos,M,Yes,Clinic Out,Stray,BUCHHOLZ AMBER,AmberB,,Mix,No,,,,07/22/2025 02:44 PM,,,,,,31
+DOA,Total Outcomes: 6,Total Unique Animals: 6,A0058955917,Pinky 1,Rodent,HAMSTER,,U,No,DOA, ,,NICOLEA,,HAMSTER,No,,Lancaster,,07/22/2025 11:56 AM,,,,,,31
+DOA,Total Outcomes: 6,Total Unique Animals: 6,A0058955920,Pinky 2,Rodent,HAMSTER,,U,No,DOA, ,,NICOLEA,,HAMSTER,No,,Lancaster,,07/22/2025 11:56 AM,,,,,,31
+DOA,Total Outcomes: 6,Total Unique Animals: 6,A0058955924,Pinky 3,Rodent,HAMSTER,,U,No,DOA, ,,NICOLEA,,HAMSTER,No,,Lancaster,,07/22/2025 11:56 AM,,,,,,31
+DOA,Total Outcomes: 6,Total Unique Animals: 6,A0058955928,Pinky 4,Rodent,HAMSTER,,U,No,DOA, ,,NICOLEA,,HAMSTER,No,,Lancaster,,07/22/2025 11:56 AM,,,,,,31
+DOA,Total Outcomes: 6,Total Unique Animals: 6,A0058956374,Pinky 5,Rodent,HAMSTER,,U,No,DOA, ,,NICOLEA,,HAMSTER,No,,Lancaster,,07/22/2025 11:56 AM,,,,,,31
+DOA,Total Outcomes: 6,Total Unique Animals: 6,A0058955934,Pinky 6,Rodent,HAMSTER,,U,No,DOA, ,,NICOLEA,,HAMSTER,No,,Lancaster,,07/22/2025 11:56 AM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058728965,Moose,Farm Type Fowl,Chicken,9mos,M,No,Euthanasia,Aggression - People,,JENT,,,No,,,,07/22/2025 02:05 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058949012,Lucille,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",18yrs,F,Yes,Euthanasia,Requested Sleep,,KRYSTANP,,Mix,No,,,,07/22/2025 09:22 AM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058913425,,Cat,Domestic Shorthair,15yrs,F,No,Euthanasia,Cancer,,KRYSTANP,,,No,,,,07/22/2025 06:22 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058951360,MOOSE,Dog,Catahoula Leopard dog,12yrs,M,Yes,Euthanasia,Requested Sleep,,NINAP,,Mix,No,,,,07/22/2025 03:21 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955577,G Pig 12,Rodent,GUINEA PIG,,F,No,Euthanasia,Medical Reasons,,VALERIEM,,GUINEA PIG,No,,,,07/22/2025 03:16 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058956902,Hampster 22,Rodent,HAMSTER,,F,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:20 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955787,Hampster 1,Rodent,HAMSTER,,U,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:55 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955792,Hampster 2,Rodent,HAMSTER,,M,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:53 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955797,Hampster 3,Rodent,HAMSTER,,M,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:51 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955829,Hampster 7,Rodent,HAMSTER,,U,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:48 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955842,Hampster 8,Rodent,HAMSTER,,F,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:45 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955864,Hampster 11,Rodent,HAMSTER,,F,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:28 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058955887,Hampster 16,Rodent,HAMSTER,,F,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:25 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058956882,Hampster 19,Rodent,HAMSTER,,U,No,Euthanasia,Medical Reasons,,VALERIEM,,HAMSTER,No,,,,07/22/2025 03:22 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058959399,,Cat,Domestic Shorthair,0mos,U,No,Euthanasia,Humane Reasons,,JENT,,Mix,No,,,,07/22/2025 03:29 PM,,,,,,31
+Euthanasia,Total Outcomes: 16,Total Unique Animals: 16,A0058959622,,Cat,Domestic Shorthair,,U,No,Euthanasia,Medical Reasons,,VALERIEM,,Mix,No,,,,07/22/2025 03:56 PM,,,,,,31
+Return to Owner/Guardian,Total Outcomes: 4,Total Unique Animals: 4,A0058949368,,Cat,Domestic Shorthair,,F,No,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,07/22/2025 11:01 AM,,,,,,31
+Return to Owner/Guardian,Total Outcomes: 4,Total Unique Animals: 4,A0058949381,,Cat,Domestic Shorthair,0mos,U,No,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,07/22/2025 11:01 AM,,,,,,31
+Return to Owner/Guardian,Total Outcomes: 4,Total Unique Animals: 4,A0058949383,,Cat,Domestic Shorthair,0mos,U,No,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,07/22/2025 11:01 AM,,,,,,31
+Return to Owner/Guardian,Total Outcomes: 4,Total Unique Animals: 4,A0058949385,,Cat,Domestic Shorthair,0mos,U,No,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,07/22/2025 11:01 AM,,,,,,31
+Transfer Out,Total Outcomes: 1,Total Unique Animals: 1,A0058954767,Remy,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,F,No,Transfer Out,ACO or DCO in County,VOGT SHANNON,SHANNONV,,Mix,No,,,More Suitable Housing,07/22/2025 09:53 AM,,,,,,31
 

@@ -45,10 +45,11 @@ def load_data():
     """Load and process all data files"""
     
     # Define possible file paths for different environments
+    # Prioritize the __Load Files Go Here__ folder for easy updates
     base_paths = [
-        '.',  # Current directory
+        '../__Load Files Go Here__',  # Primary location for easy updates
+        '.',  # Current directory (for deployment)
         '..',  # Parent directory
-        '../__Load Files Go Here__',  # Specific subdirectory
         '/app',  # Streamlit Cloud default
         '/tmp',  # Alternative Streamlit Cloud path
     ]

@@ -31,26 +31,51 @@ def check_dependencies():
 
 def check_data_files():
     """Check if required data files exist"""
-    required_files = [
-        'RodentIntake.csv',
+    # Check primary location first (__Load Files Go Here__ folder)
+    primary_files = [
+        '../__Load Files Go Here__/RodentIntake.csv',
         '../__Load Files Go Here__/FosterCurrent.csv',
         '../__Load Files Go Here__/AnimalInventory.csv',
         '../__Load Files Go Here__/AnimalOutcome.csv'
     ]
     
+    # Also check current directory for deployment
+    local_files = [
+        'RodentIntake.csv',
+        'FosterCurrent.csv',
+        'AnimalInventory.csv',
+        'AnimalOutcome.csv'
+    ]
+    
     missing_files = []
-    for file_path in required_files:
+    found_in_primary = True
+    
+    # Check primary location
+    for file_path in primary_files:
         if not Path(file_path).exists():
             missing_files.append(file_path)
+            found_in_primary = False
     
-    if missing_files:
-        print("⚠️  Missing data files:")
-        for file_path in missing_files:
-            print(f"   - {file_path}")
-        print("\n📁 Please ensure all CSV files are in the correct locations.")
-        return False
+    if found_in_primary:
+        print("✅ Found all files in __Load Files Go Here__ folder")
+        return True
     
-    return True
+    # Check local directory
+    missing_local = []
+    for file_path in local_files:
+        if not Path(file_path).exists():
+            missing_local.append(file_path)
+    
+    if not missing_local:
+        print("✅ Found all files in local directory")
+        return True
+    
+    # If we get here, files are missing from both locations
+    print("⚠️  Missing data files:")
+    for file_path in missing_files:
+        print(f"   - {file_path}")
+    print("\n📁 Please ensure all CSV files are in the __Load Files Go Here__ folder or local directory.")
+    return False
 
 def main():
     """Main launcher function"""

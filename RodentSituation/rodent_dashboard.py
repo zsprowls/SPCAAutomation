@@ -54,26 +54,60 @@ def load_data():
     """Load and process all data files"""
     
     # Define possible file paths for different environments
-    # Prioritize the __Load Files Go Here__ folder for easy updates
+    # Streamlit Cloud sets working directory to the app's directory, but files can be in other repo directories
     base_paths = [
-        '../__Load Files Go Here__',  # Primary location for easy updates
-        '.',  # Current directory (for deployment)
+        '../__Load Files Go Here__',  # Primary location for data files
+        '.',  # Current directory (for RodentIntake.csv)
         '..',  # Parent directory
+        '/app/__Load Files Go Here__',  # Streamlit Cloud with data files
         '/app',  # Streamlit Cloud default
         '/tmp',  # Alternative Streamlit Cloud path
     ]
     
-    # Load RodentIntake.csv (no header skip needed - it's clean)
-    rodent_intake = None
+    # Debug: Show current working directory and available files
+    st.info(f"🔍 Current working directory: {os.getcwd()}")
+    try:
+        current_files = [f for f in os.listdir('.') if f.endswith('.csv')]
+        st.info(f"🔍 Available CSV files in current directory: {current_files}")
+    except Exception as e:
+        st.warning(f"⚠️ Could not list current directory files: {e}")
+    
+    # Try to find the data directory
+    data_dir_found = None
     for base_path in base_paths:
         try:
-            file_path = f"{base_path}/RodentIntake.csv"
+            if os.path.exists(base_path):
+                st.info(f"✅ Found directory: {base_path}")
+                if os.path.exists(f"{base_path}/AnimalInventory.csv"):
+                    data_dir_found = base_path
+                    st.success(f"✅ Found data directory: {base_path}")
+                    break
+        except Exception as e:
+            continue
+    
+    if data_dir_found is None:
+        st.error("❌ Could not find data directory with AnimalInventory.csv")
+        st.info("Available directories checked:")
+        for base_path in base_paths:
+            st.info(f"  - {base_path}")
+        return None, None, None, None
+    
+    # Load RodentIntake.csv (no header skip needed - it's clean)
+    rodent_intake = None
+    # Try current directory first for RodentIntake.csv
+    try:
+        file_path = "RodentIntake.csv"
+        if os.path.exists(file_path):
+            rodent_intake = pd.read_csv(file_path)
+            st.success(f"✅ Loaded {len(rodent_intake)} rodents from {file_path}")
+        else:
+            # Try data directory
+            file_path = f"{data_dir_found}/RodentIntake.csv"
             if os.path.exists(file_path):
                 rodent_intake = pd.read_csv(file_path)
                 st.success(f"✅ Loaded {len(rodent_intake)} rodents from {file_path}")
-                break
-        except Exception as e:
-            continue
+    except Exception as e:
+        st.error(f"❌ Error loading RodentIntake.csv: {e}")
     
     if rodent_intake is None:
         st.error("❌ Could not load RodentIntake.csv from any location")
@@ -81,19 +115,17 @@ def load_data():
     
     # Load FosterCurrent.csv (header row 7)
     foster_data = None
-    for base_path in base_paths:
-        try:
-            file_path = f"{base_path}/FosterCurrent.csv"
-            if os.path.exists(file_path):
-                foster_current = pd.read_csv(file_path, skiprows=6)
-                # Extract relevant columns
-                foster_data = foster_current[['textbox9', 'textbox10', 'textbox11']].copy()
-                foster_data.columns = ['AnimalNumber', 'FosterPersonID', 'FosterName']
-                foster_data = foster_data.dropna(subset=['AnimalNumber'])
-                st.success(f"✅ Loaded {len(foster_data)} foster records from {file_path}")
-                break
-        except Exception as e:
-            continue
+    try:
+        file_path = f"{data_dir_found}/FosterCurrent.csv"
+        if os.path.exists(file_path):
+            foster_current = pd.read_csv(file_path, skiprows=6)
+            # Extract relevant columns
+            foster_data = foster_current[['textbox9', 'textbox10', 'textbox11']].copy()
+            foster_data.columns = ['AnimalNumber', 'FosterPersonID', 'FosterName']
+            foster_data = foster_data.dropna(subset=['AnimalNumber'])
+            st.success(f"✅ Loaded {len(foster_data)} foster records from {file_path}")
+    except Exception as e:
+        st.warning(f"⚠️ Could not load FosterCurrent.csv: {e}")
     
     if foster_data is None:
         st.warning("⚠️ Could not load FosterCurrent.csv, using empty dataset")
@@ -101,18 +133,16 @@ def load_data():
     
     # Load AnimalInventory.csv (header row 4)
     inventory_data = None
-    for base_path in base_paths:
-        try:
-            file_path = f"{base_path}/AnimalInventory.csv"
-            if os.path.exists(file_path):
-                inventory = pd.read_csv(file_path, skiprows=3)
-                # Extract relevant columns - Stage and Location are the key ones
-                inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation']].copy()
-                inventory_data = inventory_data.dropna(subset=['AnimalNumber'])
-                st.success(f"✅ Loaded {len(inventory_data)} inventory records from {file_path}")
-                break
-        except Exception as e:
-            continue
+    try:
+        file_path = f"{data_dir_found}/AnimalInventory.csv"
+        if os.path.exists(file_path):
+            inventory = pd.read_csv(file_path, skiprows=3)
+            # Extract relevant columns - Stage and Location are the key ones
+            inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation']].copy()
+            inventory_data = inventory_data.dropna(subset=['AnimalNumber'])
+            st.success(f"✅ Loaded {len(inventory_data)} inventory records from {file_path}")
+    except Exception as e:
+        st.warning(f"⚠️ Could not load AnimalInventory.csv: {e}")
     
     if inventory_data is None:
         st.warning("⚠️ Could not load AnimalInventory.csv, using empty dataset")
@@ -120,18 +150,16 @@ def load_data():
     
     # Load AnimalOutcome.csv (header row 4)
     outcome_data = None
-    for base_path in base_paths:
-        try:
-            file_path = f"{base_path}/AnimalOutcome.csv"
-            if os.path.exists(file_path):
-                outcome = pd.read_csv(file_path, skiprows=3)
-                # Extract relevant columns - OperationType is the key one
-                outcome_data = outcome[['AnimalNumber', 'OperationType']].copy()
-                outcome_data = outcome_data.dropna(subset=['AnimalNumber'])
-                st.success(f"✅ Loaded {len(outcome_data)} outcome records from {file_path}")
-                break
-        except Exception as e:
-            continue
+    try:
+        file_path = f"{data_dir_found}/AnimalOutcome.csv"
+        if os.path.exists(file_path):
+            outcome = pd.read_csv(file_path, skiprows=3)
+            # Extract relevant columns - OperationType is the key one
+            outcome_data = outcome[['AnimalNumber', 'OperationType']].copy()
+            outcome_data = outcome_data.dropna(subset=['AnimalNumber'])
+            st.success(f"✅ Loaded {len(outcome_data)} outcome records from {file_path}")
+    except Exception as e:
+        st.warning(f"⚠️ Could not load AnimalOutcome.csv: {e}")
     
     if outcome_data is None:
         st.warning("⚠️ Could not load AnimalOutcome.csv, using empty dataset")

@@ -44,47 +44,84 @@ st.markdown("""
 def load_data():
     """Load and process all data files"""
     
+    # Define possible file paths for different environments
+    base_paths = [
+        '.',  # Current directory
+        '..',  # Parent directory
+        '../__Load Files Go Here__',  # Specific subdirectory
+        '/app',  # Streamlit Cloud default
+        '/tmp',  # Alternative Streamlit Cloud path
+    ]
+    
     # Load RodentIntake.csv (header row 4)
-    try:
-        rodent_intake = pd.read_csv('RodentIntake.csv', skiprows=3)
-        rodent_intake.columns = ['AnimalNumber', 'Name', 'Species', 'Gender', 'Color']
-        st.success(f"✅ Loaded {len(rodent_intake)} rodents from RodentIntake.csv")
-    except Exception as e:
-        st.error(f"❌ Could not load RodentIntake.csv: {str(e)}")
+    rodent_intake = None
+    for base_path in base_paths:
+        try:
+            file_path = f"{base_path}/RodentIntake.csv"
+            rodent_intake = pd.read_csv(file_path, skiprows=3)
+            rodent_intake.columns = ['AnimalNumber', 'Name', 'Species', 'Gender', 'Color']
+            st.success(f"✅ Loaded {len(rodent_intake)} rodents from {file_path}")
+            break
+        except Exception as e:
+            continue
+    
+    if rodent_intake is None:
+        st.error("❌ Could not load RodentIntake.csv from any location")
         return None, None, None, None
     
     # Load FosterCurrent.csv (header row 7)
-    try:
-        foster_current = pd.read_csv('../__Load Files Go Here__/FosterCurrent.csv', skiprows=6)
-        # Extract relevant columns
-        foster_data = foster_current[['textbox9', 'textbox10', 'textbox11']].copy()
-        foster_data.columns = ['AnimalNumber', 'FosterPersonID', 'FosterName']
-        foster_data = foster_data.dropna(subset=['AnimalNumber'])
-        st.success(f"✅ Loaded {len(foster_data)} foster records from FosterCurrent.csv")
-    except Exception as e:
-        st.warning(f"⚠️ Could not load FosterCurrent.csv: {str(e)}")
+    foster_data = None
+    for base_path in base_paths:
+        try:
+            file_path = f"{base_path}/FosterCurrent.csv"
+            foster_current = pd.read_csv(file_path, skiprows=6)
+            # Extract relevant columns
+            foster_data = foster_current[['textbox9', 'textbox10', 'textbox11']].copy()
+            foster_data.columns = ['AnimalNumber', 'FosterPersonID', 'FosterName']
+            foster_data = foster_data.dropna(subset=['AnimalNumber'])
+            st.success(f"✅ Loaded {len(foster_data)} foster records from {file_path}")
+            break
+        except Exception as e:
+            continue
+    
+    if foster_data is None:
+        st.warning("⚠️ Could not load FosterCurrent.csv, using empty dataset")
         foster_data = pd.DataFrame(columns=['AnimalNumber', 'FosterPersonID', 'FosterName'])
     
     # Load AnimalInventory.csv (header row 4)
-    try:
-        inventory = pd.read_csv('../__Load Files Go Here__/AnimalInventory.csv', skiprows=3)
-        # Extract relevant columns
-        inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation']].copy()
-        inventory_data = inventory_data.dropna(subset=['AnimalNumber'])
-        st.success(f"✅ Loaded {len(inventory_data)} inventory records from AnimalInventory.csv")
-    except Exception as e:
-        st.warning(f"⚠️ Could not load AnimalInventory.csv: {str(e)}")
+    inventory_data = None
+    for base_path in base_paths:
+        try:
+            file_path = f"{base_path}/AnimalInventory.csv"
+            inventory = pd.read_csv(file_path, skiprows=3)
+            # Extract relevant columns
+            inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation']].copy()
+            inventory_data = inventory_data.dropna(subset=['AnimalNumber'])
+            st.success(f"✅ Loaded {len(inventory_data)} inventory records from {file_path}")
+            break
+        except Exception as e:
+            continue
+    
+    if inventory_data is None:
+        st.warning("⚠️ Could not load AnimalInventory.csv, using empty dataset")
         inventory_data = pd.DataFrame(columns=['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation'])
     
     # Load AnimalOutcome.csv (header row 4)
-    try:
-        outcome = pd.read_csv('../__Load Files Go Here__/AnimalOutcome.csv', skiprows=3)
-        # Extract relevant columns
-        outcome_data = outcome[['AnimalNumber', 'OperationType']].copy()
-        outcome_data = outcome_data.dropna(subset=['AnimalNumber'])
-        st.success(f"✅ Loaded {len(outcome_data)} outcome records from AnimalOutcome.csv")
-    except Exception as e:
-        st.warning(f"⚠️ Could not load AnimalOutcome.csv: {str(e)}")
+    outcome_data = None
+    for base_path in base_paths:
+        try:
+            file_path = f"{base_path}/AnimalOutcome.csv"
+            outcome = pd.read_csv(file_path, skiprows=3)
+            # Extract relevant columns
+            outcome_data = outcome[['AnimalNumber', 'OperationType']].copy()
+            outcome_data = outcome_data.dropna(subset=['AnimalNumber'])
+            st.success(f"✅ Loaded {len(outcome_data)} outcome records from {file_path}")
+            break
+        except Exception as e:
+            continue
+    
+    if outcome_data is None:
+        st.warning("⚠️ Could not load AnimalOutcome.csv, using empty dataset")
         outcome_data = pd.DataFrame(columns=['AnimalNumber', 'OperationType'])
     
     return rodent_intake, foster_data, inventory_data, outcome_data
@@ -120,9 +157,7 @@ def merge_data(rodent_intake, foster_data, inventory_data, outcome_data):
     
     return merged
 
-def create_petpoint_link(animal_number):
-    """Create PetPoint profile link"""
-    return f"https://sms.petpoint.com/sms3/enhanced/animal/{animal_number}"
+
 
 def main():
     # Header
@@ -289,9 +324,9 @@ def main():
     # Prepare table data
     table_data = filtered_data[['AnimalNumber', 'Name', 'Species', 'Sex', 'Age', 'Status', 'Location_Combined', 'FosterPersonID', 'FosterName']].copy()
     
-    # Make AnimalNumber clickable by converting to markdown links
+    # Create clickable AnimalNumber links
     table_data['AnimalNumber'] = table_data['AnimalNumber'].apply(
-        lambda x: f"[{x}]({create_petpoint_link(x)})"
+        lambda x: f"[{x}](https://sms.petpoint.com/sms3/enhanced/animal/{x})"
     )
     
     # Display table with pagination

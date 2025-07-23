@@ -54,11 +54,13 @@ def load_data():
     """Load and process all data files"""
     
     # Define possible file paths for different environments
-    # Streamlit Cloud sets working directory to the app's directory, but files can be in other repo directories
+    # Streamlit Cloud runs from repository root, local runs from subdirectory
     base_paths = [
-        '../__Load Files Go Here__',  # Primary location for data files
-        '.',  # Current directory (for RodentIntake.csv)
+        '__Load Files Go Here__',  # Primary location for data files (from repo root)
+        'RodentSituation',  # Current subdirectory (for RodentIntake.csv)
+        '.',  # Current directory
         '..',  # Parent directory
+        '../__Load Files Go Here__',  # Local development fallback
         '/app/__Load Files Go Here__',  # Streamlit Cloud with data files
         '/app',  # Streamlit Cloud default
         '/tmp',  # Alternative Streamlit Cloud path
@@ -94,20 +96,28 @@ def load_data():
     
     # Load RodentIntake.csv (no header skip needed - it's clean)
     rodent_intake = None
-    # Try current directory first for RodentIntake.csv
-    try:
-        file_path = "RodentIntake.csv"
-        if os.path.exists(file_path):
-            rodent_intake = pd.read_csv(file_path)
-            st.success(f"✅ Loaded {len(rodent_intake)} rodents from {file_path}")
-        else:
-            # Try data directory
-            file_path = f"{data_dir_found}/RodentIntake.csv"
+    # Try multiple locations for RodentIntake.csv
+    rodent_paths = [
+        "RodentIntake.csv",  # Current directory
+        "RodentSituation/RodentIntake.csv",  # From repo root
+        f"{data_dir_found}/RodentIntake.csv"  # From data directory
+    ]
+    
+    for file_path in rodent_paths:
+        try:
             if os.path.exists(file_path):
                 rodent_intake = pd.read_csv(file_path)
                 st.success(f"✅ Loaded {len(rodent_intake)} rodents from {file_path}")
-    except Exception as e:
-        st.error(f"❌ Error loading RodentIntake.csv: {e}")
+                break
+        except Exception as e:
+            continue
+    
+    if rodent_intake is None:
+        st.error("❌ Could not load RodentIntake.csv from any location")
+        st.info("Tried paths:")
+        for path in rodent_paths:
+            st.info(f"  - {path}")
+        return None, None, None, None
     
     if rodent_intake is None:
         st.error("❌ Could not load RodentIntake.csv from any location")

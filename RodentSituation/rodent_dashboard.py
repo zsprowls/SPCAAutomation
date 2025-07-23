@@ -213,7 +213,13 @@ def merge_data(rodent_intake, foster_data, inventory_data, outcome_data):
 
 def create_clickable_link(animal_id):
     """Create a clickable HTML link for the animal ID"""
-    return f'<a href="https://sms.petpoint.com/sms3/enhanced/animal/{animal_id}" target="_blank" class="animal-link">{animal_id}</a>'
+    # Extract the numeric part after "A00" prefix for the PetPoint URL
+    if animal_id.startswith('A00'):
+        petpoint_id = animal_id[3:]  # Remove "A00" prefix
+    else:
+        petpoint_id = animal_id  # Fallback if format is different
+    
+    return f'<a href="https://sms.petpoint.com/sms3/enhanced/animal/{petpoint_id}" target="_blank" class="animal-link">{animal_id}</a>'
 
 def main():
     # Header

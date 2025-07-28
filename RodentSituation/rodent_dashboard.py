@@ -286,6 +286,11 @@ def main():
     location_options = ['All'] + sorted(location_values)
     selected_location = st.sidebar.selectbox("Location", location_options)
     
+    # Spayed/Neutered filter
+    spayed_values = merged_data['SpayedNeutered'].dropna().unique().tolist()
+    spayed_options = ['All'] + sorted(spayed_values)
+    selected_spayed = st.sidebar.selectbox("Spayed/Neutered", spayed_options)
+    
     # Apply filters
     filtered_data = merged_data.copy()
     
@@ -300,6 +305,9 @@ def main():
     
     if selected_location != 'All':
         filtered_data = filtered_data[filtered_data['Location_Combined'] == selected_location]
+    
+    if selected_spayed != 'All':
+        filtered_data = filtered_data[filtered_data['SpayedNeutered'] == selected_spayed]
     
     # Filter note
     if len(filtered_data) != len(merged_data):

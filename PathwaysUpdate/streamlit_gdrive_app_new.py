@@ -135,8 +135,17 @@ def load_data_from_multiple_sources():
                 if 'AID' in df_pathways.columns and 'AID' in df_inventory.columns:
                     # Convert AID to string for merging
                     df_pathways['AID'] = df_pathways['AID'].astype(str)
-                    # Merge the dataframes
-                    df_merged = pd.merge(df_pathways, df_inventory, on='AID', how='left', suffixes=('', '_inv'))
+                                    # Merge the dataframes
+                df_merged = pd.merge(df_pathways, df_inventory, on='AID', how='left', suffixes=('', '_inv'))
+                
+                # Prioritize Location and SubLocation from AnimalInventory over Pathways data
+                if 'Location_inv' in df_merged.columns:
+                    # Use Location from AnimalInventory if available, otherwise keep from Pathways
+                    df_merged['Location'] = df_merged['Location_inv'].fillna(df_merged['Location'])
+                
+                if 'SubLocation_inv' in df_merged.columns:
+                    # Use SubLocation from AnimalInventory if available, otherwise keep from Pathways
+                    df_merged['SubLocation'] = df_merged['SubLocation_inv'].fillna(df_merged['SubLocation'])
                 else:
                     st.warning("⚠️ AID column not found in one or both datasets, using pathways data only")
                     df_merged = df_pathways

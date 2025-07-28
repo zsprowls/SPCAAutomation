@@ -49,7 +49,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-@st.cache_data
+@st.cache_data(ttl=300)  # Cache for 5 minutes, then auto-refresh
 def load_data():
     """Load and process all data files"""
     
@@ -238,11 +238,23 @@ def main():
         st.error("Failed to load primary data file. Please check file paths.")
         return
     
+    # Show data freshness
+    st.sidebar.markdown("---")
+    st.sidebar.markdown(f"📅 **Data loaded:** {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    st.sidebar.markdown("💡 *Click 'Refresh Data' to reload from files*")
+    
     # Merge data
     merged_data = merge_data(rodent_intake, foster_data, inventory_data, outcome_data)
     
     # Sidebar filters
     st.sidebar.header("🔍 Filters")
+    
+    # Cache management
+    if st.sidebar.button("🔄 Refresh Data", help="Clear cache and reload data from files"):
+        st.cache_data.clear()
+        st.rerun()
+    
+    st.sidebar.markdown("---")
     
     # Species filter
     species_options = ['All'] + sorted(merged_data['Species'].unique().tolist())

@@ -148,7 +148,7 @@ def load_data():
         if os.path.exists(file_path):
             inventory = pd.read_csv(file_path, skiprows=3)
             # Extract relevant columns - Stage and Location are the key ones
-            inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation']].copy()
+            inventory_data = inventory[['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation', 'SpayedNeutered']].copy()
             inventory_data = inventory_data.dropna(subset=['AnimalNumber'])
             st.success(f"✅ Loaded {len(inventory_data)} inventory records from {file_path}")
     except Exception as e:
@@ -156,7 +156,7 @@ def load_data():
     
     if inventory_data is None:
         st.warning("⚠️ Could not load AnimalInventory.csv, using empty dataset")
-        inventory_data = pd.DataFrame(columns=['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation'])
+        inventory_data = pd.DataFrame(columns=['AnimalNumber', 'Stage', 'Age', 'Sex', 'Location', 'SubLocation', 'SpayedNeutered'])
     
     # Load AnimalOutcome.csv (header row 4)
     outcome_data = None
@@ -196,18 +196,29 @@ def merge_data(rodent_intake, foster_data, inventory_data, outcome_data):
     merged['Sex'] = merged['Sex'].fillna(merged['Gender'])
     merged['Age'] = merged['Age'].fillna('N/A')
     
+    # For animals not in inventory, mark as "Released"
+    # Check if animal is in inventory by looking for non-null Stage values
+    released_mask = merged['Stage'].isna()
+    
+    # Set "Released" for missing inventory data
+    merged.loc[released_mask, 'Status'] = 'Released'
+    merged.loc[released_mask, 'Location'] = 'Released'
+    merged.loc[released_mask, 'SubLocation'] = 'Released'
+    merged.loc[released_mask, 'SpayedNeutered'] = 'Released'
+    merged.loc[released_mask, 'FosterPersonID'] = 'Released'
+    merged.loc[released_mask, 'FosterName'] = 'Released'
+    
+    # For animals in inventory, set Status from Stage and fill missing values
+    merged.loc[~released_mask, 'Status'] = merged.loc[~released_mask, 'Stage'].fillna('Unknown')
+    merged.loc[~released_mask, 'SpayedNeutered'] = merged.loc[~released_mask, 'SpayedNeutered'].fillna('Unknown')
+    merged.loc[~released_mask, 'FosterPersonID'] = merged.loc[~released_mask, 'FosterPersonID'].fillna('Not in Foster')
+    merged.loc[~released_mask, 'FosterName'] = merged.loc[~released_mask, 'FosterName'].fillna('Not in Foster')
+    
     # Create combined location field
     merged['Location_Combined'] = merged['Location'].fillna('') + ' - ' + merged['SubLocation'].fillna('')
     merged['Location_Combined'] = merged['Location_Combined'].str.replace(' - $', '', regex=False)
     merged['Location_Combined'] = merged['Location_Combined'].str.replace('^ - ', '', regex=True)
     merged['Location_Combined'] = merged['Location_Combined'].fillna('Unknown')
-    
-    # Determine Status: First try Stage from inventory, then OperationType from outcome
-    merged['Status'] = merged['Stage'].fillna(merged['OperationType']).fillna('Unknown')
-    
-    # Clean up foster information
-    merged['FosterPersonID'] = merged['FosterPersonID'].fillna('Not in Foster')
-    merged['FosterName'] = merged['FosterName'].fillna('Not in Foster')
     
     return merged
 
@@ -261,15 +272,18 @@ def main():
     selected_species = st.sidebar.selectbox("Species", species_options)
     
     # Sex filter
-    sex_options = ['All'] + sorted(merged_data['Sex'].dropna().unique().tolist())
+    sex_values = merged_data['Sex'].dropna().unique().tolist()
+    sex_options = ['All'] + sorted(sex_values)
     selected_sex = st.sidebar.selectbox("Sex", sex_options)
     
     # Status filter
-    status_options = ['All'] + sorted(merged_data['Status'].unique().tolist())
+    status_values = merged_data['Status'].dropna().unique().tolist()
+    status_options = ['All'] + sorted(status_values)
     selected_status = st.sidebar.selectbox("Status", status_options)
     
     # Location filter
-    location_options = ['All'] + sorted(merged_data['Location_Combined'].dropna().unique().tolist())
+    location_values = merged_data['Location_Combined'].dropna().unique().tolist()
+    location_options = ['All'] + sorted(location_values)
     selected_location = st.sidebar.selectbox("Location", location_options)
     
     # Apply filters
@@ -299,44 +313,45 @@ def main():
     with col1:
         st.markdown(f"""
         <div class="metric-card">
-            <h3>Total Rodents</h3>
+            <h3>Total Intake</h3>
             <h2>{len(filtered_data)}</h2>
+            <small style="color: #666;">All rodents from intake</small>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
-        in_foster = len(filtered_data[filtered_data['FosterPersonID'] != 'Not in Foster'])
-        foster_percentage = (in_foster / len(filtered_data)) * 100 if len(filtered_data) > 0 else 0
+        # Count animals in shelter (not released, not in foster)
+        in_shelter = len(filtered_data[
+            (filtered_data['Status'] != 'Released') & 
+            (filtered_data['Status'] != 'In Foster')
+        ])
         st.markdown(f"""
         <div class="metric-card">
-            <h3>In Foster</h3>
-            <h2>{in_foster} ({foster_percentage:.1f}%)</h2>
+            <h3>In Shelter</h3>
+            <h2>{in_shelter}</h2>
+            <small style="color: #666;">Not released or in foster</small>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
-        # Only count living females that need foster placement
-        # Excluded: Males, Euthanized, DOA, and animals already in foster
-        living_females = filtered_data[
-            (filtered_data['Sex'] == 'F') & 
-            (filtered_data['Status'].str.contains('Euthanasia|DOA', case=False, na=False) == False) &
-            (filtered_data['FosterPersonID'] == 'Not in Foster')
-        ]
-        needing_placement = len(living_females)
+        # Count released animals
+        released_count = len(filtered_data[filtered_data['Status'] == 'Released'])
         st.markdown(f"""
         <div class="metric-card">
-            <h3>Needing Placement</h3>
-            <h2>{needing_placement}</h2>
-            <small style="color: #666;">Living females only (excludes males, euthanized, DOA)</small>
+            <h3>Released</h3>
+            <h2>{released_count}</h2>
+            <small style="color: #666;">No longer in system</small>
         </div>
         """, unsafe_allow_html=True)
     
     with col4:
-        unique_fosters = filtered_data[filtered_data['FosterPersonID'] != 'Not in Foster']['FosterPersonID'].nunique()
+        # Count animals with "In Foster" status
+        in_foster = len(filtered_data[filtered_data['Status'] == 'In Foster'])
         st.markdown(f"""
         <div class="metric-card">
-            <h3>Active Fosters</h3>
-            <h2>{unique_fosters}</h2>
+            <h3>In Foster</h3>
+            <h2>{in_foster}</h2>
+            <small style="color: #666;">Status: In Foster</small>
         </div>
         """, unsafe_allow_html=True)
     
@@ -390,16 +405,43 @@ def main():
         
         st.plotly_chart(fig_species, use_container_width=True)
     
-    # Main Data Table
-    st.header("📋 Rodent Inventory")
+    # Comprehensive Data Table (like spreadsheet generator)
+    st.header("📋 Complete Rodent Inventory")
     
-    # Prepare table data with clickable links
-    table_data = filtered_data[['AnimalNumber', 'AnimalName', 'Species', 'Sex', 'Age', 'Status', 'Location_Combined', 'FosterPersonID', 'FosterName']].copy()
+    # Sort data by Location and SubLocation for better organization
+    sorted_data = filtered_data.sort_values(['Location', 'SubLocation', 'AnimalNumber'])
+    
+    # Prepare comprehensive table data with all columns
+    table_columns = [
+        'AnimalNumber', 'AnimalName', 'Species', 'Gender', 'Color', 
+        'Sex', 'Status', 'Location', 'SubLocation', 'SpayedNeutered',
+        'FosterPersonID', 'FosterName'
+    ]
+    
+    table_data = sorted_data[table_columns].copy()
     
     # Create clickable AnimalNumber links using HTML
     table_data['AnimalNumber'] = table_data['AnimalNumber'].apply(create_clickable_link)
     
-    # Display table with HTML rendering
+    # Rename columns for display
+    column_mapping = {
+        'AnimalNumber': 'Animal ID',
+        'AnimalName': 'Animal Name',
+        'Species': 'Species',
+        'Gender': 'Gender',
+        'Color': 'Color',
+        'Sex': 'Sex',
+        'Status': 'Status',
+        'Location': 'Location',
+        'SubLocation': 'Sub Location',
+        'SpayedNeutered': 'Spayed/Neutered',
+        'FosterPersonID': 'Foster PID',
+        'FosterName': 'Foster Name'
+    }
+    
+    table_data = table_data.rename(columns=column_mapping)
+    
+    # Display comprehensive table with HTML rendering
     st.write("**Note:** Click on Animal ID to open in PetPoint")
     st.markdown(
         table_data.to_html(
@@ -420,8 +462,6 @@ def main():
     
     species_summary['Not in Foster'] = species_summary['Total'] - species_summary['In Foster']
     species_summary['Foster %'] = (species_summary['In Foster'] / species_summary['Total'] * 100).round(1)
-    
-    st.dataframe(species_summary, use_container_width=True)
     
     # Footer
     st.markdown("---")

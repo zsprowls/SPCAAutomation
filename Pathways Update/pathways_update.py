@@ -40,7 +40,7 @@ inventory_df['AID'] = inventory_df['AnimalNumber'].str[-8:].str.zfill(8)
 animals_to_remove = pathways_df[~pathways_df['AID'].isin(inventory_df['AID'])]
 
 # Save animals to remove (using original column names since this is from PathwaysExportFile)
-animals_to_remove[['Name', 'AID', 'Species', 'Location ', 'Intake Date']].to_excel('./Pathways Update/PathwaysRemove.xlsx', index=False)
+animals_to_remove[['Name', 'AID', 'Species', 'Location', 'Intake Date']].to_excel('./Pathways Update/PathwaysRemove.xlsx', index=False)
 
 # Convert IntakeDateTime to datetime
 inventory_df['IntakeDateTime'] = pd.to_datetime(inventory_df['IntakeDateTime'])

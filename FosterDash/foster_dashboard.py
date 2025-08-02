@@ -60,6 +60,190 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 @st.cache_data
+def load_foster_parents_data():
+    """Load foster parents data from the Excel file"""
+    try:
+        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        
+        if os.path.exists(excel_path):
+            # Read the "Available Foster Parents" tab
+            df = pd.read_excel(excel_path, sheet_name="Available Foster Parents")
+            
+            # Clean up the data
+            df = df.dropna(subset=['PID'])  # Remove rows without PID
+            
+            # Convert PID to full format (match FosterCurrent format)
+            def format_pid(pid):
+                if pd.isna(pid):
+                    return ''
+                
+                # Convert to string first
+                pid_str = str(pid).strip()
+                
+                # If it already starts with 'P', return as-is (it's already in correct format)
+                if pid_str.startswith('P'):
+                    return pid_str
+                
+                # Try to convert to int to remove any decimal places
+                try:
+                    pid_int = int(float(pid_str))  # Handle decimal numbers
+                    numeric_part = str(pid_int)
+                except (ValueError, TypeError):
+                    # If conversion fails, use the original string
+                    numeric_part = pid_str
+                
+                # If it's 8 digits, add P00 prefix to match FosterCurrent format
+                if len(numeric_part) == 8:
+                    return f"P00{numeric_part}"
+                else:
+                    # For other lengths, pad to 9 digits after P
+                    numeric_part = numeric_part.zfill(9)
+                    return f"P{numeric_part}"
+            
+            df['Full_PID'] = df['PID'].apply(format_pid)
+            
+            # Clean up column names and data
+            df['Last Name'] = df['Last Name'].fillna('')
+            df['First Name'] = df['First Name'].fillna('')
+            df['Phone Number'] = df['Phone Number'].fillna('')
+            df['Foster Request/Animal Preference'] = df['Foster Request/Animal Preference'].fillna('')
+            df['Availability/Notes'] = df['Availability/Notes'].fillna('')
+            
+            # Create full name
+            df['Full_Name'] = df['First Name'] + ' ' + df['Last Name']
+            df['Full_Name'] = df['Full_Name'].str.strip()
+            
+            st.success(f"✅ Successfully loaded foster parents data ({len(df)} records)")
+            return df
+        else:
+            st.error(f"❌ Excel file not found at: {excel_path}")
+            return pd.DataFrame()
+            
+    except Exception as e:
+        st.error(f"❌ Error loading foster parents data: {str(e)}")
+        return pd.DataFrame()
+
+@st.cache_data
+def load_bottle_fed_kittens_data():
+    """Load Emergency Bottle Fed Kittens data from the Excel file"""
+    try:
+        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        
+        if os.path.exists(excel_path):
+            # Read the "Emergency Bottle Fed Kittens" tab
+            df = pd.read_excel(excel_path, sheet_name="Emergency Bottle Fed Kittens")
+            
+            # Clean up the data
+            df = df.dropna(subset=['PID'])  # Remove rows without PID
+            
+            # Convert PID to full format (match FosterCurrent format)
+            def format_pid(pid):
+                if pd.isna(pid):
+                    return ''
+                
+                # Convert to string first
+                pid_str = str(pid).strip()
+                
+                # If it already starts with 'P', return as-is (it's already in correct format)
+                if pid_str.startswith('P'):
+                    return pid_str
+                
+                # Try to convert to int to remove any decimal places
+                try:
+                    pid_int = int(float(pid_str))  # Handle decimal numbers
+                    numeric_part = str(pid_int)
+                except (ValueError, TypeError):
+                    # If conversion fails, use the original string
+                    numeric_part = pid_str
+                
+                # If it's 8 digits, add P00 prefix to match FosterCurrent format
+                if len(numeric_part) == 8:
+                    return f"P00{numeric_part}"
+                else:
+                    # For other lengths, pad to 9 digits after P
+                    numeric_part = numeric_part.zfill(9)
+                    return f"P{numeric_part}"
+            
+            df['Full_PID'] = df['PID'].apply(format_pid)
+            
+            # Clean up column names and data
+            df['Last Name'] = df['Last Name'].fillna('')
+            df['First Name'] = df['First Name'].fillna('')
+            df['Phone Number'] = df['Phone Number'].fillna('')
+            df['Foster Request/Animal Preference'] = df['Foster Request/Animal Preference'].fillna('')
+            df['Availability/Notes'] = df['Availability/Notes'].fillna('')
+            
+            # Create full name
+            df['Full_Name'] = df['First Name'] + ' ' + df['Last Name']
+            df['Full_Name'] = df['Full_Name'].str.strip()
+            
+            st.success(f"✅ Successfully loaded bottle fed kittens data ({len(df)} records)")
+            return df
+        else:
+            st.error(f"❌ Excel file not found at: {excel_path}")
+            return pd.DataFrame()
+            
+    except Exception as e:
+        st.error(f"❌ Error loading bottle fed kittens data: {str(e)}")
+        return pd.DataFrame()
+
+@st.cache_data
+def load_panleuk_positive_pids():
+    """Load Panleuk Positive PIDs from the Excel file"""
+    try:
+        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        
+        if os.path.exists(excel_path):
+            # Read the "Panleuk. POSITIVES" tab
+            df = pd.read_excel(excel_path, sheet_name="Panleuk. POSITIVES")
+            
+            # Clean up the data
+            df = df.dropna(subset=['PID'])  # Remove rows without PID
+            
+            # Convert PID to full format (match FosterCurrent format)
+            def format_pid(pid):
+                if pd.isna(pid):
+                    return ''
+                
+                # Convert to string first
+                pid_str = str(pid).strip()
+                
+                # If it already starts with 'P', return as-is (it's already in correct format)
+                if pid_str.startswith('P'):
+                    return pid_str
+                
+                # Try to convert to int to remove any decimal places
+                try:
+                    pid_int = int(float(pid_str))  # Handle decimal numbers
+                    numeric_part = str(pid_int)
+                except (ValueError, TypeError):
+                    # If conversion fails, use the original string
+                    numeric_part = pid_str
+                
+                # If it's 8 digits, add P00 prefix to match FosterCurrent format
+                if len(numeric_part) == 8:
+                    return f"P00{numeric_part}"
+                else:
+                    # For other lengths, pad to 9 digits after P
+                    numeric_part = numeric_part.zfill(9)
+                    return f"P{numeric_part}"
+            
+            df['Full_PID'] = df['PID'].apply(format_pid)
+            
+            # Get list of Panleuk Positive PIDs
+            panleuk_pids = set(df['Full_PID'].tolist())
+            
+            st.success(f"✅ Successfully loaded Panleuk Positive PIDs ({len(panleuk_pids)} records)")
+            return panleuk_pids
+        else:
+            st.error(f"❌ Excel file not found at: {excel_path}")
+            return set()
+            
+    except Exception as e:
+        st.error(f"❌ Error loading Panleuk Positive PIDs: {str(e)}")
+        return set()
+
+@st.cache_data
 def load_data():
     """Load and process the CSV files"""
     try:
@@ -84,7 +268,7 @@ def load_data():
             st.error(f"❌ AnimalInventory.csv not found!")
             st.error(f"Expected path: {full_path}")
             st.error(f"Current working directory: {os.getcwd()}")
-            return None, None
+            return None, None, None
         
         # Load FosterCurrent.csv - path at same level as FosterDash
         foster_current_path = "../__Load Files Go Here__/FosterCurrent.csv"
@@ -108,13 +292,77 @@ def load_data():
             st.warning(f"Expected path: {full_foster_path}")
             foster_current = pd.DataFrame()
         
-        return animal_inventory, foster_current
+        # Load Hold - Foster Stage Date.csv - path at same level as FosterDash
+        hold_foster_path = "../__Load Files Go Here__/Hold - Foster Stage Date.csv"
+        full_hold_foster_path = os.path.abspath(hold_foster_path)
+        
+        if os.path.exists(hold_foster_path):
+            # Skip first 2 rows and start from row 3 where headers are
+            try:
+                hold_foster_data = pd.read_csv(hold_foster_path, encoding='utf-8', skiprows=2)
+            except:
+                try:
+                    hold_foster_data = pd.read_csv(hold_foster_path, encoding='latin-1', skiprows=2)
+                except:
+                    # Try with different delimiter and quoting options
+                    hold_foster_data = pd.read_csv(hold_foster_path, encoding='utf-8', 
+                                                 skiprows=2, quoting=3, on_bad_lines='skip')
+            
+            st.success(f"✅ Successfully loaded Hold - Foster Stage Date.csv ({len(hold_foster_data)} records)")
+        else:
+            st.warning(f"⚠️ Hold - Foster Stage Date.csv not found!")
+            st.warning(f"Expected path: {full_hold_foster_path}")
+            hold_foster_data = pd.DataFrame()
+        
+        return animal_inventory, foster_current, hold_foster_data
     except Exception as e:
         st.error(f"❌ Error loading data: {str(e)}")
         st.error(f"Current working directory: {os.getcwd()}")
-        return None, None
+        return None, None, None
 
-def classify_animals(animal_inventory, foster_current):
+def get_foster_parent_animals(foster_parents_df, foster_current_df):
+    """Get current animals for each foster parent"""
+    foster_parent_animals = {}
+    missing_pids = set()
+    
+    if foster_current_df.empty:
+        return foster_parent_animals, missing_pids
+    
+    # Find the animal ID column in foster current data
+    animal_id_col = None
+    for col in ['textbox9', 'ARN', 'AnimalNumber']:
+        if col in foster_current_df.columns:
+            animal_id_col = col
+            break
+    
+    if not animal_id_col:
+        return foster_parent_animals, missing_pids
+    
+    # Get all PIDs from foster parents database
+    database_pids = set(foster_parents_df['Full_PID'].tolist())
+    
+    # Group animals by foster parent PID
+    for idx, row in foster_current_df.iterrows():
+        animal_id = str(row[animal_id_col])
+        foster_pid = str(row.get('textbox10', ''))  # PID column
+        
+        if foster_pid and foster_pid != 'nan':
+            # The PID in FosterCurrent is already in full format (e.g., P0047897436)
+            # Just use it as-is for matching
+            full_pid = foster_pid
+            
+            if full_pid not in foster_parent_animals:
+                foster_parent_animals[full_pid] = []
+            
+            foster_parent_animals[full_pid].append(animal_id)
+            
+            # Check if this PID is missing from our database
+            if full_pid not in database_pids:
+                missing_pids.add(full_pid)
+    
+    return foster_parent_animals, missing_pids
+
+def classify_animals(animal_inventory, foster_current, hold_foster_data):
     """Classify animals into foster categories"""
     if animal_inventory is None:
         return pd.DataFrame()
@@ -126,6 +374,8 @@ def classify_animals(animal_inventory, foster_current):
     df['Foster_Category'] = 'Other'
     df['Foster_PID'] = ''
     df['Foster_Name'] = ''
+    df['Hold_Foster_Date'] = ''  # New column for Hold - Foster date
+    df['Foster_Start_Date'] = ''  # New column for Foster Start Date
     
     # Get list of animals currently in foster and their foster info
     foster_animal_ids = set()
@@ -143,40 +393,112 @@ def classify_animals(animal_inventory, foster_current):
             # Create a mapping of animal ID to foster info
             for idx, row in foster_current.iterrows():
                 animal_id = str(row[animal_id_col])
-                foster_animal_ids.add(animal_id)
                 
-                # Get foster person info
+                # Get the stage to check if it's If The Fur Fits
+                stage = str(row.get('Stage', '')).strip()
+                
+                # Only add to foster_animal_ids if it's NOT an If The Fur Fits stage
+                if not any(fur_fits_stage in stage for fur_fits_stage in [
+                    'In If the Fur Fits - Trial', 'In If the Fur Fits - Behavior', 'In If the Fur Fits - Medical'
+                ]):
+                    foster_animal_ids.add(animal_id)
+                
+                # Always add foster info for all animals (including If The Fur Fits)
                 foster_pid = str(row.get('textbox10', ''))  # PID
                 foster_name = str(row.get('textbox11', ''))  # Person's name
+                foster_start_date = str(row.get('StartStatusDate', ''))  # Foster start date
                 
                 foster_info[animal_id] = {
                     'pid': foster_pid,
-                    'name': foster_name
+                    'name': foster_name,
+                    'start_date': foster_start_date
                 }
+    
+    # Create mapping of animal ID to Hold - Foster date
+    hold_foster_dates = {}
+    if not hold_foster_data.empty:
+        # Check for Animal ID column in hold foster data
+        animal_id_col = None
+        stage_col = None
+        date_col = None
+        
+        # Handle generic column names from the CSV file
+        if len(hold_foster_data.columns) >= 3:
+            # The file has columns: Count, Count.1, Count.2
+            # These correspond to: Animal #, Stage, Stage Start Date
+            animal_id_col = hold_foster_data.columns[0]  # First column
+            stage_col = hold_foster_data.columns[1]      # Second column
+            date_col = hold_foster_data.columns[2]       # Third column
+        else:
+            # Try to find columns by name
+            for col in ['Animal #', 'AnimalNumber', 'AnimalID']:
+                if col in hold_foster_data.columns:
+                    animal_id_col = col
+                    break
+        
+        if animal_id_col and stage_col and date_col:
+            # Create a mapping of animal ID to Hold - Foster date
+            for idx, row in hold_foster_data.iterrows():
+                animal_id = str(row[animal_id_col])
+                stage = str(row.get(stage_col, ''))
+                stage_start_date = str(row.get(date_col, ''))
+                
+                # Include if it's any Hold - Foster stage and has a valid date
+                if (stage_start_date and stage_start_date != 'nan' and 
+                    any(hold_stage in stage for hold_stage in [
+                        'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster'
+                    ])):
+                    hold_foster_dates[animal_id] = stage_start_date
     
     # Classify animals
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
         
-        # Check if in foster
-        if (animal_id in foster_animal_ids or 
-            'In Foster' in stage or 
-            'Pending Foster Pickup' in stage or 
-            'In SAFE Foster' in stage or 
-            'In Cruelty Foster' in stage):
+        # Check if in If The Fur Fits program (check this FIRST)
+        if any(fur_fits_stage in stage for fur_fits_stage in [
+            'In If the Fur Fits - Trial', 'In If the Fur Fits - Behavior', 'In If the Fur Fits - Medical'
+        ]):
+            df.at[idx, 'Foster_Category'] = 'In If The Fur Fits'
+            
+            # Add foster person info if available
+            if animal_id in foster_info:
+                df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
+                df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
+                df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
+        
+        # Check if pending foster pickup
+        elif 'Pending Foster Pickup' in stage:
+            df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
+            
+            # Add foster person info if available
+            if animal_id in foster_info:
+                df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
+                df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
+                df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
+        
+        # Check if in foster (excluding Pending Foster Pickup and If The Fur Fits)
+        elif (animal_id in foster_animal_ids or 
+              'In Foster' in stage or 
+              'In SAFE Foster' in stage or 
+              'In Cruelty Foster' in stage):
             df.at[idx, 'Foster_Category'] = 'In Foster'
             
             # Add foster person info if available
             if animal_id in foster_info:
                 df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
                 df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
+                df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
         
         # Check if needs foster now
         elif any(need_stage in stage for need_stage in [
-            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold – SAFE Foster'
+            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster'
         ]):
             df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
+            
+            # Add Hold - Foster date if available (for any Hold - Foster stage)
+            if animal_id in hold_foster_dates:
+                df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
         
         # Check if might need foster soon
         elif any(soon_stage in stage for soon_stage in [
@@ -223,214 +545,491 @@ def main():
     
     # Load data
     with st.spinner("Loading data..."):
-        animal_inventory, foster_current = load_data()
+        animal_inventory, foster_current, hold_foster_data = load_data()
+        foster_parents_data = load_foster_parents_data()
+        bottle_fed_kittens_data = load_bottle_fed_kittens_data()
+        panleuk_positive_pids = load_panleuk_positive_pids()
     
     if animal_inventory is None:
         st.error("Unable to load data. Please check that the CSV files are in the '__Load Files Go Here__' folder.")
         return
     
     # Classify animals
-    classified_data = classify_animals(animal_inventory, foster_current)
+    classified_data = classify_animals(animal_inventory, foster_current, hold_foster_data)
     
     if classified_data.empty:
         st.warning("No data available to display.")
         return
     
-    # Filter data based on foster categories
-    foster_categories = ['Needs Foster Now', 'Might Need Foster Soon', 'In Foster']
-    selected_category = st.sidebar.radio(
-        "Select Foster Category:",
-        foster_categories,
+    # Create view selector
+    view_option = st.sidebar.radio(
+        "Select View:",
+        ["Foster Animals", "Foster Database"],
         index=0
     )
     
-    # Filter data
-    filtered_data = classified_data[classified_data['Foster_Category'] == selected_category].copy()
-    
-    # Add multi-select filters in sidebar
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("🔍 Additional Filters")
-    
-    # Species filter
-    if not filtered_data.empty and 'Species' in filtered_data.columns:
-        species_options = sorted([str(species) for species in filtered_data['Species'].unique() if pd.notna(species)])
-        selected_species = st.sidebar.multiselect(
-            "Species",
-            species_options,
-            help="Select species to display"
+    if view_option == "Foster Animals":
+        # Filter data based on foster categories
+        foster_categories = ['Needs Foster Now', 'Pending Foster Pickup', 'In Foster', 'In If The Fur Fits', 'Might Need Foster Soon']
+        selected_category = st.sidebar.radio(
+            "Select Foster Category:",
+            foster_categories,
+            index=0
         )
-        if selected_species:
-            filtered_data = filtered_data[filtered_data['Species'].astype(str).isin(selected_species)]
     
-    # Stage filter
-    if not filtered_data.empty and 'Stage' in filtered_data.columns:
-        stage_options = sorted([str(stage) for stage in filtered_data['Stage'].unique() if pd.notna(stage)])
-        selected_stages = st.sidebar.multiselect(
-            "Stage",
-            stage_options,
-            help="Select stages to display"
-        )
-        if selected_stages:
-            filtered_data = filtered_data[filtered_data['Stage'].astype(str).isin(selected_stages)]
-    
-    # Foster Name filter (for animals in foster)
-    if selected_category == 'In Foster' and not filtered_data.empty and 'Foster_Name' in filtered_data.columns:
-        foster_name_options = sorted([name for name in filtered_data['Foster_Name'].unique() if name and name != 'nan'])
-        if foster_name_options:
-            selected_foster_names = st.sidebar.multiselect(
-                "Foster Name",
-                foster_name_options,
-                help="Select foster parents to display"
-            )
-            if selected_foster_names:
-                filtered_data = filtered_data[filtered_data['Foster_Name'].isin(selected_foster_names)]
-    
-    # Show filter summary
-    if len(filtered_data) != len(classified_data[classified_data['Foster_Category'] == selected_category]):
+        # Filter data
+        filtered_data = classified_data[classified_data['Foster_Category'] == selected_category].copy()
+        
+        # Add multi-select filters in sidebar
         st.sidebar.markdown("---")
-        st.sidebar.info(f"📊 Showing {len(filtered_data)} of {len(classified_data[classified_data['Foster_Category'] == selected_category])} animals")
+        st.sidebar.subheader("🔍 Additional Filters")
+        
+        # Species filter
+        if not filtered_data.empty and 'Species' in filtered_data.columns:
+            species_options = sorted([str(species) for species in filtered_data['Species'].unique() if pd.notna(species)])
+            selected_species = st.sidebar.multiselect(
+                "Species",
+                species_options,
+                help="Select species to display"
+            )
+            if selected_species:
+                filtered_data = filtered_data[filtered_data['Species'].astype(str).isin(selected_species)]
+        
+        # Stage filter
+        if not filtered_data.empty and 'Stage' in filtered_data.columns:
+            stage_options = sorted([str(stage) for stage in filtered_data['Stage'].unique() if pd.notna(stage)])
+            selected_stages = st.sidebar.multiselect(
+                "Stage",
+                stage_options,
+                help="Select stages to display"
+            )
+            if selected_stages:
+                filtered_data = filtered_data[filtered_data['Stage'].astype(str).isin(selected_stages)]
+        
+        # Foster Name filter (for animals in foster)
+        if selected_category in ['In Foster', 'Pending Foster Pickup', 'In If The Fur Fits'] and not filtered_data.empty and 'Foster_Name' in filtered_data.columns:
+            foster_name_options = sorted([name for name in filtered_data['Foster_Name'].unique() if name and name != 'nan'])
+            if foster_name_options:
+                selected_foster_names = st.sidebar.multiselect(
+                    "Foster Name",
+                    foster_name_options,
+                    help="Select foster parents to display"
+                )
+                if selected_foster_names:
+                    filtered_data = filtered_data[filtered_data['Foster_Name'].isin(selected_foster_names)]
+        
+        # Show filter summary
+        if len(filtered_data) != len(classified_data[classified_data['Foster_Category'] == selected_category]):
+            st.sidebar.markdown("---")
+            st.sidebar.info(f"📊 Showing {len(filtered_data)} of {len(classified_data[classified_data['Foster_Category'] == selected_category])} animals")
+        
+        # Display metrics
+        col1, col2, col3, col4, col5 = st.columns(5)
+        
+        with col1:
+            needs_foster = len(classified_data[classified_data['Foster_Category'] == 'Needs Foster Now'])
+            st.metric("Needs Foster Now", needs_foster)
+        
+        with col2:
+            pending_pickup = len(classified_data[classified_data['Foster_Category'] == 'Pending Foster Pickup'])
+            st.metric("Pending Pickup", pending_pickup)
+        
+        with col3:
+            in_foster = len(classified_data[classified_data['Foster_Category'] == 'In Foster'])
+            st.metric("In Foster", in_foster)
+        
+        with col4:
+            in_fur_fits = len(classified_data[classified_data['Foster_Category'] == 'In If The Fur Fits'])
+            st.metric("In If The Fur Fits", in_fur_fits)
+        
+        with col5:
+            might_need = len(classified_data[classified_data['Foster_Category'] == 'Might Need Foster Soon'])
+            st.metric("Might Need Soon", might_need)
+        
+        st.markdown("---")
+        
+        # Display filtered data
+        if not filtered_data.empty:
+            st.subheader(f"Animals: {selected_category}")
+            
+            # Select columns to display - map to actual column names
+            display_columns = ['AnimalNumber', 'AnimalName', 'IntakeDateTime', 'Species', 'PrimaryBreed', 'Sex', 'Age', 'Stage', 'Foster_PID', 'Foster_Name']
+            
+            # Add Hold - Foster Date column for "Needs Foster Now" category
+            if selected_category == 'Needs Foster Now':
+                display_columns.append('Hold_Foster_Date')
+            
+            # Add Foster Start Date column for "In Foster" and "In If The Fur Fits" categories
+            if selected_category in ['In Foster', 'In If The Fur Fits']:
+                display_columns.append('Foster_Start_Date')
+            
+            # Filter to only include columns that exist
+            available_columns = [col for col in display_columns if col in filtered_data.columns]
+            
+            # Create display data
+            display_data = filtered_data[available_columns].copy()
+            
+            # Sort data - check what columns are available for sorting
+            sort_column = None
+            if 'IntakeDateTime' in filtered_data.columns:
+                sort_column = 'IntakeDateTime'
+            elif 'AnimalName' in filtered_data.columns:
+                sort_column = 'AnimalName'
+            elif 'AnimalNumber' in filtered_data.columns:
+                sort_column = 'AnimalNumber'
+            
+            if sort_column and sort_column in filtered_data.columns:
+                try:
+                    if sort_column == 'IntakeDateTime':
+                        display_data = display_data.sort_values(sort_column, ascending=False)
+                    else:
+                        display_data = display_data.sort_values(sort_column)
+                except Exception as e:
+                    st.warning(f"Could not sort by {sort_column}: {str(e)}")
+            
+            # Create clickable links using HTML (like rodent app)
+            display_data['AnimalNumber'] = display_data['AnimalNumber'].apply(create_clickable_link)
+            display_data['Foster_PID'] = display_data['Foster_PID'].apply(create_clickable_pid_link)
+            
+            # Rename columns for display
+            column_mapping = {
+                'AnimalNumber': 'Animal ID',
+                'AnimalName': 'Animal Name',
+                'IntakeDateTime': 'Intake Date/Time',
+                'Species': 'Species',
+                'PrimaryBreed': 'Breed',
+                'Sex': 'Sex',
+                'Age': 'Age',
+                'Stage': 'Stage',
+                'Foster_PID': 'Foster PID',
+                'Foster_Name': 'Foster Name',
+                'Hold_Foster_Date': 'Hold - Foster Date',
+                'Foster_Start_Date': 'Foster Start Date'
+            }
+            
+            display_data = display_data.rename(columns=column_mapping)
+            
+            # Display the data with HTML rendering (like rodent app)
+            st.write("**Note:** Click on Animal ID or Foster PID to open in PetPoint")
+            
+            # Add CSS for better table styling
+            st.markdown("""
+            <style>
+            .foster-table {
+                border-collapse: collapse;
+                width: 100%;
+                font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                font-size: 14px;
+            }
+            .foster-table th {
+                background-color: #f0f2f6;
+                padding: 8px;
+                text-align: left;
+                border-bottom: 2px solid #e0e0e0;
+                font-weight: 600;
+            }
+            .foster-table td {
+                padding: 8px;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            .foster-table tr:hover {
+                background-color: #f8f9fa;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+            
+            st.markdown(
+                display_data.to_html(
+                    escape=False,
+                    index=False,
+                    classes=['foster-table'],
+                    table_id='foster-table'
+                ),
+                unsafe_allow_html=True
+            )
+            
+            # Download button
+            # Create a clean version for download (without HTML links)
+            download_data = filtered_data[available_columns].copy()
+            download_data = download_data.rename(columns=column_mapping)
+            
+            csv = download_data.to_csv(index=False)
+            st.download_button(
+                label="Download CSV",
+                data=csv,
+                file_name=f"foster_dashboard_{selected_category.replace(' ', '_').lower()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                mime="text/csv"
+            )
+            
+        else:
+            st.info(f"No animals found in the '{selected_category}' category.")
+        
+        # Data quality information
+        with st.expander("Data Quality Information"):
+            st.write(f"**Total records loaded:** {len(animal_inventory)}")
+            st.write(f"**Foster records loaded:** {len(foster_current) if foster_current is not None else 0}")
+            
+            if not classified_data.empty:
+                category_counts = classified_data['Foster_Category'].value_counts()
+                st.write("**Classification breakdown:**")
+                for category, count in category_counts.items():
+                    st.write(f"- {category}: {count}")
+            
+            # Show sample of raw data
+            st.write("**Sample of raw data:**")
+            st.dataframe(animal_inventory.head(), use_container_width=True)
     
-    # Display metrics
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        needs_foster = len(classified_data[classified_data['Foster_Category'] == 'Needs Foster Now'])
-        st.metric("Needs Foster Now", needs_foster)
-    
-    with col2:
-        might_need = len(classified_data[classified_data['Foster_Category'] == 'Might Need Foster Soon'])
-        st.metric("Might Need Foster Soon", might_need)
-    
-    with col3:
-        in_foster = len(classified_data[classified_data['Foster_Category'] == 'In Foster'])
-        st.metric("Currently in Foster", in_foster)
-    
-    with col4:
-        total_animals = len(classified_data)
-        st.metric("Total Animals", total_animals)
-    
-    st.markdown("---")
-    
-    # Display filtered data
-    if not filtered_data.empty:
-        st.subheader(f"Animals: {selected_category}")
+    elif view_option == "Foster Database":
+        # Foster Database View
+        st.subheader("🏠 Foster Database")
         
-        # Select columns to display - map to actual column names
-        display_columns = ['AnimalNumber', 'AnimalName', 'IntakeDateTime', 'Species', 'PrimaryBreed', 'Sex', 'Age', 'Stage', 'Foster_PID', 'Foster_Name']
+        # Create tabs within Foster Database
+        tab1, tab2 = st.tabs(["Available Foster Parents", "Emergency Bottle Fed Kittens"])
         
-        # Filter to only include columns that exist
-        available_columns = [col for col in display_columns if col in filtered_data.columns]
+        with tab1:
+            # Available Foster Parents Tab
+            if not foster_parents_data.empty:
+                # Get current animals for each foster parent
+                foster_parent_animals, missing_pids = get_foster_parent_animals(foster_parents_data, foster_current)
+                
+                # Add current animals column to foster parents data
+                foster_parents_data['Current_Animals'] = foster_parents_data['Full_PID'].apply(
+                    lambda pid: foster_parent_animals.get(pid, [])
+                )
+                
+                # Add Panleuk Positive flag
+                foster_parents_data['Is_Panleuk_Positive'] = foster_parents_data['Full_PID'].isin(panleuk_positive_pids)
+                
+                # Create clickable PID links
+                foster_parents_data['Clickable_PID'] = foster_parents_data['Full_PID'].apply(create_clickable_pid_link)
+                
+                # Create clickable animal links
+                def create_animal_links(animal_list):
+                    if not animal_list:
+                        return ''
+                    links = []
+                    for animal_id in animal_list:
+                        links.append(create_clickable_link(animal_id))
+                    return '<br>'.join(links)
+                
+                foster_parents_data['Clickable_Animals'] = foster_parents_data['Current_Animals'].apply(create_animal_links)
+                
+                # Add Panleuk Positive flag to Availability notes
+                def add_panleuk_flag(row):
+                    availability = str(row['Availability/Notes']) if pd.notna(row['Availability/Notes']) else ''
+                    if row['Is_Panleuk_Positive']:
+                        if availability:
+                            return f"{availability}<br><span style='color: red; font-weight: bold;'>Panleuk. Positive</span>"
+                        else:
+                            return "<span style='color: red; font-weight: bold;'>Panleuk. Positive</span>"
+                    return availability
+                
+                foster_parents_data['Availability_With_Flags'] = foster_parents_data.apply(add_panleuk_flag, axis=1)
+                
+                # Display metrics
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    total_foster_parents = len(foster_parents_data)
+                    st.metric("Total Foster Parents", total_foster_parents)
+                
+                with col2:
+                    active_foster_parents = len(foster_parents_data[foster_parents_data['Current_Animals'].apply(len) > 0])
+                    st.metric("Active Foster Parents", active_foster_parents)
+                
+                with col3:
+                    available_foster_parents = len(foster_parents_data[foster_parents_data['Current_Animals'].apply(len) == 0])
+                    st.metric("Available Foster Parents", available_foster_parents)
+                
+                with col4:
+                    panleuk_positive_count = len(foster_parents_data[foster_parents_data['Is_Panleuk_Positive']])
+                    st.metric("Panleuk Positive", panleuk_positive_count)
+                
+                st.markdown("---")
+                
+                # Display missing PIDs if any
+                if missing_pids:
+                    st.warning(f"⚠️ **Missing PIDs:** {len(missing_pids)} foster parents in FosterCurrent.csv are not in our database")
+                    with st.expander("View Missing PIDs"):
+                        missing_pids_list = sorted(list(missing_pids))
+                        for pid in missing_pids_list:
+                            st.write(f"- {pid}")
+                
+                # Display foster parents data
+                st.write("**Note:** Click on PID to open foster parent profile in PetPoint. Click on Animal IDs to open animal profiles.")
+                
+                # Select columns to display
+                display_columns = [
+                    'Clickable_PID', 'Full_Name', 'Phone Number', 
+                    'Foster Request/Animal Preference', 'Availability_With_Flags', 'Clickable_Animals'
+                ]
+                
+                # Create display data
+                display_data = foster_parents_data[display_columns].copy()
+                
+                # Rename columns for display
+                column_mapping = {
+                    'Clickable_PID': 'PID',
+                    'Full_Name': 'Name',
+                    'Phone Number': 'Phone',
+                    'Foster Request/Animal Preference': 'Preferences',
+                    'Availability_With_Flags': 'Availability',
+                    'Clickable_Animals': 'Current Animals'
+                }
+                
+                display_data = display_data.rename(columns=column_mapping)
+                
+                # Sort by name
+                display_data = display_data.sort_values('Name')
+                
+                # Display the data with HTML rendering
+                st.markdown(
+                    display_data.to_html(
+                        escape=False,
+                        index=False,
+                        classes=['foster-table'],
+                        table_id='foster-parents-table'
+                    ),
+                    unsafe_allow_html=True
+                )
+                
+                # Download button
+                download_data = foster_parents_data[['Full_PID', 'Full_Name', 'Phone Number', 
+                                                   'Foster Request/Animal Preference', 'Availability/Notes']].copy()
+                download_data['Current_Animals'] = foster_parents_data['Current_Animals'].apply(
+                    lambda x: ', '.join(x) if x else ''
+                )
+                download_data['Is_Panleuk_Positive'] = foster_parents_data['Is_Panleuk_Positive']
+                download_data = download_data.rename(columns={
+                    'Full_PID': 'PID',
+                    'Full_Name': 'Name',
+                    'Phone Number': 'Phone',
+                    'Foster Request/Animal Preference': 'Preferences',
+                    'Availability/Notes': 'Availability',
+                    'Current_Animals': 'Current Animals',
+                    'Is_Panleuk_Positive': 'Panleuk Positive'
+                })
+                
+                csv = download_data.to_csv(index=False)
+                st.download_button(
+                    label="Download Foster Database CSV",
+                    data=csv,
+                    file_name=f"foster_database_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv"
+                )
+                
+            else:
+                st.warning("No foster parents data available.")
         
-        # Create display data
-        display_data = filtered_data[available_columns].copy()
-        
-        # Sort data - check what columns are available for sorting
-        sort_column = None
-        if 'IntakeDateTime' in filtered_data.columns:
-            sort_column = 'IntakeDateTime'
-        elif 'AnimalName' in filtered_data.columns:
-            sort_column = 'AnimalName'
-        elif 'AnimalNumber' in filtered_data.columns:
-            sort_column = 'AnimalNumber'
-        
-        if sort_column and sort_column in filtered_data.columns:
-            try:
-                if sort_column == 'IntakeDateTime':
-                    display_data = display_data.sort_values(sort_column, ascending=False)
-                else:
-                    display_data = display_data.sort_values(sort_column)
-            except Exception as e:
-                st.warning(f"Could not sort by {sort_column}: {str(e)}")
-        
-        # Create clickable links using HTML (like rodent app)
-        display_data['AnimalNumber'] = display_data['AnimalNumber'].apply(create_clickable_link)
-        display_data['Foster_PID'] = display_data['Foster_PID'].apply(create_clickable_pid_link)
-        
-        # Rename columns for display
-        column_mapping = {
-            'AnimalNumber': 'Animal ID',
-            'AnimalName': 'Animal Name',
-            'IntakeDateTime': 'Intake Date/Time',
-            'Species': 'Species',
-            'PrimaryBreed': 'Breed',
-            'Sex': 'Sex',
-            'Age': 'Age',
-            'Stage': 'Stage',
-            'Foster_PID': 'Foster PID',
-            'Foster_Name': 'Foster Name'
-        }
-        
-        display_data = display_data.rename(columns=column_mapping)
-        
-        # Display the data with HTML rendering (like rodent app)
-        st.write("**Note:** Click on Animal ID or Foster PID to open in PetPoint")
-        
-        # Add CSS for better table styling
-        st.markdown("""
-        <style>
-        .foster-table {
-            border-collapse: collapse;
-            width: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 14px;
-        }
-        .foster-table th {
-            background-color: #f0f2f6;
-            padding: 8px;
-            text-align: left;
-            border-bottom: 2px solid #e0e0e0;
-            font-weight: 600;
-        }
-        .foster-table td {
-            padding: 8px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        .foster-table tr:hover {
-            background-color: #f8f9fa;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-        
-        st.markdown(
-            display_data.to_html(
-                escape=False,
-                index=False,
-                classes=['foster-table'],
-                table_id='foster-table'
-            ),
-            unsafe_allow_html=True
-        )
-        
-        # Download button
-        # Create a clean version for download (without HTML links)
-        download_data = filtered_data[available_columns].copy()
-        download_data = download_data.rename(columns=column_mapping)
-        
-        csv = download_data.to_csv(index=False)
-        st.download_button(
-            label="Download CSV",
-            data=csv,
-            file_name=f"foster_dashboard_{selected_category.replace(' ', '_').lower()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-            mime="text/csv"
-        )
-        
-    else:
-        st.info(f"No animals found in the '{selected_category}' category.")
-    
-    # Data quality information
-    with st.expander("Data Quality Information"):
-        st.write(f"**Total records loaded:** {len(animal_inventory)}")
-        st.write(f"**Foster records loaded:** {len(foster_current) if foster_current is not None else 0}")
-        
-        if not classified_data.empty:
-            category_counts = classified_data['Foster_Category'].value_counts()
-            st.write("**Classification breakdown:**")
-            for category, count in category_counts.items():
-                st.write(f"- {category}: {count}")
-        
-        # Show sample of raw data
-        st.write("**Sample of raw data:**")
-        st.dataframe(animal_inventory.head(), use_container_width=True)
+        with tab2:
+            # Emergency Bottle Fed Kittens Tab
+            if not bottle_fed_kittens_data.empty:
+                # Get current animals for each bottle fed kitten foster parent
+                bottle_fed_animals, _ = get_foster_parent_animals(bottle_fed_kittens_data, foster_current)
+                
+                # Add current animals column to bottle fed kittens data
+                bottle_fed_kittens_data['Current_Animals'] = bottle_fed_kittens_data['Full_PID'].apply(
+                    lambda pid: bottle_fed_animals.get(pid, [])
+                )
+                
+                # Add Panleuk Positive flag
+                bottle_fed_kittens_data['Is_Panleuk_Positive'] = bottle_fed_kittens_data['Full_PID'].isin(panleuk_positive_pids)
+                
+                # Create clickable PID links
+                bottle_fed_kittens_data['Clickable_PID'] = bottle_fed_kittens_data['Full_PID'].apply(create_clickable_pid_link)
+                
+                # Create clickable animal links
+                bottle_fed_kittens_data['Clickable_Animals'] = bottle_fed_kittens_data['Current_Animals'].apply(create_animal_links)
+                
+                # Add Panleuk Positive flag to Availability notes
+                bottle_fed_kittens_data['Availability_With_Flags'] = bottle_fed_kittens_data.apply(add_panleuk_flag, axis=1)
+                
+                # Display metrics
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    total_bottle_fed = len(bottle_fed_kittens_data)
+                    st.metric("Total Bottle Fed Foster Parents", total_bottle_fed)
+                
+                with col2:
+                    active_bottle_fed = len(bottle_fed_kittens_data[bottle_fed_kittens_data['Current_Animals'].apply(len) > 0])
+                    st.metric("Active Bottle Fed Foster Parents", active_bottle_fed)
+                
+                with col3:
+                    available_bottle_fed = len(bottle_fed_kittens_data[bottle_fed_kittens_data['Current_Animals'].apply(len) == 0])
+                    st.metric("Available Bottle Fed Foster Parents", available_bottle_fed)
+                
+                with col4:
+                    panleuk_positive_bottle_fed = len(bottle_fed_kittens_data[bottle_fed_kittens_data['Is_Panleuk_Positive']])
+                    st.metric("Panleuk Positive", panleuk_positive_bottle_fed)
+                
+                st.markdown("---")
+                
+                # Display bottle fed kittens data
+                st.write("**Note:** Click on PID to open foster parent profile in PetPoint. Click on Animal IDs to open animal profiles.")
+                
+                # Select columns to display
+                display_columns = [
+                    'Clickable_PID', 'Full_Name', 'Phone Number', 
+                    'Foster Request/Animal Preference', 'Availability_With_Flags', 'Clickable_Animals'
+                ]
+                
+                # Create display data
+                display_data = bottle_fed_kittens_data[display_columns].copy()
+                
+                # Rename columns for display
+                column_mapping = {
+                    'Clickable_PID': 'PID',
+                    'Full_Name': 'Name',
+                    'Phone Number': 'Phone',
+                    'Foster Request/Animal Preference': 'Preferences',
+                    'Availability_With_Flags': 'Availability',
+                    'Clickable_Animals': 'Current Animals'
+                }
+                
+                display_data = display_data.rename(columns=column_mapping)
+                
+                # Sort by name
+                display_data = display_data.sort_values('Name')
+                
+                # Display the data with HTML rendering
+                st.markdown(
+                    display_data.to_html(
+                        escape=False,
+                        index=False,
+                        classes=['foster-table'],
+                        table_id='bottle-fed-table'
+                    ),
+                    unsafe_allow_html=True
+                )
+                
+                # Download button
+                download_data = bottle_fed_kittens_data[['Full_PID', 'Full_Name', 'Phone Number', 
+                                                       'Foster Request/Animal Preference', 'Availability/Notes']].copy()
+                download_data['Current_Animals'] = bottle_fed_kittens_data['Current_Animals'].apply(
+                    lambda x: ', '.join(x) if x else ''
+                )
+                download_data['Is_Panleuk_Positive'] = bottle_fed_kittens_data['Is_Panleuk_Positive']
+                download_data = download_data.rename(columns={
+                    'Full_PID': 'PID',
+                    'Full_Name': 'Name',
+                    'Phone Number': 'Phone',
+                    'Foster Request/Animal Preference': 'Preferences',
+                    'Availability/Notes': 'Availability',
+                    'Current_Animals': 'Current Animals',
+                    'Is_Panleuk_Positive': 'Panleuk Positive'
+                })
+                
+                csv = download_data.to_csv(index=False)
+                st.download_button(
+                    label="Download Bottle Fed Kittens CSV",
+                    data=csv,
+                    file_name=f"bottle_fed_kittens_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                    mime="text/csv"
+                )
+                
+            else:
+                st.warning("No bottle fed kittens data available.")
 
 if __name__ == "__main__":
     main() 

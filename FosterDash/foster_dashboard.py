@@ -125,7 +125,7 @@ def load_foster_parents_data():
 
 @st.cache_data
 def load_bottle_fed_kittens_data():
-    """Load Emergency Bottle Fed Kittens data from the Excel file"""
+    """Load Emergency Bottle Baby Fosters data from the Excel file"""
     try:
         excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
         
@@ -133,8 +133,15 @@ def load_bottle_fed_kittens_data():
             # Read the "Emergency Bottle Fed Kittens" tab
             df = pd.read_excel(excel_path, sheet_name="Emergency Bottle Fed Kittens")
             
-            # Clean up the data
-            df = df.dropna(subset=['PID'])  # Remove rows without PID
+            # The actual structure has unnamed columns, so we need to handle this properly
+            # Skip the first row (header) and use the second row as column names
+            df = df.iloc[1:].reset_index(drop=True)
+            
+            # Rename columns based on the actual structure
+            df.columns = ['First Name', 'Last Name', 'PID', 'Phone Number', 'Notes']
+            
+            # Clean up the data - remove rows without PID or with empty names
+            df = df.dropna(subset=['PID', 'First Name', 'Last Name'], how='all')
             
             # Convert PID to full format (match FosterCurrent format)
             def format_pid(pid):
@@ -170,8 +177,11 @@ def load_bottle_fed_kittens_data():
             df['Last Name'] = df['Last Name'].fillna('')
             df['First Name'] = df['First Name'].fillna('')
             df['Phone Number'] = df['Phone Number'].fillna('')
-            df['Foster Request/Animal Preference'] = df['Foster Request/Animal Preference'].fillna('')
-            df['Availability/Notes'] = df['Availability/Notes'].fillna('')
+            df['Notes'] = df['Notes'].fillna('')
+            
+            # Add missing columns to match the expected structure
+            df['Foster Request/Animal Preference'] = 'Bottle Fed Kittens'
+            df['Availability/Notes'] = df['Notes']
             
             # Create full name
             df['Full_Name'] = df['First Name'] + ' ' + df['Last Name']
@@ -618,6 +628,36 @@ def main():
                 if selected_foster_names:
                     filtered_data = filtered_data[filtered_data['Foster_Name'].isin(selected_foster_names)]
         
+        # Hold - Foster Date filter (for "Needs Foster Now" category)
+        if selected_category == 'Needs Foster Now' and not filtered_data.empty and 'Hold_Foster_Date' in filtered_data.columns:
+            # Get unique Hold - Foster Dates, excluding NaN values
+            hold_dates = filtered_data['Hold_Foster_Date'].dropna().unique()
+            if len(hold_dates) > 0:
+                # Convert to string and sort
+                hold_date_options = sorted([str(date) for date in hold_dates if pd.notna(date)])
+                selected_hold_dates = st.sidebar.multiselect(
+                    "Hold - Foster Date",
+                    hold_date_options,
+                    help="Select Hold - Foster dates to display"
+                )
+                if selected_hold_dates:
+                    filtered_data = filtered_data[filtered_data['Hold_Foster_Date'].astype(str).isin(selected_hold_dates)]
+        
+        # Foster Start Date filter (for "In Foster" and "In If The Fur Fits" categories)
+        if selected_category in ['In Foster', 'In If The Fur Fits'] and not filtered_data.empty and 'Foster_Start_Date' in filtered_data.columns:
+            # Get unique Foster Start Dates, excluding NaN values
+            foster_start_dates = filtered_data['Foster_Start_Date'].dropna().unique()
+            if len(foster_start_dates) > 0:
+                # Convert to string and sort
+                foster_start_date_options = sorted([str(date) for date in foster_start_dates if pd.notna(date)])
+                selected_foster_start_dates = st.sidebar.multiselect(
+                    "Foster Start Date",
+                    foster_start_date_options,
+                    help="Select Foster Start dates to display"
+                )
+                if selected_foster_start_dates:
+                    filtered_data = filtered_data[filtered_data['Foster_Start_Date'].astype(str).isin(selected_foster_start_dates)]
+        
         # Show filter summary
         if len(filtered_data) != len(classified_data[classified_data['Foster_Category'] == selected_category]):
             st.sidebar.markdown("---")
@@ -671,7 +711,13 @@ def main():
             
             # Sort data - check what columns are available for sorting
             sort_column = None
-            if 'IntakeDateTime' in filtered_data.columns:
+            if selected_category == 'Needs Foster Now' and 'Hold_Foster_Date' in filtered_data.columns:
+                # For "Needs Foster Now" category, sort by Hold - Foster Date
+                sort_column = 'Hold_Foster_Date'
+            elif selected_category in ['In Foster', 'In If The Fur Fits'] and 'Foster_Start_Date' in filtered_data.columns:
+                # For "In Foster" and "In If The Fur Fits" categories, sort by Foster Start Date
+                sort_column = 'Foster_Start_Date'
+            elif 'IntakeDateTime' in filtered_data.columns:
                 sort_column = 'IntakeDateTime'
             elif 'AnimalName' in filtered_data.columns:
                 sort_column = 'AnimalName'
@@ -682,6 +728,12 @@ def main():
                 try:
                     if sort_column == 'IntakeDateTime':
                         display_data = display_data.sort_values(sort_column, ascending=False)
+                    elif sort_column == 'Hold_Foster_Date':
+                        # Sort Hold - Foster Date in ascending order (earliest dates first)
+                        display_data = display_data.sort_values(sort_column, ascending=True)
+                    elif sort_column == 'Foster_Start_Date':
+                        # Sort Foster Start Date in ascending order (earliest dates first)
+                        display_data = display_data.sort_values(sort_column, ascending=True)
                     else:
                         display_data = display_data.sort_values(sort_column)
                 except Exception as e:
@@ -784,7 +836,7 @@ def main():
         st.subheader("🏠 Foster Database")
         
         # Create tabs within Foster Database
-        tab1, tab2 = st.tabs(["Available Foster Parents", "Emergency Bottle Fed Kittens"])
+        tab1, tab2 = st.tabs(["Active Foster Parents", "Emergency Bottle Baby Fosters"])
         
         with tab1:
             # Available Foster Parents Tab
@@ -827,7 +879,7 @@ def main():
                 foster_parents_data['Availability_With_Flags'] = foster_parents_data.apply(add_panleuk_flag, axis=1)
                 
                 # Display metrics
-                col1, col2, col3, col4 = st.columns(4)
+                col1, col2, col3 = st.columns(3)
                 
                 with col1:
                     total_foster_parents = len(foster_parents_data)
@@ -838,10 +890,6 @@ def main():
                     st.metric("Active Foster Parents", active_foster_parents)
                 
                 with col3:
-                    available_foster_parents = len(foster_parents_data[foster_parents_data['Current_Animals'].apply(len) == 0])
-                    st.metric("Available Foster Parents", available_foster_parents)
-                
-                with col4:
                     panleuk_positive_count = len(foster_parents_data[foster_parents_data['Is_Panleuk_Positive']])
                     st.metric("Panleuk Positive", panleuk_positive_count)
                 
@@ -922,7 +970,7 @@ def main():
                 st.warning("No foster parents data available.")
         
         with tab2:
-            # Emergency Bottle Fed Kittens Tab
+            # Emergency Bottle Baby Fosters Tab
             if not bottle_fed_kittens_data.empty:
                 # Get current animals for each bottle fed kitten foster parent
                 bottle_fed_animals, _ = get_foster_parent_animals(bottle_fed_kittens_data, foster_current)

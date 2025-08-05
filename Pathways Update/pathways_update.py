@@ -56,19 +56,19 @@ inventory_df['AgeInMonths'] = ((today - inventory_df['DateOfBirth']).dt.days / 3
 # Filter based on species, age, and days in shelter
 cats_to_add = inventory_df[
     (inventory_df['Species'] == 'Cat') & 
-    (inventory_df['AgeInMonths'] >= 3) &
+    (inventory_df['AgeInMonths'] >= 5) &
     (inventory_df['DaysInShelter'] >= 60)
 ]
 
 dogs_to_add = inventory_df[
     (inventory_df['Species'] == 'Dog') & 
-    (inventory_df['AgeInMonths'] >= 3) &
+    (inventory_df['AgeInMonths'] >= 5) &
     (inventory_df['DaysInShelter'] >= 14)
 ]
 
 others_to_add = inventory_df[
     (~inventory_df['Species'].isin(['Cat', 'Dog'])) & 
-    (inventory_df['AgeInMonths'] >= 3) &
+    (inventory_df['AgeInMonths'] >= 5) &
     (inventory_df['DaysInShelter'] >= 14)
 ]
 

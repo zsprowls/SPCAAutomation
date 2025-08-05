@@ -862,6 +862,10 @@ def main():
             if selected_category == 'Needs Foster Now':
                 display_data['Foster_Plea_Dates'] = 'Database Required'
             
+            # Debug: Show what columns we have
+            st.write(f"Debug: Display data columns: {list(display_data.columns)}")
+            st.write(f"Debug: Display data shape: {display_data.shape}")
+            
             # If database is enabled, populate with real data
             if supabase_enabled:
                 # Use the original filtered_data to get AnimalNumber (before HTML conversion)

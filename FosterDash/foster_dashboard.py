@@ -960,7 +960,7 @@ def main():
             <style>
             .custom-grid {
                 display: grid;
-                grid-template-columns: repeat(11, 1fr);
+                grid-template-columns: repeat(10, 1fr);
                 gap: 8px;
                 padding: 8px;
                 background-color: #f8f9fa;
@@ -968,6 +968,9 @@ def main():
                 margin-bottom: 16px;
                 min-width: 100%;
                 overflow-x: auto;
+            }
+            .custom-grid.needs-foster {
+                grid-template-columns: repeat(11, 1fr);
             }
             .grid-header {
                 background-color: #e9ecef;
@@ -1009,23 +1012,33 @@ def main():
                 .custom-grid {
                     grid-template-columns: repeat(8, 1fr);
                 }
+                .custom-grid.needs-foster {
+                    grid-template-columns: repeat(9, 1fr);
+                }
             }
             @media (max-width: 900px) {
                 .custom-grid {
                     grid-template-columns: repeat(6, 1fr);
+                }
+                .custom-grid.needs-foster {
+                    grid-template-columns: repeat(7, 1fr);
                 }
             }
             @media (max-width: 600px) {
                 .custom-grid {
                     grid-template-columns: repeat(4, 1fr);
                 }
+                .custom-grid.needs-foster {
+                    grid-template-columns: repeat(5, 1fr);
+                }
             }
             </style>
             """, unsafe_allow_html=True)
             
             # Create header row
-            st.markdown("""
-            <div class="custom-grid">
+            grid_class = "custom-grid needs-foster" if selected_category == 'Needs Foster Now' else "custom-grid"
+            header_html = f"""
+            <div class="{grid_class}">
                 <div class="grid-header">Animal ID</div>
                 <div class="grid-header">Animal Name</div>
                 <div class="grid-header">Intake Date</div>
@@ -1036,9 +1049,13 @@ def main():
                 <div class="grid-header">Start Date</div>
                 <div class="grid-header">📝 Foster Notes</div>
                 <div class="grid-header">💊 Meds</div>
-                <div class="grid-header">📅 Foster Plea Dates</div>
-            </div>
-            """, unsafe_allow_html=True)
+            """
+            
+            if selected_category == 'Needs Foster Now':
+                header_html += '<div class="grid-header">📅 Foster Plea Dates</div>'
+            
+            header_html += '</div>'
+            st.markdown(header_html, unsafe_allow_html=True)
             
             # Create data rows with inline editing
             for idx, row in display_data.iterrows():
@@ -1055,8 +1072,11 @@ def main():
                 current_meds = foster_data.get('onmeds', False)
                 current_dates = foster_data.get('fosterpleadates', [])
                 
-                # Create row with columns
-                col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11 = st.columns(11)
+                # Create row with columns (10 or 11 depending on tab)
+                if selected_category == 'Needs Foster Now':
+                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11 = st.columns(11)
+                else:
+                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10 = st.columns(10)
                 
                 with col1:
                     st.markdown(row['Animal ID'], unsafe_allow_html=True)

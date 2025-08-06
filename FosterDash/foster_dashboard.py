@@ -982,7 +982,7 @@ def main():
             <style>
             .custom-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 2.5fr 1fr;
+                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 1fr 1fr;
                 gap: 8px;
                 padding: 8px;
                 background-color: #f8f9fa;
@@ -992,7 +992,7 @@ def main():
                 overflow-x: auto;
             }
             .custom-grid.needs-foster {
-                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 2.5fr 1fr 1fr;
+                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 1fr 1fr 1fr;
             }
             .grid-header {
                 background-color: #e9ecef;

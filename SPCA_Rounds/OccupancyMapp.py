@@ -132,13 +132,13 @@ def create_layout_editor(room_name: str):
     # --- Add a new box (for demo) ---
     if st.button("Add Box"):
         boxes.append({
-            "label": "",
+            "label": "New Box",
             "location": list(LOCATION_DATA.keys())[0],
             "sublocation": LOCATION_DATA[list(LOCATION_DATA.keys())[0]][0],
-            "width": 100,
-            "height": 100,
-            "x": 50,
-            "y": 50
+            "width": 300,
+            "height": 300,
+            "x": 200,
+            "y": 200
         })
         save_layout(room_name, {"boxes": boxes})
         st.experimental_rerun()
@@ -146,44 +146,56 @@ def create_layout_editor(room_name: str):
     return boxes, selected_box
 
 def display_layout(room_name: str):
-    """Display the saved layout in view mode."""
+    """Display the saved layout using simple Streamlit components."""
     layout_data = load_layout(room_name)
     
-    # Create a Plotly figure for the layout
-    fig = go.Figure()
+    st.subheader(f"Room Layout: {room_name}")
     
-    # Add boxes to the figure
-    for box in layout_data.get('boxes', []):
-        fig.add_shape(
-            type="rect",
-            x0=box['x'],
-            y0=box['y'],
-            x1=box['x'] + box['width'],
-            y1=box['y'] + box['height'],
-            line=dict(color="Black", width=2),
-            fillcolor="LightGray",
-        )
-        
-        # Add box label
-        fig.add_annotation(
-            x=box['x'] + box['width']/2,
-            y=box['y'] + box['height']/2,
-            text=f"{box.get('label','')}\n{box.get('location','')}\n{box.get('sublocation','')}",
-            showarrow=False,
-            font=dict(size=12)
-        )
+    # Create a simple grid layout using Streamlit columns
+    for i, box in enumerate(layout_data.get('boxes', [])):
+        # Create a container for each box
+        with st.container():
+            # Add some spacing
+            st.write("---")
+            
+            # Create a styled box using Streamlit components
+            col1, col2, col3 = st.columns([1, 2, 1])
+            
+            with col2:
+                # Create a large, visible box
+                st.markdown(f"""
+                <div style="
+                    background-color: #e6f3ff;
+                    border: 3px solid #0066cc;
+                    border-radius: 10px;
+                    padding: 30px;
+                    margin: 20px 0;
+                    text-align: center;
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: #000;
+                    min-height: 200px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div>
+                        <strong>{box.get('label', 'BOX')}</strong><br><br>
+                        {box.get('location', '')}<br>
+                        {box.get('sublocation', '')}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            # Add box details below
+            with col2:
+                st.write(f"**Box {i+1} Details:**")
+                st.write(f"Position: ({box.get('x', 0)}, {box.get('y', 0)})")
+                st.write(f"Size: {box.get('width', 0)} x {box.get('height', 0)}")
     
-    # Update layout
-    fig.update_layout(
-        title=f"Room Layout: {room_name}",
-        showlegend=False,
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False, scaleanchor="x", scaleratio=1),
-        height=600,
-        margin=dict(l=0, r=0, t=30, b=0)
-    )
-    
-    st.plotly_chart(fig, use_container_width=True)
+    # If no boxes, show a message
+    if not layout_data.get('boxes', []):
+        st.info("No boxes configured for this room. Use 'Change Layout' to add boxes.")
 
 def main():
     st.title("Room Layout Editor")

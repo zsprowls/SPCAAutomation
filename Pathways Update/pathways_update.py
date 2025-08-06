@@ -40,7 +40,7 @@ inventory_df['AID'] = inventory_df['AnimalNumber'].str[-8:].str.zfill(8)
 animals_to_remove = pathways_df[~pathways_df['AID'].isin(inventory_df['AID'])]
 
 # Save animals to remove (using original column names since this is from PathwaysExportFile)
-animals_to_remove[['Name', 'AID', 'Species', 'Location ', 'Intake Date']].to_excel('./Pathways Update/PathwaysRemove.xlsx', index=False)
+animals_to_remove[['Name', 'AID', 'Species', 'Location', 'Intake Date']].to_excel('./Pathways Update/PathwaysRemove.xlsx', index=False)
 
 # Convert IntakeDateTime to datetime
 inventory_df['IntakeDateTime'] = pd.to_datetime(inventory_df['IntakeDateTime'])
@@ -56,19 +56,19 @@ inventory_df['AgeInMonths'] = ((today - inventory_df['DateOfBirth']).dt.days / 3
 # Filter based on species, age, and days in shelter
 cats_to_add = inventory_df[
     (inventory_df['Species'] == 'Cat') & 
-    (inventory_df['AgeInMonths'] >= 3) &
+    (inventory_df['AgeInMonths'] >= 5) &
     (inventory_df['DaysInShelter'] >= 60)
 ]
 
 dogs_to_add = inventory_df[
     (inventory_df['Species'] == 'Dog') & 
-    (inventory_df['AgeInMonths'] >= 3) &
+    (inventory_df['AgeInMonths'] >= 5) &
     (inventory_df['DaysInShelter'] >= 14)
 ]
 
 others_to_add = inventory_df[
     (~inventory_df['Species'].isin(['Cat', 'Dog'])) & 
-    (inventory_df['AgeInMonths'] >= 3) &
+    (inventory_df['AgeInMonths'] >= 5) &
     (inventory_df['DaysInShelter'] >= 14)
 ]
 

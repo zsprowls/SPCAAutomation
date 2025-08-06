@@ -32,6 +32,7 @@ layout_path = script_dir / 'shelter_layout_template.csv'
 animal_path = files_dir / 'AnimalInventory.csv'
 clear_path = script_dir / 'clear.csv'
 
+
 layout_df = pd.read_csv(layout_path)
 try:
     animal_df = pd.read_csv(animal_path, skiprows=3)
@@ -71,6 +72,18 @@ if clear_path.exists():
     clear_dates_dict = dict(zip(clear_df['AnimalNumber'], clear_df['ClearDate']))
 else:
     clear_dates_dict = {}
+
+# --- Load photo data from AnimalInventory.csv ---
+photo_data = {}
+try:
+    # Create a dictionary mapping AnimalNumber to NumberOfPictures
+    photo_data = dict(zip(
+        animal_df['AnimalNumber'].astype(str), 
+        animal_df['NumberOfPictures'].fillna(0).astype(int)
+    ))
+    st.success(f"✅ Loaded photo data for {len(photo_data)} animals")
+except Exception as e:
+    st.warning(f"⚠️ Could not load photo data: {e}")
 
 def format_clear_date(date_str):
     # Convert float to string if needed
@@ -164,11 +177,31 @@ def format_display_line(row):
         name = f'<a href="https://sms.petpoint.com/sms3/enhanced/animal/{petpoint_id}" target="_blank">{name}</a>'
     clear_date = clear_dates_dict.get(animal_id, "")
     clear_date = format_clear_date(clear_date)
+    
+    # Check photo count for this animal
+    photo_count = photo_data.get(animal_id, 0)
+    
+    # Build the display line
+    display_parts = []
+    display_parts.append(name)
+    
     if abbr:
-        if clear_date:
-            return f'{name} <span class="stage-abbr">{abbr}</span> <span class="clear-date">{clear_date}</span>'
-        return f'{name} <span class="stage-abbr">{abbr}</span>'
-    return name
+        display_parts.append(f'<span class="stage-abbr">{abbr}</span>')
+    
+    if clear_date:
+        display_parts.append(f'<span class="clear-date">{clear_date}</span>')
+    
+    display_line = ' '.join(display_parts)
+    
+    # Add photo indicator based on count
+    if photo_count == 0:
+        # Highlighted alert for animals with no photos
+        display_line += '<div class="photo-indicator">NEEDS PHOTO</div>'
+    elif photo_count > 0:
+        # Lightweight note for animals with photos
+        display_line += f'<div class="photo-count">Photo: {photo_count}</div>'
+    
+    return display_line
 
 def format_kennel_label(row):
     letter = row["Location_1"][-1]
@@ -296,8 +329,8 @@ if area == "Canine Adoptions & Holding":
         f"""
         <style>
         .kennel-grid-container.canine-grid {{
-            width: 98vw;
-            max-width: 1400px;
+            width: 100vw !important;
+            max-width: 1600px !important;
             aspect-ratio: 4 / 3;
             margin: 0 auto 32px auto;
             display: grid;
@@ -347,10 +380,10 @@ if area == "Canine Adoptions & Holding":
         }}
         .kennel-animal {{
             color: #222;
-            font-size: 1em; /* Base size */
+            font-size: 1.2em !important; /* Increased base size */
             margin: 0;
             padding: 0;
-            line-height: 1.1em;
+            line-height: 1.2em;
             word-break: break-word;
             font-stretch: ultra-condensed;
             white-space: normal;
@@ -360,6 +393,28 @@ if area == "Canine Adoptions & Holding":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         .area-heading {{
             grid-column: 1 / span 12;
@@ -392,6 +447,8 @@ if area == "Canine Adoptions & Holding":
         }}
         </style>
         <script>
+        // Temporarily disabled text scaling to fix layout issues
+        /*
         function scaleText() {{
             document.querySelectorAll('.kennel-animal-list').forEach(container => {{
                 const animals = container.querySelectorAll('.kennel-animal');
@@ -424,6 +481,7 @@ if area == "Canine Adoptions & Holding":
         // Run on load and resize
         window.addEventListener('load', scaleText);
         window.addEventListener('resize', scaleText);
+        */
         </script>
         {grid_html}
         """,
@@ -548,6 +606,28 @@ elif area == "Cat Condo Room":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -710,6 +790,28 @@ elif area == "G Available Cats":
             text-transform: uppercase;
             margin-left: 0.25em;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         @container (max-width: 200px) {{
             .kennel-animal {{
                 font-size: 0.8em;
@@ -870,6 +972,28 @@ elif area == "H Available Cats":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -1032,6 +1156,28 @@ elif area == "I Behavior/Bite Case":
             text-transform: uppercase;
             margin-left: 0.25em;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         @container (max-width: 200px) {{
             .kennel-animal {{
                 font-size: 0.8em;
@@ -1193,6 +1339,28 @@ elif area == "Foster Care":
             text-transform: uppercase;
             margin-left: 0.25em;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         @container (max-width: 200px) {{
             .kennel-animal {{
                 font-size: 0.8em;
@@ -1350,6 +1518,28 @@ elif area == "Cat Isolation 235":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -1511,6 +1701,28 @@ elif area == "Cat Isolation 234 Overflow":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -1683,6 +1895,28 @@ elif area == "Cat Isolation 233 Ringworm":
             text-transform: uppercase;
             margin-left: 0.25em;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         @container (max-width: 200px) {{
             .kennel-animal {{
                 font-size: 0.8em;
@@ -1841,6 +2075,28 @@ elif area == "Cat Isolation 232 Panleuk":
             text-transform: uppercase;
             margin-left: 0.25em;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         @container (max-width: 200px) {{
             .kennel-animal {{
                 font-size: 0.8em;
@@ -1998,6 +2254,28 @@ elif area == "Cat Isolation 231 Holds":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -2203,6 +2481,28 @@ elif area == "Cat Treatment":
             text-transform: uppercase;
             margin-left: 0.25em;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         .cat-treat-inc1-6 {{ 
             flex: 0 1 25%; 
             min-width: 220px;
@@ -2356,6 +2656,28 @@ elif area == "ICU":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -2514,6 +2836,28 @@ elif area == "Administration":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -2688,6 +3032,28 @@ elif area == "Multi-Species Holding":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -2954,6 +3320,28 @@ elif area == "Small Animals & Exotics":
             width: 100%;
             max-width: 700px;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         </style>
         <div class="sa-main-bg">
           <div class="sa-horizontal-row" style="display:flex;flex-direction:row;align-items:flex-start;gap:24px;width:100%;justify-content:center;">
@@ -3092,6 +3480,28 @@ elif area == "Cat Recovery":
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{
@@ -3268,6 +3678,28 @@ elif area == "Dog Recovery":
             text-transform: uppercase;
             margin-left: 0.25em;
         }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
+        }}
         @container (max-width: 200px) {{
             .kennel-animal {{
                 font-size: 0.8em;
@@ -3441,6 +3873,28 @@ else:  # Adoptions Lobby
             font-weight: bold;
             text-transform: uppercase;
             margin-left: 0.25em;
+        }}
+        .photo-indicator {{
+            color: #ff6b35;
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-top: 2px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 1px 4px;
+            display: inline-block;
+            text-align: center;
+        }}
+        .photo-count {{
+            color: #666;
+            font-weight: normal;
+            font-size: 0.7em;
+            font-style: italic;
+            margin-top: 1px;
+            display: inline-block;
+            text-align: center;
         }}
         @container (max-width: 200px) {{
             .kennel-animal {{

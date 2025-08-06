@@ -129,17 +129,45 @@ def load_data_from_multiple_sources():
             inventory_file = os.path.join(os.path.dirname(__file__), "..", "__Load Files Go Here__", "AnimalInventory.csv")
             if os.path.exists(inventory_file):
                 df_inventory = pd.read_csv(inventory_file, skiprows=2)
-                # Extract AID from AnimalNumber (last 8 characters)
-                df_inventory['AID'] = df_inventory['AnimalNumber'].str[-8:].astype(str)
-                # Merge pathways data with inventory data on AID
-                if 'AID' in df_pathways.columns and 'AID' in df_inventory.columns:
-                    # Convert AID to string for merging
-                    df_pathways['AID'] = df_pathways['AID'].astype(str)
-                    # Merge the dataframes
-                    df_merged = pd.merge(df_pathways, df_inventory, on='AID', how='left', suffixes=('', '_inv'))
-                else:
-                    st.warning("⚠️ AID column not found in one or both datasets, using pathways data only")
+                
+                # Debug: Print column names to see what we have
+                logger.info(f"AnimalInventory columns: {df_inventory.columns.tolist()}")
+                
+                # Check if AnimalNumber column exists
+                if 'AnimalNumber' not in df_inventory.columns:
+                    st.warning("⚠️ AnimalNumber column not found in AnimalInventory.csv")
                     df_merged = df_pathways
+                else:
+                    # Extract AID from AnimalNumber (last 8 characters)
+                    df_inventory['AID'] = df_inventory['AnimalNumber'].str[-8:].astype(str)
+                    
+                    # Debug: Print some sample AIDs
+                    logger.info(f"Sample AIDs from AnimalInventory: {df_inventory['AID'].head().tolist()}")
+                    logger.info(f"Sample AIDs from Pathways: {df_pathways['AID'].head().tolist()}")
+                    
+                    # Merge pathways data with inventory data on AID
+                    if 'AID' in df_pathways.columns and 'AID' in df_inventory.columns:
+                        # Convert AID to string for merging
+                        df_pathways['AID'] = df_pathways['AID'].astype(str)
+                        # Merge the dataframes
+                        df_merged = pd.merge(df_pathways, df_inventory, on='AID', how='left', suffixes=('', '_inv'))
+                        
+                        # Debug: Print merge results
+                        logger.info(f"Merge result: {len(df_merged)} records (original: {len(df_pathways)})")
+                        
+                        # Prioritize Location and SubLocation from AnimalInventory over Pathways data
+                        if 'Location_inv' in df_merged.columns:
+                            # Use Location from AnimalInventory if available, otherwise keep from Pathways
+                            df_merged['Location'] = df_merged['Location_inv'].fillna(df_merged['Location'])
+                        
+                        if 'SubLocation_inv' in df_merged.columns:
+                            # Use SubLocation from AnimalInventory if available, otherwise keep from Pathways
+                            df_merged['SubLocation'] = df_merged['SubLocation_inv'].fillna(df_merged['SubLocation'])
+                    else:
+                        st.warning("⚠️ AID column not found in one or both datasets, using pathways data only")
+                        logger.warning(f"Pathways columns: {df_pathways.columns.tolist()}")
+                        logger.warning(f"Inventory columns: {df_inventory.columns.tolist()}")
+                        df_merged = df_pathways
             else:
                 st.warning("⚠️ AnimalInventory.csv not found, using pathways data only")
                 df_merged = df_pathways

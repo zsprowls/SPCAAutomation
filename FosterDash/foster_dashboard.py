@@ -342,7 +342,10 @@ def load_data():
         for path in possible_paths:
             if os.path.exists(path):
                 animal_inventory_path = path
+                st.info(f"🔍 Found AnimalInventory.csv at: {path}")
                 break
+            else:
+                st.info(f"❌ Not found: {path}")
         
         if animal_inventory_path:
             # Skip first 3 rows and start from row 4 where headers are
@@ -375,7 +378,10 @@ def load_data():
         for path in foster_possible_paths:
             if os.path.exists(path):
                 foster_current_path = path
+                st.info(f"🔍 Found FosterCurrent.csv at: {path}")
                 break
+            else:
+                st.info(f"❌ Not found: {path}")
         
         if foster_current_path:
             # Skip first 6 rows and start from row 7 where headers are
@@ -407,7 +413,10 @@ def load_data():
         for path in hold_possible_paths:
             if os.path.exists(path):
                 hold_foster_path = path
+                st.info(f"🔍 Found Hold - Foster Stage Date.csv at: {path}")
                 break
+            else:
+                st.info(f"❌ Not found: {path}")
         
         if hold_foster_path:
             # Skip first 2 rows and start from row 3 where headers are
@@ -720,6 +729,8 @@ def main():
     
     # Debug information - show data counts
     with st.expander("🔍 Debug Information", expanded=False):
+        st.write("**System Information:**")
+        st.write(f"- Current working directory: {os.getcwd()}")
         st.write("**Data Counts:**")
         st.write(f"- Total animals in inventory: {len(animal_inventory)}")
         st.write(f"- Animals in foster: {len(foster_current)}")

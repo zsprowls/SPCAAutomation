@@ -4,10 +4,10 @@
       "label": "Test Box",
       "location": "Adoptions Counseling Offices",
       "sublocation": "-Dog Counseling 122",
-      "width": 200,
-      "height": 200,
-      "x": 100,
-      "y": 100
+      "width": 300,
+      "height": 300,
+      "x": 200,
+      "y": 200
     }
   ]
 }

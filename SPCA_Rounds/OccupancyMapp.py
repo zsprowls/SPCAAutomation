@@ -135,10 +135,10 @@ def create_layout_editor(room_name: str):
             "label": "New Box",
             "location": list(LOCATION_DATA.keys())[0],
             "sublocation": LOCATION_DATA[list(LOCATION_DATA.keys())[0]][0],
-            "width": 200,
-            "height": 200,
-            "x": 100,
-            "y": 100
+            "width": 300,
+            "height": 300,
+            "x": 200,
+            "y": 200
         })
         save_layout(room_name, {"boxes": boxes})
         st.experimental_rerun()
@@ -151,11 +151,11 @@ def display_layout(room_name: str):
     
     st.subheader(f"Room Layout: {room_name}")
     
-    # Create a simple container
+    # Create a much larger container
     container_html = """
     <div style="
         width: 100%;
-        height: 500px;
+        height: 800px;
         border: 3px solid #333;
         background: white;
         position: relative;
@@ -166,11 +166,11 @@ def display_layout(room_name: str):
     
     # Add each box
     for box in layout_data.get('boxes', []):
-        # Use simple pixel positioning
-        left = box['x']
-        top = box['y']
-        width = box['width']
-        height = box['height']
+        # Scale up the positioning and size significantly
+        left = box['x'] * 2  # Double the x position
+        top = box['y'] * 2   # Double the y position
+        width = box['width'] * 3  # Triple the width
+        height = box['height'] * 3 # Triple the height
         
         box_html = f"""
         <div style="
@@ -179,16 +179,17 @@ def display_layout(room_name: str):
             top: {top}px;
             width: {width}px;
             height: {height}px;
-            border: 2px solid black;
-            background-color: lightgray;
+            border: 3px solid black;
+            background-color: lightblue;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: bold;
-            padding: 10px;
+            padding: 20px;
             box-sizing: border-box;
+            color: black;
         ">
             <div>
                 {box.get('label', '')}<br>

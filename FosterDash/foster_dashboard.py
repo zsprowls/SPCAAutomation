@@ -952,102 +952,148 @@ def main():
                 st.write("2. Update .streamlit/secrets.toml with your Supabase credentials")
                 st.write("3. Restart the dashboard")
             
-            # Display the data with HTML rendering (like rodent app) - this has working links
-            st.write("**Note:** Click on Animal ID or Foster PID to open in PetPoint")
+            # Custom inline editing solution with working links
+            st.write("**💡 Click any cell to edit. Press Enter to save. Click Animal ID or Foster PID to open PetPoint.**")
             
-            # Add CSS for better table styling
+            # Add CSS for the custom grid
             st.markdown("""
             <style>
-            .foster-table {
-                border-collapse: collapse;
-                width: 100%;
-                font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-                font-size: 14px;
-            }
-            .foster-table th {
-                background-color: #f0f2f6;
+            .custom-grid {
+                display: grid;
+                grid-template-columns: 120px 150px 120px 100px 120px 80px 80px 100px 120px 200px 100px 150px;
+                gap: 8px;
                 padding: 8px;
-                text-align: left;
-                border-bottom: 2px solid #e0e0e0;
-                font-weight: 600;
-            }
-            .foster-table td {
-                padding: 8px;
-                border-bottom: 1px solid #e0e0e0;
-            }
-            .foster-table tr:hover {
                 background-color: #f8f9fa;
+                border-radius: 8px;
+                margin-bottom: 16px;
             }
-            .foster-table a {
+            .grid-header {
+                background-color: #e9ecef;
+                padding: 8px;
+                font-weight: 600;
+                text-align: center;
+                border-radius: 4px;
+                font-size: 12px;
+            }
+            .grid-cell {
+                background-color: white;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #dee2e6;
+                font-size: 12px;
+                min-height: 20px;
+                display: flex;
+                align-items: center;
+            }
+            .grid-cell a {
                 color: #1f77b4;
                 text-decoration: none;
                 font-weight: 500;
             }
-            .foster-table a:hover {
+            .grid-cell a:hover {
                 text-decoration: underline;
+            }
+            .editable-cell {
+                background-color: #fff3cd;
+                border: 2px solid #ffc107;
             }
             </style>
             """, unsafe_allow_html=True)
             
-
+            # Create header row
+            st.markdown("""
+            <div class="custom-grid">
+                <div class="grid-header">Animal ID</div>
+                <div class="grid-header">Animal Name</div>
+                <div class="grid-header">Intake Date</div>
+                <div class="grid-header">Species</div>
+                <div class="grid-header">Breed</div>
+                <div class="grid-header">Sex</div>
+                <div class="grid-header">Age</div>
+                <div class="grid-header">Stage</div>
+                <div class="grid-header">Foster PID</div>
+                <div class="grid-header">📝 Foster Notes</div>
+                <div class="grid-header">💊 On Meds</div>
+                <div class="grid-header">📅 Foster Plea Dates</div>
+            </div>
+            """, unsafe_allow_html=True)
             
-            # Add editable fields below the table
-            if supabase_enabled:
-                st.write("---")
-                st.write("**📝 Edit Database Fields:**")
+            # Create data rows with inline editing
+            for idx, row in display_data.iterrows():
+                # Extract animal number for database operations
+                animal_id = str(row['Animal ID'])
+                if '<a href=' in animal_id:
+                    animal_number = animal_id.split('>')[1].split('<')[0]
+                else:
+                    animal_number = animal_id
                 
-                # Create a simple form for editing
-                with st.form("foster_edit_form"):
-                    # Dropdown to select animal
-                    animal_options = [str(row['Animal ID']).split('>')[1].split('<')[0] if '<a href=' in str(row['Animal ID']) else str(row['Animal ID']) 
-                                    for _, row in display_data.iterrows()]
-                    selected_animal = st.selectbox("Select Animal:", animal_options, key="animal_selector")
-                    
-                    # Get current data for selected animal
-                    animal_number = selected_animal
-                    foster_data = foster_data_dict.get(animal_number, {})
-                    
-                    # Foster Notes
-                    current_notes = foster_data.get('fosternotes', '')
-                    new_notes = st.text_area("📝 Foster Notes:", value=current_notes, key=f"notes_{animal_number}")
-                    
-                    # On Meds
-                    current_meds = foster_data.get('onmeds', False)
-                    new_meds = st.checkbox("💊 On Meds:", value=current_meds, key=f"meds_{animal_number}")
-                    
-                    # Foster Plea Dates (only for "Needs Foster Now" category)
+                # Get current database values
+                foster_data = foster_data_dict.get(animal_number, {})
+                current_notes = foster_data.get('fosternotes', '')
+                current_meds = foster_data.get('onmeds', False)
+                current_dates = foster_data.get('fosterpleadates', [])
+                
+                # Create row with columns
+                col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12 = st.columns(12)
+                
+                with col1:
+                    st.markdown(row['Animal ID'], unsafe_allow_html=True)
+                with col2:
+                    st.write(row['Animal Name'])
+                with col3:
+                    st.write(row['Intake Date/Time'])
+                with col4:
+                    st.write(row['Species'])
+                with col5:
+                    st.write(row['Breed'])
+                with col6:
+                    st.write(row['Sex'])
+                with col7:
+                    st.write(row['Age'])
+                with col8:
+                    st.write(row['Stage'])
+                with col9:
+                    st.markdown(row['Foster PID'], unsafe_allow_html=True)
+                with col10:
+                    # Foster Notes - editable
+                    new_notes = st.text_input(
+                        "Notes",
+                        value=current_notes,
+                        key=f"notes_{animal_number}_{idx}",
+                        label_visibility="collapsed"
+                    )
+                    if new_notes != current_notes:
+                        supabase_manager.update_foster_notes(animal_number, new_notes)
+                        st.success(f"✅ Updated notes for {animal_number}")
+                with col11:
+                    # On Meds - editable checkbox
+                    new_meds = st.checkbox(
+                        "On Meds",
+                        value=current_meds,
+                        key=f"meds_{animal_number}_{idx}",
+                        label_visibility="collapsed"
+                    )
+                    if new_meds != current_meds:
+                        supabase_manager.update_on_meds(animal_number, new_meds)
+                        st.success(f"✅ Updated meds for {animal_number}")
+                with col12:
                     if selected_category == 'Needs Foster Now':
-                        current_dates = foster_data.get('fosterpleadates', [])
+                        # Foster Plea Dates - editable
                         dates_str = ', '.join(current_dates) if current_dates else ''
-                        new_dates = st.text_input("📅 Foster Plea Dates (comma-separated):", value=dates_str, key=f"dates_{animal_number}")
-                    
-                    # Submit button
-                    submitted = st.form_submit_button("💾 Save Changes")
-                    
-                    if submitted:
-                        # Update Foster Notes
-                        if new_notes != current_notes:
-                            supabase_manager.update_foster_notes(animal_number, new_notes)
-                            st.success(f"✅ Updated Foster Notes for {animal_number}")
-                        
-                        # Update On Meds
-                        if new_meds != current_meds:
-                            supabase_manager.update_on_meds(animal_number, new_meds)
-                            st.success(f"✅ Updated On Meds for {animal_number}")
-                        
-                        # Update Foster Plea Dates
-                        if selected_category == 'Needs Foster Now':
-                            if new_dates != dates_str:
-                                if new_dates and new_dates != 'Database Required':
-                                    dates = [d.strip() for d in new_dates.split(',') if d.strip()]
-                                    supabase_manager.update_foster_plea_dates(animal_number, dates)
-                                    st.success(f"✅ Updated Foster Plea Dates for {animal_number}")
-                                elif not new_dates:
-                                    supabase_manager.update_foster_plea_dates(animal_number, [])
-                                    st.success(f"✅ Cleared Foster Plea Dates for {animal_number}")
-                        
-                        # Refresh the page to show updated data
-                        st.rerun()
+                        new_dates = st.text_input(
+                            "Dates",
+                            value=dates_str,
+                            key=f"dates_{animal_number}_{idx}",
+                            label_visibility="collapsed"
+                        )
+                        if new_dates != dates_str:
+                            if new_dates:
+                                dates = [d.strip() for d in new_dates.split(',') if d.strip()]
+                                supabase_manager.update_foster_plea_dates(animal_number, dates)
+                                st.success(f"✅ Updated dates for {animal_number}")
+                            else:
+                                supabase_manager.update_foster_plea_dates(animal_number, [])
+                                st.success(f"✅ Cleared dates for {animal_number}")
             
 
             

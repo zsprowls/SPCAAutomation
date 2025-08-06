@@ -97,9 +97,20 @@ def initialize_supabase():
 def load_foster_parents_data():
     """Load foster parents data from the Excel file"""
     try:
-        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        # Try multiple possible paths for Excel file
+        excel_possible_paths = [
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
+            "Looking for Foster Care 2025.xlsx"  # Current directory
+        ]
         
-        if os.path.exists(excel_path):
+        excel_path = None
+        for path in excel_possible_paths:
+            if os.path.exists(path):
+                excel_path = path
+                break
+        
+        if excel_path:
             # Read the "Available Foster Parents" tab
             df = pd.read_excel(excel_path, sheet_name="Available Foster Parents")
             
@@ -150,7 +161,8 @@ def load_foster_parents_data():
             st.success(f"✅ Successfully loaded foster parents data ({len(df)} records)")
             return df
         else:
-            st.error(f"❌ Excel file not found at: {excel_path}")
+            st.error(f"❌ Excel file not found!")
+            st.error(f"Tried paths: {excel_possible_paths}")
             return pd.DataFrame()
             
     except Exception as e:
@@ -161,9 +173,20 @@ def load_foster_parents_data():
 def load_bottle_fed_kittens_data():
     """Load Emergency Bottle Baby Fosters data from the Excel file"""
     try:
-        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        # Try multiple possible paths for Excel file
+        excel_possible_paths = [
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
+            "Looking for Foster Care 2025.xlsx"  # Current directory
+        ]
         
-        if os.path.exists(excel_path):
+        excel_path = None
+        for path in excel_possible_paths:
+            if os.path.exists(path):
+                excel_path = path
+                break
+        
+        if excel_path:
             # Read the "Emergency Bottle Fed Kittens" tab
             df = pd.read_excel(excel_path, sheet_name="Emergency Bottle Fed Kittens")
             
@@ -224,7 +247,8 @@ def load_bottle_fed_kittens_data():
             st.success(f"✅ Successfully loaded bottle fed kittens data ({len(df)} records)")
             return df
         else:
-            st.error(f"❌ Excel file not found at: {excel_path}")
+            st.error(f"❌ Excel file not found!")
+            st.error(f"Tried paths: {excel_possible_paths}")
             return pd.DataFrame()
             
     except Exception as e:
@@ -235,9 +259,20 @@ def load_bottle_fed_kittens_data():
 def load_panleuk_positive_pids():
     """Load Panleuk Positive PIDs from the Excel file"""
     try:
-        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        # Try multiple possible paths for Excel file
+        excel_possible_paths = [
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
+            "Looking for Foster Care 2025.xlsx"  # Current directory
+        ]
         
-        if os.path.exists(excel_path):
+        excel_path = None
+        for path in excel_possible_paths:
+            if os.path.exists(path):
+                excel_path = path
+                break
+        
+        if excel_path:
             # Read the "Panleuk. POSITIVES" tab
             df = pd.read_excel(excel_path, sheet_name="Panleuk. POSITIVES")
             
@@ -280,7 +315,8 @@ def load_panleuk_positive_pids():
             st.success(f"✅ Successfully loaded Panleuk Positive PIDs ({len(panleuk_pids)} records)")
             return panleuk_pids
         else:
-            st.error(f"❌ Excel file not found at: {excel_path}")
+            st.error(f"❌ Excel file not found!")
+            st.error(f"Tried paths: {excel_possible_paths}")
             return set()
             
     except Exception as e:
@@ -291,11 +327,20 @@ def load_panleuk_positive_pids():
 def load_data():
     """Load and process the CSV files"""
     try:
-        # Load AnimalInventory.csv - path at same level as FosterDash
-        animal_inventory_path = "../__Load Files Go Here__/AnimalInventory.csv"
-        full_path = os.path.abspath(animal_inventory_path)
+        # Load AnimalInventory.csv - try multiple possible paths
+        possible_paths = [
+            "data/AnimalInventory.csv",  # Streamlit Cloud
+            "../__Load Files Go Here__/AnimalInventory.csv",  # Local development
+            "AnimalInventory.csv"  # Current directory
+        ]
         
-        if os.path.exists(animal_inventory_path):
+        animal_inventory_path = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                animal_inventory_path = path
+                break
+        
+        if animal_inventory_path:
             # Skip first 3 rows and start from row 4 where headers are
             try:
                 animal_inventory = pd.read_csv(animal_inventory_path, encoding='utf-8', skiprows=3)
@@ -310,15 +355,24 @@ def load_data():
             st.success(f"✅ Successfully loaded AnimalInventory.csv ({len(animal_inventory)} records)")
         else:
             st.error(f"❌ AnimalInventory.csv not found!")
-            st.error(f"Expected path: {full_path}")
+            st.error(f"Tried paths: {possible_paths}")
             st.error(f"Current working directory: {os.getcwd()}")
             return None, None, None
         
-        # Load FosterCurrent.csv - path at same level as FosterDash
-        foster_current_path = "../__Load Files Go Here__/FosterCurrent.csv"
-        full_foster_path = os.path.abspath(foster_current_path)
+        # Load FosterCurrent.csv - try multiple possible paths
+        foster_possible_paths = [
+            "data/FosterCurrent.csv",  # Streamlit Cloud
+            "../__Load Files Go Here__/FosterCurrent.csv",  # Local development
+            "FosterCurrent.csv"  # Current directory
+        ]
         
-        if os.path.exists(foster_current_path):
+        foster_current_path = None
+        for path in foster_possible_paths:
+            if os.path.exists(path):
+                foster_current_path = path
+                break
+        
+        if foster_current_path:
             # Skip first 6 rows and start from row 7 where headers are
             try:
                 foster_current = pd.read_csv(foster_current_path, encoding='utf-8', skiprows=6)
@@ -333,14 +387,23 @@ def load_data():
             st.success(f"✅ Successfully loaded FosterCurrent.csv ({len(foster_current)} records)")
         else:
             st.warning(f"⚠️ FosterCurrent.csv not found!")
-            st.warning(f"Expected path: {full_foster_path}")
+            st.warning(f"Tried paths: {foster_possible_paths}")
             foster_current = pd.DataFrame()
         
-        # Load Hold - Foster Stage Date.csv - path at same level as FosterDash
-        hold_foster_path = "../__Load Files Go Here__/Hold - Foster Stage Date.csv"
-        full_hold_foster_path = os.path.abspath(hold_foster_path)
+        # Load Hold - Foster Stage Date.csv - try multiple possible paths
+        hold_possible_paths = [
+            "data/Hold - Foster Stage Date.csv",  # Streamlit Cloud
+            "../__Load Files Go Here__/Hold - Foster Stage Date.csv",  # Local development
+            "Hold - Foster Stage Date.csv"  # Current directory
+        ]
         
-        if os.path.exists(hold_foster_path):
+        hold_foster_path = None
+        for path in hold_possible_paths:
+            if os.path.exists(path):
+                hold_foster_path = path
+                break
+        
+        if hold_foster_path:
             # Skip first 2 rows and start from row 3 where headers are
             try:
                 hold_foster_data = pd.read_csv(hold_foster_path, encoding='utf-8', skiprows=2)
@@ -355,7 +418,7 @@ def load_data():
             st.success(f"✅ Successfully loaded Hold - Foster Stage Date.csv ({len(hold_foster_data)} records)")
         else:
             st.warning(f"⚠️ Hold - Foster Stage Date.csv not found!")
-            st.warning(f"Expected path: {full_hold_foster_path}")
+            st.warning(f"Tried paths: {hold_possible_paths}")
             hold_foster_data = pd.DataFrame()
         
         return animal_inventory, foster_current, hold_foster_data

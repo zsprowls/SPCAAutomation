@@ -1159,20 +1159,29 @@ def main():
                         formatted_date = ''
                     st.write(formatted_date)
                 with col9:
-                    # Foster Notes - editable with wider text input
-                    # Add custom CSS to make text area fill the wider column
+                    # Foster Notes - editable with full width text area
+                    # Add CSS to override Streamlit's column constraints
                     st.markdown("""
                     <style>
-                    .stTextArea textarea {
+                    /* Target the specific text area in the foster notes column */
+                    .stTextArea > div > div > textarea {
                         width: 100% !important;
-                        min-width: 300px !important;
+                        min-width: 400px !important;
+                        max-width: none !important;
+                        box-sizing: border-box !important;
+                    }
+                    /* Override any parent container constraints */
+                    .stTextArea > div {
+                        width: 100% !important;
                         max-width: none !important;
                     }
                     .stTextArea > div > div {
                         width: 100% !important;
+                        max-width: none !important;
                     }
                     </style>
                     """, unsafe_allow_html=True)
+                    
                     new_notes = st.text_area(
                         "Notes",
                         value=current_notes,

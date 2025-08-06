@@ -329,8 +329,8 @@ if area == "Canine Adoptions & Holding":
         f"""
         <style>
         .kennel-grid-container.canine-grid {{
-            width: 98vw;
-            max-width: 1400px;
+            width: 100vw !important;
+            max-width: 1600px !important;
             aspect-ratio: 4 / 3;
             margin: 0 auto 32px auto;
             display: grid;
@@ -380,10 +380,10 @@ if area == "Canine Adoptions & Holding":
         }}
         .kennel-animal {{
             color: #222;
-            font-size: 1em; /* Base size */
+            font-size: 1.2em !important; /* Increased base size */
             margin: 0;
             padding: 0;
-            line-height: 1.1em;
+            line-height: 1.2em;
             word-break: break-word;
             font-stretch: ultra-condensed;
             white-space: normal;
@@ -447,6 +447,8 @@ if area == "Canine Adoptions & Holding":
         }}
         </style>
         <script>
+        // Temporarily disabled text scaling to fix layout issues
+        /*
         function scaleText() {{
             document.querySelectorAll('.kennel-animal-list').forEach(container => {{
                 const animals = container.querySelectorAll('.kennel-animal');
@@ -479,6 +481,7 @@ if area == "Canine Adoptions & Holding":
         // Run on load and resize
         window.addEventListener('load', scaleText);
         window.addEventListener('resize', scaleText);
+        */
         </script>
         {grid_html}
         """,

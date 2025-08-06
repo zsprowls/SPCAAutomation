@@ -960,7 +960,7 @@ def main():
             <style>
             .custom-grid {
                 display: grid;
-                grid-template-columns: 120px 150px 120px 100px 120px 80px 80px 100px 120px 200px 100px 150px;
+                grid-template-columns: 120px 150px 120px 200px 100px 120px 200px 100px 150px;
                 gap: 8px;
                 padding: 8px;
                 background-color: #f8f9fa;
@@ -1006,10 +1006,7 @@ def main():
                 <div class="grid-header">Animal ID</div>
                 <div class="grid-header">Animal Name</div>
                 <div class="grid-header">Intake Date</div>
-                <div class="grid-header">Species</div>
-                <div class="grid-header">Breed</div>
-                <div class="grid-header">Sex</div>
-                <div class="grid-header">Age</div>
+                <div class="grid-header">Animal Details</div>
                 <div class="grid-header">Stage</div>
                 <div class="grid-header">Foster PID</div>
                 <div class="grid-header">📝 Foster Notes</div>
@@ -1034,7 +1031,7 @@ def main():
                 current_dates = foster_data.get('fosterpleadates', [])
                 
                 # Create row with columns
-                col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12 = st.columns(12)
+                col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
                 
                 with col1:
                     st.markdown(row['Animal ID'], unsafe_allow_html=True)
@@ -1043,18 +1040,14 @@ def main():
                 with col3:
                     st.write(row['Intake Date/Time'])
                 with col4:
-                    st.write(row['Species'])
+                    # Combined Animal Details: Age, Sex, Species, Breed
+                    animal_details = f"{row['Age']}, {row['Sex']}, {row['Species']}, {row['Breed']}"
+                    st.write(animal_details)
                 with col5:
-                    st.write(row['Breed'])
-                with col6:
-                    st.write(row['Sex'])
-                with col7:
-                    st.write(row['Age'])
-                with col8:
                     st.write(row['Stage'])
-                with col9:
+                with col6:
                     st.markdown(row['Foster PID'], unsafe_allow_html=True)
-                with col10:
+                with col7:
                     # Foster Notes - editable
                     new_notes = st.text_input(
                         "Notes",
@@ -1065,7 +1058,7 @@ def main():
                     if new_notes != current_notes:
                         supabase_manager.update_foster_notes(animal_number, new_notes)
                         st.success(f"✅ Updated notes for {animal_number}")
-                with col11:
+                with col8:
                     # On Meds - editable checkbox
                     new_meds = st.checkbox(
                         "On Meds",
@@ -1076,7 +1069,7 @@ def main():
                     if new_meds != current_meds:
                         supabase_manager.update_on_meds(animal_number, new_meds)
                         st.success(f"✅ Updated meds for {animal_number}")
-                with col12:
+                with col9:
                     if selected_category == 'Needs Foster Now':
                         # Foster Plea Dates - editable
                         dates_str = ', '.join(current_dates) if current_dates else ''

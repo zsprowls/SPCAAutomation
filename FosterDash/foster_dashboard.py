@@ -960,12 +960,14 @@ def main():
             <style>
             .custom-grid {
                 display: grid;
-                grid-template-columns: 120px 150px 120px 200px 100px 120px 120px 100px 200px 100px 150px;
+                grid-template-columns: repeat(11, 1fr);
                 gap: 8px;
                 padding: 8px;
                 background-color: #f8f9fa;
                 border-radius: 8px;
                 margin-bottom: 16px;
+                min-width: 100%;
+                overflow-x: auto;
             }
             .grid-header {
                 background-color: #e9ecef;
@@ -973,17 +975,23 @@ def main():
                 font-weight: 600;
                 text-align: center;
                 border-radius: 4px;
-                font-size: 12px;
+                font-size: 11px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .grid-cell {
                 background-color: white;
                 padding: 8px;
                 border-radius: 4px;
                 border: 1px solid #dee2e6;
-                font-size: 12px;
+                font-size: 11px;
                 min-height: 20px;
                 display: flex;
                 align-items: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .grid-cell a {
                 color: #1f77b4;
@@ -996,6 +1004,21 @@ def main():
             .editable-cell {
                 background-color: #fff3cd;
                 border: 2px solid #ffc107;
+            }
+            @media (max-width: 1200px) {
+                .custom-grid {
+                    grid-template-columns: repeat(8, 1fr);
+                }
+            }
+            @media (max-width: 900px) {
+                .custom-grid {
+                    grid-template-columns: repeat(6, 1fr);
+                }
+            }
+            @media (max-width: 600px) {
+                .custom-grid {
+                    grid-template-columns: repeat(4, 1fr);
+                }
             }
             </style>
             """, unsafe_allow_html=True)
@@ -1067,7 +1090,6 @@ def main():
                     )
                     if new_notes != current_notes:
                         supabase_manager.update_foster_notes(animal_number, new_notes)
-                        st.success(f"✅ Updated notes for {animal_number}")
                 with col10:
                     # Meds - editable text input
                     current_meds = foster_data.get('onmeds', '')  # Now a string instead of boolean
@@ -1079,7 +1101,6 @@ def main():
                     )
                     if new_meds != current_meds:
                         supabase_manager.update_on_meds(animal_number, new_meds)
-                        st.success(f"✅ Updated meds for {animal_number}")
                 with col11:
                     if selected_category == 'Needs Foster Now':
                         # Foster Plea Dates - editable
@@ -1094,10 +1115,8 @@ def main():
                             if new_dates:
                                 dates = [d.strip() for d in new_dates.split(',') if d.strip()]
                                 supabase_manager.update_foster_plea_dates(animal_number, dates)
-                                st.success(f"✅ Updated dates for {animal_number}")
                             else:
                                 supabase_manager.update_foster_plea_dates(animal_number, [])
-                                st.success(f"✅ Cleared dates for {animal_number}")
             
 
             

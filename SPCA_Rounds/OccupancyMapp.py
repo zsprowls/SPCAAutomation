@@ -146,64 +146,56 @@ def create_layout_editor(room_name: str):
     return boxes, selected_box
 
 def display_layout(room_name: str):
-    """Display the saved layout in view mode using simple HTML."""
+    """Display the saved layout using simple Streamlit components."""
     layout_data = load_layout(room_name)
     
     st.subheader(f"Room Layout: {room_name}")
     
-    # Create a much larger container
-    container_html = """
-    <div style="
-        width: 100%;
-        height: 800px;
-        border: 3px solid #333;
-        background: white;
-        position: relative;
-        margin: 20px 0;
-        overflow: hidden;
-    ">
-    """
+    # Create a simple grid layout using Streamlit columns
+    for i, box in enumerate(layout_data.get('boxes', [])):
+        # Create a container for each box
+        with st.container():
+            # Add some spacing
+            st.write("---")
+            
+            # Create a styled box using Streamlit components
+            col1, col2, col3 = st.columns([1, 2, 1])
+            
+            with col2:
+                # Create a large, visible box
+                st.markdown(f"""
+                <div style="
+                    background-color: #e6f3ff;
+                    border: 3px solid #0066cc;
+                    border-radius: 10px;
+                    padding: 30px;
+                    margin: 20px 0;
+                    text-align: center;
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: #000;
+                    min-height: 200px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                ">
+                    <div>
+                        <strong>{box.get('label', 'BOX')}</strong><br><br>
+                        {box.get('location', '')}<br>
+                        {box.get('sublocation', '')}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            # Add box details below
+            with col2:
+                st.write(f"**Box {i+1} Details:**")
+                st.write(f"Position: ({box.get('x', 0)}, {box.get('y', 0)})")
+                st.write(f"Size: {box.get('width', 0)} x {box.get('height', 0)}")
     
-    # Add each box
-    for box in layout_data.get('boxes', []):
-        # Scale up the positioning and size significantly
-        left = box['x'] * 2  # Double the x position
-        top = box['y'] * 2   # Double the y position
-        width = box['width'] * 3  # Triple the width
-        height = box['height'] * 3 # Triple the height
-        
-        box_html = f"""
-        <div style="
-            position: absolute;
-            left: {left}px;
-            top: {top}px;
-            width: {width}px;
-            height: {height}px;
-            border: 3px solid black;
-            background-color: lightblue;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 20px;
-            box-sizing: border-box;
-            color: black;
-        ">
-            <div>
-                {box.get('label', '')}<br>
-                {box.get('location', '')}<br>
-                {box.get('sublocation', '')}
-            </div>
-        </div>
-        """
-        container_html += box_html
-    
-    container_html += "</div>"
-    
-    # Display the HTML
-    st.markdown(container_html, unsafe_allow_html=True)
+    # If no boxes, show a message
+    if not layout_data.get('boxes', []):
+        st.info("No boxes configured for this room. Use 'Change Layout' to add boxes.")
 
 def main():
     st.title("Room Layout Editor")

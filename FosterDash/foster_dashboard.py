@@ -1093,12 +1093,12 @@ def main():
                 with col6:
                     st.markdown(row['Foster PID'], unsafe_allow_html=True)
                 with col7:
-                    # Foster Name from FosterCurrent data
+                    # Foster Name from classified data
                     foster_name = row.get('Foster Name', '')
                     st.write(foster_name)
                 with col8:
-                    # Start Date from FosterCurrent data
-                    start_date = row.get('Start Date', '')
+                    # Start Date from classified data
+                    start_date = row.get('Foster Start Date', '')
                     st.write(start_date)
                 with col9:
                     # Foster Notes - editable

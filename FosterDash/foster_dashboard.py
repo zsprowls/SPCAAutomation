@@ -93,7 +93,6 @@ def initialize_supabase():
         st.error("❌ Failed to initialize Supabase connection")
         return False
 
-@st.cache_data
 def load_foster_parents_data():
     """Load foster parents data from the Excel file"""
     try:
@@ -170,7 +169,6 @@ def load_foster_parents_data():
         st.error(f"❌ Error loading foster parents data: {str(e)}")
         return pd.DataFrame()
 
-@st.cache_data
 def load_bottle_fed_kittens_data():
     """Load Emergency Bottle Baby Fosters data from the Excel file"""
     try:
@@ -257,7 +255,6 @@ def load_bottle_fed_kittens_data():
         st.error(f"❌ Error loading bottle fed kittens data: {str(e)}")
         return pd.DataFrame()
 
-@st.cache_data
 def load_panleuk_positive_pids():
     """Load Panleuk Positive PIDs from the Excel file"""
     try:
@@ -331,9 +328,9 @@ def load_data():
     try:
         # Load AnimalInventory.csv - try multiple possible paths
         possible_paths = [
+            "../__Load Files Go Here__/AnimalInventory.csv",  # Local development (prioritized)
             "FosterDash/data/AnimalInventory.csv",  # Streamlit Cloud
             "data/AnimalInventory.csv",  # Streamlit Cloud (alternative)
-            "../__Load Files Go Here__/AnimalInventory.csv",  # Local development
             "AnimalInventory.csv"  # Current directory
         ]
         
@@ -364,9 +361,9 @@ def load_data():
         
         # Load FosterCurrent.csv - try multiple possible paths
         foster_possible_paths = [
+            "../__Load Files Go Here__/FosterCurrent.csv",  # Local development (prioritized)
             "FosterDash/data/FosterCurrent.csv",  # Streamlit Cloud
             "data/FosterCurrent.csv",  # Streamlit Cloud (alternative)
-            "../__Load Files Go Here__/FosterCurrent.csv",  # Local development
             "FosterCurrent.csv"  # Current directory
         ]
         
@@ -396,9 +393,9 @@ def load_data():
         
         # Load Hold - Foster Stage Date.csv - try multiple possible paths
         hold_possible_paths = [
+            "../__Load Files Go Here__/Hold - Foster Stage Date.csv",  # Local development (prioritized)
             "FosterDash/data/Hold - Foster Stage Date.csv",  # Streamlit Cloud
             "data/Hold - Foster Stage Date.csv",  # Streamlit Cloud (alternative)
-            "../__Load Files Go Here__/Hold - Foster Stage Date.csv",  # Local development
             "Hold - Foster Stage Date.csv"  # Current directory
         ]
         
@@ -426,11 +423,11 @@ def load_data():
             st.warning(f"Tried paths: {hold_possible_paths}")
             hold_foster_data = pd.DataFrame()
         
-        return animal_inventory, foster_current, hold_foster_data
+        return animal_inventory, foster_current, hold_foster_data, animal_inventory_path, foster_current_path, hold_foster_path
     except Exception as e:
         st.error(f"❌ Error loading data: {str(e)}")
         st.error(f"Current working directory: {os.getcwd()}")
-        return None, None, None
+        return None, None, None, None, None, None
 
 def get_foster_parent_animals(foster_parents_df, foster_current_df):
     """Get current animals for each foster parent"""
@@ -670,12 +667,16 @@ def main():
             st.cache_data.clear()
             st.rerun()
     
+    # Add timestamp to force cache invalidation
+    import time
+    cache_timestamp = time.time()
+    
     # Initialize Supabase
     supabase_enabled = initialize_supabase()
     
     # Load data
     with st.spinner("Loading data..."):
-        animal_inventory, foster_current, hold_foster_data = load_data()
+        animal_inventory, foster_current, hold_foster_data, animal_inventory_path, foster_current_path, hold_foster_path = load_data()
         foster_parents_data = load_foster_parents_data()
         bottle_fed_kittens_data = load_bottle_fed_kittens_data()
         panleuk_positive_pids = load_panleuk_positive_pids()
@@ -705,7 +706,12 @@ def main():
         
         # Count Hold - Foster animals in AnimalInventory
         hold_foster_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)])
+        hold_safe_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)])
+        hold_cruelty_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)])
         st.write(f"- Hold - Foster animals in AnimalInventory: {hold_foster_count}")
+        st.write(f"- Hold - SAFE Foster animals in AnimalInventory: {hold_safe_count}")
+        st.write(f"- Hold - Cruelty Foster animals in AnimalInventory: {hold_cruelty_count}")
+        st.write(f"- Total Hold Foster variants: {hold_foster_count + hold_safe_count + hold_cruelty_count}")
         
         # Count by category
         category_counts = classified_data['Foster_Category'].value_counts()
@@ -719,6 +725,12 @@ def main():
             st.write("**Sample Hold - Foster Animals:**")
             sample_data = hold_foster_animals[['AnimalNumber', 'AnimalName', 'Stage']].head(10)
             st.dataframe(sample_data, use_container_width=True)
+        
+        # Show file paths being used
+        st.write("**File Paths:**")
+        st.write(f"- AnimalInventory.csv: {animal_inventory_path if 'animal_inventory_path' in locals() else 'Not found'}")
+        st.write(f"- FosterCurrent.csv: {foster_current_path if 'foster_current_path' in locals() else 'Not found'}")
+        st.write(f"- Hold - Foster Stage Date.csv: {hold_foster_path if 'hold_foster_path' in locals() else 'Not found'}")
     
     # Database Status
     if supabase_enabled:

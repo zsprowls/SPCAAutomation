@@ -77,20 +77,24 @@ st.markdown("""
 # Supabase Configuration
 def initialize_supabase():
     """Initialize Supabase connection"""
-    # Check if Supabase credentials are set
-    supabase_url = st.secrets.get("SUPABASE_URL", "")
-    supabase_key = st.secrets.get("SUPABASE_KEY", "")
-    
-    if not supabase_url or not supabase_key:
-        st.warning("⚠️ Supabase credentials not configured. Database features will be disabled.")
-        st.info("To enable database features, set SUPABASE_URL and SUPABASE_KEY in your Streamlit secrets.")
-        return False
-    
-    # Initialize Supabase
-    if supabase_manager.initialize(supabase_url, supabase_key):
-        return True
-    else:
-        st.error("❌ Failed to initialize Supabase connection")
+    try:
+        # Check if Supabase credentials are set
+        supabase_url = st.secrets.get("SUPABASE_URL", "")
+        supabase_key = st.secrets.get("SUPABASE_KEY", "")
+        
+        if not supabase_url or not supabase_key:
+            st.warning("⚠️ Supabase credentials not configured. Database features will be disabled.")
+            st.info("To enable database features, set SUPABASE_URL and SUPABASE_KEY in your Streamlit secrets.")
+            return False
+        
+        # Initialize Supabase
+        if supabase_manager.initialize(supabase_url, supabase_key):
+            return True
+        else:
+            st.error("❌ Failed to initialize Supabase connection")
+            return False
+    except Exception as e:
+        st.warning("⚠️ Supabase initialization failed. Database features will be disabled.")
         return False
 
 def load_foster_parents_data():
@@ -601,7 +605,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
         
         # Check if needs foster now
         elif any(need_stage in stage for need_stage in [
-            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster'
+            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
         ]):
             df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
             
@@ -664,22 +668,39 @@ def main():
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
         if st.button("🔄 Refresh Data (Clear Cache)", help="Click to reload data from CSV files"):
+            # Clear all possible caches
             st.cache_data.clear()
+            st.cache_resource.clear()
+            # Clear session state
+            for key in list(st.session_state.keys()):
+                del st.session_state[key]
+            # Force a complete page reload
             st.rerun()
+    
+    # Add a timestamp display to show when data was last loaded
+    st.sidebar.markdown(f"**Last Updated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
     # Add timestamp to force cache invalidation
     import time
     cache_timestamp = time.time()
     
+    # Force fresh data loading by using session state
+    if 'data_loaded' not in st.session_state:
+        st.session_state.data_loaded = False
+    
     # Initialize Supabase
     supabase_enabled = initialize_supabase()
     
-    # Load data
+    # Load data with cache invalidation
     with st.spinner("Loading data..."):
+        # Add cache timestamp to force fresh loading
         animal_inventory, foster_current, hold_foster_data, animal_inventory_path, foster_current_path, hold_foster_path = load_data()
         foster_parents_data = load_foster_parents_data()
         bottle_fed_kittens_data = load_bottle_fed_kittens_data()
         panleuk_positive_pids = load_panleuk_positive_pids()
+        
+        # Mark data as loaded
+        st.session_state.data_loaded = True
         
         # Sync AnimalNumbers with Supabase if enabled
         if supabase_enabled and animal_inventory is not None:
@@ -690,7 +711,7 @@ def main():
         st.error("Unable to load data. Please check that the CSV files are in the '__Load Files Go Here__' folder.")
         return
     
-    # Classify animals
+    # Classify animals with cache timestamp to force fresh classification
     classified_data = classify_animals(animal_inventory, foster_current, hold_foster_data)
     
     if classified_data.empty:
@@ -707,11 +728,13 @@ def main():
         # Count Hold - Foster animals in AnimalInventory
         hold_foster_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)])
         hold_safe_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)])
+        hold_safe_em_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)])
         hold_cruelty_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)])
         st.write(f"- Hold - Foster animals in AnimalInventory: {hold_foster_count}")
         st.write(f"- Hold - SAFE Foster animals in AnimalInventory: {hold_safe_count}")
+        st.write(f"- Hold – SAFE Foster animals (em dash) in AnimalInventory: {hold_safe_em_count}")
         st.write(f"- Hold - Cruelty Foster animals in AnimalInventory: {hold_cruelty_count}")
-        st.write(f"- Total Hold Foster variants: {hold_foster_count + hold_safe_count + hold_cruelty_count}")
+        st.write(f"- Total Hold Foster variants: {hold_foster_count + hold_safe_count + hold_safe_em_count + hold_cruelty_count}")
         
         # Count by category
         category_counts = classified_data['Foster_Category'].value_counts()
@@ -731,6 +754,24 @@ def main():
         st.write(f"- AnimalInventory.csv: {animal_inventory_path if 'animal_inventory_path' in locals() else 'Not found'}")
         st.write(f"- FosterCurrent.csv: {foster_current_path if 'foster_current_path' in locals() else 'Not found'}")
         st.write(f"- Hold - Foster Stage Date.csv: {hold_foster_path if 'hold_foster_path' in locals() else 'Not found'}")
+        
+        # Show cache status
+        st.write("**Cache Status:**")
+        st.write(f"- Data loaded: {st.session_state.get('data_loaded', False)}")
+        st.write(f"- Cache timestamp: {cache_timestamp}")
+        
+        # Show raw data verification
+        st.write("**Raw Data Verification:**")
+        if animal_inventory is not None:
+            raw_hold_foster = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)]
+            raw_hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)]
+            raw_hold_safe_em = animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)]
+            raw_hold_cruelty = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)]
+            st.write(f"- Raw Hold - Foster count: {len(raw_hold_foster)}")
+            st.write(f"- Raw Hold - SAFE Foster count: {len(raw_hold_safe)}")
+            st.write(f"- Raw Hold – SAFE Foster count (em dash): {len(raw_hold_safe_em)}")
+            st.write(f"- Raw Hold - Cruelty Foster count: {len(raw_hold_cruelty)}")
+            st.write(f"- Raw total: {len(raw_hold_foster) + len(raw_hold_safe) + len(raw_hold_safe_em) + len(raw_hold_cruelty)}")
     
     # Database Status
     if supabase_enabled:

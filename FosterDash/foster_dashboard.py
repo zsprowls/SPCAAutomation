@@ -982,7 +982,7 @@ def main():
             <style>
             .custom-grid {
                 display: grid;
-                grid-template-columns: repeat(10, 1fr);
+                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 2.5fr 1fr;
                 gap: 8px;
                 padding: 8px;
                 background-color: #f8f9fa;
@@ -992,7 +992,7 @@ def main():
                 overflow-x: auto;
             }
             .custom-grid.needs-foster {
-                grid-template-columns: repeat(11, 1fr);
+                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 2.5fr 1fr 1fr;
             }
             .grid-header {
                 background-color: #e9ecef;
@@ -1032,26 +1032,26 @@ def main():
             }
             @media (max-width: 1200px) {
                 .custom-grid {
-                    grid-template-columns: repeat(8, 1fr);
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 2.5fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: repeat(9, 1fr);
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 2.5fr 1fr;
                 }
             }
             @media (max-width: 900px) {
                 .custom-grid {
-                    grid-template-columns: repeat(6, 1fr);
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 2.5fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: repeat(7, 1fr);
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 2.5fr 1fr;
                 }
             }
             @media (max-width: 600px) {
                 .custom-grid {
-                    grid-template-columns: repeat(4, 1fr);
+                    grid-template-columns: 1fr 1fr 0.8fr 2.5fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: repeat(5, 1fr);
+                    grid-template-columns: 1fr 1fr 0.8fr 2.5fr 1fr;
                 }
             }
             </style>
@@ -1105,7 +1105,26 @@ def main():
                 with col2:
                     st.write(row['Animal Name'])
                 with col3:
-                    st.write(row['Intake Date/Time'])
+                    # Format Intake Date to show only date, not time
+                    intake_date = row['Intake Date/Time']
+                    if pd.notna(intake_date) and intake_date != '':
+                        try:
+                            # Try to parse and format the date
+                            if isinstance(intake_date, str):
+                                # If it's a string, try to parse it
+                                parsed_date = pd.to_datetime(intake_date, errors='coerce')
+                                if pd.notna(parsed_date):
+                                    formatted_date = parsed_date.strftime('%m/%d/%Y')
+                                else:
+                                    formatted_date = intake_date
+                            else:
+                                # If it's already a datetime object
+                                formatted_date = intake_date.strftime('%m/%d/%Y')
+                        except:
+                            formatted_date = str(intake_date)
+                    else:
+                        formatted_date = ''
+                    st.write(formatted_date)
                 with col4:
                     # Combined Animal Details: Age, Sex, Species, Breed
                     animal_details = f"{row['Age']}, {row['Sex']}, {row['Species']}, {row['Breed']}"
@@ -1119,9 +1138,26 @@ def main():
                     foster_name = row.get('Foster Name', '')
                     st.write(foster_name)
                 with col8:
-                    # Start Date from classified data
+                    # Start Date from classified data - format to show only date
                     start_date = row.get('Foster Start Date', '')
-                    st.write(start_date)
+                    if pd.notna(start_date) and start_date != '':
+                        try:
+                            # Try to parse and format the date
+                            if isinstance(start_date, str):
+                                # If it's a string, try to parse it
+                                parsed_date = pd.to_datetime(start_date, errors='coerce')
+                                if pd.notna(parsed_date):
+                                    formatted_date = parsed_date.strftime('%m/%d/%Y')
+                                else:
+                                    formatted_date = start_date
+                            else:
+                                # If it's already a datetime object
+                                formatted_date = start_date.strftime('%m/%d/%Y')
+                        except:
+                            formatted_date = str(start_date)
+                    else:
+                        formatted_date = ''
+                    st.write(formatted_date)
                 with col9:
                     # Foster Notes - editable
                     new_notes = st.text_input(

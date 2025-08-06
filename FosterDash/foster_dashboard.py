@@ -1032,26 +1032,26 @@ def main():
             }
             @media (max-width: 1200px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 2.5fr;
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 1fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 2.5fr 1fr;
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 1fr 1fr;
                 }
             }
             @media (max-width: 900px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 2.5fr;
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 2.5fr 1fr;
+                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr;
                 }
             }
             @media (max-width: 600px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 2.5fr;
+                    grid-template-columns: 1fr 1fr 0.8fr 1fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 2.5fr 1fr;
+                    grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr;
                 }
             }
             </style>
@@ -1159,29 +1159,7 @@ def main():
                         formatted_date = ''
                     st.write(formatted_date)
                 with col9:
-                    # Foster Notes - editable with full width text area
-                    # Add CSS to override Streamlit's column constraints
-                    st.markdown("""
-                    <style>
-                    /* Target the specific text area in the foster notes column */
-                    .stTextArea > div > div > textarea {
-                        width: 100% !important;
-                        min-width: 400px !important;
-                        max-width: none !important;
-                        box-sizing: border-box !important;
-                    }
-                    /* Override any parent container constraints */
-                    .stTextArea > div {
-                        width: 100% !important;
-                        max-width: none !important;
-                    }
-                    .stTextArea > div > div {
-                        width: 100% !important;
-                        max-width: none !important;
-                    }
-                    </style>
-                    """, unsafe_allow_html=True)
-                    
+                    # Foster Notes - editable text area
                     new_notes = st.text_area(
                         "Notes",
                         value=current_notes,

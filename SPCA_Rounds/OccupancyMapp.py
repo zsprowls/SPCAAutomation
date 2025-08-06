@@ -135,10 +135,10 @@ def create_layout_editor(room_name: str):
             "label": "",
             "location": list(LOCATION_DATA.keys())[0],
             "sublocation": LOCATION_DATA[list(LOCATION_DATA.keys())[0]][0],
-            "width": 100,
-            "height": 100,
-            "x": 50,
-            "y": 50
+            "width": 300,
+            "height": 300,
+            "x": 100,
+            "y": 100
         })
         save_layout(room_name, {"boxes": boxes})
         st.experimental_rerun()
@@ -173,10 +173,9 @@ def display_layout(room_name: str):
             font=dict(size=12)
         )
     
-    # Use a fixed coordinate system for consistent sizing
-    # This ensures boxes are always displayed at a reasonable size
-    x_range = [0, 300]
-    y_range = [0, 300]
+    # Use a larger coordinate system to make boxes fill more of the screen
+    x_range = [0, 1000]
+    y_range = [0, 1000]
     
     # Update layout
     fig.update_layout(

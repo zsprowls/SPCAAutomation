@@ -326,7 +326,6 @@ def load_panleuk_positive_pids():
         st.error(f"❌ Error loading Panleuk Positive PIDs: {str(e)}")
         return set()
 
-@st.cache_data
 def load_data():
     """Load and process the CSV files"""
     try:
@@ -664,6 +663,13 @@ def main():
     # Header
     st.markdown('<h1 class="main-header">🐾 SPCA Foster Dashboard</h1>', unsafe_allow_html=True)
     
+    # Add cache clear button
+    col1, col2, col3 = st.columns([1, 1, 1])
+    with col2:
+        if st.button("🔄 Refresh Data (Clear Cache)", help="Click to reload data from CSV files"):
+            st.cache_data.clear()
+            st.rerun()
+    
     # Initialize Supabase
     supabase_enabled = initialize_supabase()
     
@@ -689,6 +695,30 @@ def main():
     if classified_data.empty:
         st.warning("No data available to display.")
         return
+    
+    # Debug information - show data counts
+    with st.expander("🔍 Debug Information", expanded=False):
+        st.write("**Data Counts:**")
+        st.write(f"- Total animals in inventory: {len(animal_inventory)}")
+        st.write(f"- Animals in foster: {len(foster_current)}")
+        st.write(f"- Hold - Foster entries: {len(hold_foster_data)}")
+        
+        # Count Hold - Foster animals in AnimalInventory
+        hold_foster_count = len(animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)])
+        st.write(f"- Hold - Foster animals in AnimalInventory: {hold_foster_count}")
+        
+        # Count by category
+        category_counts = classified_data['Foster_Category'].value_counts()
+        st.write("**Animals by Category:**")
+        for category, count in category_counts.items():
+            st.write(f"- {category}: {count}")
+        
+        # Show sample Hold - Foster animals
+        hold_foster_animals = classified_data[classified_data['Foster_Category'] == 'Needs Foster Now']
+        if not hold_foster_animals.empty:
+            st.write("**Sample Hold - Foster Animals:**")
+            sample_data = hold_foster_animals[['AnimalNumber', 'AnimalName', 'Stage']].head(10)
+            st.dataframe(sample_data, use_container_width=True)
     
     # Database Status
     if supabase_enabled:

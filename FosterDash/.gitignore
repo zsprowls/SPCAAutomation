@@ -1,0 +1,24 @@
+# Virtual environment
+foster_env/
+venv/
+env/
+
+# Streamlit secrets (local only)
+.streamlit/secrets.toml
+
+# Data files (too large for repo)
+../__Load Files Go Here__/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

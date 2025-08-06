@@ -326,7 +326,7 @@ def load_panleuk_positive_pids():
         st.error(f"❌ Error loading Panleuk Positive PIDs: {str(e)}")
         return set()
 
-@st.cache_data(ttl=3600)  # Cache for 1 hour
+@st.cache_data
 def load_data():
     """Load and process the CSV files"""
     try:

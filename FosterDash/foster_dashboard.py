@@ -860,10 +860,32 @@ def main():
                         display_data = display_data.sort_values(sort_column, ascending=False)
                     elif sort_column == 'Hold_Foster_Date':
                         # Sort Hold - Foster Date in ascending order (earliest dates first)
-                        display_data = display_data.sort_values(sort_column, ascending=True)
+                        # Convert to datetime for proper sorting, handling empty values
+                        try:
+                            # Convert to datetime, coerce errors to NaT (Not a Time)
+                            display_data[sort_column] = pd.to_datetime(display_data[sort_column], errors='coerce')
+                            # Sort with NaT values at the end
+                            display_data = display_data.sort_values(sort_column, ascending=True, na_position='last')
+                            # Convert back to string for display
+                            display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
+                        except Exception as e:
+                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            # Fallback to string sorting
+                            display_data = display_data.sort_values(sort_column, ascending=True)
                     elif sort_column == 'Foster_Start_Date':
                         # Sort Foster Start Date in ascending order (earliest dates first)
-                        display_data = display_data.sort_values(sort_column, ascending=True)
+                        # Convert to datetime for proper sorting, handling empty values
+                        try:
+                            # Convert to datetime, coerce errors to NaT (Not a Time)
+                            display_data[sort_column] = pd.to_datetime(display_data[sort_column], errors='coerce')
+                            # Sort with NaT values at the end
+                            display_data = display_data.sort_values(sort_column, ascending=True, na_position='last')
+                            # Convert back to string for display
+                            display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
+                        except Exception as e:
+                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            # Fallback to string sorting
+                            display_data = display_data.sort_values(sort_column, ascending=True)
                     else:
                         display_data = display_data.sort_values(sort_column)
                 except Exception as e:

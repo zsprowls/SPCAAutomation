@@ -135,10 +135,10 @@ def create_layout_editor(room_name: str):
             "label": "",
             "location": list(LOCATION_DATA.keys())[0],
             "sublocation": LOCATION_DATA[list(LOCATION_DATA.keys())[0]][0],
-            "width": 300,
-            "height": 300,
-            "x": 100,
-            "y": 100
+            "width": 150,
+            "height": 150,
+            "x": 50,
+            "y": 50
         })
         save_layout(room_name, {"boxes": boxes})
         st.experimental_rerun()
@@ -152,17 +152,23 @@ def display_layout(room_name: str):
     # Create a Plotly figure for the layout
     fig = go.Figure()
     
-    # Add boxes to the figure
+    # Add boxes to the figure using a different approach
     for box in layout_data.get('boxes', []):
-        fig.add_shape(
-            type="rect",
-            x0=box['x'],
-            y0=box['y'],
-            x1=box['x'] + box['width'],
-            y1=box['y'] + box['height'],
-            line=dict(color="Black", width=2),
-            fillcolor="LightGray",
-        )
+        # Create rectangle coordinates
+        x_coords = [box['x'], box['x'] + box['width'], box['x'] + box['width'], box['x'], box['x']]
+        y_coords = [box['y'], box['y'], box['y'] + box['height'], box['y'] + box['height'], box['y']]
+        
+        # Add the rectangle as a scatter plot (more reliable than shapes)
+        fig.add_trace(go.Scatter(
+            x=x_coords,
+            y=y_coords,
+            mode='lines',
+            line=dict(color='Black', width=3),
+            fill='toself',
+            fillcolor='LightGray',
+            showlegend=False,
+            hoverinfo='skip'
+        ))
         
         # Add box label
         fig.add_annotation(
@@ -170,12 +176,15 @@ def display_layout(room_name: str):
             y=box['y'] + box['height']/2,
             text=f"{box.get('label','')}\n{box.get('location','')}\n{box.get('sublocation','')}",
             showarrow=False,
-            font=dict(size=12)
+            font=dict(size=14, color='Black'),
+            bgcolor='White',
+            bordercolor='Black',
+            borderwidth=1
         )
     
-    # Use a larger coordinate system to make boxes fill more of the screen
-    x_range = [0, 1000]
-    y_range = [0, 1000]
+    # Use a smaller, more reasonable coordinate system
+    x_range = [0, 500]
+    y_range = [0, 500]
     
     # Update layout
     fig.update_layout(
@@ -185,7 +194,8 @@ def display_layout(room_name: str):
             showgrid=False, 
             zeroline=False, 
             showticklabels=False,
-            range=x_range
+            range=x_range,
+            fixedrange=True
         ),
         yaxis=dict(
             showgrid=False, 
@@ -193,13 +203,15 @@ def display_layout(room_name: str):
             showticklabels=False, 
             scaleanchor="x", 
             scaleratio=1,
-            range=y_range
+            range=y_range,
+            fixedrange=True
         ),
-        height=800,
-        margin=dict(l=0, r=0, t=30, b=0)
+        height=600,
+        width=800,
+        margin=dict(l=50, r=50, t=50, b=50)
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, use_container_width=False)
 
 def main():
     st.title("Room Layout Editor")

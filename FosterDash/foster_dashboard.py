@@ -1160,7 +1160,19 @@ def main():
                     st.write(formatted_date)
                 with col9:
                     # Foster Notes - editable with wider text input
-                    # Use text_area instead of text_input for more space
+                    # Add custom CSS to make text area fill the wider column
+                    st.markdown("""
+                    <style>
+                    .stTextArea textarea {
+                        width: 100% !important;
+                        min-width: 300px !important;
+                        max-width: none !important;
+                    }
+                    .stTextArea > div > div {
+                        width: 100% !important;
+                    }
+                    </style>
+                    """, unsafe_allow_html=True)
                     new_notes = st.text_area(
                         "Notes",
                         value=current_notes,

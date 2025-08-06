@@ -1,34 +1,38 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Tuesday, August 5, 2025",8/4/2025 12:00 AM,All,8/4/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Wednesday, August 6, 2025",8/5/2025 12:00 AM,All,8/5/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058452209,Elvis,Cat,Domestic Shorthair,1yrs,M,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,39,,No,,Cattaraugus County,,08/04/2025 11:23 AM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058622436,Onyx,Dog,Shepherd,6yrs,M,Yes,Adoption,Foster Care Adoption - Dog,Witkowski Victoria,VictoriaW,charcoal,Mix,No,,Cattaraugus County,,08/04/2025 11:29 AM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0057853586,Max,Cat,Domestic Shorthair,7mos,M,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,Snorkel,,No,,West Seneca,,08/04/2025 11:43 AM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0057957792,Daisy,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",1yrs,F,Yes,Adoption,Foster Care Adoption - Dog,Witkowski Victoria,VictoriaW,Diamond,Mix,No,,Buffalo,,08/04/2025 01:13 PM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0059018957,Kody,Dog,"Spaniel, English Springer",3yrs,M,Yes,Adoption,New Adopter - Dog,Witkowski Victoria,VictoriaW,Odie/Jerry,Mix,No,,Buffalo,,08/04/2025 11:40 AM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058948756,Moose Tracks,Cat,Domestic Shorthair,4yrs,M,Yes,Adoption,Previous Adopter - Cat,Sisti Maria,MariaS,,,No,,Niagara County,,08/04/2025 02:19 PM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058703260,Maya,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",11yrs,F,Yes,Adoption,Foster Care Adoption - Dog,MIRANDA KRISSI,KRISSIM,,Mix,No,,Buffalo,,08/04/2025 11:57 AM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058903802,Iris,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",6yrs,F,Yes,Adoption,Foster Care Adoption - Dog,MIRANDA KRISSI,KRISSIM,,Mix,No,,Lancaster,,08/04/2025 04:00 PM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058965103,TINK,Cat,Domestic Longhair,4mos,M,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Buffalo,,08/04/2025 05:00 PM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058884959,Bean,Cat,Domestic Shorthair,5yrs,M,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,Colby Jack,,No,,Niagara County,,08/04/2025 04:44 PM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058089142,NINA,Cat,Domestic Shorthair,5yrs,F,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,,,No,,Depew,,08/04/2025 11:35 AM,,,,,,29
-Adoption,Total Outcomes: 12,Total Unique Animals: 12,A0058587143,PETUNIA,Cat,Domestic Shorthair,4mos,F,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,,,No,,Buffalo,,08/04/2025 04:02 PM,,,,,,29
-Died,Total Outcomes: 1,Total Unique Animals: 1,A0058729710,,Cat,Domestic Shorthair,2mos,F,No,Died,IN FOSTER,O'Connell Makenzie,MAKENZIEO,,Mix,No,,,,08/04/2025 02:21 PM,,,,,,29
-DOA,Total Outcomes: 1,Total Unique Animals: 1,A0059041812,Leland,Cat,Domestic Shorthair,15yrs,M,Yes,DOA, ,,SHANNONV,,Mix,No,,,,08/04/2025 02:18 PM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059024937,,Cat,Domestic Longhair,1mos,F,No,Euthanasia,Humane Reasons,,LANAP,,Mix,No,,,,08/04/2025 09:28 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059025461,Ski,Cat,Domestic Shorthair,15yrs,M,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Mix,No,,,,08/04/2025 01:21 PM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059031437,WEDNESDAY,Cat,Domestic Shorthair,10yrs,F,No,Euthanasia,Humane Reasons,,LANAP,WEDNESDAY,Mix,No,,,,08/04/2025 09:38 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059038225,,Cat,Domestic Shorthair,1yrs,M,No,Euthanasia,Humane Reasons,,LANAP,,Mix,No,,,,08/04/2025 09:33 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039044,Kitty,Cat,Domestic Shorthair,,F,Yes,Euthanasia,Requested Sleep,,LANAP,,Mix,No,,,,08/04/2025 10:57 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039294,CYPRUS,Dog,Alaskan Husky,11yrs,M,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Mix,No,,,,08/04/2025 02:17 PM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039328,,Rodent,HAMSTER,,U,No,Euthanasia,Humane Reasons,,LANAP,,HAMSTER,No,,,,08/04/2025 11:10 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039330,,Rodent,HAMSTER,,U,No,Euthanasia,Humane Reasons,,LANAP,,HAMSTER,No,,,,08/04/2025 11:10 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039333,,Rodent,HAMSTER,,U,No,Euthanasia,Humane Reasons,,LANAP,,HAMSTER,No,,,,08/04/2025 11:11 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039335,,Rodent,HAMSTER,,U,No,Euthanasia,Humane Reasons,,LANAP,,HAMSTER,No,,,,08/04/2025 11:12 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039336,,Rodent,HAMSTER,,U,No,Euthanasia,Humane Reasons,,LANAP,,HAMSTER,No,,,,08/04/2025 11:13 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039338,,Rodent,HAMSTER,,U,No,Euthanasia,Humane Reasons,,LANAP,,HAMSTER,No,,,,08/04/2025 11:14 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059039342,,Rodent,HAMSTER,,U,No,Euthanasia,Humane Reasons,,LANAP,,HAMSTER,No,,,,08/04/2025 11:15 AM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059040144,,Cat,Domestic Shorthair,9yrs,F,No,Euthanasia,Medical Reasons,,SARAD,,Mix,No,,,,08/04/2025 12:48 PM,,,,,,29
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059040430,HAPPY,Cat,Domestic Shorthair,15yrs,F,No,Euthanasia,Requested Sleep,,SALLYB,,Mix,No,,,,08/04/2025 12:55 PM,,,,,,29
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058415840,Garbanzo,Cat,Domestic Shorthair,2yrs,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:28 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058994418,Tortuga,Cat,Domestic Longhair,7mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:50 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058457378,Francis,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Clarence,,08/05/2025 03:10 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058596371,Bean,Cat,Domestic Shorthair,4mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:41 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058838661,Link,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:43 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058857672,Ace,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:31 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058890012,Sour Cream,Cat,Domestic Longhair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:26 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058911566,Butter,Cat,Domestic Longhair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:24 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058956256,Meadow,Cat,Domestic Shorthair,4mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:29 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058956712,Ollie,Cat,Domestic Shorthair,5mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:37 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058596388,Java,Cat,Domestic Longhair,4mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:39 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058838669,Navi,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:46 PM,,,,,,33
+Adoption,Total Outcomes: 13,Total Unique Animals: 13,A0058857666,Atlas,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/05/2025 02:32 PM,,,,,,33
+Died,Total Outcomes: 1,Total Unique Animals: 1,A0059042285,Goober,Cat,Domestic Shorthair,1mos,M,No,Died,IN KENNEL,POMEROY KRYSTAN,KRYSTANP,,,No,,,,08/05/2025 07:02 AM,,,,,,33
+DOA,Total Outcomes: 4,Total Unique Animals: 4,A0059045294,BELLA,Cat,Domestic Shorthair,15yrs,F,Yes,DOA, ,,TAMMIC,,Mix,No,,West Seneca,,08/05/2025 08:14 AM,,,,,,33
+DOA,Total Outcomes: 4,Total Unique Animals: 4,A0059046991,,Cat,Domestic Shorthair,,F,No,DOA, ,,SHANNONV,,Mix,No,,Cheektowaga,,08/05/2025 11:24 AM,,,,,,33
+DOA,Total Outcomes: 4,Total Unique Animals: 4,A0059047584,Porsha,Cat,Domestic Medium Hair,5yrs,F,Yes,DOA, ,,KEARAC,,Mix,No,,,,08/05/2025 12:10 PM,,,,,,33
+DOA,Total Outcomes: 4,Total Unique Animals: 4,A0059048395,OLIVIA,Miniature Pig,Vietnamese Pot-Bellied Pig,12yrs,F,Yes,DOA, ,,TAMMIC,,,No,,Amherst,,08/05/2025 01:07 PM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059006615,SUNSET,Cat,Domestic Shorthair,4yrs,M,No,Euthanasia,Humane Reasons,,PAIGEP,,,No,,,,08/05/2025 05:10 PM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045515,Riley,Cat,Domestic Shorthair,21yrs,M,Yes,Euthanasia,Requested Sleep,,JENT,,Mix,No,,,,08/05/2025 09:24 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045663,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:40 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045664,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:41 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045667,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:44 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045668,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:42 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045670,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:45 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045673,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:46 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045675,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:47 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045677,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:48 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045679,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:49 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045680,,Rodent,HAMSTER,,U,No,Euthanasia,Failure to Thrive,,NINAP,,HAMSTER,No,,,,08/05/2025 09:49 AM,,,,,,33
+Euthanasia,Total Outcomes: 13,Total Unique Animals: 13,A0059045874,Ella,Dog,Pug,17yrs,F,Yes,Euthanasia,Requested Sleep,,VALERIEM,,Beagle,No,,,,08/05/2025 01:11 PM,,,,,,33
+Return to Owner/Guardian,Total Outcomes: 2,Total Unique Animals: 2,A0059003848,Bella,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",7yrs,F,Yes,Return to Owner/Guardian,General,ABRAMS NICOLE,NICOLEA,,Mix,No,,,,08/05/2025 08:36 AM,,,,,,33
+Return to Owner/Guardian,Total Outcomes: 2,Total Unique Animals: 2,A0059045442,Bruno,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",3yrs,M,Yes,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,08/05/2025 08:58 AM,,,,,,33
 

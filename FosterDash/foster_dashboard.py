@@ -1159,12 +1159,14 @@ def main():
                         formatted_date = ''
                     st.write(formatted_date)
                 with col9:
-                    # Foster Notes - editable
-                    new_notes = st.text_input(
+                    # Foster Notes - editable with wider text input
+                    # Use text_area instead of text_input for more space
+                    new_notes = st.text_area(
                         "Notes",
                         value=current_notes,
                         key=f"notes_{animal_number}_{idx}",
-                        label_visibility="collapsed"
+                        label_visibility="collapsed",
+                        height=60
                     )
                     if new_notes != current_notes:
                         supabase_manager.update_foster_notes(animal_number, new_notes)

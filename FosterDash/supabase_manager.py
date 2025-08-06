@@ -121,19 +121,19 @@ class SupabaseManager:
             st.error(f"❌ Error updating foster notes: {str(e)}")
             return False
     
-    def update_on_meds(self, animal_number: str, on_meds: bool) -> bool:
-        """Update OnMeds status for an animal"""
+    def update_on_meds(self, animal_number: str, meds: str) -> bool:
+        """Update meds for an animal"""
         if not self.initialized or self.client is None:
             return False
             
         try:
             self.client.table('foster_animals').update({
-                'onmeds': on_meds,
+                'onmeds': meds,
                 'updated_at': datetime.now().isoformat()
             }).eq('animalnumber', animal_number).execute()
             return True
         except Exception as e:
-            st.error(f"❌ Error updating OnMeds status: {str(e)}")
+            st.error(f"❌ Error updating meds: {str(e)}")
             return False
     
     def add_foster_plea_date(self, animal_number: str, plea_date: str) -> bool:

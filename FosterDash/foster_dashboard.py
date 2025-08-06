@@ -99,7 +99,8 @@ def load_foster_parents_data():
     try:
         # Try multiple possible paths for Excel file
         excel_possible_paths = [
-            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "FosterDash/data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud (alternative)
             "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
             "Looking for Foster Care 2025.xlsx"  # Current directory
         ]
@@ -175,7 +176,8 @@ def load_bottle_fed_kittens_data():
     try:
         # Try multiple possible paths for Excel file
         excel_possible_paths = [
-            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "FosterDash/data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud (alternative)
             "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
             "Looking for Foster Care 2025.xlsx"  # Current directory
         ]
@@ -261,7 +263,8 @@ def load_panleuk_positive_pids():
     try:
         # Try multiple possible paths for Excel file
         excel_possible_paths = [
-            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "FosterDash/data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud (alternative)
             "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
             "Looking for Foster Care 2025.xlsx"  # Current directory
         ]
@@ -329,7 +332,8 @@ def load_data():
     try:
         # Load AnimalInventory.csv - try multiple possible paths
         possible_paths = [
-            "data/AnimalInventory.csv",  # Streamlit Cloud
+            "FosterDash/data/AnimalInventory.csv",  # Streamlit Cloud
+            "data/AnimalInventory.csv",  # Streamlit Cloud (alternative)
             "../__Load Files Go Here__/AnimalInventory.csv",  # Local development
             "AnimalInventory.csv"  # Current directory
         ]
@@ -361,7 +365,8 @@ def load_data():
         
         # Load FosterCurrent.csv - try multiple possible paths
         foster_possible_paths = [
-            "data/FosterCurrent.csv",  # Streamlit Cloud
+            "FosterDash/data/FosterCurrent.csv",  # Streamlit Cloud
+            "data/FosterCurrent.csv",  # Streamlit Cloud (alternative)
             "../__Load Files Go Here__/FosterCurrent.csv",  # Local development
             "FosterCurrent.csv"  # Current directory
         ]
@@ -392,7 +397,8 @@ def load_data():
         
         # Load Hold - Foster Stage Date.csv - try multiple possible paths
         hold_possible_paths = [
-            "data/Hold - Foster Stage Date.csv",  # Streamlit Cloud
+            "FosterDash/data/Hold - Foster Stage Date.csv",  # Streamlit Cloud
+            "data/Hold - Foster Stage Date.csv",  # Streamlit Cloud (alternative)
             "../__Load Files Go Here__/Hold - Foster Stage Date.csv",  # Local development
             "Hold - Foster Stage Date.csv"  # Current directory
         ]

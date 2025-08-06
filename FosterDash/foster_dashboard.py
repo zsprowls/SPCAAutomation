@@ -1,16 +1,18 @@
 import streamlit as st
-import pandas as pd
-import os
-from datetime import datetime
-import numpy as np
 
-# Page configuration
+# Page configuration - MUST be first Streamlit command
 st.set_page_config(
     page_title="SPCA Foster Dashboard",
     page_icon="🐾",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+import pandas as pd
+import os
+from datetime import datetime
+import numpy as np
+from supabase_manager import supabase_manager
 
 # Custom CSS for better styling
 st.markdown("""
@@ -51,6 +53,19 @@ st.markdown("""
     .animal-link:hover {
         text-decoration: underline;
     }
+    .foster-notes-container {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #e0e0e0;
+        margin: 0.5rem 0;
+    }
+    .foster-plea-dates {
+        background-color: #fff3e0;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        margin: 0.25rem 0;
+    }
     @media (max-width: 768px) {
         .main-header {
             font-size: 1.8rem;
@@ -59,13 +74,44 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Supabase Configuration
+def initialize_supabase():
+    """Initialize Supabase connection"""
+    # Check if Supabase credentials are set
+    supabase_url = st.secrets.get("SUPABASE_URL", "")
+    supabase_key = st.secrets.get("SUPABASE_KEY", "")
+    
+    if not supabase_url or not supabase_key:
+        st.warning("⚠️ Supabase credentials not configured. Database features will be disabled.")
+        st.info("To enable database features, set SUPABASE_URL and SUPABASE_KEY in your Streamlit secrets.")
+        return False
+    
+    # Initialize Supabase
+    if supabase_manager.initialize(supabase_url, supabase_key):
+        return True
+    else:
+        st.error("❌ Failed to initialize Supabase connection")
+        return False
+
 @st.cache_data
 def load_foster_parents_data():
     """Load foster parents data from the Excel file"""
     try:
-        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        # Try multiple possible paths for Excel file
+        excel_possible_paths = [
+            "FosterDash/data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud (alternative)
+            "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
+            "Looking for Foster Care 2025.xlsx"  # Current directory
+        ]
         
-        if os.path.exists(excel_path):
+        excel_path = None
+        for path in excel_possible_paths:
+            if os.path.exists(path):
+                excel_path = path
+                break
+        
+        if excel_path:
             # Read the "Available Foster Parents" tab
             df = pd.read_excel(excel_path, sheet_name="Available Foster Parents")
             
@@ -116,7 +162,8 @@ def load_foster_parents_data():
             st.success(f"✅ Successfully loaded foster parents data ({len(df)} records)")
             return df
         else:
-            st.error(f"❌ Excel file not found at: {excel_path}")
+            st.error(f"❌ Excel file not found!")
+            st.error(f"Tried paths: {excel_possible_paths}")
             return pd.DataFrame()
             
     except Exception as e:
@@ -127,9 +174,21 @@ def load_foster_parents_data():
 def load_bottle_fed_kittens_data():
     """Load Emergency Bottle Baby Fosters data from the Excel file"""
     try:
-        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        # Try multiple possible paths for Excel file
+        excel_possible_paths = [
+            "FosterDash/data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud (alternative)
+            "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
+            "Looking for Foster Care 2025.xlsx"  # Current directory
+        ]
         
-        if os.path.exists(excel_path):
+        excel_path = None
+        for path in excel_possible_paths:
+            if os.path.exists(path):
+                excel_path = path
+                break
+        
+        if excel_path:
             # Read the "Emergency Bottle Fed Kittens" tab
             df = pd.read_excel(excel_path, sheet_name="Emergency Bottle Fed Kittens")
             
@@ -190,7 +249,8 @@ def load_bottle_fed_kittens_data():
             st.success(f"✅ Successfully loaded bottle fed kittens data ({len(df)} records)")
             return df
         else:
-            st.error(f"❌ Excel file not found at: {excel_path}")
+            st.error(f"❌ Excel file not found!")
+            st.error(f"Tried paths: {excel_possible_paths}")
             return pd.DataFrame()
             
     except Exception as e:
@@ -201,9 +261,21 @@ def load_bottle_fed_kittens_data():
 def load_panleuk_positive_pids():
     """Load Panleuk Positive PIDs from the Excel file"""
     try:
-        excel_path = "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx"
+        # Try multiple possible paths for Excel file
+        excel_possible_paths = [
+            "FosterDash/data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud
+            "data/Looking for Foster Care 2025.xlsx",  # Streamlit Cloud (alternative)
+            "../__Load Files Go Here__/Looking for Foster Care 2025.xlsx",  # Local development
+            "Looking for Foster Care 2025.xlsx"  # Current directory
+        ]
         
-        if os.path.exists(excel_path):
+        excel_path = None
+        for path in excel_possible_paths:
+            if os.path.exists(path):
+                excel_path = path
+                break
+        
+        if excel_path:
             # Read the "Panleuk. POSITIVES" tab
             df = pd.read_excel(excel_path, sheet_name="Panleuk. POSITIVES")
             
@@ -246,7 +318,8 @@ def load_panleuk_positive_pids():
             st.success(f"✅ Successfully loaded Panleuk Positive PIDs ({len(panleuk_pids)} records)")
             return panleuk_pids
         else:
-            st.error(f"❌ Excel file not found at: {excel_path}")
+            st.error(f"❌ Excel file not found!")
+            st.error(f"Tried paths: {excel_possible_paths}")
             return set()
             
     except Exception as e:
@@ -257,11 +330,21 @@ def load_panleuk_positive_pids():
 def load_data():
     """Load and process the CSV files"""
     try:
-        # Load AnimalInventory.csv - path at same level as FosterDash
-        animal_inventory_path = "../__Load Files Go Here__/AnimalInventory.csv"
-        full_path = os.path.abspath(animal_inventory_path)
+        # Load AnimalInventory.csv - try multiple possible paths
+        possible_paths = [
+            "FosterDash/data/AnimalInventory.csv",  # Streamlit Cloud
+            "data/AnimalInventory.csv",  # Streamlit Cloud (alternative)
+            "../__Load Files Go Here__/AnimalInventory.csv",  # Local development
+            "AnimalInventory.csv"  # Current directory
+        ]
         
-        if os.path.exists(animal_inventory_path):
+        animal_inventory_path = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                animal_inventory_path = path
+                break
+        
+        if animal_inventory_path:
             # Skip first 3 rows and start from row 4 where headers are
             try:
                 animal_inventory = pd.read_csv(animal_inventory_path, encoding='utf-8', skiprows=3)
@@ -276,15 +359,25 @@ def load_data():
             st.success(f"✅ Successfully loaded AnimalInventory.csv ({len(animal_inventory)} records)")
         else:
             st.error(f"❌ AnimalInventory.csv not found!")
-            st.error(f"Expected path: {full_path}")
+            st.error(f"Tried paths: {possible_paths}")
             st.error(f"Current working directory: {os.getcwd()}")
             return None, None, None
         
-        # Load FosterCurrent.csv - path at same level as FosterDash
-        foster_current_path = "../__Load Files Go Here__/FosterCurrent.csv"
-        full_foster_path = os.path.abspath(foster_current_path)
+        # Load FosterCurrent.csv - try multiple possible paths
+        foster_possible_paths = [
+            "FosterDash/data/FosterCurrent.csv",  # Streamlit Cloud
+            "data/FosterCurrent.csv",  # Streamlit Cloud (alternative)
+            "../__Load Files Go Here__/FosterCurrent.csv",  # Local development
+            "FosterCurrent.csv"  # Current directory
+        ]
         
-        if os.path.exists(foster_current_path):
+        foster_current_path = None
+        for path in foster_possible_paths:
+            if os.path.exists(path):
+                foster_current_path = path
+                break
+        
+        if foster_current_path:
             # Skip first 6 rows and start from row 7 where headers are
             try:
                 foster_current = pd.read_csv(foster_current_path, encoding='utf-8', skiprows=6)
@@ -299,14 +392,24 @@ def load_data():
             st.success(f"✅ Successfully loaded FosterCurrent.csv ({len(foster_current)} records)")
         else:
             st.warning(f"⚠️ FosterCurrent.csv not found!")
-            st.warning(f"Expected path: {full_foster_path}")
+            st.warning(f"Tried paths: {foster_possible_paths}")
             foster_current = pd.DataFrame()
         
-        # Load Hold - Foster Stage Date.csv - path at same level as FosterDash
-        hold_foster_path = "../__Load Files Go Here__/Hold - Foster Stage Date.csv"
-        full_hold_foster_path = os.path.abspath(hold_foster_path)
+        # Load Hold - Foster Stage Date.csv - try multiple possible paths
+        hold_possible_paths = [
+            "FosterDash/data/Hold - Foster Stage Date.csv",  # Streamlit Cloud
+            "data/Hold - Foster Stage Date.csv",  # Streamlit Cloud (alternative)
+            "../__Load Files Go Here__/Hold - Foster Stage Date.csv",  # Local development
+            "Hold - Foster Stage Date.csv"  # Current directory
+        ]
         
-        if os.path.exists(hold_foster_path):
+        hold_foster_path = None
+        for path in hold_possible_paths:
+            if os.path.exists(path):
+                hold_foster_path = path
+                break
+        
+        if hold_foster_path:
             # Skip first 2 rows and start from row 3 where headers are
             try:
                 hold_foster_data = pd.read_csv(hold_foster_path, encoding='utf-8', skiprows=2)
@@ -321,7 +424,7 @@ def load_data():
             st.success(f"✅ Successfully loaded Hold - Foster Stage Date.csv ({len(hold_foster_data)} records)")
         else:
             st.warning(f"⚠️ Hold - Foster Stage Date.csv not found!")
-            st.warning(f"Expected path: {full_hold_foster_path}")
+            st.warning(f"Tried paths: {hold_possible_paths}")
             hold_foster_data = pd.DataFrame()
         
         return animal_inventory, foster_current, hold_foster_data
@@ -549,9 +652,20 @@ def create_petpoint_links(animal_id):
     
     return f"[Profile]({profile_link}) | [Report]({report_link})"
 
+def handle_data_edit():
+    """Handle data editor changes"""
+    # This function will be called when the data editor changes
+    pass
+
+# These functions are no longer needed since we're using inline editing
+# Keeping them for potential future use or reference
+
 def main():
     # Header
     st.markdown('<h1 class="main-header">🐾 SPCA Foster Dashboard</h1>', unsafe_allow_html=True)
+    
+    # Initialize Supabase
+    supabase_enabled = initialize_supabase()
     
     # Load data
     with st.spinner("Loading data..."):
@@ -559,6 +673,11 @@ def main():
         foster_parents_data = load_foster_parents_data()
         bottle_fed_kittens_data = load_bottle_fed_kittens_data()
         panleuk_positive_pids = load_panleuk_positive_pids()
+        
+        # Sync AnimalNumbers with Supabase if enabled
+        if supabase_enabled and animal_inventory is not None:
+            with st.spinner("Syncing with database..."):
+                supabase_manager.sync_animal_numbers(animal_inventory)
     
     if animal_inventory is None:
         st.error("Unable to load data. Please check that the CSV files are in the '__Load Files Go Here__' folder.")
@@ -570,6 +689,12 @@ def main():
     if classified_data.empty:
         st.warning("No data available to display.")
         return
+    
+    # Database Status
+    if supabase_enabled:
+        st.sidebar.success("✅ Database Connected")
+    else:
+        st.sidebar.warning("⚠️ Database Disabled")
     
     # Create view selector
     view_option = st.sidebar.radio(
@@ -692,6 +817,11 @@ def main():
         if not filtered_data.empty:
             st.subheader(f"Animals: {selected_category}")
             
+            # Get foster data from Supabase if enabled
+            foster_data_dict = {}
+            if supabase_enabled:
+                foster_data_dict = supabase_manager.get_all_foster_data()
+            
             # Select columns to display - map to actual column names
             display_columns = ['AnimalNumber', 'AnimalName', 'IntakeDateTime', 'Species', 'PrimaryBreed', 'Sex', 'Age', 'Stage', 'Foster_PID', 'Foster_Name']
             
@@ -730,10 +860,32 @@ def main():
                         display_data = display_data.sort_values(sort_column, ascending=False)
                     elif sort_column == 'Hold_Foster_Date':
                         # Sort Hold - Foster Date in ascending order (earliest dates first)
-                        display_data = display_data.sort_values(sort_column, ascending=True)
+                        # Convert to datetime for proper sorting, handling empty values
+                        try:
+                            # Convert to datetime, coerce errors to NaT (Not a Time)
+                            display_data[sort_column] = pd.to_datetime(display_data[sort_column], errors='coerce')
+                            # Sort with NaT values at the end
+                            display_data = display_data.sort_values(sort_column, ascending=True, na_position='last')
+                            # Convert back to string for display
+                            display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
+                        except Exception as e:
+                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            # Fallback to string sorting
+                            display_data = display_data.sort_values(sort_column, ascending=True)
                     elif sort_column == 'Foster_Start_Date':
                         # Sort Foster Start Date in ascending order (earliest dates first)
-                        display_data = display_data.sort_values(sort_column, ascending=True)
+                        # Convert to datetime for proper sorting, handling empty values
+                        try:
+                            # Convert to datetime, coerce errors to NaT (Not a Time)
+                            display_data[sort_column] = pd.to_datetime(display_data[sort_column], errors='coerce')
+                            # Sort with NaT values at the end
+                            display_data = display_data.sort_values(sort_column, ascending=True, na_position='last')
+                            # Convert back to string for display
+                            display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
+                        except Exception as e:
+                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            # Fallback to string sorting
+                            display_data = display_data.sort_values(sort_column, ascending=True)
                     else:
                         display_data = display_data.sort_values(sort_column)
                 except Exception as e:
@@ -761,44 +913,256 @@ def main():
             
             display_data = display_data.rename(columns=column_mapping)
             
-            # Display the data with HTML rendering (like rodent app)
-            st.write("**Note:** Click on Animal ID or Foster PID to open in PetPoint")
+            # Keep the original HTML links for Animal ID - they work properly in HTML tables
+            # The Animal ID column should already be HTML links from the original data processing
             
-            # Add CSS for better table styling
+            # Add interactive columns to the display data
+            # Always add the columns, regardless of database status
+            display_data['Foster_Notes'] = 'Database Required'
+            display_data['On_Meds'] = False
+            if selected_category == 'Needs Foster Now':
+                display_data['Foster_Plea_Dates'] = 'Database Required'
+            
+
+            
+            # If database is enabled, populate with real data
+            if supabase_enabled:
+                # Use the original filtered_data to get AnimalNumber (before HTML conversion)
+                for idx, row in filtered_data.iterrows():
+                    animal_number = str(row['AnimalNumber'])
+                    foster_data = foster_data_dict.get(animal_number, {})
+                    
+                    # Find the corresponding row in display_data by matching Animal ID
+                    # Make sure we don't go out of bounds
+                    if idx < len(display_data):
+                        animal_id_in_display = display_data.iloc[idx]['Animal ID']
+                        # Extract animal number from clean format
+                        display_animal_number = str(animal_id_in_display)
+                        
+                        # Only update if the animal numbers match
+                        if display_animal_number == animal_number:
+                            # Update the interactive columns with real data
+                            display_data.iloc[idx, display_data.columns.get_loc('Foster_Notes')] = foster_data.get('fosternotes', '')
+                            display_data.iloc[idx, display_data.columns.get_loc('On_Meds')] = foster_data.get('onmeds', False)
+                            
+                            if selected_category == 'Needs Foster Now':
+                                dates = foster_data.get('fosterpleadates', [])
+                                display_data.iloc[idx, display_data.columns.get_loc('Foster_Plea_Dates')] = ', '.join(dates) if dates else ''
+            
+            # Update column mapping to include new columns
+            column_mapping.update({
+                'Foster_Notes': '📝 Foster Notes',
+                'On_Meds': '💊 On Meds',
+                'Foster_Plea_Dates': '📅 Foster Plea Dates'
+            })
+            
+            # Reorder columns to put interactive columns at the end
+            if 'Foster_Plea_Dates' in display_data.columns:
+                # For "Needs Foster Now" category, include plea dates
+                final_columns = [col for col in display_data.columns if col not in ['Foster_Notes', 'On_Meds', 'Foster_Plea_Dates']] + ['Foster_Notes', 'On_Meds', 'Foster_Plea_Dates']
+            else:
+                # For other categories, just include notes and meds
+                final_columns = [col for col in display_data.columns if col not in ['Foster_Notes', 'On_Meds']] + ['Foster_Notes', 'On_Meds']
+            
+            display_data = display_data[final_columns]
+            
+            # Show database status
+            if not supabase_enabled:
+                st.warning("⚠️ Database features are disabled. Set up Supabase to enable interactive editing.")
+                st.info("📝 To enable interactive features:")
+                st.write("1. Follow the setup guide in SUPABASE_SETUP.md")
+                st.write("2. Update .streamlit/secrets.toml with your Supabase credentials")
+                st.write("3. Restart the dashboard")
+            
+            # Custom inline editing solution with working links
+            st.write("**💡 Click any cell to edit. Press Enter to save. Click Animal ID or Foster PID to open PetPoint.**")
+            
+            # Add CSS for the custom grid
             st.markdown("""
             <style>
-            .foster-table {
-                border-collapse: collapse;
-                width: 100%;
-                font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-                font-size: 14px;
-            }
-            .foster-table th {
-                background-color: #f0f2f6;
+            .custom-grid {
+                display: grid;
+                grid-template-columns: repeat(10, 1fr);
+                gap: 8px;
                 padding: 8px;
-                text-align: left;
-                border-bottom: 2px solid #e0e0e0;
-                font-weight: 600;
-            }
-            .foster-table td {
-                padding: 8px;
-                border-bottom: 1px solid #e0e0e0;
-            }
-            .foster-table tr:hover {
                 background-color: #f8f9fa;
+                border-radius: 8px;
+                margin-bottom: 16px;
+                min-width: 100%;
+                overflow-x: auto;
+            }
+            .custom-grid.needs-foster {
+                grid-template-columns: repeat(11, 1fr);
+            }
+            .grid-header {
+                background-color: #e9ecef;
+                padding: 8px;
+                font-weight: 600;
+                text-align: center;
+                border-radius: 4px;
+                font-size: 11px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .grid-cell {
+                background-color: white;
+                padding: 8px;
+                border-radius: 4px;
+                border: 1px solid #dee2e6;
+                font-size: 11px;
+                min-height: 20px;
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .grid-cell a {
+                color: #1f77b4;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            .grid-cell a:hover {
+                text-decoration: underline;
+            }
+            .editable-cell {
+                background-color: #fff3cd;
+                border: 2px solid #ffc107;
+            }
+            @media (max-width: 1200px) {
+                .custom-grid {
+                    grid-template-columns: repeat(8, 1fr);
+                }
+                .custom-grid.needs-foster {
+                    grid-template-columns: repeat(9, 1fr);
+                }
+            }
+            @media (max-width: 900px) {
+                .custom-grid {
+                    grid-template-columns: repeat(6, 1fr);
+                }
+                .custom-grid.needs-foster {
+                    grid-template-columns: repeat(7, 1fr);
+                }
+            }
+            @media (max-width: 600px) {
+                .custom-grid {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+                .custom-grid.needs-foster {
+                    grid-template-columns: repeat(5, 1fr);
+                }
             }
             </style>
             """, unsafe_allow_html=True)
             
-            st.markdown(
-                display_data.to_html(
-                    escape=False,
-                    index=False,
-                    classes=['foster-table'],
-                    table_id='foster-table'
-                ),
-                unsafe_allow_html=True
-            )
+            # Create header row
+            grid_class = "custom-grid needs-foster" if selected_category == 'Needs Foster Now' else "custom-grid"
+            header_html = f"""
+            <div class="{grid_class}">
+                <div class="grid-header">Animal ID</div>
+                <div class="grid-header">Animal Name</div>
+                <div class="grid-header">Intake Date</div>
+                <div class="grid-header">Animal Details</div>
+                <div class="grid-header">Stage</div>
+                <div class="grid-header">Foster PID</div>
+                <div class="grid-header">Foster Name</div>
+                <div class="grid-header">Start Date</div>
+                <div class="grid-header">📝 Foster Notes</div>
+                <div class="grid-header">💊 Meds</div>
+            """
+            
+            if selected_category == 'Needs Foster Now':
+                header_html += '<div class="grid-header">📅 Foster Plea Dates</div>'
+            
+            header_html += '</div>'
+            st.markdown(header_html, unsafe_allow_html=True)
+            
+            # Create data rows with inline editing
+            for idx, row in display_data.iterrows():
+                # Extract animal number for database operations
+                animal_id = str(row['Animal ID'])
+                if '<a href=' in animal_id:
+                    animal_number = animal_id.split('>')[1].split('<')[0]
+                else:
+                    animal_number = animal_id
+                
+                # Get current database values
+                foster_data = foster_data_dict.get(animal_number, {})
+                current_notes = foster_data.get('fosternotes', '')
+                current_meds = foster_data.get('onmeds', False)
+                current_dates = foster_data.get('fosterpleadates', [])
+                
+                # Create row with columns (10 or 11 depending on tab)
+                if selected_category == 'Needs Foster Now':
+                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11 = st.columns(11)
+                else:
+                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10 = st.columns(10)
+                
+                with col1:
+                    st.markdown(row['Animal ID'], unsafe_allow_html=True)
+                with col2:
+                    st.write(row['Animal Name'])
+                with col3:
+                    st.write(row['Intake Date/Time'])
+                with col4:
+                    # Combined Animal Details: Age, Sex, Species, Breed
+                    animal_details = f"{row['Age']}, {row['Sex']}, {row['Species']}, {row['Breed']}"
+                    st.write(animal_details)
+                with col5:
+                    st.write(row['Stage'])
+                with col6:
+                    st.markdown(row['Foster PID'], unsafe_allow_html=True)
+                with col7:
+                    # Foster Name from classified data
+                    foster_name = row.get('Foster Name', '')
+                    st.write(foster_name)
+                with col8:
+                    # Start Date from classified data
+                    start_date = row.get('Foster Start Date', '')
+                    st.write(start_date)
+                with col9:
+                    # Foster Notes - editable
+                    new_notes = st.text_input(
+                        "Notes",
+                        value=current_notes,
+                        key=f"notes_{animal_number}_{idx}",
+                        label_visibility="collapsed"
+                    )
+                    if new_notes != current_notes:
+                        supabase_manager.update_foster_notes(animal_number, new_notes)
+                with col10:
+                    # Meds - editable text input
+                    current_meds = foster_data.get('onmeds', '')  # Now a string instead of boolean
+                    new_meds = st.text_input(
+                        "Meds",
+                        value=current_meds,
+                        key=f"meds_{animal_number}_{idx}",
+                        label_visibility="collapsed"
+                    )
+                    if new_meds != current_meds:
+                        supabase_manager.update_on_meds(animal_number, new_meds)
+                
+                # Only create col11 content if we're on the Needs Foster Now tab
+                if selected_category == 'Needs Foster Now':
+                    with col11:
+                        # Foster Plea Dates - editable
+                        dates_str = ', '.join(current_dates) if current_dates else ''
+                        new_dates = st.text_input(
+                            "Dates",
+                            value=dates_str,
+                            key=f"dates_{animal_number}_{idx}",
+                            label_visibility="collapsed"
+                        )
+                        if new_dates != dates_str:
+                            if new_dates:
+                                dates = [d.strip() for d in new_dates.split(',') if d.strip()]
+                                supabase_manager.update_foster_plea_dates(animal_number, dates)
+                            else:
+                                supabase_manager.update_foster_plea_dates(animal_number, [])
+            
+
             
             # Download button
             # Create a clean version for download (without HTML links)

@@ -333,8 +333,9 @@ def load_data():
         # Load AnimalInventory.csv - try multiple possible paths
         possible_paths = [
             "../__Load Files Go Here__/AnimalInventory.csv",  # Local development (prioritized)
-            "FosterDash/data/AnimalInventory.csv",  # Streamlit Cloud
-            "data/AnimalInventory.csv",  # Streamlit Cloud (alternative)
+            "__Load Files Go Here__/AnimalInventory.csv",  # Cloud deployment
+            "data/AnimalInventory.csv",  # Streamlit Cloud (fallback)
+            "FosterDash/data/AnimalInventory.csv",  # Streamlit Cloud (fallback)
             "AnimalInventory.csv"  # Current directory
         ]
         
@@ -369,8 +370,9 @@ def load_data():
         # Load FosterCurrent.csv - try multiple possible paths
         foster_possible_paths = [
             "../__Load Files Go Here__/FosterCurrent.csv",  # Local development (prioritized)
-            "FosterDash/data/FosterCurrent.csv",  # Streamlit Cloud
-            "data/FosterCurrent.csv",  # Streamlit Cloud (alternative)
+            "__Load Files Go Here__/FosterCurrent.csv",  # Cloud deployment
+            "data/FosterCurrent.csv",  # Streamlit Cloud (fallback)
+            "FosterDash/data/FosterCurrent.csv",  # Streamlit Cloud (fallback)
             "FosterCurrent.csv"  # Current directory
         ]
         
@@ -404,8 +406,9 @@ def load_data():
         # Load Hold - Foster Stage Date.csv - try multiple possible paths
         hold_possible_paths = [
             "../__Load Files Go Here__/Hold - Foster Stage Date.csv",  # Local development (prioritized)
-            "FosterDash/data/Hold - Foster Stage Date.csv",  # Streamlit Cloud
-            "data/Hold - Foster Stage Date.csv",  # Streamlit Cloud (alternative)
+            "__Load Files Go Here__/Hold - Foster Stage Date.csv",  # Cloud deployment
+            "data/Hold - Foster Stage Date.csv",  # Streamlit Cloud (fallback)
+            "FosterDash/data/Hold - Foster Stage Date.csv",  # Streamlit Cloud (fallback)
             "Hold - Foster Stage Date.csv"  # Current directory
         ]
         

@@ -173,27 +173,10 @@ def display_layout(room_name: str):
             font=dict(size=12)
         )
     
-    # Calculate axis ranges based on box positions and sizes
-    if layout_data.get('boxes', []):
-        x_coords = []
-        y_coords = []
-        for box in layout_data['boxes']:
-            x_coords.extend([box['x'], box['x'] + box['width']])
-            y_coords.extend([box['y'], box['y'] + box['height']])
-        
-        x_min, x_max = min(x_coords), max(x_coords)
-        y_min, y_max = min(y_coords), max(y_coords)
-        
-        # Add padding to the ranges
-        x_padding = (x_max - x_min) * 0.1 if x_max > x_min else 50
-        y_padding = (y_max - y_min) * 0.1 if y_max > y_min else 50
-        
-        x_range = [x_min - x_padding, x_max + x_padding]
-        y_range = [y_min - y_padding, y_max + y_padding]
-    else:
-        # Default ranges if no boxes
-        x_range = [0, 800]
-        y_range = [0, 600]
+    # Use a fixed coordinate system for consistent sizing
+    # This ensures boxes are always displayed at a reasonable size
+    x_range = [0, 300]
+    y_range = [0, 300]
     
     # Update layout
     fig.update_layout(
@@ -213,7 +196,7 @@ def display_layout(room_name: str):
             scaleratio=1,
             range=y_range
         ),
-        height=600,
+        height=800,
         margin=dict(l=0, r=0, t=30, b=0)
     )
     

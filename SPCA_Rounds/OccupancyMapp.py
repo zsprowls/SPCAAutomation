@@ -132,13 +132,13 @@ def create_layout_editor(room_name: str):
     # --- Add a new box (for demo) ---
     if st.button("Add Box"):
         boxes.append({
-            "label": "",
+            "label": "New Box",
             "location": list(LOCATION_DATA.keys())[0],
             "sublocation": LOCATION_DATA[list(LOCATION_DATA.keys())[0]][0],
-            "width": 150,
-            "height": 150,
-            "x": 50,
-            "y": 50
+            "width": 200,
+            "height": 200,
+            "x": 100,
+            "y": 100
         })
         save_layout(room_name, {"boxes": boxes})
         st.experimental_rerun()
@@ -146,60 +146,63 @@ def create_layout_editor(room_name: str):
     return boxes, selected_box
 
 def display_layout(room_name: str):
-    """Display the saved layout in view mode using HTML/CSS for reliable sizing."""
+    """Display the saved layout in view mode using simple HTML."""
     layout_data = load_layout(room_name)
     
-    # Create HTML for the layout
-    html_content = f"""
-    <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px;">
-        <h2 style="text-align: center; margin-bottom: 20px;">Room Layout: {room_name}</h2>
-        <div style="position: relative; width: 100%; height: 600px; border: 2px solid #ccc; background: white; overflow: hidden;">
+    st.subheader(f"Room Layout: {room_name}")
+    
+    # Create a simple container
+    container_html = """
+    <div style="
+        width: 100%;
+        height: 500px;
+        border: 3px solid #333;
+        background: white;
+        position: relative;
+        margin: 20px 0;
+        overflow: hidden;
+    ">
     """
     
-    # Add boxes as absolutely positioned divs
-    for i, box in enumerate(layout_data.get('boxes', [])):
-        # Calculate percentage positions for responsive sizing
-        x_pct = (box['x'] / 500) * 100
-        y_pct = (box['y'] / 500) * 100
-        width_pct = (box['width'] / 500) * 100
-        height_pct = (box['height'] / 500) * 100
+    # Add each box
+    for box in layout_data.get('boxes', []):
+        # Use simple pixel positioning
+        left = box['x']
+        top = box['y']
+        width = box['width']
+        height = box['height']
         
-        html_content += f"""
-            <div style="
-                position: absolute;
-                left: {x_pct}%;
-                top: {y_pct}%;
-                width: {width_pct}%;
-                height: {height_pct}%;
-                border: 3px solid #000;
-                background-color: #f0f0f0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                font-size: 12px;
-                font-weight: bold;
-                color: #000;
-                box-sizing: border-box;
-                padding: 5px;
-                word-wrap: break-word;
-                overflow: hidden;
-            ">
-                <div>
-                    {box.get('label', '')}<br>
-                    {box.get('location', '')}<br>
-                    {box.get('sublocation', '')}
-                </div>
+        box_html = f"""
+        <div style="
+            position: absolute;
+            left: {left}px;
+            top: {top}px;
+            width: {width}px;
+            height: {height}px;
+            border: 2px solid black;
+            background-color: lightgray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px;
+            box-sizing: border-box;
+        ">
+            <div>
+                {box.get('label', '')}<br>
+                {box.get('location', '')}<br>
+                {box.get('sublocation', '')}
             </div>
-        """
-    
-    html_content += """
         </div>
-    </div>
-    """
+        """
+        container_html += box_html
+    
+    container_html += "</div>"
     
     # Display the HTML
-    st.markdown(html_content, unsafe_allow_html=True)
+    st.markdown(container_html, unsafe_allow_html=True)
 
 def main():
     st.title("Room Layout Editor")

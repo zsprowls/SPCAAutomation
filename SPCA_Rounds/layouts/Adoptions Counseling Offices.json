@@ -1,13 +1,13 @@
 {
   "boxes": [
     {
-      "label": "",
+      "label": "Test Box",
       "location": "Adoptions Counseling Offices",
       "sublocation": "-Dog Counseling 122",
-      "width": 150,
-      "height": 150,
-      "x": 50,
-      "y": 50
+      "width": 200,
+      "height": 200,
+      "x": 100,
+      "y": 100
     }
   ]
 }

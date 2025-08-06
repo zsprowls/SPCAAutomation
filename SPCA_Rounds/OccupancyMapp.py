@@ -146,72 +146,60 @@ def create_layout_editor(room_name: str):
     return boxes, selected_box
 
 def display_layout(room_name: str):
-    """Display the saved layout in view mode."""
+    """Display the saved layout in view mode using HTML/CSS for reliable sizing."""
     layout_data = load_layout(room_name)
     
-    # Create a Plotly figure for the layout
-    fig = go.Figure()
+    # Create HTML for the layout
+    html_content = f"""
+    <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <h2 style="text-align: center; margin-bottom: 20px;">Room Layout: {room_name}</h2>
+        <div style="position: relative; width: 100%; height: 600px; border: 2px solid #ccc; background: white; overflow: hidden;">
+    """
     
-    # Add boxes to the figure using a different approach
-    for box in layout_data.get('boxes', []):
-        # Create rectangle coordinates
-        x_coords = [box['x'], box['x'] + box['width'], box['x'] + box['width'], box['x'], box['x']]
-        y_coords = [box['y'], box['y'], box['y'] + box['height'], box['y'] + box['height'], box['y']]
+    # Add boxes as absolutely positioned divs
+    for i, box in enumerate(layout_data.get('boxes', [])):
+        # Calculate percentage positions for responsive sizing
+        x_pct = (box['x'] / 500) * 100
+        y_pct = (box['y'] / 500) * 100
+        width_pct = (box['width'] / 500) * 100
+        height_pct = (box['height'] / 500) * 100
         
-        # Add the rectangle as a scatter plot (more reliable than shapes)
-        fig.add_trace(go.Scatter(
-            x=x_coords,
-            y=y_coords,
-            mode='lines',
-            line=dict(color='Black', width=3),
-            fill='toself',
-            fillcolor='LightGray',
-            showlegend=False,
-            hoverinfo='skip'
-        ))
-        
-        # Add box label
-        fig.add_annotation(
-            x=box['x'] + box['width']/2,
-            y=box['y'] + box['height']/2,
-            text=f"{box.get('label','')}\n{box.get('location','')}\n{box.get('sublocation','')}",
-            showarrow=False,
-            font=dict(size=14, color='Black'),
-            bgcolor='White',
-            bordercolor='Black',
-            borderwidth=1
-        )
+        html_content += f"""
+            <div style="
+                position: absolute;
+                left: {x_pct}%;
+                top: {y_pct}%;
+                width: {width_pct}%;
+                height: {height_pct}%;
+                border: 3px solid #000;
+                background-color: #f0f0f0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-size: 12px;
+                font-weight: bold;
+                color: #000;
+                box-sizing: border-box;
+                padding: 5px;
+                word-wrap: break-word;
+                overflow: hidden;
+            ">
+                <div>
+                    {box.get('label', '')}<br>
+                    {box.get('location', '')}<br>
+                    {box.get('sublocation', '')}
+                </div>
+            </div>
+        """
     
-    # Use a smaller, more reasonable coordinate system
-    x_range = [0, 500]
-    y_range = [0, 500]
+    html_content += """
+        </div>
+    </div>
+    """
     
-    # Update layout
-    fig.update_layout(
-        title=f"Room Layout: {room_name}",
-        showlegend=False,
-        xaxis=dict(
-            showgrid=False, 
-            zeroline=False, 
-            showticklabels=False,
-            range=x_range,
-            fixedrange=True
-        ),
-        yaxis=dict(
-            showgrid=False, 
-            zeroline=False, 
-            showticklabels=False, 
-            scaleanchor="x", 
-            scaleratio=1,
-            range=y_range,
-            fixedrange=True
-        ),
-        height=600,
-        width=800,
-        margin=dict(l=50, r=50, t=50, b=50)
-    )
-    
-    st.plotly_chart(fig, use_container_width=False)
+    # Display the HTML
+    st.markdown(html_content, unsafe_allow_html=True)
 
 def main():
     st.title("Room Layout Editor")

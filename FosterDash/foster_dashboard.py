@@ -1121,8 +1121,10 @@ def main():
                     )
                     if new_meds != current_meds:
                         supabase_manager.update_on_meds(animal_number, new_meds)
-                with col11:
-                    if selected_category == 'Needs Foster Now':
+                
+                # Only create col11 content if we're on the Needs Foster Now tab
+                if selected_category == 'Needs Foster Now':
+                    with col11:
                         # Foster Plea Dates - editable
                         dates_str = ', '.join(current_dates) if current_dates else ''
                         new_dates = st.text_input(

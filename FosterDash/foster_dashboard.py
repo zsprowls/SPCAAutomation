@@ -1,17 +1,18 @@
 import streamlit as st
-import pandas as pd
-import os
-from datetime import datetime
-import numpy as np
-from supabase_manager import supabase_manager
 
-# Page configuration
+# Page configuration - MUST be first Streamlit command
 st.set_page_config(
     page_title="SPCA Foster Dashboard",
     page_icon="🐾",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+import pandas as pd
+import os
+from datetime import datetime
+import numpy as np
+from supabase_manager import supabase_manager
 
 # Custom CSS for better styling
 st.markdown("""
@@ -582,6 +583,11 @@ def create_petpoint_links(animal_id):
     
     return f"[Profile]({profile_link}) | [Report]({report_link})"
 
+def handle_data_edit():
+    """Handle data editor changes"""
+    # This function will be called when the data editor changes
+    pass
+
 # These functions are no longer needed since we're using inline editing
 # Keeping them for potential future use or reference
 
@@ -816,7 +822,68 @@ def main():
             
             display_data = display_data.rename(columns=column_mapping)
             
-            # Display the data with HTML rendering (like rodent app)
+            # Keep the original HTML links for Animal ID - they work properly in HTML tables
+            # The Animal ID column should already be HTML links from the original data processing
+            
+            # Add interactive columns to the display data
+            # Always add the columns, regardless of database status
+            display_data['Foster_Notes'] = 'Database Required'
+            display_data['On_Meds'] = False
+            if selected_category == 'Needs Foster Now':
+                display_data['Foster_Plea_Dates'] = 'Database Required'
+            
+
+            
+            # If database is enabled, populate with real data
+            if supabase_enabled:
+                # Use the original filtered_data to get AnimalNumber (before HTML conversion)
+                for idx, row in filtered_data.iterrows():
+                    animal_number = str(row['AnimalNumber'])
+                    foster_data = foster_data_dict.get(animal_number, {})
+                    
+                    # Find the corresponding row in display_data by matching Animal ID
+                    # Make sure we don't go out of bounds
+                    if idx < len(display_data):
+                        animal_id_in_display = display_data.iloc[idx]['Animal ID']
+                        # Extract animal number from clean format
+                        display_animal_number = str(animal_id_in_display)
+                        
+                        # Only update if the animal numbers match
+                        if display_animal_number == animal_number:
+                            # Update the interactive columns with real data
+                            display_data.iloc[idx, display_data.columns.get_loc('Foster_Notes')] = foster_data.get('fosternotes', '')
+                            display_data.iloc[idx, display_data.columns.get_loc('On_Meds')] = foster_data.get('onmeds', False)
+                            
+                            if selected_category == 'Needs Foster Now':
+                                dates = foster_data.get('fosterpleadates', [])
+                                display_data.iloc[idx, display_data.columns.get_loc('Foster_Plea_Dates')] = ', '.join(dates) if dates else ''
+            
+            # Update column mapping to include new columns
+            column_mapping.update({
+                'Foster_Notes': '📝 Foster Notes',
+                'On_Meds': '💊 On Meds',
+                'Foster_Plea_Dates': '📅 Foster Plea Dates'
+            })
+            
+            # Reorder columns to put interactive columns at the end
+            if 'Foster_Plea_Dates' in display_data.columns:
+                # For "Needs Foster Now" category, include plea dates
+                final_columns = [col for col in display_data.columns if col not in ['Foster_Notes', 'On_Meds', 'Foster_Plea_Dates']] + ['Foster_Notes', 'On_Meds', 'Foster_Plea_Dates']
+            else:
+                # For other categories, just include notes and meds
+                final_columns = [col for col in display_data.columns if col not in ['Foster_Notes', 'On_Meds']] + ['Foster_Notes', 'On_Meds']
+            
+            display_data = display_data[final_columns]
+            
+            # Show database status
+            if not supabase_enabled:
+                st.warning("⚠️ Database features are disabled. Set up Supabase to enable interactive editing.")
+                st.info("📝 To enable interactive features:")
+                st.write("1. Follow the setup guide in SUPABASE_SETUP.md")
+                st.write("2. Update .streamlit/secrets.toml with your Supabase credentials")
+                st.write("3. Restart the dashboard")
+            
+            # Display the data with HTML rendering (like rodent app) - this has working links
             st.write("**Note:** Click on Animal ID or Foster PID to open in PetPoint")
             
             # Add CSS for better table styling
@@ -842,135 +909,78 @@ def main():
             .foster-table tr:hover {
                 background-color: #f8f9fa;
             }
+            .foster-table a {
+                color: #1f77b4;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            .foster-table a:hover {
+                text-decoration: underline;
+            }
             </style>
             """, unsafe_allow_html=True)
             
-            st.markdown(
-                display_data.to_html(
-                    escape=False,
-                    index=False,
-                    classes=['foster-table'],
-                    table_id='foster-table'
-                ),
-                unsafe_allow_html=True
-            )
+
             
-            # Add interactive columns to the display data
-            # Always add the columns, regardless of database status
-            display_data['Foster_Notes'] = 'Database Required'
-            display_data['On_Meds'] = False
-            if selected_category == 'Needs Foster Now':
-                display_data['Foster_Plea_Dates'] = 'Database Required'
-            
-            # Debug: Show what columns we have
-            st.write(f"Debug: Display data columns: {list(display_data.columns)}")
-            st.write(f"Debug: Display data shape: {display_data.shape}")
-            
-            # If database is enabled, populate with real data
+            # Add editable fields below the table
             if supabase_enabled:
-                # Use the original filtered_data to get AnimalNumber (before HTML conversion)
-                for idx, row in filtered_data.iterrows():
-                    animal_number = str(row['AnimalNumber'])
+                st.write("---")
+                st.write("**📝 Edit Database Fields:**")
+                
+                # Create a simple form for editing
+                with st.form("foster_edit_form"):
+                    # Dropdown to select animal
+                    animal_options = [str(row['Animal ID']).split('>')[1].split('<')[0] if '<a href=' in str(row['Animal ID']) else str(row['Animal ID']) 
+                                    for _, row in display_data.iterrows()]
+                    selected_animal = st.selectbox("Select Animal:", animal_options, key="animal_selector")
+                    
+                    # Get current data for selected animal
+                    animal_number = selected_animal
                     foster_data = foster_data_dict.get(animal_number, {})
                     
-                    # Find the corresponding row in display_data
-                    display_idx = display_data.index[idx]
+                    # Foster Notes
+                    current_notes = foster_data.get('fosternotes', '')
+                    new_notes = st.text_area("📝 Foster Notes:", value=current_notes, key=f"notes_{animal_number}")
                     
-                    # Update the interactive columns with real data
-                    display_data.at[display_idx, 'Foster_Notes'] = foster_data.get('FosterNotes', '')
-                    display_data.at[display_idx, 'On_Meds'] = foster_data.get('OnMeds', False)
+                    # On Meds
+                    current_meds = foster_data.get('onmeds', False)
+                    new_meds = st.checkbox("💊 On Meds:", value=current_meds, key=f"meds_{animal_number}")
                     
+                    # Foster Plea Dates (only for "Needs Foster Now" category)
                     if selected_category == 'Needs Foster Now':
-                        dates = foster_data.get('FosterPleaDates', [])
-                        display_data.at[display_idx, 'Foster_Plea_Dates'] = ', '.join(dates) if dates else ''
+                        current_dates = foster_data.get('fosterpleadates', [])
+                        dates_str = ', '.join(current_dates) if current_dates else ''
+                        new_dates = st.text_input("📅 Foster Plea Dates (comma-separated):", value=dates_str, key=f"dates_{animal_number}")
+                    
+                    # Submit button
+                    submitted = st.form_submit_button("💾 Save Changes")
+                    
+                    if submitted:
+                        # Update Foster Notes
+                        if new_notes != current_notes:
+                            supabase_manager.update_foster_notes(animal_number, new_notes)
+                            st.success(f"✅ Updated Foster Notes for {animal_number}")
+                        
+                        # Update On Meds
+                        if new_meds != current_meds:
+                            supabase_manager.update_on_meds(animal_number, new_meds)
+                            st.success(f"✅ Updated On Meds for {animal_number}")
+                        
+                        # Update Foster Plea Dates
+                        if selected_category == 'Needs Foster Now':
+                            if new_dates != dates_str:
+                                if new_dates and new_dates != 'Database Required':
+                                    dates = [d.strip() for d in new_dates.split(',') if d.strip()]
+                                    supabase_manager.update_foster_plea_dates(animal_number, dates)
+                                    st.success(f"✅ Updated Foster Plea Dates for {animal_number}")
+                                elif not new_dates:
+                                    supabase_manager.update_foster_plea_dates(animal_number, [])
+                                    st.success(f"✅ Cleared Foster Plea Dates for {animal_number}")
+                        
+                        # Refresh the page to show updated data
+                        st.rerun()
             
-            # Update column mapping to include new columns
-            column_mapping.update({
-                'Foster_Notes': '📝 Foster Notes',
-                'On_Meds': '💊 On Meds',
-                'Foster_Plea_Dates': '📅 Foster Plea Dates'
-            })
-            
-            # Reorder columns to put interactive columns at the end
-            if 'Foster_Plea_Dates' in display_data.columns:
-                # For "Needs Foster Now" category, include plea dates
-                final_columns = [col for col in display_data.columns if col not in ['Foster_Notes', 'On_Meds', 'Foster_Plea_Dates']] + ['Foster_Notes', 'On_Meds', 'Foster_Plea_Dates']
-            else:
-                # For other categories, just include notes and meds
-                final_columns = [col for col in display_data.columns if col not in ['Foster_Notes', 'On_Meds']] + ['Foster_Notes', 'On_Meds']
-            
-            display_data = display_data[final_columns]
-            
-            # Display the data with HTML rendering
-            st.write("**Note:** Click on Animal ID or Foster PID to open in PetPoint")
-            
-            if not supabase_enabled:
-                st.warning("⚠️ Database features are disabled. Set up Supabase to enable interactive editing.")
-                st.info("📝 To enable interactive features:")
-                st.write("1. Follow the setup guide in SUPABASE_SETUP.md")
-                st.write("2. Update .streamlit/secrets.toml with your Supabase credentials")
-                st.write("3. Restart the dashboard")
-            
-            # Add CSS for better table styling with interactive elements
-            st.markdown("""
-            <style>
-            .foster-table {
-                border-collapse: collapse;
-                width: 100%;
-                font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-                font-size: 14px;
-            }
-            .foster-table th {
-                background-color: #f0f2f6;
-                padding: 8px;
-                text-align: left;
-                border-bottom: 2px solid #e0e0e0;
-                font-weight: 600;
-            }
-            .foster-table td {
-                padding: 8px;
-                border-bottom: 1px solid #e0e0e0;
-            }
-            .foster-table tr:hover {
-                background-color: #f8f9fa;
-            }
-            .interactive-cell {
-                background-color: #fff3e0;
-                border: 1px solid #ff9800;
-                border-radius: 3px;
-                padding: 4px;
-                cursor: pointer;
-            }
-            .disabled-cell {
-                background-color: #f5f5f5;
-                color: #999;
-                font-style: italic;
-            }
-            </style>
-            """, unsafe_allow_html=True)
-            
-            # Show the table with interactive fields inline - ONE VIEW ONLY
-            if not supabase_enabled:
-                st.warning("⚠️ Database features are disabled. Set up Supabase to enable interactive editing.")
-                st.info("📝 To enable interactive features:")
-                st.write("1. Follow the setup guide in SUPABASE_SETUP.md")
-                st.write("2. Update .streamlit/secrets.toml with your Supabase credentials")
-                st.write("3. Restart the dashboard")
-            
-            # Use data editor for both cases - single view
-            edited_df = st.data_editor(
-                display_data,
-                num_rows="dynamic",
-                use_container_width=True,
-                key="foster_data_editor",
-                disabled=not supabase_enabled  # Disable editing when database is not available
-            )
-            
-            # Handle changes to the edited data (only when database is enabled)
-            if supabase_enabled and edited_df is not None:
-                # This would handle saving changes to Supabase
-                # For now, just show that changes were detected
-                st.info("💡 Changes detected! Database integration will save changes automatically.")
+
             
             # Download button
             # Create a clean version for download (without HTML links)

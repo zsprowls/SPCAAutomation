@@ -2,67 +2,81 @@
 
 ## Step 1: Prepare Your Repository
 
-1. Make sure your code is in a Git repository
-2. Ensure these files are in your repository:
-   - foster_dashboard.py
-   - supabase_manager.py
-   - requirements.txt
-   - .streamlit/config.toml
+1. **Create a new GitHub repository** (if you haven't already)
+2. **Push your code** to GitHub:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+   git push -u origin main
+   ```
 
 ## Step 2: Deploy to Streamlit Cloud
 
-1. Go to https://share.streamlit.io/
-2. Sign in with your GitHub account
-3. Click "New app"
-4. Configure your app:
-   - **Repository**: Your GitHub repo
-   - **Branch**: main (or your default branch)
-   - **Main file path**: FosterDash/foster_dashboard.py
-   - **App URL**: Choose a unique URL
+1. **Go to [share.streamlit.io](https://share.streamlit.io)**
+2. **Sign in with GitHub**
+3. **Click "New app"**
+4. **Configure your app:**
+   - **Repository**: `YOUR_USERNAME/YOUR_REPO_NAME`
+   - **Branch**: `main`
+   - **Main file path**: `foster_dashboard.py`
+   - **App URL**: Choose a custom URL (optional)
 
-## Step 3: Configure Secrets
+## Step 3: Add Streamlit Secrets
 
-1. In your Streamlit Cloud app dashboard
-2. Go to Settings > Secrets
-3. Add this configuration:
+1. **In your Streamlit Cloud dashboard**, go to your app
+2. **Click "Settings"** → **"Secrets"**
+3. **Add your Supabase credentials:**
+   ```toml
+   SUPABASE_URL = "https://xfhmrxpiupwkahmtlubd.supabase.co"
+   SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmaG1yeHBpdXB3a2FobXRsdWJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0Mzg5MzMsImV4cCI6MjA3MDAxNDkzM30.Lx9N35iu-rkg4jZamfNpGOOyoMS0vE2umT_Zw-7qy7c"
+   ```
 
-```toml
-SUPABASE_URL = "https://your-project-id.supabase.co"
-SUPABASE_KEY = "your-anon-public-key"
+## Step 4: Add Data Files
+
+Since the data files are in `../__Load Files Go Here__/`, you'll need to either:
+
+**Option A: Copy files to the repo**
+```bash
+cp -r ../__Load\ Files\ Go\ Here__/ ./data/
 ```
 
-Replace with your actual Supabase credentials.
+**Option B: Use Streamlit's file uploader** (modify the app to accept file uploads)
 
-## Step 4: Deploy
+## Step 5: Test Your Deployment
 
-1. Click "Deploy!" 
-2. Wait for deployment to complete
-3. Your app will be available at: https://your-app-name.streamlit.app
-
-## Step 5: Test
-
-1. Open your deployed app
-2. Check that database connection works
-3. Test the interactive features
+1. **Wait for deployment** (usually 1-2 minutes)
+2. **Check the logs** for any errors
+3. **Test the database connection**
+4. **Test the interactive features**
 
 ## Troubleshooting
 
-### App won't deploy:
-- Check that all required files are in the repository
-- Verify the main file path is correct
-- Check the requirements.txt file
+### Common Issues:
+- **"Module not found"**: Check `requirements.txt` has all dependencies
+- **"Secrets not found"**: Verify secrets are added in Streamlit Cloud
+- **"Data files not found"**: Make sure data files are in the repository
 
-### Database connection fails:
-- Verify Supabase credentials in Streamlit Cloud secrets
-- Check that your Supabase project is active
-- Ensure the foster_animals table exists
+### Debug Commands:
+```bash
+# Check if all files are committed
+git status
 
-### Data not loading:
-- Verify CSV files are in the correct location
-- Check file permissions and paths
+# Verify requirements.txt
+cat requirements.txt
 
-## Local Development vs Deployment
+# Test local deployment
+streamlit run foster_dashboard.py
+```
 
-- **Local**: Uses .streamlit/secrets.toml
-- **Deployed**: Uses Streamlit Cloud secrets
-- Both use the same code, just different secret storage
+## Next Steps
+
+Once deployed:
+1. **Test database connection**
+2. **Test interactive editing**
+3. **Share the URL** with your team
+4. **Set up automatic deployments** from your main branch
+
+🎉 **Your app will be live at: `https://YOUR_APP_NAME.streamlit.app`**

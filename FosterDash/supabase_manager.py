@@ -29,7 +29,7 @@ class SupabaseManager:
             self.client = create_client(supabase_url, supabase_key)
             
             # Test the connection
-            result = self.client.table('foster_animals').select('AnimalNumber').limit(1).execute()
+            result = self.client.table('foster_animals').select('animalnumber').limit(1).execute()
             self.initialized = True
             st.success("✅ Successfully connected to Supabase")
             return True
@@ -54,11 +54,11 @@ class SupabaseManager:
                 st.warning("No AnimalNumbers found in AnimalInventory.csv")
                 return False
             
-            # Get existing AnimalNumbers from Supabase
-            result = self.client.table('foster_animals').select('AnimalNumber').execute()
+            # Get existing AnimalNumbers from Supabase (use lowercase column name)
+            result = self.client.table('foster_animals').select('animalnumber').execute()
             existing_animal_numbers = set()
             if result.data:
-                existing_animal_numbers = set([row['AnimalNumber'] for row in result.data])
+                existing_animal_numbers = set([row['animalnumber'] for row in result.data])
             
             # Find missing AnimalNumbers
             missing_animal_numbers = csv_animal_numbers - existing_animal_numbers
@@ -68,10 +68,10 @@ class SupabaseManager:
                 new_records = []
                 for animal_number in missing_animal_numbers:
                     new_records.append({
-                        'AnimalNumber': animal_number,
-                        'FosterNotes': '',
-                        'OnMeds': False,
-                        'FosterPleaDates': [],
+                        'animalnumber': animal_number,
+                        'fosternotes': '',
+                        'onmeds': False,
+                        'fosterpleadates': [],
                         'created_at': datetime.now().isoformat(),
                         'updated_at': datetime.now().isoformat()
                     })
@@ -98,7 +98,7 @@ class SupabaseManager:
             return None
             
         try:
-            result = self.client.table('foster_animals').select('*').eq('AnimalNumber', animal_number).execute()
+            result = self.client.table('foster_animals').select('*').eq('animalnumber', animal_number).execute()
             if result.data:
                 return result.data[0]
             return None
@@ -113,9 +113,9 @@ class SupabaseManager:
             
         try:
             self.client.table('foster_animals').update({
-                'FosterNotes': notes,
+                'fosternotes': notes,
                 'updated_at': datetime.now().isoformat()
-            }).eq('AnimalNumber', animal_number).execute()
+            }).eq('animalnumber', animal_number).execute()
             return True
         except Exception as e:
             st.error(f"❌ Error updating foster notes: {str(e)}")
@@ -128,9 +128,9 @@ class SupabaseManager:
             
         try:
             self.client.table('foster_animals').update({
-                'OnMeds': on_meds,
+                'onmeds': on_meds,
                 'updated_at': datetime.now().isoformat()
-            }).eq('AnimalNumber', animal_number).execute()
+            }).eq('animalnumber', animal_number).execute()
             return True
         except Exception as e:
             st.error(f"❌ Error updating OnMeds status: {str(e)}")
@@ -143,19 +143,19 @@ class SupabaseManager:
             
         try:
             # Get current plea dates
-            result = self.client.table('foster_animals').select('FosterPleaDates').eq('AnimalNumber', animal_number).execute()
+            result = self.client.table('foster_animals').select('fosterpleadates').eq('animalnumber', animal_number).execute()
             current_dates = []
-            if result.data and result.data[0]['FosterPleaDates']:
-                current_dates = result.data[0]['FosterPleaDates']
+            if result.data and result.data[0]['fosterpleadates']:
+                current_dates = result.data[0]['fosterpleadates']
             
             # Add new date if not already present
             if plea_date not in current_dates:
                 current_dates.append(plea_date)
                 
                 self.client.table('foster_animals').update({
-                    'FosterPleaDates': current_dates,
+                    'fosterpleadates': current_dates,
                     'updated_at': datetime.now().isoformat()
-                }).eq('AnimalNumber', animal_number).execute()
+                }).eq('animalnumber', animal_number).execute()
                 
                 st.success(f"✅ Added foster plea date: {plea_date}")
                 return True
@@ -167,6 +167,22 @@ class SupabaseManager:
             st.error(f"❌ Error adding foster plea date: {str(e)}")
             return False
     
+    def update_foster_plea_dates(self, animal_number: str, plea_dates: List[str]) -> bool:
+        """Update all foster plea dates for an animal"""
+        if not self.initialized or self.client is None:
+            return False
+            
+        try:
+            self.client.table('foster_animals').update({
+                'fosterpleadates': plea_dates,
+                'updated_at': datetime.now().isoformat()
+            }).eq('animalnumber', animal_number).execute()
+            
+            return True
+        except Exception as e:
+            st.error(f"❌ Error updating foster plea dates: {str(e)}")
+            return False
+    
     def remove_foster_plea_date(self, animal_number: str, plea_date: str) -> bool:
         """Remove a foster plea date for an animal"""
         if not self.initialized or self.client is None:
@@ -174,19 +190,19 @@ class SupabaseManager:
             
         try:
             # Get current plea dates
-            result = self.client.table('foster_animals').select('FosterPleaDates').eq('AnimalNumber', animal_number).execute()
+            result = self.client.table('foster_animals').select('fosterpleadates').eq('animalnumber', animal_number).execute()
             current_dates = []
-            if result.data and result.data[0]['FosterPleaDates']:
-                current_dates = result.data[0]['FosterPleaDates']
+            if result.data and result.data[0]['fosterpleadates']:
+                current_dates = result.data[0]['fosterpleadates']
             
             # Remove the date if present
             if plea_date in current_dates:
                 current_dates.remove(plea_date)
                 
                 self.client.table('foster_animals').update({
-                    'FosterPleaDates': current_dates,
+                    'fosterpleadates': current_dates,
                     'updated_at': datetime.now().isoformat()
-                }).eq('AnimalNumber', animal_number).execute()
+                }).eq('animalnumber', animal_number).execute()
                 
                 st.success(f"✅ Removed foster plea date: {plea_date}")
                 return True
@@ -208,7 +224,7 @@ class SupabaseManager:
             foster_data = {}
             if result.data:
                 for row in result.data:
-                    foster_data[row['AnimalNumber']] = row
+                    foster_data[row['animalnumber']] = row
             return foster_data
         except Exception as e:
             st.error(f"❌ Error getting all foster data: {str(e)}")

@@ -573,10 +573,13 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                     ])):
                     hold_foster_dates[animal_id] = stage_start_date
     
-    # Classify animals - EXACT LOGIC AS SPECIFIED
+    # Classify animals - UPDATED LOGIC AS SPECIFIED
     hold_foster_missed = []  # Track animals that should be "Needs Foster Now" but aren't
     
-    # STEP 1: Hold Foster = anything in AnimalInventory with Hold Foster, Hold Cruelty Foster, or Hold SAFE Foster stages
+    # Create a list to store all rows (including duplicates for multi-category animals)
+    all_rows = []
+    
+    # STEP 1: Needs Foster Now = anything in AnimalInventory with Hold Foster, Hold Cruelty Foster, or Hold SAFE Foster stages
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
@@ -584,21 +587,29 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
         if any(need_stage in stage for need_stage in [
             'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
         ]):
-            df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
+            # Create a copy of the row for this category
+            needs_foster_row = row.copy()
+            needs_foster_row['Foster_Category'] = 'Needs Foster Now'
             
             # Add Hold - Foster date if available
             if animal_id in hold_foster_dates:
-                df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
+                needs_foster_row['Hold_Foster_Date'] = hold_foster_dates[animal_id]
+            
+            all_rows.append(needs_foster_row)
     
-    # STEP 2: Pending Foster Pickup = Anything in AnimalInventory with that stage
+    # STEP 2: Pending Foster Pickup = anything in AnimalInventory with that stage
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
         
         if 'Pending Foster Pickup' in stage:
-            df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
+            # Create a copy of the row for this category
+            pending_row = row.copy()
+            pending_row['Foster_Category'] = 'Pending Foster Pickup'
+            all_rows.append(pending_row)
     
     # STEP 3: In Foster = all animals in FosterCurrent MINUS the ones that have Location = "If The Fur Fits"
+    # Even if they aren't in AnimalInventory, show them and count them
     if foster_current is not None:
         for idx, row in foster_current.iterrows():
             animal_id = str(row.get('textbox9', ''))  # Animal ID column
@@ -611,26 +622,29 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             # Find the row in df that matches this animal_id
             matching_rows = df[df['AnimalNumber'] == animal_id]
             if not matching_rows.empty:
-                idx = matching_rows.index[0]
-                df.at[idx, 'Foster_Category'] = 'In Foster'
+                # Use the existing row from AnimalInventory
+                in_foster_row = matching_rows.iloc[0].copy()
+                in_foster_row['Foster_Category'] = 'In Foster'
                 
                 # Add foster person info if available
                 if animal_id in foster_info:
-                    df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
-                    df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
-                    df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
+                    in_foster_row['Foster_PID'] = foster_info[animal_id]['pid']
+                    in_foster_row['Foster_Name'] = foster_info[animal_id]['name']
+                    in_foster_row['Foster_Start_Date'] = foster_info[animal_id]['start_date']
+                
+                all_rows.append(in_foster_row)
             else:
-                # Animal exists in FosterCurrent but not in AnimalInventory - add it to df
-                new_row = pd.DataFrame({
-                    'AnimalNumber': [animal_id],
-                    'AnimalName': [str(row.get('textbox11', ''))],  # Foster name
-                    'Stage': ['In Foster'],
-                    'Foster_Category': ['In Foster'],
-                    'Foster_PID': [str(row.get('textbox10', ''))],
-                    'Foster_Name': [str(row.get('textbox11', ''))],
-                    'Foster_Start_Date': [str(row.get('StartStatusDate', ''))]
+                # Animal exists in FosterCurrent but not in AnimalInventory - create new row
+                new_row = pd.Series({
+                    'AnimalNumber': animal_id,
+                    'AnimalName': str(row.get('textbox11', '')),  # Foster name
+                    'Stage': 'In Foster',
+                    'Foster_Category': 'In Foster',
+                    'Foster_PID': str(row.get('textbox10', '')),
+                    'Foster_Name': str(row.get('textbox11', '')),
+                    'Foster_Start_Date': str(row.get('StartStatusDate', ''))
                 })
-                df = pd.concat([df, new_row], ignore_index=True)
+                all_rows.append(new_row)
     
     # STEP 4: In If The Fur Fits = animals in FosterCurrent with Location = "If The Fur Fits"
     if foster_current is not None:
@@ -642,14 +656,17 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 # Find the row in df that matches this animal_id
                 matching_rows = df[df['AnimalNumber'] == animal_id]
                 if not matching_rows.empty:
-                    idx = matching_rows.index[0]
-                    df.at[idx, 'Foster_Category'] = 'In If The Fur Fits'
+                    # Use the existing row from AnimalInventory
+                    itff_row = matching_rows.iloc[0].copy()
+                    itff_row['Foster_Category'] = 'In If The Fur Fits'
                     
                     # Add foster person info if available
                     if animal_id in foster_info:
-                        df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
-                        df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
-                        df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
+                        itff_row['Foster_PID'] = foster_info[animal_id]['pid']
+                        itff_row['Foster_Name'] = foster_info[animal_id]['name']
+                        itff_row['Foster_Start_Date'] = foster_info[animal_id]['start_date']
+                    
+                    all_rows.append(itff_row)
     
     # STEP 5: Check if might need foster soon (remaining animals)
     for idx, row in df.iterrows():
@@ -660,7 +677,15 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             'Hold - Doc', 'Hold - Behavior', 'Hold - Behavior Mod.',
             'Hold - Surgery', 'Hold - Stray', 'Hold - Legal Notice', 'Evaluate'
         ]):
-            df.at[idx, 'Foster_Category'] = 'Might Need Foster Soon'
+            # Only add if not already in any category
+            animal_in_categories = any(r['AnimalNumber'] == animal_id for r in all_rows)
+            if not animal_in_categories:
+                might_need_row = row.copy()
+                might_need_row['Foster_Category'] = 'Might Need Foster Soon'
+                all_rows.append(might_need_row)
+    
+    # Create new DataFrame from all rows
+    df = pd.DataFrame(all_rows)
     
     # Add debug information to session state for display
     # Calculate ITFF count from FosterCurrent using Location field
@@ -678,6 +703,9 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
     if foster_current is not None and 'Location' in foster_current.columns:
         unique_locations = sorted(foster_current['Location'].unique().tolist())
     
+    # Calculate category counts for debugging
+    category_counts = df['Foster_Category'].value_counts()
+    
     st.session_state.classification_debug = {
         'hold_foster_missed': hold_foster_missed,
         'foster_animal_ids_count': len(foster_animal_ids),
@@ -685,7 +713,9 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
         'total_foster_current': len(foster_current) if foster_current is not None else 0,
         'itff_count': itff_count,
         'itff_locations_found': itff_locations_found,
-        'unique_locations': unique_locations
+        'unique_locations': unique_locations,
+        'category_counts': category_counts.to_dict(),
+        'total_rows_after_classification': len(df)
     }
     
     return df
@@ -844,6 +874,14 @@ def main():
             st.write(f"- Total unique locations in FosterCurrent: {len(debug_info.get('unique_locations', []))}")
             if len(debug_info.get('unique_locations', [])) <= 20:  # Only show if not too many
                 st.write(f"- All locations: {debug_info.get('unique_locations', [])}")
+            
+            # Show new classification results
+            st.write("**New Classification Results:**")
+            st.write(f"- Total rows after classification: {debug_info.get('total_rows_after_classification', 0)}")
+            if 'category_counts' in debug_info:
+                st.write("**Category Counts (including duplicates):**")
+                for category, count in debug_info['category_counts'].items():
+                    st.write(f"- {category}: {count}")
         
                 # Show raw data verification
         st.write("**Raw Data Verification:**")

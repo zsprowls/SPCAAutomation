@@ -619,6 +619,18 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                     df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
                     df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                     df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
+            else:
+                # Animal exists in FosterCurrent but not in AnimalInventory - add it to df
+                new_row = pd.DataFrame({
+                    'AnimalNumber': [animal_id],
+                    'AnimalName': [str(row.get('textbox11', ''))],  # Foster name
+                    'Stage': ['In Foster'],
+                    'Foster_Category': ['In Foster'],
+                    'Foster_PID': [str(row.get('textbox10', ''))],
+                    'Foster_Name': [str(row.get('textbox11', ''))],
+                    'Foster_Start_Date': [str(row.get('StartStatusDate', ''))]
+                })
+                df = pd.concat([df, new_row], ignore_index=True)
     
     # STEP 4: In If The Fur Fits = animals in FosterCurrent with Location = "If The Fur Fits"
     if foster_current is not None:

@@ -612,11 +612,8 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                 df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
         
-        # Check if in foster (excluding Pending Foster Pickup and If The Fur Fits)
-        elif (animal_id in foster_animal_ids or 
-              'In Foster' in stage or 
-              'In SAFE Foster' in stage or 
-              'In Cruelty Foster' in stage):
+        # Check if in foster (simplified - just check if animal is in FosterCurrent and not ITFF)
+        elif animal_id in foster_animal_ids:
             df.at[idx, 'Foster_Category'] = 'In Foster'
             
             # Add foster person info if available

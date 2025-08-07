@@ -277,8 +277,11 @@ def process_med_condition_history():
     # Load the medical condition history data, skip first 3 rows and use row 4 as header
     df = pd.read_csv(MED_CONDITION_FILE, skiprows=3)
     
-    # Count unique Animal IDs from the textbox27 column (Animal ID)
-    unique_animal_count = df['textbox27'].nunique()
+    # Filter for only "Yelp For Help Candidate" conditions
+    yelp_candidates = df[df['Condition'] == 'Yelp For Help Candidate']
+    
+    # Count unique Animal IDs from the filtered data
+    unique_animal_count = yelp_candidates['textbox27'].nunique()
     
     # Create a result row for Yelp For Help Candidate
     result = [("", ""), ("Yelp For Help Candidate", unique_animal_count)]

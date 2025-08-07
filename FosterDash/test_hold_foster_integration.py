@@ -54,9 +54,9 @@ def test_hold_foster_integration():
                     
                     # Include if it's any Hold - Foster stage and has a valid date
                     if (stage_start_date and stage_start_date != 'nan' and 
-                        any(hold_stage in stage for hold_stage in [
-                            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster'
-                        ])):
+                                            any(hold_stage in stage for hold_stage in [
+                        'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
+                    ])):
                         hold_foster_dates[animal_id] = stage_start_date
                 
                 print(f"✅ Created mapping with {len(hold_foster_dates)} Hold - Foster dates")
@@ -97,7 +97,7 @@ def test_hold_foster_integration():
             print(f"✅ Successfully loaded AnimalInventory.csv ({len(animal_inventory)} records)")
             
             # Check for animals with Hold - Foster stage
-            hold_foster_animals = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster|Hold - Cruelty Foster|Hold - SAFE Foster', na=False)]
+            hold_foster_animals = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster|Hold - Cruelty Foster|Hold - SAFE Foster|Hold – SAFE Foster', na=False)]
             print(f"✅ Found {len(hold_foster_animals)} animals with Hold - Foster stages")
             
             if not hold_foster_animals.empty:

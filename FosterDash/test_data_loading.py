@@ -31,7 +31,7 @@ def test_data_loading():
             
             # Count Hold - Foster animals
             hold_foster = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)]
-            hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)]
+            hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster|Hold – SAFE Foster', na=False)]
             hold_safe_em = animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)]
             hold_cruelty = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)]
             

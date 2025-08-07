@@ -572,7 +572,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 # Include if it's any Hold - Foster stage and has a valid date
                 if (stage_start_date and stage_start_date != 'nan' and 
                     any(hold_stage in stage for hold_stage in [
-                        'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster'
+                        'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
                     ])):
                     hold_foster_dates[animal_id] = stage_start_date
     

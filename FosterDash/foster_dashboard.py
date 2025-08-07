@@ -885,6 +885,16 @@ def main():
                 st.write("**Category Counts (including duplicates):**")
                 for category, count in debug_info['category_counts'].items():
                     st.write(f"- {category}: {count}")
+            
+            # Show Hold - Foster date debugging
+            if selected_category == 'Needs Foster Now' and not filtered_data.empty:
+                hold_foster_animals = filtered_data[filtered_data['Hold_Foster_Date'].notna()]
+                st.write(f"**Hold - Foster Date Debug:**")
+                st.write(f"- Animals with Hold - Foster dates: {len(hold_foster_animals)}")
+                if len(hold_foster_animals) > 0:
+                    st.write("**Sample Hold - Foster dates:**")
+                    sample_dates = hold_foster_animals[['AnimalNumber', 'Hold_Foster_Date']].head(5)
+                    st.dataframe(sample_dates, use_container_width=True)
         
                 # Show raw data verification
         st.write("**Raw Data Verification:**")
@@ -1104,7 +1114,7 @@ def main():
                             # Convert back to string for display
                             display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
                         except Exception as e:
-                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            st.warning(f"Could not sort Hold - Foster dates properly: {str(e)}")
                             # Fallback to string sorting
                             display_data = display_data.sort_values(sort_column, ascending=True)
                     elif sort_column == 'Foster_Start_Date':
@@ -1118,7 +1128,7 @@ def main():
                             # Convert back to string for display
                             display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
                         except Exception as e:
-                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            st.warning(f"Could not sort Foster Start dates properly: {str(e)}")
                             # Fallback to string sorting
                             display_data = display_data.sort_values(sort_column, ascending=True)
                     else:

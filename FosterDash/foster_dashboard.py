@@ -594,6 +594,16 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                 df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
         
+        # Check if needs foster now (check this BEFORE "In Foster" to prioritize Hold Foster animals)
+        elif any(need_stage in stage for need_stage in [
+            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
+        ]):
+            df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
+            
+            # Add Hold - Foster date if available (for any Hold - Foster stage)
+            if animal_id in hold_foster_dates:
+                df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
+        
         # Check if pending foster pickup
         elif 'Pending Foster Pickup' in stage:
             df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
@@ -616,16 +626,6 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
                 df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                 df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
-        
-        # Check if needs foster now
-        elif any(need_stage in stage for need_stage in [
-            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
-        ]):
-            df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
-            
-            # Add Hold - Foster date if available (for any Hold - Foster stage)
-            if animal_id in hold_foster_dates:
-                df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
         
         # Check if might need foster soon
         elif any(soon_stage in stage for soon_stage in [

@@ -603,18 +603,26 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
     
     # STEP 3: In Foster = all animals in FosterCurrent MINUS the ones that have Location = "If The Fur Fits"
-    for animal_id in foster_animal_ids:
-        # Find the row in df that matches this animal_id
-        matching_rows = df[df['AnimalNumber'] == animal_id]
-        if not matching_rows.empty:
-            idx = matching_rows.index[0]
-            df.at[idx, 'Foster_Category'] = 'In Foster'
+    if foster_current is not None:
+        for idx, row in foster_current.iterrows():
+            animal_id = str(row.get('textbox9', ''))  # Animal ID column
+            location = str(row.get('Location', '')).strip()
             
-            # Add foster person info if available
-            if animal_id in foster_info:
-                df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
-                df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
-                df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
+            # Skip ITFF animals
+            if 'If The Fur Fits' in location:
+                continue
+                
+            # Find the row in df that matches this animal_id
+            matching_rows = df[df['AnimalNumber'] == animal_id]
+            if not matching_rows.empty:
+                idx = matching_rows.index[0]
+                df.at[idx, 'Foster_Category'] = 'In Foster'
+                
+                # Add foster person info if available
+                if animal_id in foster_info:
+                    df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
+                    df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
+                    df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
     
     # STEP 4: In If The Fur Fits = animals in FosterCurrent with Location = "If The Fur Fits"
     if foster_current is not None:

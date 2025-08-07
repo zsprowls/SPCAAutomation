@@ -573,10 +573,10 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                     ])):
                     hold_foster_dates[animal_id] = stage_start_date
     
-    # Classify animals - EXACT LOGIC AS SPECIFIED
+    # Classify animals - SIMPLE DIRECT LOGIC
     hold_foster_missed = []  # Track animals that should be "Needs Foster Now" but aren't
     
-    # FIRST: Mark all animals in FosterCurrent as "In Foster" (excluding ITFF)
+    # STEP 1: Mark all animals in FosterCurrent as "In Foster" (excluding ITFF)
     for animal_id in foster_animal_ids:
         # Find the row in df that matches this animal_id
         matching_rows = df[df['AnimalNumber'] == animal_id]
@@ -590,7 +590,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                 df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
     
-    # SECOND: Mark ITFF animals from FosterCurrent (override "In Foster" classification)
+    # STEP 2: Mark ITFF animals from FosterCurrent (override "In Foster" classification)
     if foster_current is not None:
         for idx, row in foster_current.iterrows():
             animal_id = str(row.get('textbox9', ''))  # Animal ID column
@@ -609,7 +609,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                         df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                         df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
     
-    # THIRD: Classify remaining animals based on AnimalInventory stages
+    # STEP 3: Classify remaining animals based on AnimalInventory stages
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()

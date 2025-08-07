@@ -635,20 +635,20 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             df.at[idx, 'Foster_Category'] = 'Might Need Foster Soon'
     
     # Add debug information to session state for display
-    # Calculate ITFF count
+    # Calculate ITFF count from FosterCurrent using Location field
     itff_count = 0
-    itff_stages_found = []
+    itff_locations_found = []
     if foster_current is not None:
         for idx, row in foster_current.iterrows():
-            stage = str(row.get('Stage', '')).strip()
-            if any(fur_fits_stage in stage for fur_fits_stage in ['In If the Fur Fits - Trial', 'In If the Fur Fits - Behavior', 'In If the Fur Fits - Medical']):
+            location = str(row.get('Location', '')).strip()
+            if 'If The Fur Fits' in location:
                 itff_count += 1
-                itff_stages_found.append(stage)
+                itff_locations_found.append(location)
     
-    # Get unique stages from FosterCurrent for debugging
-    unique_stages = []
-    if foster_current is not None and 'Stage' in foster_current.columns:
-        unique_stages = sorted(foster_current['Stage'].unique().tolist())
+    # Get unique locations from FosterCurrent for debugging
+    unique_locations = []
+    if foster_current is not None and 'Location' in foster_current.columns:
+        unique_locations = sorted(foster_current['Location'].unique().tolist())
     
     st.session_state.classification_debug = {
         'hold_foster_missed': hold_foster_missed,
@@ -656,8 +656,8 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
         'hold_foster_dates_count': len(hold_foster_dates),
         'total_foster_current': len(foster_current) if foster_current is not None else 0,
         'itff_count': itff_count,
-        'itff_stages_found': itff_stages_found,
-        'unique_stages': unique_stages
+        'itff_locations_found': itff_locations_found,
+        'unique_locations': unique_locations
     }
     
     return df
@@ -807,15 +807,15 @@ def main():
             debug_info = st.session_state.classification_debug
             st.write("**Classification Debug:**")
             st.write(f"- Total FosterCurrent records: {debug_info.get('total_foster_current', 0)}")
-            st.write(f"- ITFF count in FosterCurrent: {debug_info.get('itff_count', 0)}")
+            st.write(f"- ITFF count in FosterCurrent (by Location): {debug_info.get('itff_count', 0)}")
             st.write(f"- Foster animal IDs count (non-ITFF): {debug_info.get('foster_animal_ids_count', 0)}")
             st.write(f"- Hold foster dates count: {debug_info.get('hold_foster_dates_count', 0)}")
             st.write(f"- Hold foster missed: {len(debug_info.get('hold_foster_missed', []))}")
             st.write(f"- Expected In Foster: {debug_info.get('total_foster_current', 0) - debug_info.get('itff_count', 0)}")
-            st.write(f"- ITFF stages found: {debug_info.get('itff_stages_found', [])}")
-            st.write(f"- Total unique stages in FosterCurrent: {len(debug_info.get('unique_stages', []))}")
-            if len(debug_info.get('unique_stages', [])) <= 20:  # Only show if not too many
-                st.write(f"- All stages: {debug_info.get('unique_stages', [])}")
+            st.write(f"- ITFF locations found: {debug_info.get('itff_locations_found', [])}")
+            st.write(f"- Total unique locations in FosterCurrent: {len(debug_info.get('unique_locations', []))}")
+            if len(debug_info.get('unique_locations', [])) <= 20:  # Only show if not too many
+                st.write(f"- All locations: {debug_info.get('unique_locations', [])}")
         
                 # Show raw data verification
         st.write("**Raw Data Verification:**")

@@ -595,10 +595,6 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
         
-        # Skip if already classified
-        if df.at[idx, 'Foster_Category'] != 'Other':
-            continue
-        
         if 'Pending Foster Pickup' in stage:
             df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
     
@@ -647,10 +643,6 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
-        
-        # Skip if already classified
-        if df.at[idx, 'Foster_Category'] != 'Other':
-            continue
         
         if any(soon_stage in stage for soon_stage in [
             'Hold - Doc', 'Hold - Behavior', 'Hold - Behavior Mod.',

@@ -343,10 +343,11 @@ def load_data():
         for path in possible_paths:
             if os.path.exists(path):
                 animal_inventory_path = path
-                st.info(f"🔍 Found AnimalInventory.csv at: {path}")
+                # st.info(f"🔍 Found AnimalInventory.csv at: {path}")
                 break
             else:
-                st.info(f"❌ Not found: {path}")
+                # st.info(f"❌ Not found: {path}")
+                pass
         
         if animal_inventory_path:
             # Skip first 3 rows and start from row 4 where headers are
@@ -380,10 +381,11 @@ def load_data():
         for path in foster_possible_paths:
             if os.path.exists(path):
                 foster_current_path = path
-                st.info(f"🔍 Found FosterCurrent.csv at: {path}")
+                # st.info(f"🔍 Found FosterCurrent.csv at: {path}")
                 break
             else:
-                st.info(f"❌ Not found: {path}")
+                # st.info(f"❌ Not found: {path}")
+                pass
         
         if foster_current_path:
             # Skip first 6 rows and start from row 7 where headers are
@@ -416,10 +418,11 @@ def load_data():
         for path in hold_possible_paths:
             if os.path.exists(path):
                 hold_foster_path = path
-                st.info(f"🔍 Found Hold - Foster Stage Date.csv at: {path}")
+                # st.info(f"🔍 Found Hold - Foster Stage Date.csv at: {path}")
                 break
             else:
-                st.info(f"❌ Not found: {path}")
+                # st.info(f"❌ Not found: {path}")
+                pass
         
         if hold_foster_path:
             # Skip first 2 rows and start from row 3 where headers are
@@ -1207,9 +1210,6 @@ def main():
                 st.write("3. Restart the dashboard")
             
             # Custom inline editing solution with working links
-            st.write("**💡 Click any cell to edit. Press Enter to save. Click Animal ID or Foster PID to open PetPoint.**")
-            st.write("**📝 All text fields (Notes, Meds, Dates) are now expandable text areas that you can scroll in!**")
-            st.write("**🎯 Animal ID & Name are combined, Foster PID & Name are combined for more space!**")
             
             # Add CSS for the custom grid
             st.markdown("""

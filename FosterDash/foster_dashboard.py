@@ -1209,13 +1209,14 @@ def main():
             # Custom inline editing solution with working links
             st.write("**💡 Click any cell to edit. Press Enter to save. Click Animal ID or Foster PID to open PetPoint.**")
             st.write("**📝 All text fields (Notes, Meds, Dates) are now expandable text areas that you can scroll in!**")
+            st.write("**🎯 Animal ID & Name are combined, Foster PID & Name are combined for more space!**")
             
             # Add CSS for the custom grid
             st.markdown("""
             <style>
             .custom-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 1fr 1fr;
+                grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr 1fr;
                 gap: 8px;
                 padding: 8px;
                 background-color: #f8f9fa;
@@ -1225,7 +1226,7 @@ def main():
                 overflow-x: auto;
             }
             .custom-grid.needs-foster {
-                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 1fr 1fr 1fr;
+                grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr 1fr 1fr;
             }
             .grid-header {
                 background-color: #e9ecef;
@@ -1265,26 +1266,26 @@ def main():
             }
             @media (max-width: 1200px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr 1fr;
                 }
             }
             @media (max-width: 900px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 1fr;
                 }
             }
             @media (max-width: 600px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1fr 1.5fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1fr 1.5fr 1fr;
                 }
             }
             </style>
@@ -1294,13 +1295,11 @@ def main():
             grid_class = "custom-grid needs-foster" if selected_category == 'Needs Foster Now' else "custom-grid"
             header_html = f"""
             <div class="{grid_class}">
-                <div class="grid-header">Animal ID</div>
-                <div class="grid-header">Animal Name</div>
+                <div class="grid-header">Animal ID & Name</div>
                 <div class="grid-header">Intake Date</div>
                 <div class="grid-header">Animal Details</div>
                 <div class="grid-header">Stage</div>
-                <div class="grid-header">Foster PID</div>
-                <div class="grid-header">Foster Name</div>
+                <div class="grid-header">Foster PID & Name</div>
                 <div class="grid-header">Start Date</div>
                 <div class="grid-header">📝 Foster Notes</div>
                 <div class="grid-header">💊 Meds</div>
@@ -1327,17 +1326,20 @@ def main():
                 current_meds = foster_data.get('onmeds', False)
                 current_dates = foster_data.get('fosterpleadates', [])
                 
-                # Create row with columns (10 or 11 depending on tab)
+                # Create row with columns (8 or 9 depending on tab)
                 if selected_category == 'Needs Foster Now':
-                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11 = st.columns(11)
+                    col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
                 else:
-                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10 = st.columns(10)
+                    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
                 
                 with col1:
-                    st.markdown(row['Animal ID'], unsafe_allow_html=True)
+                    # Combined Animal ID & Name with working links
+                    animal_id_html = row['Animal ID']
+                    animal_name = row['Animal Name']
+                    combined_animal = f"{animal_id_html}<br><strong>{animal_name}</strong>"
+                    st.markdown(combined_animal, unsafe_allow_html=True)
+                
                 with col2:
-                    st.write(row['Animal Name'])
-                with col3:
                     # Format Intake Date to show only date, not time
                     intake_date = row['Intake Date/Time']
                     if pd.notna(intake_date) and intake_date != '':
@@ -1358,19 +1360,26 @@ def main():
                     else:
                         formatted_date = ''
                     st.write(formatted_date)
-                with col4:
+                
+                with col3:
                     # Combined Animal Details: Age, Sex, Species, Breed
                     animal_details = f"{row['Age']}, {row['Sex']}, {row['Species']}, {row['Breed']}"
                     st.write(animal_details)
-                with col5:
+                
+                with col4:
                     st.write(row['Stage'])
-                with col6:
-                    st.markdown(row['Foster PID'], unsafe_allow_html=True)
-                with col7:
-                    # Foster Name from classified data
+                
+                with col5:
+                    # Combined Foster PID & Name with working links
+                    foster_pid_html = row['Foster PID']
                     foster_name = row.get('Foster Name', '')
-                    st.write(foster_name)
-                with col8:
+                    if foster_name and foster_name != 'nan':
+                        combined_foster = f"{foster_pid_html}<br><strong>{foster_name}</strong>"
+                    else:
+                        combined_foster = foster_pid_html
+                    st.markdown(combined_foster, unsafe_allow_html=True)
+                
+                with col6:
                     # Start Date from classified data - format to show only date
                     start_date = row.get('Foster Start Date', '')
                     if pd.notna(start_date) and start_date != '':
@@ -1391,7 +1400,8 @@ def main():
                     else:
                         formatted_date = ''
                     st.write(formatted_date)
-                with col9:
+                
+                with col7:
                     # Foster Notes - expandable text area
                     new_notes = st.text_area(
                         "Notes",
@@ -1404,7 +1414,7 @@ def main():
                     if new_notes != current_notes:
                         supabase_manager.update_foster_notes(animal_number, new_notes)
                 
-                with col10:
+                with col8:
                     # Meds - expandable text area (same style as notes)
                     current_meds = foster_data.get('onmeds', '')
                     new_meds = st.text_area(
@@ -1418,9 +1428,9 @@ def main():
                     if new_meds != current_meds:
                         supabase_manager.update_on_meds(animal_number, new_meds)
                 
-                # Only create col11 content if we're on the Needs Foster Now tab
+                # Only create col9 content if we're on the Needs Foster Now tab
                 if selected_category == 'Needs Foster Now':
-                    with col11:
+                    with col9:
                         # Foster Plea Dates - expandable text area (same style as notes)
                         dates_str = ', '.join(current_dates) if current_dates else ''
                         new_dates = st.text_area(

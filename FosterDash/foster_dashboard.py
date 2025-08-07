@@ -573,7 +573,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                     ])):
                     hold_foster_dates[animal_id] = stage_start_date
     
-    # Classify animals - SIMPLIFIED LOGIC
+    # Classify animals - EXACT LOGIC AS SPECIFIED
     hold_foster_missed = []  # Track animals that should be "Needs Foster Now" but aren't
     
     # FIRST: Mark all animals in FosterCurrent as "In Foster" (excluding ITFF)
@@ -590,7 +590,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                 df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
     
-    # SECOND: Mark ITFF animals from FosterCurrent
+    # SECOND: Mark ITFF animals from FosterCurrent (override "In Foster" classification)
     if foster_current is not None:
         for idx, row in foster_current.iterrows():
             animal_id = str(row.get('textbox9', ''))  # Animal ID column
@@ -618,7 +618,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
         if df.at[idx, 'Foster_Category'] != 'Other':
             continue
         
-        # Check if needs foster now
+        # Hold Foster = anything in AnimalInventory with Hold Foster, Hold Cruelty Foster, or Hold SAFE Foster stages
         if any(need_stage in stage for need_stage in [
             'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
         ]):
@@ -628,7 +628,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             if animal_id in hold_foster_dates:
                 df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
         
-        # Check if pending foster pickup
+        # Pending Foster Pickup = Anything in AnimalInventory with that stage
         elif 'Pending Foster Pickup' in stage:
             df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
         

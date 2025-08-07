@@ -1261,7 +1261,7 @@ def main():
                 <div class="grid-header">Animal Details</div>
                 <div class="grid-header">Stage</div>
                 <div class="grid-header">Foster PID & Name</div>
-                <div class="grid-header">Hold - Foster Date</div>
+                <div class="grid-header">{'Hold - Foster Date' if selected_category == 'Needs Foster Now' else 'Start Date'}</div>
                 <div class="grid-header">📝 Foster Notes</div>
                 <div class="grid-header">💊 Meds</div>
             """

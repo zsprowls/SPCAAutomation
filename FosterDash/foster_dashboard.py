@@ -576,6 +576,8 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                     hold_foster_dates[animal_id] = stage_start_date
     
     # Classify animals
+    hold_foster_missed = []  # Track animals that should be "Needs Foster Now" but aren't
+    
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
@@ -631,6 +633,13 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             'Hold - Surgery', 'Hold - Stray', 'Hold - Legal Notice', 'Evaluate'
         ]):
             df.at[idx, 'Foster_Category'] = 'Might Need Foster Soon'
+    
+    # Add debug information to session state for display
+    st.session_state.classification_debug = {
+        'hold_foster_missed': hold_foster_missed,
+        'foster_animal_ids_count': len(foster_animal_ids),
+        'hold_foster_dates_count': len(hold_foster_dates)
+    }
     
     return df
 
@@ -774,18 +783,52 @@ def main():
         st.write(f"- Data loaded: {st.session_state.get('data_loaded', False)}")
         st.write(f"- Cache timestamp: {cache_timestamp}")
         
-        # Show raw data verification
-        st.write("**Raw Data Verification:**")
-        if animal_inventory is not None:
-            raw_hold_foster = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)]
-            raw_hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)]
-            raw_hold_safe_em = animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)]
-            raw_hold_cruelty = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)]
-            st.write(f"- Raw Hold - Foster count: {len(raw_hold_foster)}")
-            st.write(f"- Raw Hold - SAFE Foster count: {len(raw_hold_safe)}")
-            st.write(f"- Raw Hold – SAFE Foster count (em dash): {len(raw_hold_safe_em)}")
-            st.write(f"- Raw Hold - Cruelty Foster count: {len(raw_hold_cruelty)}")
-            st.write(f"- Raw total: {len(raw_hold_foster) + len(raw_hold_safe) + len(raw_hold_safe_em) + len(raw_hold_cruelty)}")
+        # Show classification debug info
+        if 'classification_debug' in st.session_state:
+             debug_info = st.session_state.classification_debug
+             st.write("**Classification Debug:**")
+             st.write(f"- Foster animal IDs count: {debug_info.get('foster_animal_ids_count', 0)}")
+             st.write(f"- Hold foster dates count: {debug_info.get('hold_foster_dates_count', 0)}")
+             st.write(f"- Hold foster missed: {len(debug_info.get('hold_foster_missed', []))}")
+         
+         # Show raw data verification
+         st.write("**Raw Data Verification:**")
+         if animal_inventory is not None:
+             raw_hold_foster = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)]
+             raw_hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)]
+             raw_hold_safe_em = animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)]
+             raw_hold_cruelty = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)]
+             st.write(f"- Raw Hold - Foster count: {len(raw_hold_foster)}")
+             st.write(f"- Raw Hold - SAFE Foster count: {len(raw_hold_safe)}")
+             st.write(f"- Raw Hold – SAFE Foster count (em dash): {len(raw_hold_safe_em)}")
+             st.write(f"- Raw Hold - Cruelty Foster count: {len(raw_hold_cruelty)}")
+             st.write(f"- Raw total: {len(raw_hold_foster) + len(raw_hold_safe) + len(raw_hold_safe_em) + len(raw_hold_cruelty)}")
+             
+             # Show detailed breakdown of what's happening
+             st.write("**Detailed Classification Analysis:**")
+             
+             # Check for animals that should be "Needs Foster Now" but are classified as something else
+             hold_foster_animals = animal_inventory[
+                 animal_inventory['Stage'].str.contains('Hold - Foster|Hold - SAFE Foster|Hold – SAFE Foster|Hold - Cruelty Foster', na=False)
+             ]
+             
+             st.write(f"- Total animals with Hold Foster stages: {len(hold_foster_animals)}")
+             
+             # Show what these animals are actually classified as
+             if not classified_data.empty:
+                 hold_foster_animal_ids = hold_foster_animals['AnimalNumber'].tolist()
+                 actual_classifications = classified_data[classified_data['AnimalNumber'].isin(hold_foster_animal_ids)]
+                 
+                 st.write("**Hold Foster Animals - Actual Classifications:**")
+                 classification_counts = actual_classifications['Foster_Category'].value_counts()
+                 for category, count in classification_counts.items():
+                     st.write(f"- {category}: {count}")
+                 
+                 # Show animals that should be "Needs Foster Now" but aren't
+                 misclassified = actual_classifications[actual_classifications['Foster_Category'] != 'Needs Foster Now']
+                 if not misclassified.empty:
+                     st.write("**Misclassified Hold Foster Animals:**")
+                     st.dataframe(misclassified[['AnimalNumber', 'AnimalName', 'Stage', 'Foster_Category']], use_container_width=True)
     
     # Database Status
     if supabase_enabled:

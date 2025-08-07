@@ -573,10 +573,36 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                     ])):
                     hold_foster_dates[animal_id] = stage_start_date
     
-    # Classify animals - SIMPLE DIRECT LOGIC
+    # Classify animals - EXACT LOGIC AS SPECIFIED
     hold_foster_missed = []  # Track animals that should be "Needs Foster Now" but aren't
     
-    # STEP 1: Mark all animals in FosterCurrent as "In Foster" (excluding ITFF)
+    # STEP 1: Hold Foster = anything in AnimalInventory with Hold Foster, Hold Cruelty Foster, or Hold SAFE Foster stages
+    for idx, row in df.iterrows():
+        animal_id = str(row.get('AnimalNumber', ''))
+        stage = str(row.get('Stage', '')).strip()
+        
+        if any(need_stage in stage for need_stage in [
+            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
+        ]):
+            df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
+            
+            # Add Hold - Foster date if available
+            if animal_id in hold_foster_dates:
+                df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
+    
+    # STEP 2: Pending Foster Pickup = Anything in AnimalInventory with that stage
+    for idx, row in df.iterrows():
+        animal_id = str(row.get('AnimalNumber', ''))
+        stage = str(row.get('Stage', '')).strip()
+        
+        # Skip if already classified
+        if df.at[idx, 'Foster_Category'] != 'Other':
+            continue
+        
+        if 'Pending Foster Pickup' in stage:
+            df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
+    
+    # STEP 3: In Foster = all animals in FosterCurrent MINUS the ones that have Location = "If The Fur Fits"
     for animal_id in foster_animal_ids:
         # Find the row in df that matches this animal_id
         matching_rows = df[df['AnimalNumber'] == animal_id]
@@ -590,7 +616,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                 df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
     
-    # STEP 2: Mark ITFF animals from FosterCurrent (override "In Foster" classification)
+    # STEP 4: In If The Fur Fits = animals in FosterCurrent with Location = "If The Fur Fits"
     if foster_current is not None:
         for idx, row in foster_current.iterrows():
             animal_id = str(row.get('textbox9', ''))  # Animal ID column
@@ -609,7 +635,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                         df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
                         df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
     
-    # STEP 3: Classify remaining animals based on AnimalInventory stages
+    # STEP 5: Check if might need foster soon (remaining animals)
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
@@ -618,22 +644,7 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
         if df.at[idx, 'Foster_Category'] != 'Other':
             continue
         
-        # Hold Foster = anything in AnimalInventory with Hold Foster, Hold Cruelty Foster, or Hold SAFE Foster stages
-        if any(need_stage in stage for need_stage in [
-            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
-        ]):
-            df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
-            
-            # Add Hold - Foster date if available
-            if animal_id in hold_foster_dates:
-                df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
-        
-        # Pending Foster Pickup = Anything in AnimalInventory with that stage
-        elif 'Pending Foster Pickup' in stage:
-            df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
-        
-        # Check if might need foster soon
-        elif any(soon_stage in stage for soon_stage in [
+        if any(soon_stage in stage for soon_stage in [
             'Hold - Doc', 'Hold - Behavior', 'Hold - Behavior Mod.',
             'Hold - Surgery', 'Hold - Stray', 'Hold - Legal Notice', 'Evaluate'
         ]):

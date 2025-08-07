@@ -1208,6 +1208,7 @@ def main():
             
             # Custom inline editing solution with working links
             st.write("**💡 Click any cell to edit. Press Enter to save. Click Animal ID or Foster PID to open PetPoint.**")
+            st.write("**🔍 Hover over the small text fields to see the full content in tooltips!**")
             
             # Add CSS for the custom grid
             st.markdown("""
@@ -1261,6 +1262,47 @@ def main():
             .editable-cell {
                 background-color: #fff3cd;
                 border: 2px solid #ffc107;
+            }
+            .tooltip {
+                position: relative;
+                display: inline-block;
+            }
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 300px;
+                background-color: #555;
+                color: #fff;
+                text-align: left;
+                border-radius: 6px;
+                padding: 10px;
+                position: absolute;
+                z-index: 9999;
+                bottom: 125%;
+                left: 50%;
+                margin-left: -150px;
+                opacity: 0;
+                transition: opacity 0.3s;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                max-height: 200px;
+                overflow-y: auto;
+                font-size: 12px;
+                line-height: 1.4;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            }
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
             }
             @media (max-width: 1200px) {
                 .custom-grid {
@@ -1391,7 +1433,7 @@ def main():
                         formatted_date = ''
                     st.write(formatted_date)
                 with col9:
-                    # Foster Notes - editable text area
+                    # Foster Notes - editable text area with tooltip
                     new_notes = st.text_area(
                         "Notes",
                         value=current_notes,
@@ -1399,10 +1441,18 @@ def main():
                         label_visibility="collapsed",
                         height=60
                     )
+                    # Add tooltip for the text area
+                    if current_notes and len(current_notes) > 20:
+                        st.markdown(f"""
+                        <div class="tooltip">
+                            <span style="font-size: 9px; color: #888;">📝</span>
+                            <span class="tooltiptext">{current_notes}</span>
+                        </div>
+                        """, unsafe_allow_html=True)
                     if new_notes != current_notes:
                         supabase_manager.update_foster_notes(animal_number, new_notes)
                 with col10:
-                    # Meds - editable text input
+                    # Meds - editable text input with tooltip
                     current_meds = foster_data.get('onmeds', '')  # Now a string instead of boolean
                     new_meds = st.text_input(
                         "Meds",
@@ -1410,13 +1460,21 @@ def main():
                         key=f"meds_{animal_number}_{idx}",
                         label_visibility="collapsed"
                     )
+                    # Add tooltip for the text input
+                    if current_meds and len(current_meds) > 15:
+                        st.markdown(f"""
+                        <div class="tooltip">
+                            <span style="font-size: 9px; color: #888;">💊</span>
+                            <span class="tooltiptext">{current_meds}</span>
+                        </div>
+                        """, unsafe_allow_html=True)
                     if new_meds != current_meds:
                         supabase_manager.update_on_meds(animal_number, new_meds)
                 
                 # Only create col11 content if we're on the Needs Foster Now tab
                 if selected_category == 'Needs Foster Now':
                     with col11:
-                        # Foster Plea Dates - editable
+                        # Foster Plea Dates - editable with tooltip
                         dates_str = ', '.join(current_dates) if current_dates else ''
                         new_dates = st.text_input(
                             "Dates",
@@ -1424,6 +1482,14 @@ def main():
                             key=f"dates_{animal_number}_{idx}",
                             label_visibility="collapsed"
                         )
+                        # Add tooltip for the dates input
+                        if dates_str and len(dates_str) > 15:
+                            st.markdown(f"""
+                            <div class="tooltip">
+                                <span style="font-size: 9px; color: #888;">📅</span>
+                                <span class="tooltiptext">{dates_str}</span>
+                            </div>
+                            """, unsafe_allow_html=True)
                         if new_dates != dates_str:
                             if new_dates:
                                 dates = [d.strip() for d in new_dates.split(',') if d.strip()]

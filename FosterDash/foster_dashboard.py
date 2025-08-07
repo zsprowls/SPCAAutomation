@@ -885,55 +885,6 @@ def main():
                 st.write("**Category Counts (including duplicates):**")
                 for category, count in debug_info['category_counts'].items():
                     st.write(f"- {category}: {count}")
-            
-            # Show Hold - Foster date debugging
-            if selected_category == 'Needs Foster Now' and not filtered_data.empty:
-                hold_foster_animals = filtered_data[filtered_data['Hold_Foster_Date'].notna()]
-                st.write(f"**Hold - Foster Date Debug:**")
-                st.write(f"- Animals with Hold - Foster dates: {len(hold_foster_animals)}")
-                if len(hold_foster_animals) > 0:
-                    st.write("**Sample Hold - Foster dates:**")
-                    sample_dates = hold_foster_animals[['AnimalNumber', 'Hold_Foster_Date']].head(5)
-                    st.dataframe(sample_dates, use_container_width=True)
-        
-                # Show raw data verification
-        st.write("**Raw Data Verification:**")
-        if animal_inventory is not None:
-             raw_hold_foster = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)]
-             raw_hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)]
-             raw_hold_safe_em = animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)]
-             raw_hold_cruelty = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)]
-             st.write(f"- Raw Hold - Foster count: {len(raw_hold_foster)}")
-             st.write(f"- Raw Hold - SAFE Foster count: {len(raw_hold_safe)}")
-             st.write(f"- Raw Hold – SAFE Foster count (em dash): {len(raw_hold_safe_em)}")
-             st.write(f"- Raw Hold - Cruelty Foster count: {len(raw_hold_cruelty)}")
-             st.write(f"- Raw total: {len(raw_hold_foster) + len(raw_hold_safe) + len(raw_hold_safe_em) + len(raw_hold_cruelty)}")
-             
-             # Show detailed breakdown of what's happening
-             st.write("**Detailed Classification Analysis:**")
-             
-             # Check for animals that should be "Needs Foster Now" but are classified as something else
-             hold_foster_animals = animal_inventory[
-                 animal_inventory['Stage'].str.contains('Hold - Foster|Hold - SAFE Foster|Hold – SAFE Foster|Hold - Cruelty Foster', na=False)
-             ]
-             
-             st.write(f"- Total animals with Hold Foster stages: {len(hold_foster_animals)}")
-             
-             # Show what these animals are actually classified as
-             if not classified_data.empty:
-                 hold_foster_animal_ids = hold_foster_animals['AnimalNumber'].tolist()
-                 actual_classifications = classified_data[classified_data['AnimalNumber'].isin(hold_foster_animal_ids)]
-                 
-                 st.write("**Hold Foster Animals - Actual Classifications:**")
-                 classification_counts = actual_classifications['Foster_Category'].value_counts()
-                 for category, count in classification_counts.items():
-                     st.write(f"- {category}: {count}")
-                 
-                 # Show animals that should be "Needs Foster Now" but aren't
-                 misclassified = actual_classifications[actual_classifications['Foster_Category'] != 'Needs Foster Now']
-                 if not misclassified.empty:
-                     st.write("**Misclassified Hold Foster Animals:**")
-                     st.dataframe(misclassified[['AnimalNumber', 'AnimalName', 'Stage', 'Foster_Category']], use_container_width=True)
     
     # Database Status
     if supabase_enabled:
@@ -1310,7 +1261,7 @@ def main():
                 <div class="grid-header">Animal Details</div>
                 <div class="grid-header">Stage</div>
                 <div class="grid-header">Foster PID & Name</div>
-                <div class="grid-header">Start Date</div>
+                <div class="grid-header">Hold - Foster Date</div>
                 <div class="grid-header">📝 Foster Notes</div>
                 <div class="grid-header">💊 Meds</div>
             """
@@ -1390,25 +1341,47 @@ def main():
                     st.markdown(combined_foster, unsafe_allow_html=True)
                 
                 with col6:
-                    # Start Date from classified data - format to show only date
-                    start_date = row.get('Foster Start Date', '')
-                    if pd.notna(start_date) and start_date != '':
-                        try:
-                            # Try to parse and format the date
-                            if isinstance(start_date, str):
-                                # If it's a string, try to parse it
-                                parsed_date = pd.to_datetime(start_date, errors='coerce')
-                                if pd.notna(parsed_date):
-                                    formatted_date = parsed_date.strftime('%m/%d/%Y')
+                    # Show Hold - Foster Date for "Needs Foster Now", otherwise Foster Start Date
+                    if selected_category == 'Needs Foster Now':
+                        # Hold - Foster Date from classified data - format to show only date
+                        hold_date = row.get('Hold - Foster Date', '')
+                        if pd.notna(hold_date) and hold_date != '':
+                            try:
+                                # Try to parse and format the date
+                                if isinstance(hold_date, str):
+                                    # If it's a string, try to parse it
+                                    parsed_date = pd.to_datetime(hold_date, errors='coerce')
+                                    if pd.notna(parsed_date):
+                                        formatted_date = parsed_date.strftime('%m/%d/%Y')
+                                    else:
+                                        formatted_date = hold_date
                                 else:
-                                    formatted_date = start_date
-                            else:
-                                # If it's already a datetime object
-                                formatted_date = start_date.strftime('%m/%d/%Y')
-                        except:
-                            formatted_date = str(start_date)
+                                    # If it's already a datetime object
+                                    formatted_date = hold_date.strftime('%m/%d/%Y')
+                            except:
+                                formatted_date = str(hold_date)
+                        else:
+                            formatted_date = ''
                     else:
-                        formatted_date = ''
+                        # Foster Start Date from classified data - format to show only date
+                        start_date = row.get('Foster Start Date', '')
+                        if pd.notna(start_date) and start_date != '':
+                            try:
+                                # Try to parse and format the date
+                                if isinstance(start_date, str):
+                                    # If it's a string, try to parse it
+                                    parsed_date = pd.to_datetime(start_date, errors='coerce')
+                                    if pd.notna(parsed_date):
+                                        formatted_date = parsed_date.strftime('%m/%d/%Y')
+                                    else:
+                                        formatted_date = start_date
+                                else:
+                                    # If it's already a datetime object
+                                    formatted_date = start_date.strftime('%m/%d/%Y')
+                            except:
+                                formatted_date = str(start_date)
+                        else:
+                            formatted_date = ''
                     st.write(formatted_date)
                 
                 with col7:

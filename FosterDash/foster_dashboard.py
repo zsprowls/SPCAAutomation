@@ -519,13 +519,11 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             for idx, row in foster_current.iterrows():
                 animal_id = str(row[animal_id_col])
                 
-                # Get the stage to check if it's If The Fur Fits
-                stage = str(row.get('Stage', '')).strip()
+                # Get the location to check if it's If The Fur Fits
+                location = str(row.get('Location', '')).strip()
                 
-                # Only add to foster_animal_ids if it's NOT an If The Fur Fits stage
-                if not any(fur_fits_stage in stage for fur_fits_stage in [
-                    'In If the Fur Fits - Trial', 'In If the Fur Fits - Behavior', 'In If the Fur Fits - Medical'
-                ]):
+                # Only add to foster_animal_ids if it's NOT an If The Fur Fits location
+                if 'If The Fur Fits' not in location:
                     foster_animal_ids.add(animal_id)
                 
                 # Always add foster info for all animals (including If The Fur Fits)

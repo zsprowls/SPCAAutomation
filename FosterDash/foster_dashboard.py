@@ -785,15 +785,15 @@ def main():
         
         # Show classification debug info
         if 'classification_debug' in st.session_state:
-             debug_info = st.session_state.classification_debug
-             st.write("**Classification Debug:**")
-             st.write(f"- Foster animal IDs count: {debug_info.get('foster_animal_ids_count', 0)}")
-             st.write(f"- Hold foster dates count: {debug_info.get('hold_foster_dates_count', 0)}")
-             st.write(f"- Hold foster missed: {len(debug_info.get('hold_foster_missed', []))}")
-         
-         # Show raw data verification
-         st.write("**Raw Data Verification:**")
-         if animal_inventory is not None:
+            debug_info = st.session_state.classification_debug
+            st.write("**Classification Debug:**")
+            st.write(f"- Foster animal IDs count: {debug_info.get('foster_animal_ids_count', 0)}")
+            st.write(f"- Hold foster dates count: {debug_info.get('hold_foster_dates_count', 0)}")
+            st.write(f"- Hold foster missed: {len(debug_info.get('hold_foster_missed', []))}")
+        
+                # Show raw data verification
+        st.write("**Raw Data Verification:**")
+        if animal_inventory is not None:
              raw_hold_foster = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)]
              raw_hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)]
              raw_hold_safe_em = animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)]

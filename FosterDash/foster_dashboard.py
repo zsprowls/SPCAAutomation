@@ -635,10 +635,20 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             df.at[idx, 'Foster_Category'] = 'Might Need Foster Soon'
     
     # Add debug information to session state for display
+    # Calculate ITFF count
+    itff_count = 0
+    if foster_current is not None:
+        for idx, row in foster_current.iterrows():
+            stage = str(row.get('Stage', '')).strip()
+            if any(fur_fits_stage in stage for fur_fits_stage in ['In If the Fur Fits - Trial', 'In If the Fur Fits - Behavior', 'In If the Fur Fits - Medical']):
+                itff_count += 1
+    
     st.session_state.classification_debug = {
         'hold_foster_missed': hold_foster_missed,
         'foster_animal_ids_count': len(foster_animal_ids),
-        'hold_foster_dates_count': len(hold_foster_dates)
+        'hold_foster_dates_count': len(hold_foster_dates),
+        'total_foster_current': len(foster_current) if foster_current is not None else 0,
+        'itff_count': itff_count
     }
     
     return df
@@ -787,9 +797,12 @@ def main():
         if 'classification_debug' in st.session_state:
             debug_info = st.session_state.classification_debug
             st.write("**Classification Debug:**")
-            st.write(f"- Foster animal IDs count: {debug_info.get('foster_animal_ids_count', 0)}")
+            st.write(f"- Total FosterCurrent records: {debug_info.get('total_foster_current', 0)}")
+            st.write(f"- ITFF count in FosterCurrent: {debug_info.get('itff_count', 0)}")
+            st.write(f"- Foster animal IDs count (non-ITFF): {debug_info.get('foster_animal_ids_count', 0)}")
             st.write(f"- Hold foster dates count: {debug_info.get('hold_foster_dates_count', 0)}")
             st.write(f"- Hold foster missed: {len(debug_info.get('hold_foster_missed', []))}")
+            st.write(f"- Expected In Foster: {debug_info.get('total_foster_current', 0) - debug_info.get('itff_count', 0)}")
         
                 # Show raw data verification
         st.write("**Raw Data Verification:**")

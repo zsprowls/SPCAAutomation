@@ -328,6 +328,81 @@ def create_todo_table(doc, category):
     
     return table
 
+def map_outcome_group(row):
+    op_type = str(row['OperationType']).strip().upper()
+    op_subtype = str(row['OperationSubType']).strip().upper()
+    
+    # Common outcome groupings - you can adjust these based on your OutcomeGrouping.xlsx
+    if op_type == 'ADOPTION':
+        if 'OFFSITE' in op_subtype:
+            return 'Adoption - Offsite'
+        elif 'NEW ADOPTER' in op_subtype:
+            return 'Adoption - New Adopter'
+        else:
+            return 'Adoption - Other'
+    elif op_type == 'RETURN TO OWNER/GUARDIAN':
+        return 'Return to Owner'
+    elif op_type == 'TRANSFER OUT':
+        return 'Transfer Out'
+    elif op_type == 'CLINIC OUT':
+        return 'Clinic Out'
+    elif op_type == 'MISSING':
+        return 'Missing'
+    elif op_type == 'WILDLIFE RELEASE':
+        return 'Wildlife Release'
+    elif op_type == 'DIED':
+        return 'Died'
+    elif op_type == 'EUTHANASIA':
+        if 'REQUESTED SLEEP' in op_subtype:
+            return 'Euthanasia - Requested Sleep'
+        elif 'HUMANE REASONS' in op_subtype:
+            return 'Euthanasia - Humane Reasons'
+        else:
+            return 'Euthanasia - Other'
+    elif op_type == 'DOA':
+        return 'DOA'
+    else:
+        return 'Other'
+
+def get_outcome_count_detail(check_dates):
+    outcome_path = os.path.join(LOAD_FILES_DIR, 'AnimalOutcome.csv')
+    df_outcome = pd.read_csv(outcome_path, skiprows=3)
+    
+    # Filter by outcome date (Textbox50)
+    df_outcome['Textbox50'] = pd.to_datetime(df_outcome['Textbox50'], format='mixed').dt.date
+    check_dates_dt = [pd.to_datetime(date).date() for date in check_dates]
+    filtered = df_outcome[df_outcome['Textbox50'].isin(check_dates_dt)].copy()
+    
+    # Assign group
+    filtered['OutcomeGroup'] = filtered.apply(map_outcome_group, axis=1)
+    
+    # For detail, include all rows (even not counted)
+    all_rows = df_outcome.copy()
+    all_rows['OutcomeGroup'] = all_rows.apply(map_outcome_group, axis=1)
+    
+    # Only keep relevant columns
+    detail = all_rows[['AnimalNumber', 'Species', 'Textbox50', 'OperationType', 'OperationSubType', 'OutcomeGroup']]
+    return detail
+
+def get_outcome_summary(detail_df):
+    # Define outcome group order - you can adjust this based on your OutcomeGrouping.xlsx
+    OUTCOME_GROUP_ORDER = [
+        'Adoption - Offsite', 'Adoption - New Adopter', 'Adoption - Other',
+        'Return to Owner', 'Transfer Out', 'Clinic Out', 'Missing', 
+        'Wildlife Release', 'Died', 'Euthanasia - Requested Sleep', 
+        'Euthanasia - Humane Reasons', 'Euthanasia - Other', 'DOA', 'Other'
+    ]
+    
+    summary = []
+    for group in OUTCOME_GROUP_ORDER:
+        group_df = detail_df[detail_df['OutcomeGroup'] == group]
+        cat_count = (group_df['Species'].str.lower() == 'cat').sum() if not group_df.empty else 0
+        dog_count = (group_df['Species'].str.lower() == 'dog').sum() if not group_df.empty else 0
+        other_count = (~group_df['Species'].str.lower().isin(['cat', 'dog'])).sum() if not group_df.empty else 0
+        total_count = cat_count + dog_count + other_count
+        summary.append({'Group': group, 'Cat': cat_count, 'Dog': dog_count, 'Other': other_count, 'Total': total_count})
+    return pd.DataFrame(summary)
+
 def export_to_word(check_dates):
     # Get all our data
     adoptions = get_adoptions_count(check_dates)
@@ -517,6 +592,51 @@ def export_to_word(check_dates):
         intake_table.rows[i + 1].cells[2].text = str(row['Dog']) if row['Dog'] != 0 else ''
         intake_table.rows[i + 1].cells[3].text = str(row['Other']) if row['Other'] != 0 else ''
         intake_table.rows[i + 1].cells[4].text = str(row['Total']) if row['Total'] != 0 else ''
+    
+    # Add blank line
+    doc.add_paragraph()
+    
+    # Outcomes section
+    doc.add_heading(f'Outcomes: {check_dates_str}', level=1)
+    
+    # Get outcome summary with totals
+    outcome_detail = get_outcome_count_detail(check_dates)
+    outcome_summary = get_outcome_summary(outcome_detail)
+    
+    # Add total row to outcome summary
+    outcome_total_row = {
+        'Group': 'TOTAL',
+        'Cat': outcome_summary['Cat'].sum(),
+        'Dog': outcome_summary['Dog'].sum(),
+        'Other': outcome_summary['Other'].sum(),
+        'Total': outcome_summary['Total'].sum()
+    }
+    outcome_summary = pd.concat([outcome_summary, pd.DataFrame([outcome_total_row])], ignore_index=True)
+    
+    # Create outcome table
+    outcome_table = doc.add_table(rows=len(outcome_summary) + 1, cols=5)
+    outcome_table.style = 'Table Grid'
+    
+    # Add header
+    outcome_table.rows[0].cells[0].text = 'Group'
+    outcome_table.rows[0].cells[1].text = 'Cat'
+    outcome_table.rows[0].cells[2].text = 'Dog'
+    outcome_table.rows[0].cells[3].text = 'Other'
+    outcome_table.rows[0].cells[4].text = 'Total'
+    
+    # Make header bold
+    for cell in outcome_table.rows[0].cells:
+        for paragraph in cell.paragraphs:
+            for run in paragraph.runs:
+                run.bold = True
+    
+    # Add data
+    for i, row in outcome_summary.iterrows():
+        outcome_table.rows[i + 1].cells[0].text = str(row['Group'])
+        outcome_table.rows[i + 1].cells[1].text = str(row['Cat']) if row['Cat'] != 0 else ''
+        outcome_table.rows[i + 1].cells[2].text = str(row['Dog']) if row['Dog'] != 0 else ''
+        outcome_table.rows[i + 1].cells[3].text = str(row['Other']) if row['Other'] != 0 else ''
+        outcome_table.rows[i + 1].cells[4].text = str(row['Total']) if row['Total'] != 0 else ''
     
     # Save the document
     output_path = os.path.join('MorningEmail', 'morning_email.docx')

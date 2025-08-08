@@ -13,6 +13,18 @@ For Fosters Number File:
         -Change 'Based On:' to 'Foster Start and Status Date'
         -Change 'Based On From:' and 'Based on To' to first and last day of the month you want to pull
 
+For Infirmary Number files:
+-Go to Reports Website
+    -Click on Medical Dropdown
+    -Click on Medical: Condition History
+        -Change Exam Start Date and Exam End Date to first and last day of the month you want to pull
+
+    -Click on Medical Dropdown
+    -Click on Medical: Exam/Surgery Extended
+        -Change Based on Status to Completed
+        -Change Based on From and Based on To to first adn last day of the month you want to pull
+
+
 After pulling these files into this folder and insuring that they have the correct names:
 Adoptions Numbers: AnimalOutcome.csv
 Fosters Numbers: FosterAnimalExtended.xls

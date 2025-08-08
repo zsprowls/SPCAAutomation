@@ -380,7 +380,7 @@ if area == "Canine Adoptions & Holding":
         }}
         .kennel-animal {{
             color: #222;
-            font-size: 1.2em !important; /* Increased base size */
+            font-size: 0.9em !important; /* Increased base size */
             margin: 0;
             padding: 0;
             line-height: 1.2em;
@@ -389,6 +389,7 @@ if area == "Canine Adoptions & Holding":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -410,7 +411,6 @@ if area == "Canine Adoptions & Holding":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -437,7 +437,6 @@ if area == "Canine Adoptions & Holding":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -602,6 +601,7 @@ elif area == "Cat Condo Room":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -623,7 +623,6 @@ elif area == "Cat Condo Room":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -636,7 +635,6 @@ elif area == "Cat Condo Room":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -785,6 +783,7 @@ elif area == "G Available Cats":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -806,7 +805,6 @@ elif area == "G Available Cats":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -819,7 +817,6 @@ elif area == "G Available Cats":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -968,6 +965,7 @@ elif area == "H Available Cats":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -989,7 +987,6 @@ elif area == "H Available Cats":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -1002,7 +999,6 @@ elif area == "H Available Cats":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -1151,6 +1147,7 @@ elif area == "I Behavior/Bite Case":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -1172,7 +1169,6 @@ elif area == "I Behavior/Bite Case":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -1185,7 +1181,6 @@ elif area == "I Behavior/Bite Case":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -1334,6 +1329,7 @@ elif area == "Foster Care":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -1355,7 +1351,6 @@ elif area == "Foster Care":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -1368,7 +1363,6 @@ elif area == "Foster Care":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -1514,6 +1508,7 @@ elif area == "Cat Isolation 235":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -1535,7 +1530,6 @@ elif area == "Cat Isolation 235":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -1548,7 +1542,6 @@ elif area == "Cat Isolation 235":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -1697,6 +1690,7 @@ elif area == "Cat Isolation 234 Overflow":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -1718,7 +1712,6 @@ elif area == "Cat Isolation 234 Overflow":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -1731,7 +1724,6 @@ elif area == "Cat Isolation 234 Overflow":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -1890,6 +1882,7 @@ elif area == "Cat Isolation 233 Ringworm":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -1911,7 +1904,6 @@ elif area == "Cat Isolation 233 Ringworm":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -1924,7 +1916,6 @@ elif area == "Cat Isolation 233 Ringworm":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -2070,6 +2061,7 @@ elif area == "Cat Isolation 232 Panleuk":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -2091,7 +2083,6 @@ elif area == "Cat Isolation 232 Panleuk":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -2104,7 +2095,6 @@ elif area == "Cat Isolation 232 Panleuk":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -2250,6 +2240,7 @@ elif area == "Cat Isolation 231 Holds":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -2271,7 +2262,6 @@ elif area == "Cat Isolation 231 Holds":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -2284,7 +2274,6 @@ elif area == "Cat Isolation 231 Holds":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -2476,6 +2465,7 @@ elif area == "Cat Treatment":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -2497,7 +2487,6 @@ elif area == "Cat Treatment":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -2652,6 +2641,7 @@ elif area == "ICU":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -2673,7 +2663,6 @@ elif area == "ICU":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -2686,7 +2675,6 @@ elif area == "ICU":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -2832,6 +2820,7 @@ elif area == "Administration":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -2853,7 +2842,6 @@ elif area == "Administration":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -2866,7 +2854,6 @@ elif area == "Administration":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -3028,6 +3015,7 @@ elif area == "Multi-Species Holding":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -3049,7 +3037,6 @@ elif area == "Multi-Species Holding":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -3062,7 +3049,6 @@ elif area == "Multi-Species Holding":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -3311,6 +3297,7 @@ elif area == "Small Animals & Exotics":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -3336,7 +3323,6 @@ elif area == "Small Animals & Exotics":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -3476,6 +3462,7 @@ elif area == "Cat Recovery":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -3497,7 +3484,6 @@ elif area == "Cat Recovery":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -3510,7 +3496,6 @@ elif area == "Cat Recovery":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -3673,6 +3658,7 @@ elif area == "Dog Recovery":
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -3694,7 +3680,6 @@ elif area == "Dog Recovery":
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -3707,7 +3692,6 @@ elif area == "Dog Recovery":
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{
@@ -3869,6 +3853,7 @@ else:  # Adoptions Lobby
             white-space: normal;
         }}
         .stage-abbr {{
+            font-size: 0.7em;
             color: #c00;
             font-weight: bold;
             text-transform: uppercase;
@@ -3890,7 +3875,6 @@ else:  # Adoptions Lobby
         .photo-count {{
             color: #666;
             font-weight: normal;
-            font-size: 0.7em;
             font-style: italic;
             margin-top: 1px;
             display: inline-block;
@@ -3903,7 +3887,6 @@ else:  # Adoptions Lobby
         }}
         @container (max-width: 150px) {{
             .kennel-animal {{
-                font-size: 0.7em;
             }}
         }}
         @container (max-width: 100px) {{

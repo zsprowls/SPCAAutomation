@@ -267,7 +267,7 @@ def classify_animals_optimized(animal_inventory, foster_current, hold_foster_dat
             
             # Filter for Hold - Foster stages and create mapping
             hold_foster_filtered = hold_foster_data[
-                hold_foster_data[stage_col].str.contains('Hold - Foster|Hold - Cruelty Foster|Hold - SAFE Foster', 
+                hold_foster_data[stage_col].str.contains('Hold - Foster|Hold - Cruelty Foster|Hold - SAFE Foster|Hold – SAFE Foster', 
                                                        case=False, na=False)
             ]
             

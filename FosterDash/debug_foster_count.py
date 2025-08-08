@@ -55,7 +55,7 @@ def analyze_counts():
     # Count animals in AnimalInventory.csv with Hold - Foster stages
     if animal_inventory is not None:
         hold_foster_stages = [
-            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster'
+            'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
         ]
         
         hold_foster_count = 0

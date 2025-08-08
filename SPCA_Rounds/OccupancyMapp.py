@@ -153,8 +153,8 @@ def display_layout(room_name: str):
     
     # Create a simple grid layout using Streamlit columns
     for i, box in enumerate(layout_data.get('boxes', [])):
-        # Create a container for each box
-        with st.container():
+        # Create a container for each box with explicit height
+        with st.container(height=300):  # Add explicit height
             # Add some spacing
             st.write("---")
             

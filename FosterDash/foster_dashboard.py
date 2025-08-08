@@ -343,10 +343,11 @@ def load_data():
         for path in possible_paths:
             if os.path.exists(path):
                 animal_inventory_path = path
-                st.info(f"🔍 Found AnimalInventory.csv at: {path}")
+                # st.info(f"🔍 Found AnimalInventory.csv at: {path}")
                 break
             else:
-                st.info(f"❌ Not found: {path}")
+                # st.info(f"❌ Not found: {path}")
+                pass
         
         if animal_inventory_path:
             # Skip first 3 rows and start from row 4 where headers are
@@ -380,10 +381,11 @@ def load_data():
         for path in foster_possible_paths:
             if os.path.exists(path):
                 foster_current_path = path
-                st.info(f"🔍 Found FosterCurrent.csv at: {path}")
+                # st.info(f"🔍 Found FosterCurrent.csv at: {path}")
                 break
             else:
-                st.info(f"❌ Not found: {path}")
+                # st.info(f"❌ Not found: {path}")
+                pass
         
         if foster_current_path:
             # Skip first 6 rows and start from row 7 where headers are
@@ -416,10 +418,11 @@ def load_data():
         for path in hold_possible_paths:
             if os.path.exists(path):
                 hold_foster_path = path
-                st.info(f"🔍 Found Hold - Foster Stage Date.csv at: {path}")
+                # st.info(f"🔍 Found Hold - Foster Stage Date.csv at: {path}")
                 break
             else:
-                st.info(f"❌ Not found: {path}")
+                # st.info(f"❌ Not found: {path}")
+                pass
         
         if hold_foster_path:
             # Skip first 2 rows and start from row 3 where headers are
@@ -519,13 +522,11 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
             for idx, row in foster_current.iterrows():
                 animal_id = str(row[animal_id_col])
                 
-                # Get the stage to check if it's If The Fur Fits
-                stage = str(row.get('Stage', '')).strip()
+                # Get the location to check if it's If The Fur Fits
+                location = str(row.get('Location', '')).strip()
                 
-                # Only add to foster_animal_ids if it's NOT an If The Fur Fits stage
-                if not any(fur_fits_stage in stage for fur_fits_stage in [
-                    'In If the Fur Fits - Trial', 'In If the Fur Fits - Behavior', 'In If the Fur Fits - Medical'
-                ]):
+                # Only add to foster_animal_ids if it's NOT an If The Fur Fits location
+                if 'If The Fur Fits' not in location:
                     foster_animal_ids.add(animal_id)
                 
                 # Always add foster info for all animals (including If The Fur Fits)
@@ -571,66 +572,154 @@ def classify_animals(animal_inventory, foster_current, hold_foster_data):
                 # Include if it's any Hold - Foster stage and has a valid date
                 if (stage_start_date and stage_start_date != 'nan' and 
                     any(hold_stage in stage for hold_stage in [
-                        'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster'
+                        'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
                     ])):
                     hold_foster_dates[animal_id] = stage_start_date
     
-    # Classify animals
+    # Classify animals - UPDATED LOGIC AS SPECIFIED
+    hold_foster_missed = []  # Track animals that should be "Needs Foster Now" but aren't
+    
+    # Create a list to store all rows (including duplicates for multi-category animals)
+    all_rows = []
+    
+    # STEP 1: Needs Foster Now = anything in AnimalInventory with Hold Foster, Hold Cruelty Foster, or Hold SAFE Foster stages
     for idx, row in df.iterrows():
         animal_id = str(row.get('AnimalNumber', ''))
         stage = str(row.get('Stage', '')).strip()
         
-        # Check if in If The Fur Fits program (check this FIRST)
-        if any(fur_fits_stage in stage for fur_fits_stage in [
-            'In If the Fur Fits - Trial', 'In If the Fur Fits - Behavior', 'In If the Fur Fits - Medical'
-        ]):
-            df.at[idx, 'Foster_Category'] = 'In If The Fur Fits'
-            
-            # Add foster person info if available
-            if animal_id in foster_info:
-                df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
-                df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
-                df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
-        
-        # Check if pending foster pickup
-        elif 'Pending Foster Pickup' in stage:
-            df.at[idx, 'Foster_Category'] = 'Pending Foster Pickup'
-            
-            # Add foster person info if available
-            if animal_id in foster_info:
-                df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
-                df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
-                df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
-        
-        # Check if in foster (excluding Pending Foster Pickup and If The Fur Fits)
-        elif (animal_id in foster_animal_ids or 
-              'In Foster' in stage or 
-              'In SAFE Foster' in stage or 
-              'In Cruelty Foster' in stage):
-            df.at[idx, 'Foster_Category'] = 'In Foster'
-            
-            # Add foster person info if available
-            if animal_id in foster_info:
-                df.at[idx, 'Foster_PID'] = foster_info[animal_id]['pid']
-                df.at[idx, 'Foster_Name'] = foster_info[animal_id]['name']
-                df.at[idx, 'Foster_Start_Date'] = foster_info[animal_id]['start_date']
-        
-        # Check if needs foster now
-        elif any(need_stage in stage for need_stage in [
+        if any(need_stage in stage for need_stage in [
             'Hold - Foster', 'Hold - Cruelty Foster', 'Hold - SAFE Foster', 'Hold – SAFE Foster'
         ]):
-            df.at[idx, 'Foster_Category'] = 'Needs Foster Now'
+            # Create a copy of the row for this category
+            needs_foster_row = row.copy()
+            needs_foster_row['Foster_Category'] = 'Needs Foster Now'
             
-            # Add Hold - Foster date if available (for any Hold - Foster stage)
+            # Add Hold - Foster date if available
             if animal_id in hold_foster_dates:
-                df.at[idx, 'Hold_Foster_Date'] = hold_foster_dates[animal_id]
+                needs_foster_row['Hold_Foster_Date'] = hold_foster_dates[animal_id]
+            
+            all_rows.append(needs_foster_row)
+    
+    # STEP 2: Pending Foster Pickup = anything in AnimalInventory with that stage
+    for idx, row in df.iterrows():
+        animal_id = str(row.get('AnimalNumber', ''))
+        stage = str(row.get('Stage', '')).strip()
         
-        # Check if might need foster soon
-        elif any(soon_stage in stage for soon_stage in [
+        if 'Pending Foster Pickup' in stage:
+            # Create a copy of the row for this category
+            pending_row = row.copy()
+            pending_row['Foster_Category'] = 'Pending Foster Pickup'
+            all_rows.append(pending_row)
+    
+    # STEP 3: In Foster = all animals in FosterCurrent MINUS the ones that have Location = "If The Fur Fits"
+    # Even if they aren't in AnimalInventory, show them and count them
+    if foster_current is not None:
+        for idx, row in foster_current.iterrows():
+            animal_id = str(row.get('textbox9', ''))  # Animal ID column
+            location = str(row.get('Location', '')).strip()
+            
+            # Skip ITFF animals
+            if 'If The Fur Fits' in location:
+                continue
+                
+            # Find the row in df that matches this animal_id
+            matching_rows = df[df['AnimalNumber'] == animal_id]
+            if not matching_rows.empty:
+                # Use the existing row from AnimalInventory
+                in_foster_row = matching_rows.iloc[0].copy()
+                in_foster_row['Foster_Category'] = 'In Foster'
+                
+                # Add foster person info if available
+                if animal_id in foster_info:
+                    in_foster_row['Foster_PID'] = foster_info[animal_id]['pid']
+                    in_foster_row['Foster_Name'] = foster_info[animal_id]['name']
+                    in_foster_row['Foster_Start_Date'] = foster_info[animal_id]['start_date']
+                
+                all_rows.append(in_foster_row)
+            else:
+                # Animal exists in FosterCurrent but not in AnimalInventory - create new row
+                new_row = pd.Series({
+                    'AnimalNumber': animal_id,
+                    'AnimalName': str(row.get('textbox11', '')),  # Foster name
+                    'Stage': 'In Foster',
+                    'Foster_Category': 'In Foster',
+                    'Foster_PID': str(row.get('textbox10', '')),
+                    'Foster_Name': str(row.get('textbox11', '')),
+                    'Foster_Start_Date': str(row.get('StartStatusDate', ''))
+                })
+                all_rows.append(new_row)
+    
+    # STEP 4: In If The Fur Fits = animals in FosterCurrent with Location = "If The Fur Fits"
+    if foster_current is not None:
+        for idx, row in foster_current.iterrows():
+            animal_id = str(row.get('textbox9', ''))  # Animal ID column
+            location = str(row.get('Location', '')).strip()
+            
+            if 'If The Fur Fits' in location:
+                # Find the row in df that matches this animal_id
+                matching_rows = df[df['AnimalNumber'] == animal_id]
+                if not matching_rows.empty:
+                    # Use the existing row from AnimalInventory
+                    itff_row = matching_rows.iloc[0].copy()
+                    itff_row['Foster_Category'] = 'In If The Fur Fits'
+                    
+                    # Add foster person info if available
+                    if animal_id in foster_info:
+                        itff_row['Foster_PID'] = foster_info[animal_id]['pid']
+                        itff_row['Foster_Name'] = foster_info[animal_id]['name']
+                        itff_row['Foster_Start_Date'] = foster_info[animal_id]['start_date']
+                    
+                    all_rows.append(itff_row)
+    
+    # STEP 5: Check if might need foster soon (remaining animals)
+    for idx, row in df.iterrows():
+        animal_id = str(row.get('AnimalNumber', ''))
+        stage = str(row.get('Stage', '')).strip()
+        
+        if any(soon_stage in stage for soon_stage in [
             'Hold - Doc', 'Hold - Behavior', 'Hold - Behavior Mod.',
             'Hold - Surgery', 'Hold - Stray', 'Hold - Legal Notice', 'Evaluate'
         ]):
-            df.at[idx, 'Foster_Category'] = 'Might Need Foster Soon'
+            # Only add if not already in any category
+            animal_in_categories = any(r['AnimalNumber'] == animal_id for r in all_rows)
+            if not animal_in_categories:
+                might_need_row = row.copy()
+                might_need_row['Foster_Category'] = 'Might Need Foster Soon'
+                all_rows.append(might_need_row)
+    
+    # Create new DataFrame from all rows
+    df = pd.DataFrame(all_rows)
+    
+    # Add debug information to session state for display
+    # Calculate ITFF count from FosterCurrent using Location field
+    itff_count = 0
+    itff_locations_found = []
+    if foster_current is not None:
+        for idx, row in foster_current.iterrows():
+            location = str(row.get('Location', '')).strip()
+            if 'If The Fur Fits' in location:
+                itff_count += 1
+                itff_locations_found.append(location)
+    
+    # Get unique locations from FosterCurrent for debugging
+    unique_locations = []
+    if foster_current is not None and 'Location' in foster_current.columns:
+        unique_locations = sorted(foster_current['Location'].unique().tolist())
+    
+    # Calculate category counts for debugging
+    category_counts = df['Foster_Category'].value_counts()
+    
+    st.session_state.classification_debug = {
+        'hold_foster_missed': hold_foster_missed,
+        'foster_animal_ids_count': len(foster_animal_ids),
+        'hold_foster_dates_count': len(hold_foster_dates),
+        'total_foster_current': len(foster_current) if foster_current is not None else 0,
+        'itff_count': itff_count,
+        'itff_locations_found': itff_locations_found,
+        'unique_locations': unique_locations,
+        'category_counts': category_counts.to_dict(),
+        'total_rows_after_classification': len(df)
+    }
     
     return df
 
@@ -774,18 +863,28 @@ def main():
         st.write(f"- Data loaded: {st.session_state.get('data_loaded', False)}")
         st.write(f"- Cache timestamp: {cache_timestamp}")
         
-        # Show raw data verification
-        st.write("**Raw Data Verification:**")
-        if animal_inventory is not None:
-            raw_hold_foster = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Foster', na=False)]
-            raw_hold_safe = animal_inventory[animal_inventory['Stage'].str.contains('Hold - SAFE Foster', na=False)]
-            raw_hold_safe_em = animal_inventory[animal_inventory['Stage'].str.contains('Hold – SAFE Foster', na=False)]
-            raw_hold_cruelty = animal_inventory[animal_inventory['Stage'].str.contains('Hold - Cruelty Foster', na=False)]
-            st.write(f"- Raw Hold - Foster count: {len(raw_hold_foster)}")
-            st.write(f"- Raw Hold - SAFE Foster count: {len(raw_hold_safe)}")
-            st.write(f"- Raw Hold – SAFE Foster count (em dash): {len(raw_hold_safe_em)}")
-            st.write(f"- Raw Hold - Cruelty Foster count: {len(raw_hold_cruelty)}")
-            st.write(f"- Raw total: {len(raw_hold_foster) + len(raw_hold_safe) + len(raw_hold_safe_em) + len(raw_hold_cruelty)}")
+        # Show classification debug info
+        if 'classification_debug' in st.session_state:
+            debug_info = st.session_state.classification_debug
+            st.write("**Classification Debug:**")
+            st.write(f"- Total FosterCurrent records: {debug_info.get('total_foster_current', 0)}")
+            st.write(f"- ITFF count in FosterCurrent (by Location): {debug_info.get('itff_count', 0)}")
+            st.write(f"- Foster animal IDs count (non-ITFF): {debug_info.get('foster_animal_ids_count', 0)}")
+            st.write(f"- Hold foster dates count: {debug_info.get('hold_foster_dates_count', 0)}")
+            st.write(f"- Hold foster missed: {len(debug_info.get('hold_foster_missed', []))}")
+            st.write(f"- Expected In Foster: {debug_info.get('total_foster_current', 0) - debug_info.get('itff_count', 0)}")
+            st.write(f"- ITFF locations found: {debug_info.get('itff_locations_found', [])}")
+            st.write(f"- Total unique locations in FosterCurrent: {len(debug_info.get('unique_locations', []))}")
+            if len(debug_info.get('unique_locations', [])) <= 20:  # Only show if not too many
+                st.write(f"- All locations: {debug_info.get('unique_locations', [])}")
+            
+            # Show new classification results
+            st.write("**New Classification Results:**")
+            st.write(f"- Total rows after classification: {debug_info.get('total_rows_after_classification', 0)}")
+            if 'category_counts' in debug_info:
+                st.write("**Category Counts (including duplicates):**")
+                for category, count in debug_info['category_counts'].items():
+                    st.write(f"- {category}: {count}")
     
     # Database Status
     if supabase_enabled:
@@ -966,7 +1065,7 @@ def main():
                             # Convert back to string for display
                             display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
                         except Exception as e:
-                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            st.warning(f"Could not sort Hold - Foster dates properly: {str(e)}")
                             # Fallback to string sorting
                             display_data = display_data.sort_values(sort_column, ascending=True)
                     elif sort_column == 'Foster_Start_Date':
@@ -980,7 +1079,7 @@ def main():
                             # Convert back to string for display
                             display_data[sort_column] = display_data[sort_column].dt.strftime('%Y-%m-%d').fillna('')
                         except Exception as e:
-                            st.warning(f"Could not sort dates properly: {str(e)}")
+                            st.warning(f"Could not sort Foster Start dates properly: {str(e)}")
                             # Fallback to string sorting
                             display_data = display_data.sort_values(sort_column, ascending=True)
                     else:
@@ -1072,14 +1171,13 @@ def main():
                 st.write("3. Restart the dashboard")
             
             # Custom inline editing solution with working links
-            st.write("**💡 Click any cell to edit. Press Enter to save. Click Animal ID or Foster PID to open PetPoint.**")
             
             # Add CSS for the custom grid
             st.markdown("""
             <style>
             .custom-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 1fr 1fr;
+                grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr 1fr;
                 gap: 8px;
                 padding: 8px;
                 background-color: #f8f9fa;
@@ -1089,7 +1187,7 @@ def main():
                 overflow-x: auto;
             }
             .custom-grid.needs-foster {
-                grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr 0.8fr 1fr 1fr 1fr;
+                grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr 1fr 1fr;
             }
             .grid-header {
                 background-color: #e9ecef;
@@ -1129,26 +1227,26 @@ def main():
             }
             @media (max-width: 1200px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 0.8fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 0.8fr 1fr 1fr;
                 }
             }
             @media (max-width: 900px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1.2fr 1fr 1.5fr 1fr;
                 }
             }
             @media (max-width: 600px) {
                 .custom-grid {
-                    grid-template-columns: 1fr 1fr 0.8fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1fr 1.5fr;
                 }
                 .custom-grid.needs-foster {
-                    grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr;
+                    grid-template-columns: 1.5fr 0.8fr 1fr 1.5fr 1fr;
                 }
             }
             </style>
@@ -1158,14 +1256,12 @@ def main():
             grid_class = "custom-grid needs-foster" if selected_category == 'Needs Foster Now' else "custom-grid"
             header_html = f"""
             <div class="{grid_class}">
-                <div class="grid-header">Animal ID</div>
-                <div class="grid-header">Animal Name</div>
+                <div class="grid-header">Animal ID & Name</div>
                 <div class="grid-header">Intake Date</div>
                 <div class="grid-header">Animal Details</div>
                 <div class="grid-header">Stage</div>
-                <div class="grid-header">Foster PID</div>
-                <div class="grid-header">Foster Name</div>
-                <div class="grid-header">Start Date</div>
+                <div class="grid-header">Foster PID & Name</div>
+                <div class="grid-header">{'Hold - Foster Date' if selected_category == 'Needs Foster Now' else 'Start Date'}</div>
                 <div class="grid-header">📝 Foster Notes</div>
                 <div class="grid-header">💊 Meds</div>
             """
@@ -1191,17 +1287,20 @@ def main():
                 current_meds = foster_data.get('onmeds', False)
                 current_dates = foster_data.get('fosterpleadates', [])
                 
-                # Create row with columns (10 or 11 depending on tab)
+                # Create row with columns (8 or 9 depending on tab)
                 if selected_category == 'Needs Foster Now':
-                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11 = st.columns(11)
+                    col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns(9)
                 else:
-                    col1, col2, col3, col4, col5, col6, col7, col8, col9, col10 = st.columns(10)
+                    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
                 
                 with col1:
-                    st.markdown(row['Animal ID'], unsafe_allow_html=True)
+                    # Combined Animal ID & Name with working links
+                    animal_id_html = row['Animal ID']
+                    animal_name = row['Animal Name']
+                    combined_animal = f"{animal_id_html}<br><strong>{animal_name}</strong>"
+                    st.markdown(combined_animal, unsafe_allow_html=True)
+                
                 with col2:
-                    st.write(row['Animal Name'])
-                with col3:
                     # Format Intake Date to show only date, not time
                     intake_date = row['Intake Date/Time']
                     if pd.notna(intake_date) and intake_date != '':
@@ -1222,72 +1321,108 @@ def main():
                     else:
                         formatted_date = ''
                     st.write(formatted_date)
-                with col4:
+                
+                with col3:
                     # Combined Animal Details: Age, Sex, Species, Breed
                     animal_details = f"{row['Age']}, {row['Sex']}, {row['Species']}, {row['Breed']}"
                     st.write(animal_details)
-                with col5:
+                
+                with col4:
                     st.write(row['Stage'])
-                with col6:
-                    st.markdown(row['Foster PID'], unsafe_allow_html=True)
-                with col7:
-                    # Foster Name from classified data
+                
+                with col5:
+                    # Combined Foster PID & Name with working links
+                    foster_pid_html = row['Foster PID']
                     foster_name = row.get('Foster Name', '')
-                    st.write(foster_name)
-                with col8:
-                    # Start Date from classified data - format to show only date
-                    start_date = row.get('Foster Start Date', '')
-                    if pd.notna(start_date) and start_date != '':
-                        try:
-                            # Try to parse and format the date
-                            if isinstance(start_date, str):
-                                # If it's a string, try to parse it
-                                parsed_date = pd.to_datetime(start_date, errors='coerce')
-                                if pd.notna(parsed_date):
-                                    formatted_date = parsed_date.strftime('%m/%d/%Y')
-                                else:
-                                    formatted_date = start_date
-                            else:
-                                # If it's already a datetime object
-                                formatted_date = start_date.strftime('%m/%d/%Y')
-                        except:
-                            formatted_date = str(start_date)
+                    if foster_name and foster_name != 'nan':
+                        combined_foster = f"{foster_pid_html}<br><strong>{foster_name}</strong>"
                     else:
-                        formatted_date = ''
+                        combined_foster = foster_pid_html
+                    st.markdown(combined_foster, unsafe_allow_html=True)
+                
+                with col6:
+                    # Show Hold - Foster Date for "Needs Foster Now", otherwise Foster Start Date
+                    if selected_category == 'Needs Foster Now':
+                        # Hold - Foster Date from classified data - format to show only date
+                        hold_date = row.get('Hold - Foster Date', '')
+                        if pd.notna(hold_date) and hold_date != '':
+                            try:
+                                # Try to parse and format the date
+                                if isinstance(hold_date, str):
+                                    # If it's a string, try to parse it
+                                    parsed_date = pd.to_datetime(hold_date, errors='coerce')
+                                    if pd.notna(parsed_date):
+                                        formatted_date = parsed_date.strftime('%m/%d/%Y')
+                                    else:
+                                        formatted_date = hold_date
+                                else:
+                                    # If it's already a datetime object
+                                    formatted_date = hold_date.strftime('%m/%d/%Y')
+                            except:
+                                formatted_date = str(hold_date)
+                        else:
+                            formatted_date = ''
+                    else:
+                        # Foster Start Date from classified data - format to show only date
+                        start_date = row.get('Foster Start Date', '')
+                        if pd.notna(start_date) and start_date != '':
+                            try:
+                                # Try to parse and format the date
+                                if isinstance(start_date, str):
+                                    # If it's a string, try to parse it
+                                    parsed_date = pd.to_datetime(start_date, errors='coerce')
+                                    if pd.notna(parsed_date):
+                                        formatted_date = parsed_date.strftime('%m/%d/%Y')
+                                    else:
+                                        formatted_date = start_date
+                                else:
+                                    # If it's already a datetime object
+                                    formatted_date = start_date.strftime('%m/%d/%Y')
+                            except:
+                                formatted_date = str(start_date)
+                        else:
+                            formatted_date = ''
                     st.write(formatted_date)
-                with col9:
-                    # Foster Notes - editable text area
+                
+                with col7:
+                    # Foster Notes - expandable text area
                     new_notes = st.text_area(
                         "Notes",
                         value=current_notes,
                         key=f"notes_{animal_number}_{idx}",
                         label_visibility="collapsed",
-                        height=60
+                        height=80,
+                        placeholder="Enter foster notes here..."
                     )
                     if new_notes != current_notes:
                         supabase_manager.update_foster_notes(animal_number, new_notes)
-                with col10:
-                    # Meds - editable text input
-                    current_meds = foster_data.get('onmeds', '')  # Now a string instead of boolean
-                    new_meds = st.text_input(
+                
+                with col8:
+                    # Meds - expandable text area (same style as notes)
+                    current_meds = foster_data.get('onmeds', '')
+                    new_meds = st.text_area(
                         "Meds",
                         value=current_meds,
                         key=f"meds_{animal_number}_{idx}",
-                        label_visibility="collapsed"
+                        label_visibility="collapsed",
+                        height=80,
+                        placeholder="Enter medication info here..."
                     )
                     if new_meds != current_meds:
                         supabase_manager.update_on_meds(animal_number, new_meds)
                 
-                # Only create col11 content if we're on the Needs Foster Now tab
+                # Only create col9 content if we're on the Needs Foster Now tab
                 if selected_category == 'Needs Foster Now':
-                    with col11:
-                        # Foster Plea Dates - editable
+                    with col9:
+                        # Foster Plea Dates - expandable text area (same style as notes)
                         dates_str = ', '.join(current_dates) if current_dates else ''
-                        new_dates = st.text_input(
+                        new_dates = st.text_area(
                             "Dates",
                             value=dates_str,
                             key=f"dates_{animal_number}_{idx}",
-                            label_visibility="collapsed"
+                            label_visibility="collapsed",
+                            height=80,
+                            placeholder="Enter dates separated by commas..."
                         )
                         if new_dates != dates_str:
                             if new_dates:

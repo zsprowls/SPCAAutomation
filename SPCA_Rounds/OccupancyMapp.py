@@ -168,19 +168,19 @@ def display_layout(room_name: str):
                     background-color: #e6f3ff;
                     border: 3px solid #0066cc;
                     border-radius: 10px;
-                    padding: 30px;
+                    padding: 15px;
                     margin: 20px 0;
                     text-align: center;
-                    font-size: 20px;
-                    font-weight: bold;
+                    font-size: 12px;
+                    font-weight: normal;
                     color: #000;
-                    min-height: 200px;
+                    min-height: 150px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                 ">
                     <div>
-                        <strong>{box.get('label', 'BOX')}</strong><br><br>
+                        <strong>{box.get('label', 'BOX')}</strong><br>
                         {box.get('location', '')}<br>
                         {box.get('sublocation', '')}
                     </div>

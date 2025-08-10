@@ -385,12 +385,10 @@ def get_outcome_count_detail(check_dates):
     return detail
 
 def get_outcome_summary(detail_df):
-    # Define outcome group order - you can adjust this based on your OutcomeGrouping.xlsx
+    # Only show RTOs and Transfer Outs for this specific chart
+    # This helps explain inflated intake numbers when animals come in DOA and need to be RTO'd/transferred
     OUTCOME_GROUP_ORDER = [
-        'Adoption - Offsite', 'Adoption - New Adopter', 'Adoption - Other',
-        'Return to Owner', 'Transfer Out', 'Clinic Out', 'Missing', 
-        'Wildlife Release', 'Died', 'Euthanasia - Requested Sleep', 
-        'Euthanasia - Humane Reasons', 'Euthanasia - Other', 'DOA', 'Other'
+        'Return to Owner', 'Transfer Out'
     ]
     
     summary = []
@@ -596,8 +594,9 @@ def export_to_word(check_dates):
     # Add blank line
     doc.add_paragraph()
     
-    # Outcomes section
-    doc.add_heading(f'Outcomes: {check_dates_str}', level=1)
+    # RTOs & Transfers section - shows animals that left through these channels
+    # This helps explain inflated intake numbers when animals come in DOA and need to be RTO'd/transferred
+    doc.add_heading(f'RTOs & Transfers: {check_dates_str}', level=1)
     
     # Get outcome summary with totals
     outcome_detail = get_outcome_count_detail(check_dates)

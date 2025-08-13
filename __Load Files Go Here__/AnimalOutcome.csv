@@ -1,18 +1,41 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Tuesday, August 12, 2025",8/11/2025 12:00 AM,All,8/11/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Wednesday, August 13, 2025",8/12/2025 12:00 AM,All,8/12/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 2,Total Unique Animals: 2,A0046648434,LEILANI,Cat,Domestic Shorthair,5yrs,F,Yes,Adoption,Previous Adopter - Cat,Paryz Michelle,MICHELLEP,LEANI,,No,,Buffalo,,08/11/2025 03:03 PM,,,,,,13
-Adoption,Total Outcomes: 2,Total Unique Animals: 2,A0046648430,KAYA,Cat,Domestic Shorthair,5yrs,F,Yes,Adoption,Previous Adopter - Cat,Paryz Michelle,MICHELLEP,AVIANNA,,No,,Buffalo,,08/11/2025 03:03 PM,,,,,,13
-Clinic Out,Total Outcomes: 4,Total Unique Animals: 4,A0058788889,Strudel,Rabbit,Californian,11mos,M,Yes,Clinic Out,Retention,Cook Keara,KEARAC,,Rex,No,,,,08/11/2025 03:12 PM,,,,,,13
-Clinic Out,Total Outcomes: 4,Total Unique Animals: 4,A0059084350,,Cat,Domestic Longhair,2mos,F,No,Clinic Out,Stray,VOGT SHANNON,SHANNONV,,Mix,No,,West Seneca,,08/11/2025 10:34 AM,,,,,,13
-Clinic Out,Total Outcomes: 4,Total Unique Animals: 4,A0059067064,Blancha,Cat,Domestic Shorthair,,F,Yes,Clinic Out,Outreach,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,08/11/2025 11:16 AM,,,,,,13
-Clinic Out,Total Outcomes: 4,Total Unique Animals: 4,A0058788884,Churro,Rabbit,Californian,11mos,M,Yes,Clinic Out,Retention,Cook Keara,KEARAC,,Rex,No,,,,08/11/2025 03:12 PM,,,,,,13
-Died,Total Outcomes: 2,Total Unique Animals: 2,A0059078813,,Cat,Domestic Shorthair,,U,No,Died,IN KENNEL,BUDIK SALLY,SALLYB,,Mix,No,,,,08/11/2025 08:43 AM,,,,,,13
-Died,Total Outcomes: 2,Total Unique Animals: 2,A0058959631,SKINNY PETE,Cat,Domestic Shorthair,2mos,M,No,Died,IN FOSTER,TOPOLSKI JULIE,JULIET,,Mix,No,,,,08/11/2025 11:16 AM,,,,,,13
-DOA,Total Outcomes: 1,Total Unique Animals: 1,A0059086218,ANDY,Cat,Domestic Shorthair,10yrs,M,Yes,DOA, ,,TAMMIC,,Mix,No,,Buffalo,,08/11/2025 01:11 PM,,,,,,13
-Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0059012579,,Cat,Domestic Shorthair,1mos,M,No,Euthanasia,Humane Reasons,,KRYSTANP,,Mix,No,,,,08/11/2025 05:58 PM,,,,,,13
-Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0059085730,Little Bear,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",15yrs,M,Yes,Euthanasia,Requested Sleep,,LANAP,,Mix,No,,,,08/11/2025 12:50 PM,,,,,,13
-Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0059086845,,Cat,Domestic Shorthair,,U,No,Euthanasia,Requested Sleep,,ROBINR,,Mix,No,,,,08/11/2025 02:09 PM,,,,,,13
-Transfer Out,Total Outcomes: 1,Total Unique Animals: 1,A0059084529,,Dog,Maltese,,F,No,Transfer Out,ACO or DCO in County,VOGT SHANNON,SHANNONV,,Mix,No,,West Seneca,More Suitable Housing,08/11/2025 10:52 AM,,,,,,13
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0059038375,GOLDILOCKS,Cat,Domestic Shorthair,5yrs,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,GOLDILOCKS,,No,,East Aurora,,08/12/2025 05:14 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0058849570,Bruno,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",6mos,M,Yes,Adoption,New Adopter - Dog,Sisti Maria,MariaS,,Mix,No,,Buffalo,,08/12/2025 05:00 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0058948732,Gary,Cat,Domestic Shorthair,5yrs,M,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,Parkerhouse,,No,,Hamburg,,08/12/2025 01:55 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0059011832,Oreo,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2yrs,M,Yes,Adoption,Foster Care Adoption - Dog,Witkowski Victoria,VictoriaW,,Mix,No,,Cheektowaga,,08/12/2025 04:54 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0059042651,DARREN,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Niagara County,,08/12/2025 04:39 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0058561752,FRANCIS,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,MOE,Mix,No,,Niagara County,,08/12/2025 03:51 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0058985403,Duck Tracy,Farm Type Fowl,Duck,2yrs,M,No,Adoption,Farm Adoption,Burg Patricia,admin,,Duck,No,,Wyoming County,,08/12/2025 12:11 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0058985404,Duke Of Duckingham,Farm Type Fowl,Duck,2yrs,M,No,Adoption,Farm Adoption,Burg Patricia,admin,,Duck,No,,Wyoming County,,08/12/2025 12:11 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0058985405,Quackie Chan,Farm Type Fowl,Duck,2yrs,M,No,Adoption,Farm Adoption,Burg Patricia,admin,,Duck,No,,Wyoming County,,08/12/2025 12:11 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0058995198,,Farm Type Fowl,Goose,,U,No,Adoption,Farm Adoption,Burg Patricia,admin,,,No,,Wyoming County,,08/12/2025 12:11 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0059042657,AMANA,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Niagara County,,08/12/2025 04:39 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0059050618,MEECHI,Cat,Domestic Shorthair,4yrs,M,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,,,No,,Buffalo,,08/12/2025 04:33 PM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0059001218,,Rodent,MOUSE-DOMESTIC,,F,No,Adoption,New Adopter - Other,Sprowls Zachery,ZAKS,NATALIA,,No,,Buffalo,,08/12/2025 10:40 AM,,,,,,36
+Adoption,Total Outcomes: 14,Total Unique Animals: 14,A0059001236,,Rodent,MOUSE-DOMESTIC,,F,No,Adoption,New Adopter - Other,Sprowls Zachery,ZAKS,MELINA,,No,,Buffalo,,08/12/2025 10:40 AM,,,,,,36
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0058981309,LADY,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2yrs,F,Yes,Clinic Out,Medical Treatment Completed,VOGT SHANNON,SHANNONV,,Mix,No,,,,08/12/2025 03:59 PM,,,,,,36
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0057168663,FIONA,Cat,Domestic Shorthair,2yrs,F,Yes,Clinic Out,Medical Treatment Completed,COGSWELL TAMMI,TAMMIC,FIONA,,No,,,,08/12/2025 04:02 PM,,,,,,36
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0059086422,MERLIN,Cat,Domestic Longhair,8yrs,M,Yes,Clinic Out,Medical Treatment Completed,COGSWELL TAMMI,TAMMIC,,,No,,,,08/12/2025 12:45 PM,,,,,,36
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0059012565,,Cat,Domestic Shorthair,1mos,M,No,Euthanasia,Humane Reasons,,KRYSTANP,,Mix,No,,,,08/12/2025 09:16 AM,,,,,,36
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0059084490,Ace,Cat,Domestic Medium Hair,7yrs,M,Yes,Euthanasia,Requested Sleep,,JENT,,Mix,No,,,,08/12/2025 01:32 PM,,,,,,36
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0059091871,Luna,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",12yrs,F,Yes,Euthanasia,Requested Sleep,,NINAP,,Mix,No,,,,08/12/2025 11:10 AM,,,,,,36
+Euthanasia,Total Outcomes: 4,Total Unique Animals: 4,A0059094278,Bobby,Cat,Domestic Shorthair,2yrs,M,Yes,Euthanasia,Requested Sleep,,KRYSTANP,,Mix,No,,,,08/12/2025 01:54 PM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084215,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084216,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084223,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084232,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084235,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084237,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084240,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084242,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084248,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084249,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084251,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084254,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084256,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084260,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0059084219,,Fish,"Cold Water (Goldfish, etc)",,U,No,Transfer Out,Pet Store,Dittrich Ashley,ASHLEYD,,"Cold Water (Goldfish, etc)",No,,,More Suitable Housing,08/12/2025 08:00 AM,,,,,,36
 

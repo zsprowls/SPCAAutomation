@@ -1831,7 +1831,8 @@ def show_migration_interface():
         
         # Migration button
         if st.sidebar.button("🚀 Run Data Migration", help="Convert existing boolean values to text"):
-            with st.sidebar.spinner("Migrating data..."):
+            # Use regular spinner instead of sidebar spinner
+            with st.spinner("Migrating data..."):
                 success, count = run_data_migration()
                 if success:
                     st.sidebar.success(f"✅ Migration completed! {count} records updated.")

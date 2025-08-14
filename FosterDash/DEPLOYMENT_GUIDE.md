@@ -1,82 +1,200 @@
-# 🚀 Streamlit Cloud Deployment Guide
+# 🚀 Foster Dashboard Deployment Guide
 
-## Step 1: Prepare Your Repository
+Complete guide for migrating and deploying the updated Foster Dashboard with text-based medication support.
 
-1. **Create a new GitHub repository** (if you haven't already)
-2. **Push your code** to GitHub:
+## 📋 Overview
+
+This guide covers the complete process of:
+1. **Local Migration** - Updating your local database
+2. **Cloud Migration** - Updating your Supabase cloud database  
+3. **Code Deployment** - Deploying to Streamlit Cloud
+4. **Verification** - Ensuring everything works correctly
+
+## 🔄 Migration Process
+
+### Phase 1: Local Migration
+
+**Step 1: Run the Migration Script**
+```bash
+cd FosterDash
+streamlit run migrate_onmeds_to_text.py
+```
+
+**What this does:**
+- ✅ Connects to your local Supabase database
+- ✅ Converts existing boolean medication values to text ("Yes"/"No")
+- ✅ Shows you the SQL commands needed for cloud migration
+- ✅ Provides step-by-step cloud migration instructions
+
+**Expected Output:**
+- Data migration completed successfully
+- SQL commands displayed for cloud migration
+- Clear next steps provided
+
+### Phase 2: Cloud Database Migration
+
+**Step 2: Update Cloud Database Schema**
+
+1. **Go to your Supabase project:** https://supabase.com
+2. **Open SQL Editor** (left sidebar)
+3. **Run this SQL:**
+
+```sql
+-- Migration SQL for onmeds column
+-- This will convert the onmeds column from BOOLEAN to TEXT
+
+-- Step 1: Convert existing boolean values to text (already done by data migration)
+-- UPDATE foster_animals 
+-- SET "onmeds" = CASE 
+--     WHEN "onmeds" = true THEN 'Yes'
+--     WHEN "onmeds" = false THEN 'No'
+--     ELSE ''
+-- END;
+
+-- Step 2: Alter column type (REQUIRED for cloud deployment)
+ALTER TABLE foster_animals 
+ALTER COLUMN "onmeds" TYPE TEXT;
+
+-- Step 3: Set default value
+ALTER TABLE foster_animals 
+ALTER COLUMN "onmeds" SET DEFAULT '';
+
+-- Step 4: Verify the change
+SELECT column_name, data_type, column_default 
+FROM information_schema.columns 
+WHERE table_name = 'foster_animals' 
+AND column_name = 'onmeds';
+```
+
+**Expected Result:**
+```
+ column_name | data_type | column_default | is_nullable
+-------------+-----------+----------------+-------------
+ onmeds      | text      | ''             | YES
+```
+
+### Phase 3: Verification
+
+**Step 3: Verify Cloud Database**
+```bash
+streamlit run verify_cloud_deployment.py
+```
+
+**What this does:**
+- ✅ Tests if cloud database accepts text-based medications
+- ✅ Verifies existing data is properly migrated
+- ✅ Confirms deployment readiness
+- ✅ Provides testing instructions
+
+**Expected Output:**
+- 🎉 **READY FOR DEPLOYMENT!**
+- All checks passed
+- Clear next steps for deployment
+
+## 🚀 Code Deployment
+
+### Step 4: Deploy to Streamlit Cloud
+
+1. **Commit and push your changes:**
    ```bash
-   git init
    git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-   git push -u origin main
+   git commit -m "Update medication field from boolean to text"
+   git push origin main
    ```
 
-## Step 2: Deploy to Streamlit Cloud
+2. **Streamlit Cloud will automatically deploy** the updated code
 
-1. **Go to [share.streamlit.io](https://share.streamlit.io)**
-2. **Sign in with GitHub**
-3. **Click "New app"**
-4. **Configure your app:**
-   - **Repository**: `YOUR_USERNAME/YOUR_REPO_NAME`
-   - **Branch**: `main`
-   - **Main file path**: `foster_dashboard.py`
-   - **App URL**: Choose a custom URL (optional)
+3. **Verify deployment** by checking your Streamlit Cloud app
 
-## Step 3: Add Streamlit Secrets
+## 🧪 Testing After Deployment
 
-1. **In your Streamlit Cloud dashboard**, go to your app
-2. **Click "Settings"** → **"Secrets"**
-3. **Add your Supabase credentials:**
-   ```toml
-   SUPABASE_URL = "https://xfhmrxpiupwkahmtlubd.supabase.co"
-   SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmaG1yeHBpdXB3a2FobXRsdWJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0Mzg5MzMsImV4cCI6MjA3MDAxNDkzM30.Lx9N35iu-rkg4jZamfNpGOOyoMS0vE2umT_Zw-7qy7c"
+### Test the New Medication Field
+
+1. **Open your Streamlit Cloud app**
+2. **Navigate to any animal in the foster dashboard**
+3. **Try entering medication details:**
+   - "Amoxicillin 250mg twice daily"
+   - "Insulin 2 units AM/PM"
+   - "No medications currently"
+   - "Pain medication as needed"
+
+4. **Verify data persistence:**
+   - Save the medication entry
+   - Refresh the page
+   - Confirm your entry is still there
+
+### Test Other Features
+
+- ✅ **Foster Notes** - Edit and save notes
+- ✅ **Medication Field** - Enter detailed medication info
+- ✅ **Foster Plea Dates** - Add/remove dates
+- ✅ **Data Display** - Check that text displays correctly
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| **Migration failed** | Check Supabase permissions, run SQL manually |
+| **Text not saving** | Verify database schema is TEXT type |
+| **Connection errors** | Check Streamlit Cloud environment variables |
+| **Data not displaying** | Ensure code was updated and deployed |
+
+### Migration Verification
+
+If you're unsure about the migration status:
+
+1. **Check database schema:**
+   ```sql
+   SELECT column_name, data_type, column_default 
+   FROM information_schema.columns 
+   WHERE table_name = 'foster_animals' 
+   AND column_name = 'onmeds';
    ```
 
-## Step 4: Add Data Files
+2. **Check existing data:**
+   ```sql
+   SELECT onmeds, COUNT(*) 
+   FROM foster_animals 
+   GROUP BY onmeds;
+   ```
 
-Since the data files are in `../__Load Files Go Here__/`, you'll need to either:
+3. **Test text insertion:**
+   ```sql
+   UPDATE foster_animals 
+   SET onmeds = 'Test medication' 
+   WHERE animalnumber = 'YOUR_TEST_ANIMAL';
+   ```
 
-**Option A: Copy files to the repo**
-```bash
-cp -r ../__Load\ Files\ Go\ Here__/ ./data/
-```
+## 📊 Migration Status Checklist
 
-**Option B: Use Streamlit's file uploader** (modify the app to accept file uploads)
+- [ ] **Local migration completed** (`migrate_onmeds_to_text.py`)
+- [ ] **Cloud SQL migration run** (in Supabase SQL Editor)
+- [ ] **Verification passed** (`verify_cloud_deployment.py`)
+- [ ] **Code deployed** (pushed to git and Streamlit Cloud)
+- [ ] **Testing completed** (medication field working correctly)
 
-## Step 5: Test Your Deployment
+## 🆘 Getting Help
 
-1. **Wait for deployment** (usually 1-2 minutes)
-2. **Check the logs** for any errors
-3. **Test the database connection**
-4. **Test the interactive features**
+If you encounter issues:
 
-## Troubleshooting
+1. **Check the migration script output** for specific error messages
+2. **Run the verification script** to diagnose problems
+3. **Check Supabase logs** for database errors
+4. **Verify Streamlit Cloud environment variables** are correct
 
-### Common Issues:
-- **"Module not found"**: Check `requirements.txt` has all dependencies
-- **"Secrets not found"**: Verify secrets are added in Streamlit Cloud
-- **"Data files not found"**: Make sure data files are in the repository
+## 🎯 Success Indicators
 
-### Debug Commands:
-```bash
-# Check if all files are committed
-git status
+You'll know the migration is complete when:
 
-# Verify requirements.txt
-cat requirements.txt
+- ✅ Migration script shows "Data migration completed successfully"
+- ✅ Cloud SQL migration runs without errors
+- ✅ Verification script shows "🎉 READY FOR DEPLOYMENT!"
+- ✅ Medication field accepts and saves text entries
+- ✅ Existing medication data displays correctly
+- ✅ All foster dashboard features work as expected
 
-# Test local deployment
-streamlit run foster_dashboard.py
-```
+---
 
-## Next Steps
-
-Once deployed:
-1. **Test database connection**
-2. **Test interactive editing**
-3. **Share the URL** with your team
-4. **Set up automatic deployments** from your main branch
-
-🎉 **Your app will be live at: `https://YOUR_APP_NAME.streamlit.app`**
+**Need help?** Run the verification script first to diagnose any issues, then check the troubleshooting section above.

@@ -70,7 +70,7 @@ class SupabaseManager:
                     new_records.append({
                         'animalnumber': animal_number,
                         'fosternotes': '',
-                        'onmeds': False,
+                        'onmeds': '',
                         'fosterpleadates': [],
                         'created_at': datetime.now().isoformat(),
                         'updated_at': datetime.now().isoformat()

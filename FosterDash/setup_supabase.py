@@ -119,7 +119,7 @@ CREATE TABLE foster_animals (
     id BIGSERIAL PRIMARY KEY,
     AnimalNumber TEXT UNIQUE NOT NULL,
     FosterNotes TEXT DEFAULT '',
-    OnMeds BOOLEAN DEFAULT FALSE,
+    OnMeds TEXT DEFAULT '',
     FosterPleaDates JSONB DEFAULT '[]',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()

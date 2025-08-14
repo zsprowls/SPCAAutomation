@@ -93,6 +93,23 @@ The `FosterCurrent.csv` should contain:
 - `textbox10`: Person ID (PID)
 - `textbox11`: Person's name
 
+## Recent Updates
+
+### Medication Field Enhancement (Latest)
+The `OnMeds` field has been updated from a simple boolean checkbox to a text field that accepts any medication details. This allows foster coordinators to specify exactly what medications an animal is on (e.g., "Amoxicillin 250mg twice daily", "Insulin 2 units AM/PM", etc.).
+
+**For existing users:** If you have an existing database with the old boolean schema:
+
+1. **Run the migration script:**
+   ```bash
+   streamlit run migrate_onmeds_to_text.py
+   ```
+
+2. **Verify cloud deployment readiness:**
+   ```bash
+   streamlit run verify_cloud_deployment.py
+   ```
+
 ## Database Schema
 
 When using Supabase, the following table structure is created:
@@ -102,7 +119,7 @@ When using Supabase, the following table structure is created:
 | `id` | BIGSERIAL | Primary key (auto-increment) |
 | `AnimalNumber` | TEXT | Unique animal identifier (from PetPoint) |
 | `FosterNotes` | TEXT | Editable foster notes |
-| `OnMeds` | BOOLEAN | Checkbox for medication status |
+| `OnMeds` | TEXT | Text field for medication details |
 | `FosterPleaDates` | JSONB | Array of foster plea dates |
 | `created_at` | TIMESTAMP | Record creation time |
 | `updated_at` | TIMESTAMP | Last update time |
@@ -126,7 +143,7 @@ The dashboard automatically generates links to:
 1. **Foster Notes & Medications**: 
    - Expand any animal in the "Foster Notes & Medications" tab
    - Edit foster notes in the text area
-   - Toggle medication status with the checkbox
+   - Enter specific medication details in the medication field (e.g., "Amoxicillin 250mg twice daily")
    - Changes save automatically to the database
 
 2. **Foster Plea Dates**:
@@ -156,6 +173,8 @@ SPCAAutomation/
 │   ├── foster_dashboard.py          # Main dashboard application
 │   ├── supabase_manager.py          # Database integration module
 │   ├── test_supabase_integration.py # Database testing script
+│   ├── migrate_onmeds_to_text.py    # Database migration script
+│   ├── verify_cloud_deployment.py   # Cloud deployment verification
 │   ├── SUPABASE_SETUP.md           # Database setup guide
 │   ├── requirements_foster_dashboard.txt
 │   ├── README_foster_dashboard.md

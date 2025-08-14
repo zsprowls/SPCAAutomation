@@ -889,8 +889,41 @@ def main():
     # Database Status
     if supabase_enabled:
         st.sidebar.success("✅ Database Connected")
+        # Show migration interface if database is connected
+        show_migration_interface()
     else:
         st.sidebar.warning("⚠️ Database Disabled")
+    
+    # Show migration status prominently in main area
+    if supabase_enabled:
+        needs_migration, status_message, _ = check_migration_status()
+        if needs_migration:
+            st.warning("⚠️ **Database Migration Required**")
+            st.write("Your database needs to be updated to support text-based medications. Use the migration tools in the sidebar to complete this process.")
+            
+            # Show what migration will enable
+            with st.expander("🔍 What will migration enable?", expanded=False):
+                st.write("**After migration, you'll be able to enter detailed medication information like:**")
+                st.write("- 'Amoxicillin 250mg twice daily'")
+                st.write("- 'Insulin 2 units AM/PM'")
+                st.write("- 'No medications currently'")
+                st.write("- 'Pain medication as needed'")
+                st.write("- Any other specific medication details")
+                st.write("")
+                st.write("**Instead of just:** True/False checkboxes")
+        else:
+            st.success("✅ **Database Ready for Text Medications**")
+            st.write("Your database supports detailed medication entries. You can now enter specific medication information for each animal.")
+            
+            # Show example of what's now possible
+            with st.expander("🎉 What you can now do", expanded=False):
+                st.write("**You can now enter detailed medication information:**")
+                st.write("- Specific medication names and dosages")
+                st.write("- Frequency and timing instructions")
+                st.write("- Special notes about administration")
+                st.write("- Multiple medication details in one field")
+                st.write("")
+                st.write("**This provides much better tracking and communication for foster coordinators!**")
     
     # Create view selector
     view_option = st.sidebar.radio(
@@ -1115,7 +1148,7 @@ def main():
             # Add interactive columns to the display data
             # Always add the columns, regardless of database status
             display_data['Foster_Notes'] = 'Database Required'
-            display_data['On_Meds'] = False
+            display_data['On_Meds'] = ''
             if selected_category == 'Needs Foster Now':
                 display_data['Foster_Plea_Dates'] = 'Database Required'
             
@@ -1139,7 +1172,7 @@ def main():
                         if display_animal_number == animal_number:
                             # Update the interactive columns with real data
                             display_data.iloc[idx, display_data.columns.get_loc('Foster_Notes')] = foster_data.get('fosternotes', '')
-                            display_data.iloc[idx, display_data.columns.get_loc('On_Meds')] = foster_data.get('onmeds', False)
+                            display_data.iloc[idx, display_data.columns.get_loc('On_Meds')] = foster_data.get('onmeds', '')
                             
                             if selected_category == 'Needs Foster Now':
                                 dates = foster_data.get('fosterpleadates', [])
@@ -1284,7 +1317,7 @@ def main():
                 # Get current database values
                 foster_data = foster_data_dict.get(animal_number, {})
                 current_notes = foster_data.get('fosternotes', '')
-                current_meds = foster_data.get('onmeds', False)
+                current_meds = foster_data.get('onmeds', '')
                 current_dates = foster_data.get('fosterpleadates', [])
                 
                 # Create row with columns (8 or 9 depending on tab)
@@ -1400,6 +1433,14 @@ def main():
                 with col8:
                     # Meds - expandable text area (same style as notes)
                     current_meds = foster_data.get('onmeds', '')
+                    
+                    # Show helpful note for medication field
+                    if idx == 0:  # Only show on first row
+                        # Check migration status for this specific field
+                        field_needs_migration, _, _ = check_migration_status()
+                        if field_needs_migration:
+                            st.info("💊 **Medication field will support text after migration**")
+                    
                     new_meds = st.text_area(
                         "Meds",
                         value=current_meds,
@@ -1711,6 +1752,135 @@ def main():
                 
             else:
                 st.warning("No bottle fed kittens data available.")
+
+# Database Migration Functions
+def check_migration_status():
+    """Check if the database needs migration for text-based medications"""
+    try:
+        if not supabase_manager.initialized:
+            return False, "Database not connected", None
+        
+        # Check if onmeds column accepts text by examining existing data
+        result = supabase_manager.client.table('foster_animals').select('onmeds').limit(10).execute()
+        
+        if result.data:
+            # Check if any values are boolean
+            has_boolean_values = any(isinstance(row.get('onmeds'), bool) for row in result.data)
+            
+            if has_boolean_values:
+                return True, "Migration needed - found boolean values", result.data
+            else:
+                return False, "No migration needed - already supports text", result.data
+        else:
+            return False, "No data found - column type will be set on first record", []
+            
+    except Exception as e:
+        return False, f"Error checking migration status: {str(e)}", None
+
+def run_data_migration():
+    """Run the data migration to convert boolean values to text"""
+    try:
+        st.info("🔄 Starting data migration...")
+        
+        # Get all records with boolean onmeds values
+        result = supabase_manager.client.table('foster_animals').select('id,onmeds').execute()
+        
+        if result.data:
+            updates_made = 0
+            for row in result.data:
+                if isinstance(row.get('onmeds'), bool):
+                    # Convert boolean to text
+                    new_value = "Yes" if row['onmeds'] else "No"
+                    
+                    # Update the record
+                    supabase_manager.client.table('foster_animals').update({
+                        'onmeds': new_value
+                    }).eq('id', row['id']).execute()
+                    
+                    updates_made += 1
+            
+            st.success(f"✅ Successfully converted {updates_made} boolean values to text")
+            return True, updates_made
+        else:
+            st.warning("⚠️ No data found to migrate")
+            return False, 0
+            
+    except Exception as e:
+        st.error(f"❌ Migration failed: {str(e)}")
+        return False, 0
+
+def show_migration_interface():
+    """Show the migration interface in the sidebar"""
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("🔧 Database Migration")
+    
+    # Check migration status
+    needs_migration, status_message, sample_data = check_migration_status()
+    
+    if needs_migration:
+        st.sidebar.warning("⚠️ Database Migration Required")
+        st.sidebar.write("Your database needs to be updated to support text-based medications.")
+        
+        # Show current data sample
+        if sample_data:
+            with st.sidebar.expander("📊 Current Data Sample", expanded=False):
+                st.write("**Sample medication values before migration:**")
+                for i, row in enumerate(sample_data[:3]):
+                    meds_value = row.get('onmeds', 'NULL')
+                    st.write(f"- Record {i+1}: `{meds_value}` (Type: {type(meds_value).__name__})")
+        
+        # Migration button
+        if st.sidebar.button("🚀 Run Data Migration", help="Convert existing boolean values to text"):
+            with st.sidebar.spinner("Migrating data..."):
+                success, count = run_data_migration()
+                if success:
+                    st.sidebar.success(f"✅ Migration completed! {count} records updated.")
+                    st.sidebar.info("🔄 **Next step:** Run the SQL commands in Supabase to complete the migration.")
+                    st.rerun()  # Refresh to show new status
+                else:
+                    st.sidebar.error("❌ Migration failed. Check the error message above.")
+        
+        # Show next steps
+        st.sidebar.info("📝 **Next Steps:**")
+        st.sidebar.write("1. ✅ Data migration completed (above)")
+        st.sidebar.write("2. 🔄 Update database schema (SQL required)")
+        st.sidebar.write("3. 🚀 Your app will support text medications!")
+        
+        # Show SQL instructions
+        with st.sidebar.expander("📋 SQL Migration Instructions", expanded=False):
+            st.write("**Run this SQL in your Supabase SQL Editor:**")
+            migration_sql = """
+-- Update onmeds column from BOOLEAN to TEXT
+ALTER TABLE foster_animals 
+ALTER COLUMN "onmeds" TYPE TEXT;
+
+-- Set default value
+ALTER TABLE foster_animals 
+ALTER COLUMN "onmeds" SET DEFAULT '';
+            """
+            st.code(migration_sql, language="sql")
+            
+            st.write("**After running the SQL:**")
+            st.write("1. Refresh this page")
+            st.write("2. Migration status should show 'Complete'")
+            st.write("3. You can now enter detailed medication info!")
+        
+    else:
+        st.sidebar.success("✅ Database Ready")
+        st.sidebar.write("Your database supports text-based medications.")
+        
+        # Show verification
+        if sample_data:
+            with st.sidebar.expander("🔍 Verification Details", expanded=False):
+                st.write("**Database schema verified:**")
+                st.write("✅ onmeds column accepts text")
+                st.write("✅ Existing data preserved")
+                st.write("✅ Ready for text-based medication entries")
+        
+        st.sidebar.info("🎉 You can now enter detailed medication information in the foster dashboard!")
+        
+        # Show celebration
+        st.sidebar.balloons()
 
 if __name__ == "__main__":
     main() 

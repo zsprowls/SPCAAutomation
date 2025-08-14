@@ -86,7 +86,7 @@ def test_crud_operations():
         return False
     
     # Test updating OnMeds
-    if supabase_manager.update_on_meds(test_animal, True):
+    if supabase_manager.update_on_meds(test_animal, "Amoxicillin 250mg twice daily"):
         st.success("✅ OnMeds update test passed")
     else:
         st.error("❌ OnMeds update test failed")

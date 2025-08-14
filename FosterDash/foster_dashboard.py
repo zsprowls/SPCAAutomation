@@ -914,16 +914,6 @@ def main():
         else:
             st.success("✅ **Database Ready for Text Medications**")
             st.write("Your database supports detailed medication entries. You can now enter specific medication information for each animal.")
-            
-            # Show example of what's now possible
-            with st.expander("🎉 What you can now do", expanded=False):
-                st.write("**You can now enter detailed medication information:**")
-                st.write("- Specific medication names and dosages")
-                st.write("- Frequency and timing instructions")
-                st.write("- Special notes about administration")
-                st.write("- Multiple medication details in one field")
-                st.write("")
-                st.write("**This provides much better tracking and communication for foster coordinators!**")
     
     # Create view selector
     view_option = st.sidebar.radio(

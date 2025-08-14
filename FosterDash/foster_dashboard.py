@@ -1879,9 +1879,6 @@ ALTER COLUMN "onmeds" SET DEFAULT '';
                 st.write("✅ Ready for text-based medication entries")
         
         st.sidebar.info("🎉 You can now enter detailed medication information in the foster dashboard!")
-        
-        # Show celebration
-        st.sidebar.balloons()
 
 if __name__ == "__main__":
     main() 

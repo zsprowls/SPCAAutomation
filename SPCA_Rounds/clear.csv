@@ -1,12 +1,14 @@
 AnimalNumber,AnimalName,AnimalType,Stage,ClearDate
 A0059071090,,Cat,Hold - Bite/Scratch,08/17/25
-A0059047263,,Dog,Hold - Legal Notice,08/11/25
-A0059086932,,Dog,Hold - Legal Notice,08/15/25
-A0059100555,Givency,Dog,Hold - Legal Notice,08/20/25
-A0059100571,Dior,Dog,Hold - Legal Notice,08/20/25
+A0059111689,Mo,Cat,Hold - Legal Notice,
+A0059100555,GIVENCY,Dog,Hold - Legal Notice,08/20/25
+A0059100571,DIOR,Dog,Hold - Legal Notice,08/20/25
+A0059109647,RAMBUN,Cat,Hold - Legal Notice,
 A0059084312,,Other,Hold - Legal Notice,08/18/25
 A0059084314,,Other,Hold - Legal Notice,08/18/25
 A0059084334,,Other,Hold - Legal Notice,08/18/25
 A0059084623,,Other,Hold - Legal Notice,08/18/25
 A0059095233,,Cat,Hold - Stray,08/16/25
 A0059086071,,Cat,Hold - Stray,08/15/25
+A0059107218,,Cat,Hold - Stray,
+A0059113390,,Bird,Hold - Stray,08/21/25

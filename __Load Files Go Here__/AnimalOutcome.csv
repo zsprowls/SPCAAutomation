@@ -1,17 +1,47 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Wednesday, August 27, 2025",8/26/2025 12:00 AM,All,8/26/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Thursday, August 28, 2025",8/27/2025 12:00 AM,All,8/27/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058571047,,Rodent,GUINEA PIG,7mos,F,No,Adoption,Foster Care Adoption - Other,MIRANDA KRISSI,KRISSIM,,,No,,Buffalo,,08/26/2025 10:53 AM,,,,,,12
-Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058996529,DJ,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Previous Adopter - Cat,Paryz Michelle,MICHELLEP,,,No,,Kenmore,,08/26/2025 12:56 PM,,,,,,12
-Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0059067099,Violin,Cat,Domestic Shorthair,6mos,F,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KENDRAHT,,,No,,Buffalo,,08/26/2025 03:15 PM,,,,,,12
-Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0058763319,KIRK,Cat,Domestic Shorthair,4yrs,M,Yes,Adoption,New Adopter - Cat,Tirado Kendrah,KENDRAHT,,,No,,Buffalo,,08/26/2025 04:09 PM,,,,,,12
-Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0059048691,Lucy,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",2yrs,F,Yes,Adoption,New Adopter - Dog,WEBSTER KATE,KATEW,,Mix,No,,Other County in NYS,,08/26/2025 12:08 PM,,,,,,12
-Adoption,Total Outcomes: 6,Total Unique Animals: 6,A0059067089,Vortex,Cat,Domestic Shorthair,6mos,M,Yes,Adoption,Previous Adopter - Cat,WEBSTER KATE,KATEW,,,No,,Town of Tonawanda,,08/26/2025 04:16 PM,,,,,,12
-Clinic Out,Total Outcomes: 1,Total Unique Animals: 1,A0058855239,Willow,Rabbit,Lion Head,4mos,F,Yes,Clinic Out,Retention,COGSWELL TAMMI,TAMMIC,Sprout,,No,,,,08/26/2025 04:11 PM,,,,,,12
-DOA,Total Outcomes: 1,Total Unique Animals: 1,A0059243178,MIDNIGHT,Cat,Domestic Shorthair,0mos,F,No,DOA, ,,TAMMIC,,Mix,No,,Buffalo,,08/26/2025 02:46 PM,,,,,,12
-Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0059202899,Walker,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",20yrs,M,Yes,Euthanasia,Requested Sleep,,KRYSTANP,,Mix,No,,,,08/26/2025 12:31 PM,,,,,,12
-Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0059213667,Prince,Dog,"Spaniel, Cavalier King Charles",16yrs,M,Yes,Euthanasia,Requested Sleep,,JENT,,Mix,No,,,,08/26/2025 02:34 PM,,,,,,12
-Euthanasia,Total Outcomes: 3,Total Unique Animals: 3,A0059239367,DARLA,Cat,Domestic Medium Hair,21yrs,F,Yes,Euthanasia,Requested Sleep,,JENT,,Mix,No,,,,08/26/2025 02:33 PM,,,,,,12
-Return to Owner/Guardian,Total Outcomes: 1,Total Unique Animals: 1,A0058855249,Cherry Blossom,Rabbit,Lion Head,4mos,M,No,Return to Owner/Guardian,Not Received,VOGT SHANNON,SHANNONV,,,No,,,,08/26/2025 08:19 AM,,,,,,12
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059202770,ADIRA,Cat,Domestic Shorthair,2yrs,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Buffalo,,08/27/2025 12:18 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059116922,GRIFFIN,Cat,Domestic Shorthair,8yrs,M,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,,,No,,Hamburg,,08/27/2025 04:30 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059116929,MERV,Cat,Domestic Shorthair,8yrs,M,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,,,No,,Hamburg,,08/27/2025 04:30 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0058074487,JENNIFER,Cat,Domestic Shorthair,8yrs,F,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,,,No,,West Seneca,,08/27/2025 12:00 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059048855,SASHA,Cat,Domestic Longhair,5yrs,F,Yes,Adoption,Previous Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,West Seneca,,08/27/2025 04:34 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059067070,Viola,Cat,Domestic Shorthair,6mos,F,Yes,Adoption,Previous Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,West Seneca,,08/27/2025 04:34 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059067078,VOYAGER,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,West Seneca,,08/27/2025 12:34 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0058792719,Queenie,Dog,Beagle,3yrs,F,Yes,Adoption,New Adopter - Dog,Sisti Maria,MariaS,,Mix,No,,Niagara County,,08/27/2025 02:43 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0038713655,TOFU,Cat,Domestic Shorthair,7yrs,M,Yes,Adoption,New Adopter - Cat,Paryz Michelle,MICHELLEP,Titan,,No,,Buffalo,,08/27/2025 02:56 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059067112,Velcro,Cat,Domestic Shorthair,6mos,F,Yes,Adoption,New Adopter - Cat,Paryz Michelle,MICHELLEP,,,No,,Town of Tonawanda,,08/27/2025 11:34 AM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059078506,CORA,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",4mos,F,Yes,Adoption,Previous Adopter - Dog,Sprowls Zachery,ZAKS,,Mix,No,,Buffalo,,08/27/2025 04:42 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0058955896,Hailey,Rodent,HAMSTER,,F,No,Adoption,New Adopter - Other,Witkowski Victoria,VictoriaW,hamster 17,,No,,Buffalo,,08/27/2025 11:56 AM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0058792732,PEANUT,Dog,Beagle,3yrs,M,Yes,Adoption,New Adopter - Dog,Sisti Maria,MariaS,,Mix,No,,Niagara County,,08/27/2025 02:43 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0058825550,WAVE,Cat,Domestic Shorthair,3yrs,F,Yes,Adoption,Previous Adopter - Cat,Sisti Maria,MariaS,,,No,,East Aurora,,08/27/2025 02:01 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0058905758,Pugsly,Cat,Domestic Shorthair,2yrs,M,Yes,Adoption,New Adopter - Cat,Paryz Michelle,MICHELLEP,,,No,,Buffalo,,08/27/2025 02:56 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059067121,Vodka,Cat,Domestic Shorthair,6mos,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,,No,,Kenmore,,08/27/2025 05:14 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0058996522,PIA,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Previous Adopter - Cat,Sisti Maria,MariaS,,,No,,Lancaster,,08/27/2025 03:13 PM,,,,,,42
+Adoption,Total Outcomes: 18,Total Unique Animals: 18,A0059078492,CLARA,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",4mos,F,Yes,Adoption,New Adopter - Puppy,Tirado Kendrah,KENDRAHT,,Mix,No,,Buffalo,,08/27/2025 03:20 PM,,,,,,42
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0059232105,,Cat,Domestic Shorthair,1yrs,M,No,Clinic Out,Stray,VOGT SHANNON,SHANNONV,,Mix,No,,Elma,,08/27/2025 11:47 AM,,,,,,42
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0059247888,,Cat,Domestic Shorthair,1yrs,F,No,Clinic Out,Stray,Dittrich Ashley,ASHLEYD,,Mix,No,,,,08/27/2025 11:20 AM,,,,,,42
+Clinic Out,Total Outcomes: 3,Total Unique Animals: 3,A0059210139,Luna,Cat,Domestic Shorthair,1yrs,F,Yes,Clinic Out,Stray,VOGT SHANNON,SHANNONV,,Mix,No,,,,08/27/2025 10:33 AM,,,,,,42
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0058949385,,Cat,Domestic Shorthair,1mos,F,No,Euthanasia,Humane Reasons,,KRYSTANP,,Mix,No,,,,08/27/2025 06:09 PM,,,,,,42
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059246556,,Cat,Domestic Longhair,8mos,F,No,Euthanasia,Humane Reasons,,LANAP,,Mix,No,,,,08/27/2025 12:39 PM,,,,,,42
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059249208,SPICE CAT,Cat,Domestic Shorthair,1mos,M,No,Euthanasia,Humane Reasons,,LANAP,,Mix,No,,,,08/27/2025 04:48 PM,,,,,,42
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059249826,Nomee,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",10yrs,F,No,Euthanasia,Requested Sleep,,LANAP,,Mix,No,,,,08/27/2025 02:56 PM,,,,,,42
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059250060,Trixie,Cat,Domestic Shorthair,22yrs,F,Yes,Euthanasia,Requested Sleep,,KRYSTANP,,Mix,No,,,,08/27/2025 04:45 PM,,,,,,42
+Return to Owner/Guardian,Total Outcomes: 1,Total Unique Animals: 1,A0059249826,Nomee,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",10yrs,F,No,Return to Owner/Guardian,Not Received,Abbey Leigh Ann,LEIGHANNA,,Mix,No,,,,08/27/2025 02:41 PM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058952074,Porter,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 1,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955553,Parker,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 4,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955564,Patrick,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 7,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955603,Pedro,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 13,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955608,Pascal,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 14,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955613,PHIL,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,15,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955639,Potter,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 20,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955651,MIKE,Rodent,GUINEA PIG,,M,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,G Pig 22,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955735,Gabriella,Rodent,GUINEA PIG,,F,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 40,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955743,Gloria,Rodent,GUINEA PIG,,F,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 41,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955750,Glenda,Rodent,GUINEA PIG,,F,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 43,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955758,Gretchen,Rodent,GUINEA PIG,,F,No,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,g pig 44,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955676,AMELIA,Rodent,GUINEA PIG,,F,Yes,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,#27,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955689,SHANNON,Rodent,GUINEA PIG,,F,Yes,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,G Pig 29,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
+Transfer Out,Total Outcomes: 15,Total Unique Animals: 15,A0058955731,GERTIE,Rodent,GUINEA PIG,,F,Yes,Transfer Out,Shelter out of Coalition,Abbey Leigh Ann,LEIGHANNA,G Pig 39,,No,,,Surplus,08/27/2025 09:03 AM,,,,,,42
 

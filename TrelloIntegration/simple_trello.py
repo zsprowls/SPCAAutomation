@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Simple Trello Card Creator for SPCA Foster Animals
+Simple Trello Card Creator for SPCA Foster Animals with Supabase Integration
 Just run this script and it will automatically process your AnimalInventory data for Hold - Foster animals
 IMAGES ARE PRESERVED - all other info updates with latest data
 CARDS ARE ARCHIVED when animals move out of Hold - Foster stage
+PULLS FOSTER NOTES AND MEDS from Supabase database
 """
 
 import os
@@ -15,12 +16,74 @@ import pandas as pd
 import requests
 from dotenv import load_dotenv
 
+# Supabase imports
+try:
+    from supabase import create_client, Client
+except ImportError:
+    Client = None
+
 # Load environment variables
 load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+class SupabaseManager:
+    """Manages Supabase database operations for foster data"""
+    
+    def __init__(self):
+        self.client = None
+        self.initialized = False
+        
+    def initialize(self, supabase_url: str, supabase_key: str) -> bool:
+        """Initialize the Supabase client"""
+        try:
+            if Client is None:
+                logger.error("Supabase library not available - install with: pip install supabase")
+                return False
+                
+            self.client = create_client(supabase_url, supabase_key)
+            
+            # Test the connection
+            result = self.client.table('foster_animals').select('animalnumber').limit(1).execute()
+            self.initialized = True
+            logger.info("✅ Successfully connected to Supabase")
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Failed to connect to Supabase: {str(e)}")
+            return False
+    
+    def get_animal_data(self, animal_number: str) -> dict:
+        """Get foster data for a specific animal"""
+        if not self.initialized or self.client is None:
+            return {}
+            
+        try:
+            result = self.client.table('foster_animals').select('*').eq('animalnumber', animal_number).execute()
+            if result.data:
+                return result.data[0]
+            return {}
+        except Exception as e:
+            logger.warning(f"Could not get Supabase data for {animal_number}: {str(e)}")
+            return {}
+    
+    def get_all_foster_data(self) -> dict:
+        """Get all foster data from the database"""
+        if not self.initialized or self.client is None:
+            return {}
+            
+        try:
+            result = self.client.table('foster_animals').select('*').execute()
+            foster_data = {}
+            if result.data:
+                for row in result.data:
+                    foster_data[row['animalnumber']] = row
+            return foster_data
+        except Exception as e:
+            logger.warning(f"Could not get all foster data from Supabase: {str(e)}")
+            return {}
 
 class SimpleTrelloManager:
     """Simple Trello manager that preserves images but updates all other info and archives old cards"""
@@ -95,9 +158,11 @@ class SimpleTrelloManager:
         
         return None
     
-    def create_card(self, animal_number: str, animal_name: str, animal_type: str, primary_breed: str, age: str, sex: str, species: str, spayed_neutered: str, intake_date: str):
-        """Create a new foster card"""
+    def create_card(self, animal_number: str, animal_name: str, animal_type: str, primary_breed: str, age: str, sex: str, species: str, spayed_neutered: str, intake_date: str, foster_notes: str = "", on_meds: str = ""):
+        """Create a new foster card with Supabase data"""
         name = f"{animal_number} - {animal_name}"
+        
+        # Build description with Supabase data
         description = f"""Animal: {animal_name}
 Type: {animal_type}
 Primary Breed: {primary_breed}
@@ -108,6 +173,14 @@ Spayed/Neutered: {spayed_neutered}
 Intake Date: {intake_date}
 
 This animal is currently on hold for foster care."""
+
+        # Add foster notes if available
+        if foster_notes and foster_notes.strip():
+            description += f"\n\n--- **Latest Foster Notes:** ---\n{foster_notes}"
+        
+        # Add meds info if available
+        if on_meds and on_meds.strip():
+            description += f"\n\n--- **Current Medications:** ---\n{on_meds}"
         
         data = {
             'idList': self.list_id,
@@ -123,9 +196,11 @@ This animal is currently on hold for foster care."""
         logger.info(f"Created new foster card: {name}")
         return card_id
     
-    def update_card(self, card_id: str, animal_number: str, animal_name: str, animal_type: str, primary_breed: str, age: str, sex: str, species: str, spayed_neutered: str, intake_date: str):
+    def update_card(self, card_id: str, animal_number: str, animal_name: str, animal_type: str, primary_breed: str, age: str, sex: str, species: str, spayed_neutered: str, intake_date: str, foster_notes: str = "", on_meds: str = ""):
         """Update existing foster card - always updates info, preserves attachments"""
         name = f"{animal_number} - {animal_name}"
+        
+        # Build description with Supabase data
         description = f"""Animal: {animal_name}
 Type: {animal_type}
 Primary Breed: {primary_breed}
@@ -136,6 +211,14 @@ Spayed/Neutered: {spayed_neutered}
 Intake Date: {intake_date}
 
 This animal is currently on hold for foster care."""
+
+        # Add foster notes if available
+        if foster_notes and foster_notes.strip():
+            description += f"\n\n--- **Latest Foster Notes:** ---\n{foster_notes}"
+        
+        # Add meds info if available
+        if on_meds and on_meds.strip():
+            description += f"\n\n--- **Current Medications:** ---\n{on_meds}"
         
         data = {
             'name': name,
@@ -174,8 +257,21 @@ Card archived for reference."""
 
 
 def process_foster_data():
-    """Process the foster data and create/update Trello cards"""
+    """Process the foster data and create/update Trello cards with Supabase integration"""
     try:
+        # Initialize Supabase connection
+        supabase_url = os.getenv('SUPABASE_URL')
+        supabase_key = os.getenv('SUPABASE_KEY')
+        
+        supabase = SupabaseManager()
+        if supabase_url and supabase_key:
+            if supabase.initialize(supabase_url, supabase_key):
+                logger.info("✅ Supabase connected - will pull foster notes and meds data")
+            else:
+                logger.warning("⚠️ Supabase connection failed - continuing without foster notes/meds")
+        else:
+            logger.warning("⚠️ Supabase credentials not found - continuing without foster notes/meds")
+        
         # Load the CSV file, skipping the first 2 metadata rows
         # Row 1-2: Metadata, Row 3: Actual headers, Row 4+: Data
         df = pd.read_csv('../__Load Files Go Here__/AnimalInventory.csv', skiprows=2)
@@ -229,13 +325,23 @@ def process_foster_data():
                 spayed_neutered = str(row['SpayedNeutered']) if pd.notna(row['SpayedNeutered']) else 'Unknown'
                 intake_date = str(row['IntakeDateTime']) if pd.notna(row['IntakeDateTime']) else 'Unknown'
                 
+                # Get Supabase data for this animal
+                foster_notes = ""
+                on_meds = ""
+                if supabase.initialized:
+                    supabase_data = supabase.get_animal_data(animal_number)
+                    if supabase_data:
+                        foster_notes = supabase_data.get('fosternotes', '')
+                        on_meds = supabase_data.get('onmeds', '')
+                        logger.info(f"Found Supabase data for {animal_number}: notes={bool(foster_notes)}, meds={bool(on_meds)}")
+                
                 # Find or create card
                 card_id = trello.find_existing_card(animal_number)
                 
                 if card_id:
                     # Update existing card
                     logger.info(f"Updating card for {animal_name} ({animal_number})")
-                    trello.update_card(card_id, animal_number, animal_name, animal_type, primary_breed, age, sex, species, spayed_neutered, intake_date)
+                    trello.update_card(card_id, animal_number, animal_name, animal_type, primary_breed, age, sex, species, spayed_neutered, intake_date, foster_notes, on_meds)
                     
                     # Remove from existing cards list
                     if animal_number in existing_cards:
@@ -243,7 +349,7 @@ def process_foster_data():
                 else:
                     # Create new card
                     logger.info(f"Creating new card for {animal_name} ({animal_number})")
-                    card_id = trello.create_card(animal_number, animal_name, animal_type, primary_breed, age, sex, species, spayed_neutered, intake_date)
+                    card_id = trello.create_card(animal_number, animal_name, animal_type, primary_breed, age, sex, species, spayed_neutered, intake_date, foster_notes, on_meds)
                     trello.card_map[animal_number] = card_id
                     
             except Exception as e:
@@ -280,11 +386,12 @@ def process_foster_data():
 
 def main():
     """Main function - just run this!"""
-    print("SPCA Foster Trello Card Creator with Archiving")
-    print("=" * 50)
+    print("SPCA Foster Trello Card Creator with Supabase Integration")
+    print("=" * 60)
     print("Processing AnimalInventory.csv for animals with Stage = 'Hold - Foster'")
     print("IMAGES ARE PRESERVED - all other info updates with latest data")
     print("CARDS ARE ARCHIVED when animals move out of Hold - Foster stage")
+    print("PULLS FOSTER NOTES AND MEDS from Supabase database")
     print()
     
     try:
@@ -292,6 +399,7 @@ def main():
         print("\n✅ Done! Check your Trello board for the updated foster cards.")
         print("Note: Existing photos and attachments were preserved!")
         print("Old cards were moved to the archive list.")
+        print("Foster notes and meds data were pulled from Supabase!")
         
     except Exception as e:
         print(f"\n❌ Error: {e}")
@@ -300,7 +408,8 @@ def main():
         print("2. The 'AnimalInventory.csv' file in the '__Load Files Go Here__' folder")
         print("3. Animals with Stage = 'Hold - Foster' in your data")
         print("4. Set TRELLO_ARCHIVE_LIST_ID in your .env file for archiving")
-        print("5. Installed requirements: pip install -r requirements.txt")
+        print("5. Set SUPABASE_URL and SUPABASE_KEY for foster notes/meds data")
+        print("6. Installed requirements: pip install -r requirements.txt")
 
 
 if __name__ == "__main__":

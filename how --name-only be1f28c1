@@ -1,0 +1,13 @@
+[33mcommit ac1ee93b274bbd57d3b7d179ef8ca2f0d3b0ded0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Zac Sprowls <AdoptionsFosterMgr@yourspca.org>
+Date:   Fri Aug 29 09:10:02 2025 -0400
+
+    8/29 update
+
+SPCA_Rounds/clear.csv
+__Load Files Go Here__/AnimalIntake.csv
+__Load Files Go Here__/AnimalInventory.csv
+__Load Files Go Here__/AnimalOutcome.csv
+__Load Files Go Here__/FosterCurrent.csv
+__Load Files Go Here__/Hold - Foster Stage Date.csv
+__Load Files Go Here__/StageReview.csv

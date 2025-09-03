@@ -58,8 +58,9 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Logs
+# Logs (but allow automation logs)
 *.log
+!__Load Files Go Here__/AutomationLog/*.log
 logs/
 
 # Cache

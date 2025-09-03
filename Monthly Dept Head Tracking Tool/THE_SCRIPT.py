@@ -153,7 +153,7 @@ SURGERY_CATEGORIES = [
     ('', ''),  # Blank space
     ('Cat', 'Other Surgeries'),
     ('Dog', 'Other Surgeries'),
-    ('Others', 'Other Surgeries')
+    ('Other', 'Other Surgeries')
 ]
 
 # Function to classify species
@@ -162,12 +162,8 @@ def classify_species(species):
         return 'Cat'
     elif species == 'Dog':
         return 'Dog'
-    elif species == 'Rabbit':
-        return 'Rabbit'
-    elif species == 'Rodent':
-        return 'Rat'
     else:
-        return 'Others'
+        return 'Other'
 
 # Function to classify species for foster data (original logic)
 def classify_species_foster(species):
@@ -339,8 +335,8 @@ def process_medical_surgery():
             continue
             
         # Filter for this species and surgery type
-        if species == 'Others':
-            # For "Others", include all species except Cat and Dog
+        if species == 'Other':
+            # For "Other", include all species except Cat and Dog
             subset = surgery_df[
                 (~surgery_df['SpeciesCategory'].isin(['Cat', 'Dog'])) &
                 (surgery_df['SurgeryCategory'] == surgery_type)

@@ -1,56 +1,25 @@
 ﻿textbox3,textbox19,textbox13,textbox20,textbox5,textbox25,textbox7,textbox39,textbox9,textbox41,Textbox2
-"Tuesday, September 2, 2025",8/29/2025 12:00 AM,All,8/30/2025 11:59 PM,All,All,All,All,All,All,Completed
+"Wednesday, September 3, 2025",9/2/2025 12:00 AM,All,9/2/2025 11:59 PM,All,All,All,All,All,All,Completed
 
 textbox16,textbox33,textbox36,AnimalNumber,AnimalName,Species,PrimaryBreed,textbox11,Gender,Altered,OperationType,OperationSubType,OperBy,textbox64,ARN,textbox55,textbox54,textbox58,JurisdictionOut,OutcomeReason,Textbox50,Textbox17,Textbox31,Textbox34,Textbox44,Textbox45,textbox77
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059117909,Lionel,Farm Type Fowl,Chicken,,M,No,Adoption,Farm Adoption,Burg Patricia,admin,,,No,,Wyoming County,,08/29/2025 12:16 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059236544,Pinecone,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/29/2025 03:12 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059000884,CROISSANT,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KATEW,,,No,,Angola,,08/30/2025 02:39 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059000897,DANISH,Cat,Domestic Shorthair,1mos,F,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KATEW,,,No,,Buffalo,,08/29/2025 11:50 AM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059033751,KIERNAN,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KATEW,,,No,,Buffalo,,08/29/2025 05:03 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059236569,Almond,Cat,Domestic Shorthair,3mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Siamese,No,,,,08/29/2025 03:11 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058999777,Rex,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",9mos,M,Yes,Adoption,Previous Adopter - Dog,WEBSTER KATE,KATEW,,Mix,No,,Hamburg,,08/29/2025 03:28 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059038318,Ollie,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,Mix,No,,Buffalo,,08/30/2025 04:01 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059007999,Clementine,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1yrs,F,Yes,Adoption,New Adopter - Dog,Sisti Maria,MariaS,,Mix,No,,Buffalo,,08/29/2025 02:05 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058763173,Nixie,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,,No,,,,08/29/2025 03:10 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059067084,Valley,Cat,Domestic Shorthair,6mos,F,Yes,Adoption,New Adopter - Cat,Paryz Michelle,MICHELLEP,,,No,,Hamburg,,08/30/2025 01:18 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059067086,Vibrant,Cat,Domestic Shorthair,6mos,F,Yes,Adoption,New Adopter - Cat,Paryz Michelle,MICHELLEP,,,No,,,,08/29/2025 11:39 AM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059046741,SHERBERT,Cat,Domestic Shorthair,10mos,M,Yes,Adoption,New Adopter - Cat,Tirado Kendrah,KENDRAHT,,,No,,,,08/30/2025 01:04 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059024880,Louise,Farm Type Fowl,Chicken,,F,No,Adoption,Farm Adoption,Burg Patricia,admin,,Chicken,No,,Wyoming County,,08/29/2025 12:16 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059024884,Thelma,Farm Type Fowl,Chicken,,F,No,Adoption,Farm Adoption,Burg Patricia,admin,,Chicken,No,,Wyoming County,,08/29/2025 12:16 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058549497,SILKY,Cat,Domestic Shorthair,2yrs,F,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KATEW,,,No,,Buffalo,,08/30/2025 02:26 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059038323,Luna,Cat,Domestic Shorthair,2mos,F,Yes,Adoption,New Adopter - Cat,Witkowski Victoria,VictoriaW,,Mix,No,,Buffalo,,08/30/2025 03:47 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058682112,Bowie,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,Foster Care Adoption - Cat,Sisti Maria,MariaS,,,No,,Buffalo,,08/29/2025 03:34 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0039918688,Casidine,Dog,"Chihuahua, Short Coat",9yrs,M,Yes,Adoption,New Adopter - Dog,Sisti Maria,MariaS,Thomas,Mix,No,,Buffalo,,08/29/2025 04:03 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058763174,Ash,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,,No,,,,08/29/2025 03:08 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058905650,Harriett,Cat,Domestic Shorthair,11mos,F,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,HARRIETT,Mix,No,,,,08/29/2025 03:17 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059232739,Dragonfly,Cat,Domestic Shorthair,2mos,M,Yes,Adoption,Offsite Adoption - Cat,Kiblin Julia,JULIAK,,Mix,No,,,,08/29/2025 03:15 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058955858,Huckleberry,Rodent,HAMSTER,,M,No,Adoption,Previous Adopter - Other,Paryz Michelle,MICHELLEP,hamster 9,,No,,,,08/29/2025 03:05 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0058733210,Kyro,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1yrs,M,Yes,Adoption,Foster Care Adoption - Dog,Paryz Michelle,MICHELLEP,,Mix,No,,,,08/29/2025 02:31 PM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059244012,IRIS,Rodent,RAT-DOMESTIC,,M,No,Adoption,New Adopter - Other,Dittrich Ashley,ASHLEYD,,,No,,,,08/29/2025 11:26 AM,,,,,,51
-Adoption,Total Outcomes: 26,Total Unique Animals: 26,A0059244037,ROOMIE,Rodent,RAT-DOMESTIC,,M,No,Adoption,New Adopter - Other,Dittrich Ashley,ASHLEYD,,,No,,,,08/29/2025 11:26 AM,,,,,,51
-Clinic Out,Total Outcomes: 5,Total Unique Animals: 5,A0059213469,Shadow,Cat,Domestic Longhair,,M,No,Clinic Out,Medical Treatment Completed,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,08/29/2025 02:29 PM,,,,,,51
-Clinic Out,Total Outcomes: 5,Total Unique Animals: 5,A0059213481,Luka,Cat,Domestic Longhair,10yrs,M,Yes,Clinic Out,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,08/29/2025 02:36 PM,,,,,,51
-Clinic Out,Total Outcomes: 5,Total Unique Animals: 5,A0059269275,,Cat,Domestic Shorthair,5mos,F,No,Clinic Out,Stray,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,08/30/2025 12:25 PM,,,,,,51
-Clinic Out,Total Outcomes: 5,Total Unique Animals: 5,A0058962835,Chanel,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,F,Yes,Clinic Out,Case - Outreach,VOGT SHANNON,SHANNONV,,Mix,No,,,,08/29/2025 04:00 PM,,,,,,51
-Clinic Out,Total Outcomes: 5,Total Unique Animals: 5,A0058834525,Remy,Dog,"Bulldog, French",1yrs,F,Yes,Clinic Out,Medical Treatment Completed,VOGT SHANNON,SHANNONV,,,No,,,,08/29/2025 02:44 PM,,,,,,51
-Died,Total Outcomes: 2,Total Unique Animals: 2,A0059078430,,Cat,Domestic Shorthair,1mos,M,No,Died,IN FOSTER,TOPOLSKI JULIE,JULIET,,,No,,,,08/30/2025 02:02 PM,,,,,,51
-Died,Total Outcomes: 2,Total Unique Animals: 2,A0059263324,,Rabbit,French Lop,0mos,M,No,Died,IN KENNEL,PROCYSZYN-BILGER LANA,LANAP,,French Lop,No,,,,08/30/2025 09:10 AM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059236581,Jazz,Cat,Domestic Shorthair,14yrs,F,No,Euthanasia,Requested Sleep,,ROBINR,,Mix,No,,,,08/29/2025 01:30 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059239485,RYLEE,Dog,Retriever,12yrs,F,Yes,Euthanasia,Requested Sleep,,ROBINR,,Mix,No,,,,08/29/2025 10:23 AM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059246748,Lucas,Cat,Domestic Medium Hair,16yrs,M,Yes,Euthanasia,Requested Sleep,,SARAD,,Mix,No,,,,08/29/2025 01:15 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059256008,OSCAR,Dog,"Dachshund, Miniature Long Haired",18yrs,M,Yes,Euthanasia,Requested Sleep,,LANAP,,,No,,,,08/30/2025 10:25 AM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059263127,,Cat,Domestic Shorthair,3mos,M,No,Euthanasia,Humane Reasons,,KRYSTANP,GINA,Mix,No,,,,08/29/2025 11:50 AM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059263863,,Cat,Domestic Shorthair,,U,No,Euthanasia,Requested Sleep,,ROBINR,,Mix,No,,,,08/29/2025 12:36 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059269486,,Cat,Domestic Shorthair,1yrs,F,No,Euthanasia,Humane Reasons,,LANAP,,Mix,No,,,,08/30/2025 10:56 AM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059270087,,Cat,Domestic Shorthair,10mos,F,No,Euthanasia,Humane Reasons,,LANAP,,Mix,No,,,,08/30/2025 01:23 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059270092,,Cat,Domestic Shorthair,0mos,M,No,Euthanasia,Humane Reasons,,PAIGEP,,Mix,No,,,,08/30/2025 01:25 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059270095,,Cat,Domestic Shorthair,0mos,M,No,Euthanasia,Humane Reasons,,PAIGEP,,Mix,No,,,,08/30/2025 01:25 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059270103,,Cat,Domestic Shorthair,0mos,M,No,Euthanasia,Humane Reasons,,PAIGEP,,Mix,No,,,,08/30/2025 01:26 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059270109,,Cat,Domestic Shorthair,0mos,M,No,Euthanasia,Humane Reasons,,PAIGEP,,Mix,No,,,,08/30/2025 01:27 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0057372301,Chloe,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",10mos,F,Yes,Euthanasia,Requested Sleep,,PAIGEP,Cinder,Mix,No,,,,08/30/2025 12:03 PM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0023287111,KITTY,Cat,Domestic Shorthair,11yrs,M,Yes,Euthanasia,Humane Reasons,,LANAP,,,No,,,,08/30/2025 09:51 AM,,,,,,51
-Euthanasia,Total Outcomes: 15,Total Unique Animals: 15,A0059263014,Dallas,Dog,Maltese,20yrs,F,No,Euthanasia,Requested Sleep,,LANAP,,Pekingese,No,,,,08/30/2025 10:40 AM,,,,,,51
-Return to Owner/Guardian,Total Outcomes: 3,Total Unique Animals: 3,A0059255216,,Cat,Domestic Shorthair,3mos,U,No,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,,Mix,No,,,,08/29/2025 09:02 AM,,,,,,51
-Return to Owner/Guardian,Total Outcomes: 3,Total Unique Animals: 3,A0059264705,Georgia,Reptile/Amphibian,"Gecko, Crested",,F,No,Return to Owner/Guardian,General,ABRAMS NICOLE,NICOLEA,,,No,,,,08/29/2025 02:42 PM,,,,,,51
-Return to Owner/Guardian,Total Outcomes: 3,Total Unique Animals: 3,A0057372301,Chloe,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",10mos,F,Yes,Return to Owner/Guardian,Not Received,COGSWELL TAMMI,TAMMIC,Cinder,Mix,No,,,,08/30/2025 11:16 AM,,,,,,51
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0059047263,Penny,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1yrs,F,Yes,Adoption,Foster Care Adoption - Dog,MIRANDA KRISSI,KRISSIM,JIMMY CHEW,Mix,No,,Niagara County,,09/02/2025 09:23 AM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0056617154,CE-CE,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2yrs,F,Yes,Adoption,New Adopter - Dog,WEBSTER KATE,KATEW,,Mix,No,,East Amherst,,09/02/2025 11:06 AM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0059073515,STORMI,Cat,Domestic Shorthair,4yrs,M,Yes,Adoption,Foster Care Adoption - Cat,MIRANDA KRISSI,KRISSIM,NORBERT,,No,,Cheektowaga,,09/02/2025 11:28 AM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0059116640,CREAM SODA,Cat,Domestic Shorthair,2yrs,F,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KATEW,,,No,,Buffalo,,09/02/2025 01:49 PM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058501226,Cairo,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1yrs,F,Yes,Adoption,New Adopter - Dog,WEBSTER KATE,KATEW,Luna/Cairo,Mix,No,,Depew,,09/02/2025 12:46 PM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0059066187,Snuggles,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",12yrs,M,Yes,Adoption,Previous Adopter - Dog,WEBSTER KATE,KATEW,,Mix,No,,Silver Creek,,09/02/2025 11:47 AM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0059219059,LYNX,Cat,Domestic Shorthair,4mos,F,Yes,Adoption,New Adopter - Cat,WEBSTER KATE,KATEW,,,No,,East Aurora,,09/02/2025 05:26 PM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0058873076,PAWS,Cat,Domestic Shorthair,3mos,M,Yes,Adoption,New Adopter - Cat,Sisti Maria,MariaS,,Mix,No,,Buffalo,,09/02/2025 05:21 PM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0059219048,Marbles,Cat,Domestic Shorthair,4mos,F,Yes,Adoption,New Adopter - Cat,Tirado Kendrah,KENDRAHT,,,No,,,,09/02/2025 05:04 PM,,,,,,20
+Adoption,Total Outcomes: 10,Total Unique Animals: 10,A0059219054,Banshee,Cat,Domestic Shorthair,4mos,F,Yes,Adoption,New Adopter - Cat,Tirado Kendrah,KENDRAHT,,,No,,,,09/02/2025 05:04 PM,,,,,,20
+Clinic Out,Total Outcomes: 1,Total Unique Animals: 1,A0059255764,,Cat,Domestic Longhair,1yrs,F,No,Clinic Out,Stray,COGSWELL TAMMI,TAMMIC,,,No,,,,09/02/2025 10:55 AM,,,,,,20
+Died,Total Outcomes: 1,Total Unique Animals: 1,A0059226718,,Cat,Domestic Shorthair,2mos,M,No,Died,IN FOSTER,PARFINSKI PAIGE,PAIGEP,,,No,,,,09/02/2025 06:48 PM,,,,,,20
+DOA,Total Outcomes: 2,Total Unique Animals: 2,A0023346662,LILA,Dog,Pug,18yrs,F,Yes,DOA, ,,SHANNONV,,Beagle,No,,Buffalo,,09/02/2025 08:48 AM,,,,,,20
+DOA,Total Outcomes: 2,Total Unique Animals: 2,A0059278238,GREY,Cat,Domestic Shorthair,7mos,U,No,DOA, ,,TAMMIC,,Mix,No,,Buffalo,,09/02/2025 08:24 AM,,,,,,20
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059194514,Desi,Cat,Domestic Shorthair,11yrs,U,Yes,Euthanasia,Requested Sleep,,PAIGEP,,Mix,No,,,,09/02/2025 03:09 PM,,,,,,20
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059221432,Capricorn,Cat,Domestic Shorthair,10yrs,M,Yes,Euthanasia,Urinary Infection/Blockage,,JENT,,,No,,,,09/02/2025 11:00 AM,,,,,,20
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059226715,,Cat,Domestic Shorthair,2mos,M,No,Euthanasia,Humane Reasons,,PAIGEP,,,No,,,,09/02/2025 06:45 PM,,,,,,20
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059256329,GRACIE,Cat,Domestic Longhair,16yrs,F,No,Euthanasia,Requested Sleep,,KRYSTANP,,Mix,No,,,,09/02/2025 11:18 AM,,,,,,20
+Euthanasia,Total Outcomes: 5,Total Unique Animals: 5,A0059278693,MOLSON,Cat,Domestic Shorthair,17yrs,M,Yes,Euthanasia,Requested Sleep,,JENT,,Mix,No,,,,09/02/2025 10:07 AM,,,,,,20
+Return to Owner/Guardian,Total Outcomes: 1,Total Unique Animals: 1,A0059068106,Bobby,Cat,Domestic Shorthair,2yrs,M,Yes,Return to Owner/Guardian,Medical Treatment Completed,Hebert Nathan,NATHANH,VROOM,,No,,Buffalo,,09/02/2025 08:42 AM,,,,,,20
 

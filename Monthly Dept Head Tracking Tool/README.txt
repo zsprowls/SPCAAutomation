@@ -6,6 +6,12 @@ For Adoptions Numbers File:
     -Click Animal:Outcome
         -'Change Outcome Date From' and 'Outcome Date To' to the first and last day of the month you want to pull
 
+For Intake Numbers File:
+-Go to Reports Website
+    -Click Intake Dropdown
+    -Click Animal:Intake
+        -'Change Intake Date From' and 'Intake Date To' to the first and last day of the month you want to pull
+
 For Fosters Number File:
 -Go to Reports Website
     -Click on Care Dropdown

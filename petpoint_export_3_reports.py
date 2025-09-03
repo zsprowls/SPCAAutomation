@@ -163,65 +163,103 @@ def run(playwright: Playwright) -> None:
         # Report 2: Stage Review
         logging.info("=== EXPORTING STAGE REVIEW ===")
         logging.info("⚠️  Stage Review can take 2+ minutes due to photos...")
-        page1.goto("https://repstd.petpoint.com/Index#")
-        page1.wait_for_load_state('networkidle')
         
-        page1.get_by_role("link", name="Animal", exact=True).click()
-        page1.get_by_text("Stage: Review").click()
-        page1.locator("[id=\"1\"]").get_by_text("Summary", exact=True).click()
-        page1.get_by_role("option", name="Detail").click()
-        
-        with page1.expect_popup() as page3_info:
-            page1.get_by_role("button", name="Submit").click()
-        page3 = page3_info.value
-        
-        logging.info("⏳ Waiting for Stage Review to generate (this can take 2+ minutes)...")
-        # Wait for the loading indicator to disappear first
         try:
-            page3.wait_for_selector("#ReportViewer1_AsyncWait_Wait", state="hidden", timeout=180000)  # 3 minutes
-            logging.info("✅ Loading completed, looking for export button...")
-        except:
-            logging.warning("⚠️  Loading indicator didn't disappear, proceeding anyway...")
-        
-        # Wait much longer for the export button
-        page3.wait_for_selector("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg", timeout=60000)  # 1 minute
-        page3.locator("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg").click()
-        logging.info("Clicked export button")
-        
-        page3.wait_for_selector("a[title='CSV (comma delimited)']", timeout=10000)
-        with page3.expect_download() as download1_info:
-            page3.locator("a[title='CSV (comma delimited)']").click()
-        download1 = download1_info.value
-        download1.save_as(DOWNLOAD_DIR / "StageReview.csv")
-        logging.info("✅ Saved StageReview.csv")
-        page3.close()
+            page1.goto("https://repstd.petpoint.com/Index#")
+            page1.wait_for_load_state('networkidle')
+            logging.info("Navigated back to reports page")
+            
+            page1.get_by_role("link", name="Animal", exact=True).click()
+            logging.info("Clicked Animal link for Stage Review")
+            
+            page1.get_by_text("Stage: Review").click()
+            logging.info("Clicked Stage: Review")
+            
+            page1.locator("[id=\"1\"]").get_by_text("Summary", exact=True).click()
+            page1.get_by_role("option", name="Detail").click()
+            logging.info("Selected Detail option for Stage Review")
+            
+            with page1.expect_popup() as page3_info:
+                page1.get_by_role("button", name="Submit").click()
+            page3 = page3_info.value
+            logging.info("Stage Review popup opened")
+            
+            logging.info("⏳ Waiting for Stage Review to generate (this can take 2+ minutes)...")
+            # Wait for the loading indicator to disappear first
+            try:
+                page3.wait_for_selector("#ReportViewer1_AsyncWait_Wait", state="hidden", timeout=180000)  # 3 minutes
+                logging.info("✅ Loading completed, looking for export button...")
+            except Exception as e:
+                logging.warning(f"⚠️  Loading indicator didn't disappear: {e}")
+                logging.info("Proceeding anyway...")
+            
+            # Wait much longer for the export button
+            page3.wait_for_selector("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg", timeout=60000)  # 1 minute
+            page3.locator("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg").click()
+            logging.info("Clicked export button for Stage Review")
+            
+            page3.wait_for_selector("a[title='CSV (comma delimited)']", timeout=10000)
+            with page3.expect_download() as download1_info:
+                page3.locator("a[title='CSV (comma delimited)']").click()
+            download1 = download1_info.value
+            download1.save_as(DOWNLOAD_DIR / "StageReview.csv")
+            logging.info("✅ Saved StageReview.csv")
+            page3.close()
+            
+        except Exception as e:
+            logging.error(f"❌ Stage Review failed: {e}")
+            logging.error("Skipping Stage Review and continuing with Foster Current...")
+            try:
+                page3.close()
+            except:
+                pass
         
         # Report 3: Foster Current
         logging.info("=== EXPORTING FOSTER CURRENT ===")
-        page1.goto("https://repstd.petpoint.com/Index#")
-        page1.wait_for_load_state('networkidle')
         
-        page1.get_by_role("link", name="Care").click()
-        page1.get_by_text("Foster: Current").click()
-        page1.get_by_text("select").nth(4).click()
-        page1.get_by_role("option", name="Detail").click()
+        try:
+            page1.goto("https://repstd.petpoint.com/Index#")
+            page1.wait_for_load_state('networkidle')
+            logging.info("Navigated back to reports page for Foster Current")
+            
+            page1.get_by_role("link", name="Care").click()
+            logging.info("Clicked Care link")
+            
+            page1.get_by_text("Foster: Current").click()
+            logging.info("Clicked Foster: Current")
+            
+            page1.get_by_text("select").nth(4).click()
+            page1.get_by_role("option", name="Detail").click()
+            logging.info("Selected Detail option for Foster Current")
+            
+            with page1.expect_popup() as page4_info:
+                page1.get_by_role("button", name="Submit").click()
+            page4 = page4_info.value
+            logging.info("Foster Current popup opened")
+            
+            page4.get_by_role("link", name="J K").click()
+            logging.info("Clicked J K link")
+            
+            page4.wait_for_selector("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg", timeout=10000)
+            page4.locator("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg").click()
+            logging.info("Clicked export button for Foster Current")
+            
+            page4.wait_for_selector("a[title='CSV (comma delimited)']", timeout=5000)
+            with page4.expect_download() as download2_info:
+                page4.locator("a[title='CSV (comma delimited)']").click()
+            download2 = download2_info.value
+            download2.save_as(DOWNLOAD_DIR / "FosterCurrent.csv")
+            logging.info("✅ Saved FosterCurrent.csv")
+            page4.close()
+            
+        except Exception as e:
+            logging.error(f"❌ Foster Current failed: {e}")
+            logging.error("Skipping Foster Current...")
+            try:
+                page4.close()
+            except:
+                pass
         
-        with page1.expect_popup() as page4_info:
-            page1.get_by_role("button", name="Submit").click()
-        page4 = page4_info.value
-        page4.get_by_role("link", name="J K").click()
-        
-        page4.wait_for_selector("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg", timeout=10000)
-        page4.locator("#ReportViewer1_ctl09_ctl04_ctl00_ButtonImg").click()
-        logging.info("Clicked export button")
-        
-        page4.wait_for_selector("a[title='CSV (comma delimited)']", timeout=5000)
-        with page4.expect_download() as download2_info:
-            page4.locator("a[title='CSV (comma delimited)']").click()
-        download2 = download2_info.value
-        download2.save_as(DOWNLOAD_DIR / "FosterCurrent.csv")
-        logging.info("✅ Saved FosterCurrent.csv")
-        page4.close()
         page1.close()
         
         logging.info("🎉 All 3 reports exported successfully!")

@@ -1,1 +1,36 @@
 2025-09-04 15:45:57,498 - INFO - Starting PetPoint automation - Log file: C:\Users\AdoptionsFosterMgr\Desktop\SPCAAutomation\__Load Files Go Here__\AutomationLog\petpoint_automation_20250904_154557.log
+2025-09-04 15:45:57,864 - INFO - Navigating to PetPoint login...
+2025-09-04 15:46:00,396 - INFO - Logging in...
+2025-09-04 15:46:11,066 - INFO - Login completed, looking for Reports dropdown...
+2025-09-04 15:46:11,099 - INFO - Found Reports dropdown
+2025-09-04 15:46:12,175 - INFO - Hovered over Reports dropdown
+2025-09-04 15:46:12,191 - INFO - Report Website option appeared in dropdown
+2025-09-04 15:46:14,413 - INFO - Report Website opened successfully
+2025-09-04 15:46:14,413 - INFO - === EXPORTING ANIMAL INVENTORY ===
+2025-09-04 15:46:15,474 - INFO - Clicked Animal link
+2025-09-04 15:46:16,640 - INFO - Clicked Animal Inventory
+2025-09-04 15:46:18,741 - INFO - Selected Detail option
+2025-09-04 15:46:22,325 - INFO - Report generated, looking for export options...
+2025-09-04 15:46:23,374 - INFO - Clicked export button
+2025-09-04 15:46:24,481 - INFO - === EXPORTING STAGE REVIEW ===
+2025-09-04 15:46:25,811 - INFO - Navigated back to reports page
+2025-09-04 15:46:26,874 - INFO - Clicked Animal link for Stage Review
+2025-09-04 15:46:27,993 - INFO - Clicked Stage: Review
+2025-09-04 15:46:30,089 - INFO - Selected Detail option for Stage Review
+2025-09-04 15:46:31,123 - INFO - Stage Review popup opened
+2025-09-04 15:46:56,269 - INFO - Clicked export button for Stage Review
+2025-09-04 15:46:57,344 - INFO - === EXPORTING FOSTER CURRENT ===
+2025-09-04 15:46:58,775 - INFO - Navigated back to reports page for Foster Current
+2025-09-04 15:46:59,837 - INFO - Clicked Care link
+2025-09-04 15:47:00,953 - INFO - Clicked Foster: Current
+2025-09-04 15:47:03,070 - INFO - Selected Detail option for Foster Current
+2025-09-04 15:47:04,102 - INFO - Foster Current popup opened
+2025-09-04 15:47:08,820 - INFO - Clicked J K link
+2025-09-04 15:47:09,869 - INFO - Clicked export button for Foster Current
+2025-09-04 15:47:10,979 - INFO - Files saved to: __Load Files Go Here__
+2025-09-04 15:47:10,981 - INFO - Stashing any unstaged changes...
+2025-09-04 15:47:11,195 - INFO - Pulling latest changes...
+2025-09-04 15:47:11,664 - INFO - Adding __Load Files Go Here__ folder to Git...
+2025-09-04 15:47:11,791 - INFO - Committing our changes...
+2025-09-04 15:47:11,911 - INFO - Pushing to remote repository...
+2025-09-04 15:47:13,280 - INFO - Automation completed

@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -28,6 +30,13 @@ jobs:
     - name: Run clear_file.py
       run: |
         echo "StageReview.csv was updated. Running clear_file.py..."
+        echo "Current directory: $(pwd)"
+        echo "Files in current directory:"
+        ls -la
+        echo "Files in __Load Files Go Here__ directory:"
+        ls -la "__Load Files Go Here__/"
+        echo "Files in SPCA_Rounds directory:"
+        ls -la SPCA_Rounds/
         python3 SPCA_Rounds/clear_file.py
         
     - name: Commit and push clear.csv if it was created/modified

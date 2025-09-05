@@ -39,14 +39,21 @@ jobs:
         ls -la SPCA_Rounds/
         python3 SPCA_Rounds/clear_file.py
         
-    - name: Commit and push clear.csv if it was created/modified
+    - name: Check if clear.csv was created
+      id: check-clear
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add SPCA_Rounds/clear.csv
-        if git diff --staged --quiet; then
-          echo "No changes to clear.csv"
+        if [ -f "SPCA_Rounds/clear.csv" ]; then
+          echo "clear.csv exists"
+          echo "file_exists=true" >> $GITHUB_OUTPUT
         else
-          git commit -m "Auto-update: clear.csv generated from StageReview.csv"
-          git push
+          echo "clear.csv does not exist"
+          echo "file_exists=false" >> $GITHUB_OUTPUT
         fi
+        
+    - name: Upload clear.csv as artifact
+      if: steps.check-clear.outputs.file_exists == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: clear-csv
+        path: SPCA_Rounds/clear.csv
+        retention-days: 30

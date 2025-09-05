@@ -1,0 +1,43 @@
+name: Run clear_file.py on StageReview.csv changes
+
+on:
+  push:
+    paths:
+      - '__Load Files Go Here__/StageReview.csv'
+    branches:
+      - main
+
+jobs:
+  run-clear-file:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas
+        
+    - name: Run clear_file.py
+      run: |
+        echo "StageReview.csv was updated. Running clear_file.py..."
+        python3 SPCA_Rounds/clear_file.py
+        
+    - name: Commit and push clear.csv if it was created/modified
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add SPCA_Rounds/clear.csv
+        if git diff --staged --quiet; then
+          echo "No changes to clear.csv"
+        else
+          git commit -m "Auto-update: clear.csv generated from StageReview.csv"
+          git push
+        fi

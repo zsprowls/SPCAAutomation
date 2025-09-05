@@ -10,6 +10,8 @@ on:
 jobs:
   run-clear-file:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
     - name: Checkout repository
@@ -50,10 +52,15 @@ jobs:
           echo "file_exists=false" >> $GITHUB_OUTPUT
         fi
         
-    - name: Upload clear.csv as artifact
+    - name: Commit and push clear.csv
       if: steps.check-clear.outputs.file_exists == 'true'
-      uses: actions/upload-artifact@v4
-      with:
-        name: clear-csv
-        path: SPCA_Rounds/clear.csv
-        retention-days: 30
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add SPCA_Rounds/clear.csv
+        if git diff --staged --quiet; then
+          echo "No changes to clear.csv"
+        else
+          git commit -m "Auto-update: clear.csv generated from StageReview.csv"
+          git push
+        fi

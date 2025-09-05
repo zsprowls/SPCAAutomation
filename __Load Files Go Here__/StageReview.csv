@@ -2,4 +2,483 @@
 "Thursday, September 4, 2025",All,All,True,All,All,All,All
 
 Location,textbox39,textbox89,AnimalName,Species,PrimaryBreed,textbox90,PrimaryColour,Stage,ReviewDate,StageChangeReason,ARN,textbox61,textbox78,SecondaryBreed,Gender,SecondaryColour,textbox79,SubLocation,HoldReason,HorForName,HoldStartDate,HoldPlacedBy,textbox47
+  Adoptions Lobby,9,A0058955507,GWENETH,Rodent,GUINEA PIG,,Black,Available,,,G Pig 5,25.00,Small,,F,White,,Rabbitat 1,,,,,479
+  Adoptions Lobby,9,A0058955559,MARGRET,Rodent,GUINEA PIG,,White,Available,,,G Pig 6,25.00,Small,,F,Black,,Rabbitat 1,,,,,479
+  Adoptions Lobby,9,A0058955576,MARIA,Rodent,GUINEA PIG,,Black,Available,,,G Pig 11,25.00,Small,,F,,,Rabbitat 1,,,,,479
+  Adoptions Lobby,9,A0058955669,TRINITY,Rodent,GUINEA PIG,,Brown,Available,,,G Pig 25,25.00,Small,,F,White,,Rabbitat 1,,,,,479
+  Adoptions Lobby,9,A0058955862,Hillary,Rodent,HAMSTER,,Black,Available,,,hamster 10,5.00,Small,,F,White,,Rabbitat 2,,,,,479
+  Adoptions Lobby,9,A0058955867,Harlee,Rodent,HAMSTER,,Black,Available,,,hamster 12,5.00,Small,,F,White,,Rabbitat 2,,,,,479
+  Adoptions Lobby,9,A0058955898,Halle,Rodent,HAMSTER,,Black,Available,,,hamster 18,5.00,Small,,F,White,,Rabbitat 2,,,,,479
+  Adoptions Lobby,9,A0058956889,Harriet,Rodent,HAMSTER,,Black,Available,,,hamster 20,5.00,Small,,F,White,,Rabbitat 2,,,,,479
+  Adoptions Lobby,9,A0058956894,Harper,Rodent,HAMSTER,,Black,Available,,,hamster 21,5.00,Small,,F,White,,Rabbitat 2,,,,,479
+  Cat Adoption Condo Rooms,20,A0057756153,BAM,Cat,Domestic Shorthair,2y 7m 7d,Brown,Available,,,,120.00,Small,,M,White,,Meet & Greet 109B,,,,,479
+  Cat Adoption Condo Rooms,20,A0057756173,BINX,Cat,Domestic Shorthair,5y 7m 7d,Grey,Available,,,,50.00,Small,,M,White,,Meet & Greet 109B,,,,,479
+  Cat Adoption Condo Rooms,20,A0058415888,PINTO,Cat,Domestic Shorthair,2y 4m 3d,Black,Available,,,,120.00,Medium,,F,,,Condo E,,,,,479
+  Cat Adoption Condo Rooms,20,A0058922776,SHELDON,Cat,Domestic Shorthair,1y 1m 19d,Black,Available,,,,120.00,Small,,M,,,Condo A,,,,,479
+  Cat Adoption Condo Rooms,20,A0058954682,FIREMAN SAM,Cat,Domestic Shorthair,3m 20d,Blue,Available,,,,200.00,Small,,M,White,,Condo A,,,,,479
+  Cat Adoption Condo Rooms,20,A0058955706,GIAVONNA,Rodent,GUINEA PIG,,White,Available,,,g pig 33,25.00,Small,,F,Black,,Rabbitat 2,,,,,479
+  Cat Adoption Condo Rooms,20,A0058955726,Gianna,Rodent,GUINEA PIG,,Brown,Available,,,g pig 38,25.00,Small,,F,Tan,,Rabbitat 2,,,,,479
+  Cat Adoption Condo Rooms,20,A0059067091,Vibe,Cat,Domestic Shorthair,6m 28d,Orange,Available,,On Meds,,120.00,Small,,M,White,,Condo A,,,,,479
+  Cat Adoption Condo Rooms,20,A0059188994,Bart,Cat,Domestic Shorthair,4m 17d,Orange,Available,,,,200.00,Small,,M,,,Condo B,,,,,479
+  Cat Adoption Condo Rooms,20,A0059189011,Lisa,Cat,Domestic Longhair,4m 17d,Black,Available,,,,200.00,Small,,F,,,Condo B,,,,,479
+  Cat Adoption Condo Rooms,20,A0059218951,KITKAT,Cat,Domestic Shorthair,3m 22d,Brown,Hold - Behavior,,,,,Small,,F,,,Condo B,,,,,479
+  Cat Adoption Condo Rooms,20,A0059218957,MARGOT,Cat,Domestic Shorthair,3m 22d,Black,Hold - Behavior,,,,,Small,,F,White,,Condo B,,,,,479
+  Cat Adoption Condo Rooms,20,A0059218964,BENTLEY,Cat,Domestic Shorthair,3m 22d,White,Hold - Behavior,,,,,Small,,F,Black,,Condo B,,,,,479
+  Cat Adoption Condo Rooms,20,A0059232182,Solo,Cat,Domestic Shorthair,3y 10d,Black,Hold - Surgery,,Needs spay,,,Small,,F,,,Condo C,,,,,479
+  Cat Adoption Condo Rooms,20,A0059232188,Padme,Cat,Domestic Shorthair,2y 10d,White,Hold - Surgery,,Needs spay,,,Small,,F,Black,,Condo C,,,,,479
+  Cat Adoption Condo Rooms,20,A0059232190,Leia,Cat,Domestic Shorthair,3y 10d,Black,Hold - Surgery,,Needs spay,,,Small,,F,White,,Condo C,,,,,479
+  Cat Adoption Condo Rooms,20,A0059256194,FELIX,Cat,Domestic Shorthair,1y 7d,Black,Hold - Behavior Mod.,,,,,Small,,M,White,,Condo F,,,,,479
+  Cat Adoption Condo Rooms,20,A0059256204,POST MALONE,Cat,Domestic Shorthair,3m 7d,Brown,Hold - Possible Adoption,,,,200.00,Small,,M,White,,Condo F,,,,,479
+  Cat Adoption Condo Rooms,20,A0059256254,TAYLOR SWIFT,Cat,Domestic Shorthair,6m 7d,Brown,Available,,,,120.00,Small,,F,White,,Condo F,,,,,479
+  Cat Adoption Condo Rooms,20,A0059256765,CHLOE,Cat,Domestic Shorthair,2m 22d,Grey,Available,,,,200.00,Small,,F,White,,Condo D,,,,,479
+  Cat Adoption Room G,4,A0059220220,POE,Cat,Domestic Shorthair,4m 13d,Black,Available,,ON MEDS,,200.00,Small,,M,,,07,,,,,479
+  Cat Adoption Room G,4,A0059232782,TOUCHDOWN,Cat,Domestic Shorthair,6y 10d,Brown,Hold - Possible Adoption,,,,0.00,Small,,M,,,02,,,,,479
+  Cat Adoption Room G,4,A0059236527,Buzz Lightyear,Cat,Domestic Shorthair,4y 10d,Black,Available,,,,0.00,Small,,M,,,08,,,,,479
+  Cat Adoption Room G,4,A0059264181,Petunia,Cat,Domestic Shorthair,2m 15d,Tan,Available,,,,200.00,Small,,F,White,,06,,,,,479
+  Cat Behavior Room I,4,A0058959677,Church,Cat,Domestic Shorthair,6m 3d,Blue,Hold - Bite/Scratch,9/5/2025 12:00 AM,,,120.00,Small,,M,,,05,,,,,479
+  Cat Behavior Room I,4,A0059038749,SHEBA,Cat,Domestic Shorthair,5y 30d,Black,Hold - Behavior Mod.,,,,50.00,Small,,F,White,,08,,,,,479
+  Cat Behavior Room I,4,A0059042672,Pretzel,Cat,Domestic Longhair,2m 28d,White,Hold - Surgery,,,,,Small,,F,Brown,,01,,,,,479
+  Cat Behavior Room I,4,A0059280127,HAMMY,Cat,Domestic Shorthair,1y 2d,Blue,Hold - Foster,,,BABY HAMMY,,Medium,,F,White,9/3/2025 6:37 PM,02,,,,,479
+  Cat Isolation 231,12,A0058819858,Fiona,Cat,Domestic Shorthair,1y 2m 3d,Black,Hold - Doc,,PLAN? - DR NOTES TO FOLLOW,DRAGONFLY,120.00,Small,,F,,,Cage 2,,,,,479
+  Cat Isolation 231,12,A0058855018,SPRINGROLL,Cat,Domestic Shorthair,2m 8d,White,Hold - Surgery,,needs neuter,,,Small,,M,Grey,,Cage 6,,,,,479
+  Cat Isolation 231,12,A0058887121,,Cat,Domestic Longhair,2m 19d,Brown,Hold - Surgery,,,,,Small,,M,,,Cage 4,,,,,479
+  Cat Isolation 231,12,A0058887122,,Cat,Domestic Shorthair,2m 19d,Black,Hold - Surgery,,,,,Small,,M,White,,Cage 4,,,,,479
+  Cat Isolation 231,12,A0058901776,,Cat,Domestic Shorthair,2m 16d,Brown,Hold - Surgery,,,,,Small,,F,,,Cage 1,,,,,479
+  Cat Isolation 231,12,A0058901778,,Cat,Domestic Shorthair,2m 16d,Orange,Hold - Surgery,,,,,Small,,M,,,Cage 1,,,,,479
+  Cat Isolation 231,12,A0058996530,,Cat,Domestic Shorthair,3m 7d,Black,Hold - Surgery,,,,,Small,,F,,,Cage 8,,,,,479
+  Cat Isolation 231,12,A0058996532,,Cat,Domestic Shorthair,3m 7d,Black,Hold - Surgery,,,,,Small,,F,,,Cage 8,,,,,479
+  Cat Isolation 231,12,A0059237171,MISS KITTY,Cat,Domestic Shorthair,15y 10d,Blue,Hold - Doc,,,,,Small,,F,,,Cage 7,,,,,479
+  Cat Isolation 231,12,A0059269648,AMBROSE,Cat,Domestic Shorthair,1y 5d,Grey,Hold - Surgery,,HAS AN ADOPTER,AMBROSE,,Small,,M,,,Cage 5,,,,,479
+  Cat Isolation 231,12,A0059296414,Wayne,Cat,Domestic Shorthair,3m 0d,Black,Hold - Surgery,,needs neuter,,,Small,Mix,M,,,Cage 3,,,,,479
+  Cat Isolation 231,12,A0059296421,Garth,Cat,Domestic Shorthair,3m 0d,Black,Hold - Surgery,,needs neuter,,,Small,Mix,M,,,Cage 3,,,,,479
+  Cat Isolation 232,6,A0058896393,,Cat,Domestic Shorthair,1m 26d,Brown,Hold - Doc,9/13/2025 3:04 PM,panleuk quarantine,,,Small,,M,,,Cage 1,,,,,479
+  Cat Isolation 232,6,A0059078408,SONNET,Cat,Domestic Shorthair,1y 6m 26d,Black,Hold - Doc,,panleuk quarantine,,,Small,,F,Orange,,Cage 2,,,,,479
+  Cat Isolation 232,6,A0059078427,,Cat,Domestic Shorthair,1m 5d,Orange,Hold - Doc,9/13/2025 3:37 PM,panleuk treatment/quarantine,,,Small,,M,,,Cage 2,,,,,479
+  Cat Isolation 232,6,A0059078447,,Cat,Domestic Shorthair,1m 5d,Black,Hold - Doc,9/13/2025 3:40 PM,panleuk treatment/quarantine,,,Small,,F,Orange,,Cage 2,,,,,479
+  Cat Isolation 232,6,A0059078458,,Cat,Domestic Shorthair,1m 5d,Blue,Hold - Doc,9/13/2025 3:42 PM,panleuk treatment/quarantine,,,Small,,F,Orange,,Cage 2,,,,,479
+  Cat Isolation 232,6,A0059078469,,Cat,Domestic Shorthair,1m 5d,Black,Hold - Doc,9/13/2025 3:44 PM,panleuk treatment/quarantine,,,Small,,M,,,Cage 2,,,,,479
+  Cat Isolation 234,3,A0036769703,SUSHI,Cat,Domestic Shorthair,9y 4m 11d,Black,Hold - Behavior,,,,120.00,Small,,F,,,Cage 2,,,,,479
+  Cat Isolation 234,3,A0059241255,MUM,Cat,Domestic Shorthair,6y 9d,Black,Hold - Doc,,urinary issue,,,Small,,F,,,Cage 6,,,,,479
+  Cat Isolation 234,3,A0059270791,BRIOCHE,Cat,Domestic Shorthair,1y 5d,Black,Hold - Surgery,,,,,Small,,F,White,,Cage 4,,,,,479
+  Cat Treatment,21,A0059041027,,Cat,Domestic Shorthair,1m 21d,Black,Hold - Doc,,need tx,,,Small,Mix,F,,,D,,,,,479
+  Cat Treatment,21,A0059041041,,Cat,Domestic Shorthair,1m 21d,Black,Hold - Doc,,need tx,,,Small,Mix,M,,,D,,,,,479
+  Cat Treatment,21,A0059215935,Snoozle,Cat,Domestic Shorthair,1m 11d,Brown,Hold - Foster,,ok for foster,,,Small,,M,White,,E,,,,,479
+  Cat Treatment,21,A0059226495,ARTEMIS,Cat,Domestic Longhair,1m 9d,White,Hold - Foster,,ok for foster,,,Small,Mix,F,Grey,,E,,,,,479
+  Cat Treatment,21,A0059236519,Bo Peep,Cat,Domestic Shorthair,4y 10d,Orange,Hold - Doc,,,,,Small,,F,Black,,01 - A,,,,,479
+  Cat Treatment,21,A0059241943,,Cat,Domestic Longhair,2m 1d,White,Hold - Doc,,recheck D 9/8,,,Small,,M,Orange,,06 - A,,,,,479
+  Cat Treatment,21,A0059255215,STRUDEL,Cat,Domestic Shorthair,3m 7d,Black,Hold - Doc,,,,,Small,,F,,,03 - B,,,,,479
+  Cat Treatment,21,A0059264173,,Cat,Domestic Shorthair,1m 10d,Orange,Pending Foster Pickup,,,,,Small,,M,White,,05,,,,,479
+  Cat Treatment,21,A0059264194,,Cat,Domestic Shorthair,1m 10d,Black,Pending Foster Pickup,,10 DAY CHECK,Love Bug,,Small,,F,Orange,,05,,,,,479
+  Cat Treatment,21,A0059264203,,Cat,Domestic Shorthair,1m 10d,Black,Pending Foster Pickup,,,,,Small,,F,Orange,,05,,,,,479
+  Cat Treatment,21,A0059264212,,Cat,Domestic Shorthair,1m 10d,Brown,Pending Foster Pickup,,,,,Small,,F,White,,05,,,,,479
+  Cat Treatment,21,A0059264225,,Cat,Domestic Shorthair,1m 10d,Black,Pending Foster Pickup,,,,,Small,,M,White,,05,,,,,479
+  Cat Treatment,21,A0059278495,,Cat,Domestic Longhair,12y 2d,Grey,Hold - Stray,9/6/2025 9:15 AM,,,,Small,,F,,,04,,,,,479
+  Cat Treatment,21,A0059280458,,Cat,Domestic Shorthair,30d,Brown,Pending Foster Pickup,,,,,Small,Mix,M,White,,H,,,,,479
+  Cat Treatment,21,A0059280459,,Cat,Domestic Shorthair,30d,Grey,Pending Foster Pickup,,,,,Small,Mix,F,White,,H,,,,,479
+  Cat Treatment,21,A0059280460,,Cat,Domestic Shorthair,30d,Orange,Pending Foster Pickup,,,,,Small,Mix,M,White,,H,,,,,479
+  Cat Treatment,21,A0059280461,,Cat,Domestic Shorthair,30d,Orange,Pending Foster Pickup,,,,,Small,Mix,M,,,H,,,,,479
+  Cat Treatment,21,A0059295716,,Cat,Domestic Shorthair,1y 5m 29d,Brown,Hold - Stray,9/9/2025 12:00 AM,STRAY HOLD,,,Small,Mix,F,,,01 - B,,,,,479
+  Cat Treatment,21,A0059296097,,Cat,Domestic Shorthair,28d,Black,Pending Foster Pickup,,,,,Small,Mix,F,Orange,,B,,,,,479
+  Cat Treatment,21,A0059296100,,Cat,Domestic Shorthair,28d,Brown,Pending Foster Pickup,,,,,Small,Mix,F,,,B,,,,,479
+  Cat Treatment,21,A0059298822,,Cat,Domestic Shorthair,21d,Black,Hold - Foster,,Needs syringe feeding,,,Small,Mix,M,,,F,,,,,479
+  Dental Area,5,A0059299569,,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,Black,Hold - Legal Notice,9/11/2025 12:01 AM,,,,Large,Mix,F,,,Cage 1,,,,,479
+  Dental Area,5,A0059299574,,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,Black,Hold - Legal Notice,9/11/2025 12:01 AM,,,,Large,Mix,U,,,Cage 1,,,,,479
+  Dental Area,5,A0059299578,,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,Black,Hold - Legal Notice,9/11/2025 12:01 AM,,,,Large,Mix,U,,,Cage 1,,,,,479
+  Dental Area,5,A0059299582,,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,Black,Hold - Legal Notice,9/11/2025 12:01 AM,,,,Large,Mix,U,,,Cage 1,,,,,479
+  Dental Area,5,A0059299583,,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",,Black,Hold - Legal Notice,9/11/2025 12:01 AM,,,,Large,Mix,U,,,Cage 1,,,,,479
+  Dog Adoptions A,8,A0059054823,PANDORA,Dog,Mastiff,4y 29d,Tan,Hold - Behavior Mod.,,,big mamma,400.00,Large,Boerboel,F,Black,,09,,,,,479
+  Dog Adoptions A,8,A0059259522,,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",2m 6d,Tan,Hold - Surgery,,,,,Small,Mix,M,White,,06,,,,,479
+  Dog Adoptions A,8,A0059259526,,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",2m 6d,White,Hold - Surgery,,,,,Small,Mix,F,Black,,06,,,,,479
+  Dog Adoptions A,8,A0059259529,,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",2m 6d,White,Hold - Surgery,,,,,Small,Mix,M,Brown,,06,,,,,479
+  Dog Adoptions A,8,A0059259533,,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",2m 6d,Brown,Hold - Surgery,,,,,Small,Mix,F,White,,06,,,,,479
+  Dog Adoptions A,8,A0059259534,,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",2m 6d,White,Hold - Surgery,,,,,Small,Mix,F,Brown,,06,,,,,479
+  Dog Adoptions A,8,A0059265062,PEPE,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",10m 3d,Black,Hold - Surgery,,Needs neuter + ear check,,,Medium,Mix,M,,,04,,,,,479
+  Dog Adoptions A,8,A0059265204,Templeton,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 1m 17d,Red,Hold - Surgery,,Needs neuter,,,Medium,Mix,M,White,,03,,,,,479
+  Dog Adoptions B,2,A0058955277,Birdie,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",1y 9m 2d,Black,Available,,,Karma,250.00,Medium,Mix,F,White,,05,,,,,479
+  Dog Adoptions B,2,A0059265226,Daryl,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",4y 5d,Brindle,Available,,,Darrell,250.00,Medium,Mix,M,Grey,,09,,,,,479
+  Dog Adoptions C,4,A0056174456,TIGOR,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 7m 27d,Brindle,Available,,,,250.00,Medium,Mix,M,,,04,,,,,479
+  Dog Adoptions C,4,A0058811083,MAJOR,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",13y 2m 3d,Brown,Available,,,,100.00,Large,Mix,M,White,,05,,,,,479
+  Dog Adoptions C,4,A0058910423,Harlow,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",4y 1m 20d,Tan,Available,,,ZOE,250.00,Large,Mix,F,White,,06,,,,,479
+  Dog Adoptions C,4,A0059086932,HENRY,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 24d,White,Available,,,,250.00,Large,Mix,M,,,08,,,,,479
+  Dog Adoptions D,3,A0058804353,Petey,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 7d,Black,Available,,,Puppy,400.00,Large,Mix,M,White,,08,,,,,479
+  Dog Adoptions D,3,A0058981296,Brody,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2y 4m 11d,Brown,Available,,,,0.00,Medium,Mix,M,White,,09,,,,,479
+  Dog Adoptions D,3,A0059226469,Blu,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",7m 12d,Blue,Available - ITFF Medical,,,,400.00,Large,Mix,M,White,,07,,,,,479
+  Dog Holding E,15,A0058864066,,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2m 3d,Brindle,Hold - Surgery,,,,,Small,Mix,F,,,03,,,,,479
+  Dog Holding E,15,A0058864067,,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2m 3d,Brindle,Hold - Surgery,,,,,Small,Mix,F,,,03,,,,,479
+  Dog Holding E,15,A0058917898,Zeus,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 1m 19d,Tan,Hold - Meet and Greet,,,,250.00,Large,Mix,M,Black,,12,,,,,479
+  Dog Holding E,15,A0059013434,Zane,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 7m 27d,Black,Hold - Bite/Scratch,9/5/2025 5:37 PM,NEEDS NEUTER AND INTAKE SERVIC,Zeus,,Large,Mix,M,,,08,,,,,479
+  Dog Holding E,15,A0059054832,COTTON CANDY,Dog,Mastiff,2m 10d,Tan,Hold - Surgery,,NEEDS SPAY,,600.00,Small,Mix,F,Black,,05,,,,,479
+  Dog Holding E,15,A0059054847,Bleu,Dog,Mastiff,2m 10d,Blue,Hold - Surgery,,NEEDS FOSTER,,600.00,Small,Mix,M,Tan,,09,,,,,479
+  Dog Holding E,15,A0059054851,Duke,Dog,Mastiff,2m 10d,Tan,Hold - Surgery,,NEEDS SPAY,,600.00,Small,Mix,M,Black,,09,,,,,479
+  Dog Holding E,15,A0059054867,KETTLE CORN,Dog,Mastiff,2m 10d,Tan,Hold - Surgery,,NEEDS SPAY,,600.00,Small,Mix,F,,,05,,,,,479
+  Dog Holding E,15,A0059208222,COLGATE,Dog,"Terrier, American Pit Bull",1y 14d,Tan,Hold - Surgery,,,,,Large,Mix,M,White,,06,,,,,479
+  Dog Holding E,15,A0059257872,Bud,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",11y 10d,White,Hold - Doc,,,A0059236504,,Large,Mix,M,Black,,10,,,,,479
+  Dog Holding E,15,A0059265048,TROUT,Dog,"Chihuahua, Short Coat",,Blond,Hold - Surgery,,Neuter + intake/PE,,,Small,Mix,M,,,01,,,,,479
+  Dog Holding E,15,A0059265181,Riff Raff,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 6m 1d,Brindle,Hold - Surgery,,Needs neuter,,,Medium,Mix,M,White,,07,,,,,479
+  Dog Holding E,15,A0059271225,,Dog,"Terrier, American Pit Bull",2y 3d,Red,Hold - Legal Notice,9/6/2025 12:01 AM,,,,Medium,Mix,F,,,02,,,,,479
+  Dog Holding E,15,A0059289091,,Dog,"Poodle, Standard",,White,Hold - Legal Notice,9/10/2025 12:01 AM,,,,Large,"Retriever, Labrador",U,Black,,11,,,,,479
+  Dog Holding E,15,A0059293950,Brownie,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",5m 15d,Brown,Hold - Stray,9/11/2025 12:01 AM,,,,Medium,Mix,M,White,,04,,,,,479
+  Dog Holding F,13,A0056168108,SNOOPY,Dog,"Terrier, American Pit Bull",1y 7m 17d,White,Hold - Doc,,REVIEW BLOODWORK,,250.00,Medium,Mix,M,Black,,06,,,,,479
+  Dog Holding F,13,A0058864061,BiscuIt,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2m 3d,Brown,Hold - Surgery,,,Bagel,,Small,Mix,F,White,,01,,,,,479
+  Dog Holding F,13,A0058864064,Peanut,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2m 3d,Brown,Hold - Surgery,,,,,Small,Mix,F,Black,,01,,,,,479
+  Dog Holding F,13,A0059077128,Bruce,Dog,German Shepherd,4y 21d,Black,Hold - Doc,8/19/2025 12:00 AM,NEEDS SX/ XRAYS,,400.00,Large,Mix,M,Tan,,11,,,,,479
+  Dog Holding F,13,A0059100555,GIVENCY,Dog,"Terrier, Staffordshire Bull",3y 22d,Blue,PTS,,,,,Large,Mix,M,,,09,,,,,479
+  Dog Holding F,13,A0059100571,DIOR,Dog,"Terrier, Staffordshire Bull",5y 6m 24d,Blue,Hold - Surgery,,,,,Large,Mix,F,White,,10,,,,,479
+  Dog Holding F,13,A0059187085,Creme,Dog,Cane Corso,1y 17d,Tan,Hold - Cruelty Foster,,,,400.00,Large,Mix,F,,,08,,,,,479
+  Dog Holding F,13,A0059208214,,Dog,"Terrier, American Pit Bull",4y 15d,Black,Hold - Complaint,,,,,Large,Mix,F,White,,12,,,,,479
+  Dog Holding F,13,A0059222909,NYLA,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",9y 5d,Tan,Hold - Legal Notice,,HOLD LEGAL NOTICE,,,Large,Mix,F,White,,04,,,,,479
+  Dog Holding F,13,A0059235297,Fritz,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",,Black,Hold - Doc,9/12/2025 5:52 PM,recheck of jaw,,,Medium,Mix,M,Brown,,03,,,,,479
+  Dog Holding F,13,A0059264283,lola,Dog,"Bulldog, English",7y 6d,Brindle,Hold - For RTO,,has an adopter - see memo,,,Medium,Mix,F,White,,02,,,,,479
+  Dog Holding F,13,A0059265092,KING CONDRELL,Dog,"Terrier, Pit Bull",2y 3m 5d,White,Hold - Surgery,,Needs neuter,,,Medium,Mix,M,Black,,07,,,,,479
+  Dog Holding F,13,A0059297179,,Dog,"Terrier, Pit Bull",8m 0d,Brown,Hold - Legal Notice,9/11/2025 12:01 AM,,,,Large,Mix,F,White,,12,,,,,479
+  Farm,17,A0000782604,Xylord,Mini Horse,Miniature Horse,32y 3m 3d,Black,Permanent Resident,,,,,Small,,M,White,,Stall #5,,,,,479
+  Farm,17,A0036675257,Brooster,Farm Type Fowl,Chicken,8y 5m 3d,Rust,Permanent Resident,,,,,Large,,M,Black,,Stall #1,,,,,479
+  Farm,17,A0038590512,Lady Marmalade,Farm Type Fowl,Chicken,7y 4m 15d,Apricot,Permanent Resident,,,,,Medium,,F,White,,Stall #1,,,,,479
+  Farm,17,A0041015190,Frenchy,Farm Type Fowl,Chicken,,Black,Permanent Resident,,,,,Medium,,F,White,,Stall #1,,,,,479
+  Farm,17,A0054810701,Itty Bitty Betty,Farm Type Fowl,Chicken,,Black,Permanent Resident,,,,,Small,,F,,,Stall #1,,,,,479
+  Farm,17,A0054953161,Bonnie,Goat,Nubian,,Brown,Permanent Resident,,S/O Cleared For Dispo,Garage 18,,Large,Boer,F,White,,Stall #2,,,,,479
+  Farm,17,A0054953163,Clara,Goat,Boer,1y 11m 20d,White,Permanent Resident,,,Garage 19,,Large,Nubian,F,Black,,Stall #2,,,,,479
+  Farm,17,A0054953947,Iris,Farm Type Fowl,Chicken,,Lavender,Permanent Resident,,Clear for dispo- Signed Over 8,Garage 138,,Large,,F,,,Stall #1,,,,,479
+  Farm,17,A0057300395,"Emerson ""Emmy""",Farm Type Fowl,Chicken,1y 9m 9d,White,Permanent Resident,,,,,Small,,F,Cream,,Stall #1,,,,,479
+  Farm,17,A0058648104,Duck Vader,Farm Type Fowl,Duck,,Black,In Foster to Adopt,7/14/2025 12:00 AM,,,,Small,,U,,,Foster Farm,,,,,479
+  Farm,17,A0058653310,Quack Efron,Farm Type Fowl,Duck,,Brown,In Foster to Adopt,7/14/2025 12:00 AM,,,,Small,,U,,,Foster Farm,,,,,479
+  Farm,17,A0058942685,Little Foot,Farm Type Fowl,Duck,1m 27d,Yellow,In Foster to Adopt,7/25/2025 9:32 AM,,,10.00,Small,,U,Brown,,Foster Farm,,,,,479
+  Farm,17,A0058972687,KAHLUA,Miniature Pig,Kune Kune Mini-pig,1y 1m 11d,Black,Evaluate,,,,,Extra Large,,F,,,Stall #6,,,,,479
+  Farm,17,A0059186760,,Farm Type Fowl,Duck,,Yellow,Evaluate,,,,,Small,,U,White,,Stall #2,,,,,479
+  Farm,17,A0059186762,,Farm Type Fowl,Duck,,Yellow,Evaluate,,,,,Small,,U,White,,Stall #2,,,,,479
+  Farm,17,A0059186763,,Farm Type Fowl,Duck,,Yellow,Evaluate,,,,,Small,,U,White,,Stall #2,,,,,479
+  Farm,17,A0059286626,AZAD,Pony,Appaloosa,12y 8m 3d,White,Hold - Legal Notice,9/13/2025 12:01 AM,,,,Large,Pinto,F,Red,,Stall #3,,,,,479
+  Feature Room 2,1,A0054196266,WENDELL,Cat,Domestic Shorthair,2y 13d,Brown,Available,,,,120.00,Small,,M,,,Feature Room 2,,,,,479
+  Foster Care Room,17,A0058972148,Millie,Cat,Domestic Shorthair,1y 11d,Blue,Hold - Surgery,,,PHOENIX,,Small,,F,White,,02,,,,,479
+  Foster Care Room,17,A0058994442,BUBBLES,Cat,Domestic Shorthair,1y 1m 7d,White,Hold - Surgery,,,,,Medium,,F,Black,,01,,,,,479
+  Foster Care Room,17,A0059020773,Bay,Cat,Domestic Shorthair,2m 22d,Black,Hold - Surgery,,,Binx,,Small,,F,,,05,,,,,479
+  Foster Care Room,17,A0059024547,Hudson,Cat,Domestic Medium Hair,2m 15d,Brown,Hold - Surgery,,,,,Small,,M,,,05,,,,,479
+  Foster Care Room,17,A0059050668,CHRIS,Cat,Domestic Shorthair,2m 28d,Black,Hold - Special Event,,,,,Small,,M,,,03,,,,,479
+  Foster Care Room,17,A0059050679,QUAGMIRE,Cat,Domestic Shorthair,2m 28d,Black,Hold - Surgery,,,,,Small,,F,White,,03,,,,,479
+  Foster Care Room,17,A0059050700,LOIS,Cat,Domestic Shorthair,2m 28d,Black,Hold - Surgery,,,,,Small,,F,,,03,,,,,479
+  Foster Care Room,17,A0059269123,,Cat,Domestic Shorthair,1m 2d,Brown,Pending Foster Pickup,,CLEAR FOR FOSTER,,,Small,Mix,F,,,04,,,,,479
+  Foster Care Room,17,A0059269124,,Cat,Domestic Shorthair,1m 2d,Brown,Pending Foster Pickup,,CLEAR FOR FOSTER,,,Small,Mix,M,,,04,,,,,479
+  Foster Care Room,17,A0059269125,,Cat,Domestic Shorthair,1m 2d,Brown,Pending Foster Pickup,,CLEAR FOR FOSTER,,,Small,Mix,M,,,04,,,,,479
+  Foster Care Room,17,A0059269127,,Cat,Domestic Shorthair,1m 2d,Brown,Pending Foster Pickup,,CLEAR FOR FOSTER - ON MEDS,,,Small,Mix,F,,,04,,,,,479
+  Foster Care Room,17,A0059270843,OZZY,Cat,Domestic Shorthair,3m 5d,Black,Hold - Surgery,,,,,Small,,M,White,,07,,,,,479
+  Foster Care Room,17,A0059294317,RILEY,Cat,Domestic Shorthair,1y 0d,Black,Hold - Foster,,,,,Small,,F,White,,08,,,,,479
+  Foster Care Room,17,A0059294321,,Cat,Domestic Shorthair,28d,Brown,Hold - Foster,,,,,Small,Mix,F,White,,08,,,,,479
+  Foster Care Room,17,A0059294323,,Cat,Domestic Shorthair,28d,Black,Hold - Foster,,,,,Small,Mix,M,White,,08,,,,,479
+  Foster Care Room,17,A0059294327,,Cat,Domestic Shorthair,28d,Black,Hold - Foster,,,,,Small,Mix,F,White,,08,,,,,479
+  Foster Care Room,17,A0059294330,,Cat,Domestic Shorthair,28d,Brown,Hold - Foster,,,,,Small,Mix,M,White,,08,,,,,479
+  Foster Home,244,A0046861476,Brooklyn,Rabbit,American,,Silver,Permanent Resident,,medically cleared,Lunar,60.00,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0046861487,Broadway,Rabbit,American,,Sable,Permanent Resident,,medically cleared,Morgan,60.00,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0052669181,Alex Wolff,Rodent,CHINCHILLA,,Grey,Permanent Resident,,,,75.00,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0052669183,Ernie,Rodent,CHINCHILLA,,Grey,Permanent Resident,,,Nat Wolff,75.00,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058058096,,Rodent,RAT-DOMESTIC,5m 21d,White,In Foster,,,,,Small,RAT-DOMESTIC,U,,,Foster Home,,,,,479
+  Foster Home,244,A0058058107,,Rodent,RAT-DOMESTIC,5m 21d,White,In Foster,,,,,Small,RAT-DOMESTIC,U,,,Foster Home,,,,,479
+  Foster Home,244,A0058058111,,Rodent,RAT-DOMESTIC,5m 21d,White,In Foster,,,,,Small,RAT-DOMESTIC,U,,,Foster Home,,,,,479
+  Foster Home,244,A0058212975,Gilbert,Rabbit,Florida White,5m 6d,White,In Foster,,,Bunny 2,,Small,Satin,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058212978,CUCUMBER,Rabbit,Florida White,5m 6d,White,In Foster,,,BUNNY 1,,Small,Satin,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058212979,Glacier,Rabbit,Florida White,5m 6d,White,In Foster,,,,,Small,Satin,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058212981,Apple,Rabbit,Florida White,5m 6d,White,In Foster,,,,0.00,Small,Satin,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058212982,Cloudy,Rabbit,Florida White,5m 6d,White,In Foster,,,,,Small,Satin,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058212985,Bunny 5,Rabbit,Florida White,5m 6d,White,In Foster,,,,,Small,Satin,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058212987,Bunny 7,Rabbit,Florida White,5m 6d,White,In Foster,,,,,Small,Satin,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058213031,Heather,Rabbit,Rex,5m 6d,White,In Foster,,,,0.00,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058213036,Cinnamon,Rabbit,Rex,5m 6d,Buff,In Foster,,,,0.00,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058284280,Beaker,Dog,"Terrier, American Pit Bull",9m 25d,White,Available,,,,400.00,Medium,Mix,M,Brown,,Foster Home,,,,,479
+  Foster Home,244,A0058636096,LUKA,Cat,Domestic Shorthair,3m 28d,Black,In Foster,,went back into FC,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058729684,PICKLES,Cat,Domestic Shorthair,1y 9m 12d,Black,In Foster,,Nursing mom,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058729698,,Cat,Domestic Shorthair,2m 22d,White,In Foster,,,,,Small,Mix,M,Black,,Foster Home,,,,,479
+  Foster Home,244,A0058729703,,Cat,Domestic Shorthair,2m 22d,White,In Foster,,,,,Small,Mix,F,Grey,,Foster Home,,,,,479
+  Foster Home,244,A0058729706,,Cat,Domestic Shorthair,2m 22d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058757630,FUZZY SLIPPER,Rabbit,Mini-Lop,4m 26d,White,In Foster,,assess,,,Small,,M,Grey,,Foster Home,,,,,479
+  Foster Home,244,A0058757640,FLIP FLOP,Rabbit,Rex,4m 26d,Black,In Foster,,CLEAR FOR FOSTER,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058764920,Leonardo,Rabbit,Satin,1y 2m 12d,Brown,In Foster,,weight gain,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058787259,,Rabbit,Satin,3m 9d,Black,In Foster,,,,,Small,Mix,M,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058787263,,Rabbit,Satin,3m 9d,White,In Foster,,,,,Small,Mix,M,Brown,,Foster Home,,,,,479
+  Foster Home,244,A0058790535,Abigail,Cat,Domestic Longhair,1y 8d,Black,In Foster,,Nursing mom,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058790545,,Cat,Domestic Shorthair,2m 12d,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058790552,,Cat,Domestic Shorthair,2m 12d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058790558,,Cat,Domestic Longhair,2m 12d,Smoke,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058790560,,Cat,Domestic Longhair,2m 12d,Grey,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058795591,,Rabbit,Satin,3m 9d,Brown,In Foster,,,,,Small,Mix,M,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058796476,FIRECRACKER,Cat,Domestic Shorthair,6m 8d,Black,In Foster,7/16/2025 11:14 AM,ON MEDS,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058799429,,Cat,Domestic Longhair,2m 12d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058799431,,Cat,Domestic Longhair,2m 12d,Grey,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058811036,,Rabbit,Satin,,Blue,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058819243,,Rabbit,Satin,3m 3d,Orange,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058819245,BEACH BALL,Rabbit,Satin,,Orange,In Foster,,Ok for foster,,,Small,Mix,F,Black,,Foster Home,,,,,479
+  Foster Home,244,A0058825557,,Cat,Domestic Shorthair,2m 1d,Black,In Foster,9/17/2025 12:00 AM,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058825574,,Cat,Domestic Shorthair,2m 1d,Grey,In Foster,9/17/2025 12:00 AM,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058847120,KIWI,Cat,Domestic Shorthair,5m 30d,Brown,In Foster,,Recheck UA in 3-4wks; QOL,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058847793,SPARK,Cat,Domestic Shorthair,2m 28d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058858463,General Lee,Cat,Domestic Shorthair,2m 19d,Orange,In Foster,,,,,Small,,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058864070,Brownie,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2m 3d,Brindle,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058864072,Oreo,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",2m 3d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058872790,,Rabbit,Satin,1m 27d,White,In Foster,,needs fostering,,,Small,Satin,F,Tan,,Foster Home,,,,,479
+  Foster Home,244,A0058872792,,Rabbit,Satin,1m 27d,White,In Foster,,needs fostering,,,Small,Satin,M,Grey,,Foster Home,,,,,479
+  Foster Home,244,A0058872796,,Rabbit,Satin,1m 27d,White,In Foster,,needs fostering,,,Small,Satin,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058872798,,Rabbit,Satin,1m 27d,Grey,In Foster,,needs fostering,,,Small,Satin,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058872803,,Rabbit,Satin,1m 27d,Black,In Foster,,needs fostering,,,Small,Satin,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058872805,,Rabbit,Satin,1m 27d,Grey,In Foster,,needs fostering,,,Small,Satin,F,Tan,,Foster Home,,,,,479
+  Foster Home,244,A0058872807,,Rabbit,Satin,1m 27d,White,In Foster,,needs fostering,,,Small,Satin,F,Grey,,Foster Home,,,,,479
+  Foster Home,244,A0058872864,Berlini,Cat,Domestic Shorthair,1m 30d,Black,In Foster,,bottle baby,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058872867,Kiki,Cat,Domestic Shorthair,1m 30d,Black,In Foster,,bottle baby,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058874852,Shania,Cat,Domestic Shorthair,2m 17d,Grey,In Foster,,ok for foster,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058874855,Blakey,Cat,Domestic Shorthair,2m 17d,Black,In Foster,,ok for foster,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058894881,,Cat,Domestic Shorthair,1y 1m 23d,Black,In Foster,,,ANASTASIA,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058901767,,Cat,Domestic Shorthair,3m 2d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058901777,,Cat,Domestic Shorthair,2m 16d,Grey,In Foster,,Too young/URI,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058901781,,Cat,Domestic Shorthair,2m 16d,Grey,In Foster,,Too young/URI,,,Small,Mix,F,Tan,,Foster Home,,,,,479
+  Foster Home,244,A0058901783,,Cat,Domestic Shorthair,3m 2d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058901787,,Cat,Domestic Shorthair,3m 2d,Black,In Foster,,,,0.00,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058901794,,Cat,Domestic Shorthair,3m 2d,Black,In Foster,,,,0.00,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058901926,,Cat,Domestic Shorthair,1m 22d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058901929,,Cat,Domestic Shorthair,1m 22d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058901930,,Cat,Domestic Longhair,1m 22d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058901931,,Cat,Domestic Shorthair,1m 22d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058903437,Henrietta,Cat,Domestic Shorthair,2m 22d,Grey,In Foster,,okay for foster,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058904578,Sam,Cat,Domestic Shorthair,2m 19d,Orange,In Foster,,,,,Small,,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058904579,Molly,Cat,Domestic Shorthair,2m 19d,Brown,In Foster,,,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058904643,Omen,Cat,Domestic Shorthair,2m 19d,Brown,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058904859,,Cat,Domestic Shorthair,1m 22d,Grey,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058909081,PEEWEE,Cat,Domestic Shorthair,1m 21d,Brown,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058909084,,Cat,Domestic Shorthair,1y 1m 20d,Grey,In Foster,,,ROSEMARIE,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058914263,,Cat,Domestic Shorthair,1m 21d,Grey,In Foster,7/22/2025 12:01 AM,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058914271,Pancake,Cat,Domestic Shorthair,1m 21d,Brown,In Foster,7/22/2025 12:01 AM,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058914274,,Cat,Domestic Shorthair,1m 21d,Grey,In Foster,7/22/2025 12:01 AM,,,,Small,,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058914310,,Cat,Domestic Shorthair,1m 21d,Grey,In Foster,7/22/2025 12:01 AM,,,,Small,,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058914774,POPPY,Cat,Domestic Shorthair,1m 21d,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058914782,PORTER,Cat,Domestic Shorthair,1m 21d,Brown,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058925498,,Cat,Domestic Shorthair,3m 6d,Black,In Foster,,Too young/Weight gain,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058925505,,Cat,Domestic Shorthair,3m 6d,Grey,In Foster,,Too young/Weight gain,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058925509,,Cat,Domestic Shorthair,3m 6d,Black,In Foster,,Too young/weight gain,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058940364,SUNNY,Cat,Domestic Shorthair,4m 0d,Black,In Foster,,regular foster recheck 2 weeks,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058941118,,Cat,Domestic Shorthair,1m 18d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058941120,,Cat,Domestic Shorthair,1m 18d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058941129,,Cat,Domestic Shorthair,1m 18d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058941146,,Cat,Domestic Shorthair,1m 18d,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058941151,QUINT,Cat,Domestic Shorthair,1y 1m 16d,Brown,In Foster,,,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058941158,,Cat,Domestic Shorthair,1m 18d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058942274,Lynx,Cat,Domestic Shorthair,4m 16d,Blue,In Foster,,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058949368,Petal,Cat,Domestic Shorthair,1y 14d,Black,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058949381,,Cat,Domestic Shorthair,1m 15d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058949383,,Cat,Domestic Shorthair,1m 15d,White,In Foster,,,,,Small,Mix,F,Brown,,Foster Home,,,,,479
+  Foster Home,244,A0058955724,G Pig 37,Rodent,GUINEA PIG,,Brown,In Foster,,,,,Small,,F,Tan,,Foster Home,,,,,479
+  Foster Home,244,A0058955747,G Pig 42,Rodent,GUINEA PIG,,Tan,In Foster,,,,,Small,,F,Brown,,Foster Home,,,,,479
+  Foster Home,244,A0058955890,,Cat,Domestic Shorthair,2m 11d,Brown,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058955910,Dottie,Cat,Domestic Shorthair,2m 11d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058955935,,Cat,Domestic Shorthair,2m 11d,Black,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058959452,Peanut,Cat,Domestic Shorthair,2m 3d,Brown,In Foster,,,Baby Jaguar,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058959620,JESSE,Cat,Domestic Shorthair,2m 11d,Orange,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058959628,BADGER,Cat,Domestic Shorthair,2m 18d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058967475,MAMA DUCKY,Cat,Domestic Shorthair,2y 1m 5d,Brown,In Foster,,sent back into FC,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058967489,,Cat,Domestic Shorthair,2m 2d,Brown,In Foster,,,,,Small,Mix,U,,,Foster Home,,,,,479
+  Foster Home,244,A0058967492,,Cat,Domestic Shorthair,2m 2d,Brown,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058967494,,Cat,Domestic Shorthair,2m 2d,Brown,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058967496,,Cat,Domestic Shorthair,2m 2d,White,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058967498,,Cat,Domestic Shorthair,2m 2d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058967501,,Cat,Domestic Shorthair,2m 2d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058967503,,Cat,Domestic Shorthair,2m 2d,Black,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058972970,,Cat,Domestic Shorthair,2m 9d,White,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058972982,,Cat,Domestic Shorthair,2m 9d,White,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058972994,,Cat,Domestic Shorthair,2m 9d,White,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058973012,,Cat,Domestic Shorthair,2m 9d,White,In Foster,,,,,Small,Mix,M,Black,,Foster Home,,,,,479
+  Foster Home,244,A0058973036,,Cat,Domestic Shorthair,2m 9d,White,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058974161,,Cat,Domestic Shorthair,2m 1d,Brown,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058974171,,Cat,Domestic Shorthair,2m 1d,Grey,In Foster,,,,0.00,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058982440,Peanut,Cat,Domestic Shorthair,3m 10d,Black,In Foster,,,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058982457,Cashew,Cat,Domestic Shorthair,3m 10d,White,In Foster,,,,,Small,,M,Tan,,Foster Home,,,,,479
+  Foster Home,244,A0058983772,SHIRLEY,Cat,Domestic Longhair,2y 1m 8d,Brown,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058983789,CARMIN,Cat,Domestic Shorthair,1m 10d,Brown,In Foster,,,,,Small,Mix,F,Black,,Foster Home,,,,,479
+  Foster Home,244,A0058983802,SQUIGGIE,Cat,Domestic Shorthair,1m 10d,Brown,In Foster,,,,,Small,,M,Black,,Foster Home,,,,,479
+  Foster Home,244,A0058983806,LAVERNE,Cat,Domestic Shorthair,1m 10d,Brown,In Foster,,,,,Small,Mix,F,Black,,Foster Home,,,,,479
+  Foster Home,244,A0058983813,LENNY,Cat,Domestic Shorthair,1m 10d,Grey,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058993438,Jeffery,Cat,Domestic Shorthair,2m 12d,Black,In Foster,,Ok for foster,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058993921,,Cat,Domestic Shorthair,1m 10d,White,In Foster,,,,,Small,Mix,F,Grey,,Foster Home,,,,,479
+  Foster Home,244,A0058993935,,Cat,Domestic Shorthair,1m 10d,Black,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058994363,,Cat,Domestic Shorthair,2m 7d,Black,In Foster,,,,,Medium,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0058994460,,Cat,Domestic Shorthair,2m 7d,Black,In Foster,,,,,Medium,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0058994462,,Cat,Domestic Shorthair,2m 7d,Blue,In Foster,,,,,Medium,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0058999679,Tortellini,Cat,Domestic Shorthair,1m 14d,Black,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0058999688,Fettuccine,Cat,Domestic Shorthair,1m 14d,Grey,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0058999695,Macaroni,Cat,Domestic Shorthair,1m 14d,Orange,In Foster,,,,,Small,Mix,F,Brown,,Foster Home,,,,,479
+  Foster Home,244,A0059000881,Jake,Cat,Domestic Shorthair,1m 27d,Brown,In Foster,,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059000887,SCONE,Cat,Domestic Shorthair,2m 11d,Grey,In Foster,,,,,Small,,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059000895,Amanda,Cat,Domestic Shorthair,1m 27d,Grey,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059003765,CREPE,Cat,Domestic Shorthair,2m 3d,Grey,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059003767,PANCAKE,Cat,Domestic Shorthair,2m 3d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059003770,WAFFLE,Cat,Domestic Shorthair,2m 3d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059010853,,Cat,Domestic Shorthair,2m 10d,Black,In Foster,,cuterebra wound,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059010863,,Cat,Domestic Shorthair,2m 10d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059011330,,Cat,Domestic Shorthair,1m 26d,Black,In Foster,,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059012575,BLUE BONNET,Cat,Domestic Shorthair,1m 15d,Orange,In Foster,,,,,Small,,F,Grey,,Foster Home,,,,,479
+  Foster Home,244,A0059019080,,Cat,Domestic Shorthair,1m 25d,Cream,In Foster,,,,,Small,Mix,M,Chocolate,,Foster Home,,,,,479
+  Foster Home,244,A0059019082,,Cat,Domestic Shorthair,1m 25d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059032130,,Cat,Domestic Shorthair,1m 30d,Blue,In Foster,,WAITING ON FELK PCR FOR MOM,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059032137,,Cat,Domestic Shorthair,1m 30d,Grey,In Foster,,WAITING ON FELK PCR FOR MOM,,0.00,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059032143,Estrella,Cat,Domestic Shorthair,1m 30d,Black,In Foster,,WAITING ON FELK PCR FOR MOM,,0.00,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059032150,LORETTA,Cat,Domestic Shorthair,1y 7m 2d,Black,In Foster,,,,0.00,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059032220,Frenchie,Cat,Domestic Shorthair,1m 8d,Black,In Foster,,MED CLEAR FOR FOSTER,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0059032242,Sandy,Cat,Domestic Shorthair,1m 8d,Tan,In Foster,,CLEAR FOR FOSTER,,0.00,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059032246,Danny,Cat,Domestic Shorthair,1m 8d,Black,In Foster,,MEDICALLY CLEAR FOR FOSTER,,0.00,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059033710,ANGELFISH,Cat,Domestic Shorthair,2m 7d,Black,In Foster,,too young,,,Small,Mix,F,Silver,,Foster Home,,,,,479
+  Foster Home,244,A0059046340,COSMO,Cat,Domestic Shorthair,2m 18d,Grey,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059048669,BRISTOL,Cat,Domestic Shorthair,4y 30d,White,In Foster,,Nursing 6 kittens,,,Small,,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0059048785,,Cat,Domestic Shorthair,1m 6d,Orange,In Foster,,Needs foster,,,Small,Mix,F,Grey,,Foster Home,,,,,479
+  Foster Home,244,A0059048793,,Cat,Domestic Shorthair,1m 6d,Orange,In Foster,,Needs foster,,0.00,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059048808,,Cat,Domestic Shorthair,1m 6d,Brown,In Foster,,Needs foster,,0.00,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059048810,,Cat,Domestic Shorthair,1m 6d,Brown,In Foster,,Needs foster,,0.00,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059048816,,Cat,Domestic Shorthair,1m 6d,Brown,In Foster,,Needs foster,,0.00,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059048819,,Cat,Domestic Shorthair,1m 6d,Grey,In Foster,,Needs foster,,0.00,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059054844,,Dog,Mastiff,2m 10d,Black,In Foster,,,,600.00,Small,Mix,M,Tan,,Foster Home,,,,,479
+  Foster Home,244,A0059054864,,Dog,Mastiff,2m 10d,Tan,In Foster,,,,600.00,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059067081,VIXEN,Cat,Domestic Shorthair,1m 24d,Grey,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059072302,,Cat,Domestic Longhair,1m 24d,Black,In Foster,,,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059074072,FUNNEL CAKE,Cat,Domestic Shorthair,2y 27d,Blue,In Foster,,STRAT WAIT,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059077063,JINGLES,Cat,Domestic Shorthair,10y 26d,Black,In Foster,,,JINGLES,,Small,,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0059084350,,Cat,Domestic Longhair,2m 5d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059084965,Bellatrix,Cat,Domestic Shorthair,2m 5d,Black,In Foster,,Too young,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059084971,Capella,Cat,Domestic Shorthair,2m 5d,Black,In Foster,,Too young,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059084976,Polaris,Cat,Domestic Shorthair,2m 5d,Black,In Foster,,Too young,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059084981,Arcturus,Cat,Domestic Shorthair,2m 5d,Black,In Foster,,Too young,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059085383,Cadi,Cat,Domestic Shorthair,1m 28d,Black,In Foster,,Too young,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059087158,,Cat,Domestic Shorthair,1m 21d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059087167,,Cat,Domestic Shorthair,1m 21d,Brown,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059093094,CAPPUCCINO,Cat,Domestic Shorthair,2m 3d,Brown,In Foster,,,CHARLIE,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059096094,Luna,Cat,Domestic Shorthair,2m 3d,Black,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0059096097,Mea,Cat,Domestic Shorthair,2m 3d,Black,In Foster,,,,0.00,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0059112824,LONDON,Cat,Domestic Shorthair,1m 25d,Grey,In Foster,,,,,Small,,F,Tan,,Foster Home,,,,,479
+  Foster Home,244,A0059117489,EINSTEIN,Cat,Domestic Shorthair,1m 17d,Brown,In Foster,,okay for foster,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059123397,EMONI,Cat,Domestic Shorthair,5m 1d,Brown,In Foster,,CLEAR FOR FOSTER,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059186749,,Cat,Domestic Shorthair,1m 17d,Grey,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059186750,,Cat,Domestic Shorthair,1m 17d,Grey,In Foster,,,,,Small,,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059188017,SPIRAL,Cat,Domestic Shorthair,1m 21d,Black,In Foster,,see notes - has a person,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059190945,,Cat,Domestic Shorthair,,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059190947,,Cat,Domestic Shorthair,,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059190951,,Cat,Domestic Shorthair,,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059192491,Pudge,Cat,Domestic Shorthair,1m 3d,Brown,In Foster,,,Princess,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059193830,GRACE,Cat,Domestic Shorthair,2y 16d,Silver,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059193836,,Cat,Domestic Shorthair,17d,Brown,In Foster,,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059193839,,Cat,Domestic Shorthair,17d,Black,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059195117,,Cat,Domestic Longhair,1m 20d,Grey,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059195119,,Cat,Domestic Longhair,1m 20d,Grey,In Foster,,monitor head tilt/vision,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059195120,,Cat,Domestic Shorthair,1m 20d,Grey,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059195122,,Cat,Domestic Shorthair,1m 20d,Grey,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059196914,,Cat,Domestic Shorthair,17d,Black,In Foster,,,,,Small,,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059198048,,Cat,Domestic Shorthair,1m 20d,Grey,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059198590,,Cat,Domestic Shorthair,23d,Black,In Foster,,bottle bb,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059198596,,Cat,Domestic Shorthair,23d,Grey,In Foster,,bottle bb,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059199127,GRAYCIE,Cat,Domestic Shorthair,4m 16d,Blue,In Foster,,,,,Small,,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059204602,,Cat,Domestic Shorthair,1y 14d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059204612,,Cat,Domestic Shorthair,1m 11d,Brown,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059204614,,Cat,Domestic Shorthair,1m 11d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059204617,,Cat,Domestic Shorthair,1m 11d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059204618,,Cat,Domestic Shorthair,1m 11d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059214402,,Cat,Domestic Shorthair,19d,Orange,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059215018,,Cat,Domestic Shorthair,1m 15d,Tan,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059215984,Foxtrot,Cat,Domestic Longhair,1m 25d,Black,In Foster,,Socialization/weight gain/bite,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059222752,,Cat,Domestic Shorthair,1m 9d,Brown,In Foster,,CLEAR FOR FOSTER,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059222755,,Cat,Domestic Shorthair,1m 9d,Brown,In Foster,,CLEAR FOR FOSTER,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059222757,,Cat,Domestic Longhair,1m 9d,Black,In Foster,,CLEAR FOR FOSTER,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059222758,,Cat,Domestic Shorthair,1m 9d,Black,In Foster,,CLEAR FOR FOSTER,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059227214,,Cat,Domestic Longhair,1m 12d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059232827,,Rabbit,Mini-Lop,2m 10d,Tan,In Foster,,TOO YOUNG,,,Small,Mix,U,Blue,,Foster Home,,,,,479
+  Foster Home,244,A0059232836,,Rabbit,Mini-Lop,2m 10d,Tan,In Foster,,,,,Small,Mix,U,Black,,Foster Home,,,,,479
+  Foster Home,244,A0059233387,VOLKS,Cat,Domestic Shorthair,1m 14d,Brown,In Foster,,,,,Small,Mix,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059233908,Hobbs Jr.,Cat,Domestic Shorthair,1m 0d,Grey,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059233920,Potato,Cat,Domestic Shorthair,1m 0d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059233926,Sylvester,Cat,Domestic Shorthair,1m 0d,Brown,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059233941,Jackson,Cat,Domestic Shorthair,1m 0d,Brown,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059233946,Maverick,Cat,Domestic Shorthair,1m 0d,Brown,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059235560,GARRISON,Cat,Domestic Longhair,2m 12d,Grey,In Foster,,okay for foster with meds,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059236564,BARBIE,Cat,Domestic Shorthair,1y 6m 10d,Brown,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059236576,,Cat,Domestic Shorthair,24d,Black,In Foster,,,,,Small,,U,,,Foster Home,,,,,479
+  Foster Home,244,A0059236580,,Cat,Domestic Longhair,24d,Brown,In Foster,,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059236583,,Cat,Domestic Longhair,24d,Brown,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059238758,,Cat,Domestic Shorthair,2y 9d,Brown,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Foster Home,244,A0059238761,,Cat,Domestic Shorthair,14d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059238762,,Cat,Domestic Shorthair,14d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059238763,,Cat,Domestic Shorthair,14d,Black,In Foster,,,,,Small,Mix,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059238764,,Cat,Domestic Shorthair,14d,Black,In Foster,,,,,Small,Mix,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0059246997,,Cat,Domestic Shorthair,1m 19d,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059246998,,Cat,Domestic Shorthair,1m 19d,Black,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059247000,,Cat,Domestic Shorthair,1m 5d,Grey,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059257699,Bluey,Cat,Domestic Shorthair,1m 18d,Blue,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059257701,,Cat,Domestic Shorthair,1m 18d,Brown,In Foster,,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059257702,,Cat,Domestic Shorthair,1m 18d,Grey,In Foster,,,,,Small,,M,,,Foster Home,,,,,479
+  Foster Home,244,A0059257703,Bingo,Cat,Domestic Shorthair,1m 18d,Grey,In Foster,,,,,Small,,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059257722,,Cat,Domestic Shorthair,1m 18d,Black,In Foster,,,,,Small,,M,White,,Foster Home,,,,,479
+  Foster Home,244,A0059282042,,Cat,Domestic Shorthair,1m 13d,Brown,In Foster,,,,,Small,,F,Orange,,Foster Home,,,,,479
+  Foster Home,244,A0059287576,,Cat,Domestic Shorthair,18d,Brown,In Foster,,,BABY SHERMAN,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059291498,ANGELINA,Cat,Domestic Shorthair,2m 0d,White,In Foster,,,,,Small,Mix,F,,,Foster Home,,,,,479
+  Foster Home,244,A0059296231,,Cat,Domestic Shorthair,7d,Black,In Foster,,,,,Small,Mix,F,White,,Foster Home,,,,,479
+  Humane Education Office,6,A0050404927,HANDSOME HENRY,Mammal,Ferret,4y 2m 24d,Sable,Permanent Resident,,per HuEd,,,Medium,,M,,,Humane Ed Office,,,,,479
+  Humane Education Office,6,A0051407698,FLAKE,Reptile/Amphibian,"Snake, Corn",,Orange,Permanent Resident,,,,,Small,,M,Golden,,Humane Ed Office,,,,,479
+  Humane Education Office,6,A0052747565,Elliot,Reptile/Amphibian,Bearded Dragon,,Brown,Permanent Resident,,Humane Education Perm Resident,,,Small,,M,,,Humane Ed Office,,,,,479
+  Humane Education Office,6,A0056143449,HERBIE,Rodent,GUINEA PIG,1y 2m 22d,Brown,Permanent Resident,,MED CLEARED,KENT,,Small,GUINEA PIG,M,White,,Humane Ed Office,,,,,479
+  Humane Education Office,6,A0057946635,,Rodent,RAT-DOMESTIC,6m 22d,White,Hold - Surgery,,needs neuter,,,Small,,M,,,Humane Ed Office,,,,,479
+  Humane Education Office,6,A0058058104,,Rodent,RAT-DOMESTIC,5m 21d,White,Hold - Surgery,,needs neuter,,,Small,RAT-DOMESTIC,M,,,Humane Ed Office,,,,,479
+  ICU,4,A0058959624,OTTER,Cat,Domestic Shorthair,3m 22d,Orange,Hold - Doc,9/8/2025 5:55 PM,RECHECK,,,Small,,M,,,03 - B,,,,,479
+  ICU,4,A0059046296,BLUE,Cat,Domestic Shorthair,8y 30d,Blue,Hold - Doc,,doc notes,,,Small,,F,White,,05,,,,,479
+  ICU,4,A0059213481,LUKA,Cat,Domestic Longhair,10y 6d,Black,Hold - Doc,,Bloodwork + radiographs,,,Small,,M,,,01,,,,,479
+  ICU,4,A0059278568,,Cat,Domestic Shorthair,4y 2d,Orange,Hold - Stray,9/6/2025 12:00 AM,STRAY WAIT,,,Small,,M,,,03 - A,,,,,479
+  If The Fur Fits,33,A0032144299,THOR,Dog,"Collie, Rough",9y 7m 22d,Tan,In If the Fur Fits - Medical,,,,200.00,Medium,Mix,M,Brown,,Medical,,,,,479
+  If The Fur Fits,33,A0034301390,GIBBS,Dog,Bichon Frise,9y 3m 25d,White,In If the Fur Fits - Medical,9/25/2025 12:00 AM,,$300,300.00,Medium,Mix,M,Black,,Medical,,,,,479
+  If The Fur Fits,33,A0058048215,OREO,Cat,Domestic Shorthair,8y 5m 15d,Black,In If the Fur Fits - Medical,6/18/2025 12:00 AM,NEEDS DENTAL SCHEDULED,,50.00,Small,,M,White,,Medical,,,,,479
+  If The Fur Fits,33,A0058216827,WESLEY,Cat,Domestic Shorthair,6y 5m 5d,Blue,In If the Fur Fits - Medical,,,,50.00,Small,,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0058581971,TABITHA,Cat,Domestic Shorthair,10y 10m 14d,White,In If the Fur Fits - Medical,,,,50.00,Small,,F,Brown,,Medical,,,,,479
+  If The Fur Fits,33,A0058600883,NIGHT RIDER,Cat,Domestic Shorthair,7y 3m 6d,Black,In If the Fur Fits - Medical,,,,50.00,Small,,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0058610562,SAFFRON,Cat,Domestic Shorthair,7y 3m 5d,Orange,In If the Fur Fits - Medical,9/11/2025 12:00 AM,,,50.00,Small,,F,White,,Medical,,,,,479
+  If The Fur Fits,33,A0058622641,KIT,Cat,Domestic Shorthair,9y 3m 2d,Blue,In If the Fur Fits - Medical,10/8/2025 12:00 AM,Needs dental,,50.00,Small,,F,,,Medical,,,,,479
+  If The Fur Fits,33,A0058640624,Snow Cone,Dog,"Mixed Breed, Medium (up to 44 lbs fully grown)",5y 3m 11d,White,In If the Fur Fits - Medical,7/28/2025 12:00 AM,UNDER SKIN TREATMENT,,250.00,Medium,Mix,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0058720491,Pea,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",1y 2m 15d,Grey,In If the Fur Fits - Medical,,,,250.00,Large,Mix,F,,,Medical,,,,,479
+  If The Fur Fits,33,A0058764550,Karma,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2y 2m 12d,Brindle,In If the Fur Fits - Medical,,,,250.00,Medium,Mix,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0058767718,MAGNOLIA,Cat,Domestic Shorthair,9y 4m 3d,Grey,In If the Fur Fits - Medical,10/15/2025 12:00 AM,ITFF (dental needed),,50.00,Small,,F,White,,Medical,,,,,479
+  If The Fur Fits,33,A0058831432,Lilly,Dog,"Chihuahua, Long Coat",10y 2m 2d,Black,In If the Fur Fits - Medical,,,,200.00,Small,Mix,F,Brown,,Medical,,,,,479
+  If The Fur Fits,33,A0058838875,COLT,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",10y 1m 27d,Yellow,In If the Fur Fits - Medical,10/29/2025 12:00 AM,,,100.00,Large,Mix,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0058862316,RODRIGO,Cat,Domestic Longhair,5y 1m 27d,Grey,In If the Fur Fits - Medical,11/6/2025 12:00 AM,,,50.00,Small,,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0058902147,Puddin Pot Pie,Cat,Domestic Shorthair,6y 1m 21d,White,In If the Fur Fits - Medical,10/23/2025 8:00 AM,,,50.00,Small,,F,Black,,Medical,,,,,479
+  If The Fur Fits,33,A0058909086,ROCKFORD,Cat,Domestic Shorthair,2y 1m 20d,Brown,In If the Fur Fits - Medical,10/30/2025 12:00 AM,NEEDS DENTAL SCHEDULED,ROCKFORD,120.00,Small,,M,White,,Medical,,,,,479
+  If The Fur Fits,33,A0058917468,Chester,Cat,Domestic Shorthair,5y 1m 19d,Brown,In If the Fur Fits - Medical,8/18/2025 12:00 AM,,,50.00,Small,,M,White,,Medical,,,,,479
+  If The Fur Fits,33,A0058928244,SQUEAKY,Cat,Domestic Shorthair,13y 11m 28d,Grey,In If the Fur Fits - Medical,9/24/2025 12:00 AM,,,50.00,Small,,F,,,Medical,,,,,479
+  If The Fur Fits,33,A0058948741,Mint Ting A Ling,Cat,Domestic Shorthair,7y 1m 14d,Black,In If the Fur Fits - Medical,11/5/2025 12:00 AM,NEEDS DENTAL SCHEDULED,,50.00,Small,,M,White,,Medical,,,,,479
+  If The Fur Fits,33,A0058971658,CHEERIO,Cat,Domestic Longhair,2y 1m 11d,Orange,In If the Fur Fits - Trial,9/9/2025 12:00 AM,,,120.00,Small,,M,,,Trial,,,,,479
+  If The Fur Fits,33,A0058981285,LIVIA,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",9y 1m 27d,Black,In If the Fur Fits - Medical,11/13/2025 12:00 AM,,,200.00,Large,Mix,F,White,,Medical,,,,,479
+  If The Fur Fits,33,A0058981309,LADY,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2y 1m 19d,White,In If the Fur Fits - Medical,,TAIL AMP - ADOPTED,,250.00,Medium,Mix,F,Tan,,Medical,,,,,479
+  If The Fur Fits,33,A0058988867,Evelyn,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",3y 1m 9d,Black,In If the Fur Fits - Medical,9/5/2025 12:00 AM,,,250.00,Medium,Mix,F,Tan,,Medical,,,,,479
+  If The Fur Fits,33,A0058997270,Fallon,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2y 17d,Grey,In If the Fur Fits - Trial,9/10/2025 12:00 AM,,FALCOR,250.00,Large,Mix,F,Fawn,,Trial,,,,,479
+  If The Fur Fits,33,A0059007995,Bandit,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",9y 1m 5d,Tan,In If the Fur Fits - Medical,11/20/2025 12:00 AM,,,250.00,Small,Mix,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0059007997,Max,Dog,"Mixed Breed, Small (under 24 lbs fully grown)",8y 1m 5d,Tan,In If the Fur Fits - Medical,11/20/2025 12:00 AM,,,250.00,Small,Mix,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0059063506,KODA,Dog,Shiba Inu,8y 28d,Tan,In If the Fur Fits - Trial,9/10/2025 12:00 AM,,,400.00,Medium,Mix,M,White,,Trial,,,,,479
+  If The Fur Fits,33,A0059070428,KARA,Dog,"Mixed Breed, Large (over 44 lbs fully grown)",2y 27d,Blue,In If the Fur Fits - Trial,9/4/2025 12:00 AM,,KARMA,250.00,Large,Mix,F,White,,Trial,,,,,479
+  If The Fur Fits,33,A0059074462,Felix,Cat,Domestic Shorthair,1y 27d,Grey,In If the Fur Fits - Medical,8/27/2025 12:00 AM,,Yuji,120.00,Medium,,M,White,,Medical,,,,,479
+  If The Fur Fits,33,A0059079050,HERB,Cat,Domestic Shorthair,4y 26d,Orange,In If the Fur Fits - Medical,9/25/2025 12:00 AM,,HERB,120.00,Small,,M,,,Medical,,,,,479
+  If The Fur Fits,33,A0059088015,Kash,Dog,Akita,2y 24d,Tan,In If the Fur Fits - Trial,9/6/2025 12:00 AM,,,250.00,Large,Mix,M,Black,,Trial,,,,,479
+  If The Fur Fits,33,A0059111689,MO,Cat,Domestic Shorthair,11y 21d,Brown,In If the Fur Fits - Medical,11/26/2025 8:00 AM,,,50.00,Small,,F,White,,Medical,,,,,479
+  Large Dog Recovery,1,A0059259513,Eclipse,Dog,"Terrier, Pit Bull",8m 7d,Brown,Hold - Doc,,,,,Large,Mix,F,,,03,,,,,479
+"  Multi-Animal Holding, Room 227",2,A0059239809,BASIL,Reptile/Amphibian,"Python, Ball",,Brown,Hold - Doc,,,,300.00,Small,,U,Yellow,,Boaphile 1,,,,,479
+"  Multi-Animal Holding, Room 227",2,A0059291248,CJ,Rodent,CHINCHILLA,,Grey,Available,,,REX,75.00,Small,,M,,,Mammal 1,,,,,479
+"  Multi-Animal Holding, Room 229",3,A0059084312,TORCH,Reptile/Amphibian,"Frog, Other",,Green,Hold - Possible Adoption,,,,,Small,,U,Red,,Multi Animal Holding,,,,,479
+"  Multi-Animal Holding, Room 229",3,A0059084314,FLAME,Reptile/Amphibian,"Frog, Other",,Green,Hold - Possible Adoption,,,,,Small,,U,Red,,Multi Animal Holding,,,,,479
+"  Multi-Animal Holding, Room 229",3,A0059264705,Georgia,Reptile/Amphibian,"Gecko, Crested",,Yellow,Hold - Foster,,Monitoring  2-3 WEEKS.,,,Small,,F,,,Multi Animal Holding,,,,,479
+  Offsite Adoptions,7,A0058682110,Marigold,Cat,Domestic Shorthair,3m 8d,Tan,Available,,,,,Small,Mix,F,,,Petco Amherst,,,,,479
+  Offsite Adoptions,7,A0058682114,Tiger Lily,Cat,Domestic Shorthair,3m 8d,Orange,Available,,,,,Small,Mix,F,,,Petco Amherst,,,,,479
+  Offsite Adoptions,7,A0058838635,Antonia,Cat,Domestic Shorthair,2y 2m 1d,White,Available,,,,120.00,Small,Mix,F,Black,,PetSuppliesPlus OP,,,,,479
+  Offsite Adoptions,7,A0058873067,Zasa,Cat,Domestic Longhair,1y 1m 25d,White,Available,,,,,Small,Mix,F,Grey,,Petsmart Amherst,,,,,479
+  Offsite Adoptions,7,A0058874853,Lemonade,Cat,Domestic Shorthair,2m 10d,Orange,Available,,,,,Small,,M,,,PetSuppliesPlus OP,,,,,479
+  Offsite Adoptions,7,A0058949040,Muffin,Cat,Domestic Longhair,11m 14d,Orange,Available,,,,,Small,Mix,F,,,Petsmart Orchard Pk,,,,,479
+  Offsite Adoptions,7,A0059002720,Fred,Cat,Domestic Shorthair,2y 1m 6d,Black,Available,,,,120.00,Small,Mix,M,White,,Petsmart Clarence,,,,,479
+  Released,1,A0058986010,Iommi,Dog,"Chihuahua, Long Coat",17y 1m 9d,Black,Unavailable,,,,,Small,Mix,F,Tan,,,,,,,479
+  Small Animals & Exotics,12,A0058955571,LINDA,Rodent,GUINEA PIG,,Black,Available,,,G Pig 9,25.00,Small,,F,Tan,,Mammal 1,,,,,479
+  Small Animals & Exotics,12,A0058955616,KAREN,Rodent,GUINEA PIG,,Brown,Available,,,G Pig 16,25.00,Small,,F,Red,,Mammal 1,,,,,479
+  Small Animals & Exotics,12,A0058955657,Gaia,Rodent,GUINEA PIG,,Red,Available,,,G Pig 23,25.00,Small,,F,Black,,Mammal 4,,,,,479
+  Small Animals & Exotics,12,A0058955696,Gertrude,Rodent,GUINEA PIG,,Red,Available,,,g pig 30,25.00,Small,,F,White,,Mammal 4,,,,,479
+  Small Animals & Exotics,12,A0058955704,GIA,Rodent,GUINEA PIG,,White,Available,,,32,25.00,Small,,F,Black,,Small Animal 8,,,,,479
+  Small Animals & Exotics,12,A0058955721,Gemma,Rodent,GUINEA PIG,,Tan,Available,,,g pig 36,25.00,Small,,F,White,,Mammal 4,,,,,479
+  Small Animals & Exotics,12,A0058955803,Howard,Rodent,HAMSTER,,Black,Available,,,hamster 4,5.00,Small,,M,White,,Small Animal 4,,,,,479
+  Small Animals & Exotics,12,A0058955810,Hunter,Rodent,HAMSTER,,Black,Available,,,hamster 5,5.00,Small,,M,White,,Small Animal 5,,,,,479
+  Small Animals & Exotics,12,A0058955824,Hudson,Rodent,HAMSTER,,Black,Available,,,hamster 6,5.00,Small,,M,White,,Small Animal 7,,,,,479
+  Small Animals & Exotics,12,A0058955875,Hector,Rodent,HAMSTER,,Black,Available,,,Hamster 13,5.00,Small,,M,White,,Small Animal 2,,,,,479
+  Small Animals & Exotics,12,A0058955879,Hubert,Rodent,HAMSTER,,Black,Available,,,hamster 14,5.00,Small,,M,White,,Small Animal 3,,,,,479
+  Small Animals & Exotics,12,A0059191115,SUNRISE,Domestic (Cage) Bird,"Conure, Other",,Yellow,Available,,,,200.00,Small,,U,Red,,Small Animals & Exotics,,,,,479
+  Wildlife,2,A0059084334,,Reptile/Amphibian,Salamander,,Cream,Hold - Legal Notice,8/18/2025 12:01 AM,,,,Small,,U,,,Wildlife Rooms,,,,,479
+  Wildlife,2,A0059084623,,Reptile/Amphibian,Salamander,,Cream,Hold - Legal Notice,8/18/2025 12:01 AM,,,,Small,,U,,,Wildlife Rooms,,,,,479
 

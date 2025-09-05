@@ -32,24 +32,10 @@ def setup_logging():
     )
     return log_file
 
-def git_pull_and_push():
-    """Pull latest changes and push the __Load Files Go Here__ folder."""
+def git_commit_and_push():
+    """Commit and push the updated files."""
     try:
-        logging.info("🔄 Updating Git repository...")
-        
-        # First, stash any unstaged changes to clean up the working directory
-        logging.info("Stashing any unstaged changes...")
-        result = subprocess.run(['git', 'stash'], capture_output=True, text=True, cwd=Path(__file__).parent)
-        if result.returncode != 0 and "No local changes to save" not in result.stderr:
-            logging.warning(f"Git stash had issues: {result.stderr}")
-        
-        # Pull latest changes
-        logging.info("Pulling latest changes...")
-        result = subprocess.run(['git', 'pull'], capture_output=True, text=True, cwd=Path(__file__).parent)
-        if result.returncode != 0:
-            logging.error(f"Git pull failed: {result.stderr}")
-            return False
-        logging.info("✅ Git pull completed")
+        logging.info("🔄 Committing and pushing updated files...")
         
         # Add our new files (including logs)
         logging.info("Adding __Load Files Go Here__ folder to Git...")
@@ -89,6 +75,14 @@ def run(playwright: Playwright) -> None:
     # Setup logging first
     log_file = setup_logging()
     logging.info(f"Starting PetPoint automation - Log file: {log_file}")
+    
+    # Pull latest changes from Git FIRST
+    logging.info("🔄 Pulling latest changes from Git...")
+    result = subprocess.run(['git', 'pull'], capture_output=True, text=True, cwd=Path(__file__).parent)
+    if result.returncode != 0:
+        logging.error(f"Git pull failed: {result.stderr}")
+        return
+    logging.info("✅ Git pull completed")
     
     browser = playwright.chromium.launch(headless=True, slow_mo=500)  # Run headless for automation
     context = browser.new_context()
@@ -266,7 +260,7 @@ def run(playwright: Playwright) -> None:
         logging.info("Files saved to: __Load Files Go Here__")
         
         # Push to Git repository
-        git_success = git_pull_and_push()
+        git_success = git_commit_and_push()
         if git_success:
             logging.info("✅ All done! Reports exported and pushed to Git.")
         else:
